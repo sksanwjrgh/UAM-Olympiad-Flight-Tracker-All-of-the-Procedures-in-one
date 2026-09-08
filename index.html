@@ -1,0 +1,1801 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RKSI · RKSS SID · STAR · IAP 통합 항로도 — 위성</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#e8ecf1; --panel:#151a20; --panel2:#1c232b; --rule:#2e3841; --dim:#94a1ad;
+  --star:#ffffff; --sid:#5aa9ff; --iap:#c491ff; --red:#ff3b30; --uam:#ffa03c;
+  --hold-star:#2dd4bf; --hold-iap:#facc15;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--panel);color:var(--ink);
+  font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:13px;line-height:1.55;
+  display:flex;overflow:hidden}
+
+/* ---------- sidebar ---------- */
+#side{width:336px;flex:0 0 336px;height:100%;overflow-y:auto;background:var(--panel);
+  border-right:1px solid var(--rule);padding:16px 0 40px}
+#side::-webkit-scrollbar{width:9px}#side::-webkit-scrollbar-thumb{background:#33404b;border-radius:5px}
+#side h1{font-family:"Barlow Condensed",sans-serif;font-size:20px;letter-spacing:.05em;
+  text-transform:uppercase;margin:0 16px 2px}
+#side .sub{font-family:"Barlow Condensed",sans-serif;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--dim);font-size:10.5px;margin:0 16px 12px}
+.sect{font-family:"Barlow Condensed",sans-serif;letter-spacing:.09em;text-transform:uppercase;
+  font-size:11.5px;color:var(--dim);margin:16px 16px 6px;padding-bottom:3px;border-bottom:1px solid var(--rule)}
+.btns{display:flex;flex-wrap:wrap;gap:5px;margin:0 16px}
+.btns button{font-family:"Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;
+  font-size:11.5px;padding:3px 9px;border:1px solid var(--rule);background:var(--panel2);color:var(--ink);
+  border-radius:2px;cursor:pointer}
+.btns button:hover{border-color:#5d6e7d}
+.btns button.on{background:#e8ecf1;color:#151a20;border-color:#e8ecf1}
+#q{width:calc(100% - 32px);margin:10px 16px 0;padding:5px 8px;border:1px solid var(--rule);
+  border-radius:2px;font-family:inherit;font-size:12.5px;background:var(--panel2);color:var(--ink)}
+#q::placeholder{color:#66737f}
+
+.tree{margin:8px 0 0}
+.grpwrap{margin:0 0 2px}
+.row{display:flex;align-items:center;gap:7px;padding:2px 16px;cursor:pointer;user-select:none}
+.row:hover{background:#212a33}
+.row.t0{font-family:"Barlow Condensed",sans-serif;font-size:14.5px;letter-spacing:.05em;
+  text-transform:uppercase;font-weight:600;padding:5px 16px;background:#1b232b}
+.row.t1{font-size:12px;color:#b6c2ce;padding-left:26px;font-weight:600}
+.row.t2{font-size:11.8px;padding-left:38px;color:#cbd5df}
+.row .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .c{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--dim)}
+.row .sw{width:15px;height:0;border-top:3px solid var(--rule);flex:0 0 15px}
+input[type=checkbox]{accent-color:#5aa9ff;width:13px;height:13px;flex:0 0 13px;margin:0;cursor:pointer}
+.caret{flex:0 0 10px;font-size:9px;color:var(--dim);transition:transform .12s}
+.collapsed .caret{transform:rotate(-90deg)}
+.collapsed .kids{display:none}
+
+/* ---------- map ---------- */
+#main{flex:1;position:relative;min-width:0}
+#map{position:absolute;inset:0;background:#0c1116}
+.leaflet-container{font-family:"IBM Plex Sans KR",sans-serif}
+.leaflet-control-attribution{font-size:9.5px!important;background:rgba(12,17,22,.7)!important;color:#9aa6b2!important}
+.leaflet-control-attribution a{color:#7fb3e8!important}
+.leaflet-bar a{background:#1c232b;color:#e8ecf1;border-bottom-color:#2e3841}
+.leaflet-bar a:hover{background:#27313b;color:#fff}
+.leaflet-control-scale-line{background:rgba(12,17,22,.65);color:#dbe3ea;border-color:#7c8994}
+
+/* waypoint markers */
+.wp{pointer-events:none}
+.wp svg{position:absolute;left:-7px;top:-7px}
+.wp b{position:absolute;left:11px;top:-11px;font-family:"Barlow Condensed",sans-serif;
+  font-weight:700;font-size:10.8px;color:#fff;white-space:nowrap;
+  text-shadow:0 0 3px #000,0 0 3px #000,0 0 5px #000}
+.wp em{position:absolute;left:11px;top:1px;font-style:normal;font-family:"IBM Plex Mono",monospace;
+  font-size:9px;color:#f0b96a;white-space:nowrap;text-shadow:0 0 3px #000,0 0 3px #000}
+.wp.nav svg polygon{stroke:#7fe3ff}
+.wp.nav b{color:#7fe3ff}
+.wp.arp b{color:#ffe27a;font-size:12.5px}
+.hide-sym  .wp svg{display:none}
+.hide-name .wp b{display:none}
+.hide-alt  .wp em{display:none}
+.only-major .wp.minor b,.only-major .wp.minor em{display:none}
+.only-major:not(.hide-name) .wp.force b{display:inline!important}
+.only-major:not(.hide-alt)  .wp.force em{display:inline!important}
+.wp.force b{text-shadow:0 0 4px #000,0 0 4px #000,0 0 8px #000}
+
+/* published AIP holding labels */
+.phold{pointer-events:none}
+.phold b{position:absolute;left:10px;top:-12px;font-family:"Barlow Condensed",sans-serif;
+  font-weight:700;font-size:11.5px;letter-spacing:.04em;white-space:nowrap;
+  text-shadow:0 0 3px #000,0 0 3px #000,0 0 6px #000}
+.phold em{position:absolute;left:10px;top:1px;font-family:"IBM Plex Mono",monospace;
+  font-style:normal;font-size:8.5px;white-space:nowrap;text-shadow:0 0 3px #000,0 0 3px #000}
+.phold.star b,.phold.star em{color:var(--hold-star)}
+.phold.iap b,.phold.iap em{color:var(--hold-iap)}
+
+#hud{position:absolute;left:12px;bottom:24px;z-index:500;background:rgba(21,26,32,.9);
+  border:1px solid var(--rule);padding:9px 12px;max-width:340px;font-size:11.5px;
+  backdrop-filter:blur(4px)}
+#hud .t{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.07em;
+  font-size:12.5px;font-weight:700;margin-bottom:2px}
+#hud .m{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim)}
+#lg{position:absolute;right:12px;bottom:24px;z-index:500;background:rgba(21,26,32,.9);
+  border:1px solid var(--rule);padding:9px 12px;font-size:11.5px;backdrop-filter:blur(4px)}
+#rprev{position:absolute;right:12px;top:52px;z-index:600;width:300px;background:rgba(15,19,24,.95);
+  border:1px solid var(--rule);padding:9px 10px 8px;backdrop-filter:blur(4px);box-shadow:0 4px 18px rgba(0,0,0,.5)}
+#rprev .t{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.05em;
+  font-size:12.5px;font-weight:700;margin:0 22px 6px 0;line-height:1.3}
+#rprevClose{position:absolute;right:8px;top:6px;width:18px;height:18px;line-height:16px;text-align:center;
+  cursor:pointer;color:var(--dim);font-size:15px;border:1px solid var(--rule);border-radius:2px}
+#rprevClose:hover{color:#fff;border-color:#5d6e7d}
+#rprevSvg{background:#0c1116;border:1px solid var(--rule)}
+#rprevSvg svg{display:block;width:100%;height:auto}
+#rprevWps{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--dim);margin-top:6px;
+  max-height:70px;overflow-y:auto;line-height:1.5}
+#lg div{display:flex;align-items:center;gap:7px;margin:1px 0}
+#lg i{width:22px;height:0;border-top:3px solid;display:inline-block}
+#count{position:absolute;left:12px;top:12px;z-index:500;background:rgba(21,26,32,.9);
+  border:1px solid var(--rule);padding:5px 10px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  backdrop-filter:blur(4px)}
+@media(max-width:900px){
+  body{flex-direction:column}
+  #side{width:100%;flex:0 0 44%;border-right:0;border-bottom:1px solid var(--rule)}
+  #main{flex:1}
+  #lg{display:none}
+}
+
+/* ---- live traffic ---- */
+.ac b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;color:#fff;
+  text-shadow:0 0 3px #000,0 0 3px #000;margin-left:15px;margin-top:-24px;white-space:nowrap}
+.ac em{display:block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-style:normal;color:#cfd8e2;
+  text-shadow:0 0 3px #000,0 0 3px #000;margin-left:15px;white-space:nowrap}
+.ac svg{position:absolute;left:-12px;top:-12px;filter:drop-shadow(0 0 3px rgba(0,0,0,.9))}
+.ac.focus svg{transform-origin:center;filter:drop-shadow(0 0 6px #ff2db0) drop-shadow(0 0 6px #ff2db0)}
+.ac.focus b{color:#ff2db0;font-size:13px}
+
+/* ---- 리플레이 focus 추적 ---- */
+.rpfocus{pointer-events:none}
+.rpfocus .ring{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;
+  border:2.5px solid #ff2db0;box-shadow:0 0 10px #ff2db0;animation:rpPulse 1.1s ease-out infinite}
+.rpfocus .lbl{position:absolute;left:26px;top:-30px;font-family:"Barlow Condensed",sans-serif;font-weight:700;
+  font-size:13px;color:#ff2db0;white-space:nowrap;text-shadow:0 0 3px #000,0 0 4px #000,0 0 6px #000}
+@keyframes rpPulse{0%{transform:scale(.55);opacity:1}100%{transform:scale(1.25);opacity:0}}
+#acStat{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim);margin:6px 16px 0;line-height:1.4}
+#acStat.ok{color:#8fe39a} #acStat.err{color:#ff8a80}
+.mini{margin:6px 16px 0;font-size:11px;color:var(--dim)}
+.mini select,.mini input{background:var(--panel2);color:var(--ink);border:1px solid var(--rule);
+  border-radius:2px;font-family:inherit;font-size:11.5px;padding:3px 5px}
+.mini input{width:100%;margin-top:4px}
+.mini summary{cursor:pointer;letter-spacing:.03em}
+
+/* ---- uam corridor ---- */
+.uwp b{position:absolute;left:18px;top:-2px;font-family:"Barlow Condensed",sans-serif;font-size:12.5px;
+  letter-spacing:.05em;font-weight:600;color:#ffd7a3;text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap}
+.uwp.nolbl b{display:none}
+#uamOut{display:none;width:calc(100% - 32px);margin:6px 16px 0;height:96px;background:var(--panel2);
+  color:var(--ink);border:1px solid var(--rule);border-radius:2px;font-family:"IBM Plex Mono",monospace;font-size:10px}
+#uamMsg{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:#ffd7a3;margin:5px 16px 0}
+
+/* ---- vertiport ---- */
+.vp b{position:absolute;left:30px;top:2px;font-family:"Barlow Condensed",sans-serif;font-size:12.5px;
+  letter-spacing:.04em;font-weight:600;color:#a7f3c0;text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap}
+</style></head><body>
+
+<div id="side">
+  <h1>RKSI · RKSS 통합 항로도</h1>
+  <p class="sub">SID · STAR · IAP · AIP HOLD &nbsp;|&nbsp; UAM 회랑 SB 2 150 ft / NB 2 450 ft</p>
+
+  <div class="sect">배경 지도</div>
+  <div class="btns" id="base">
+    <button data-b="sat" class="on">위성</button>
+    <button data-b="hyb">위성+지명</button>
+    <button data-b="terr">지형</button>
+    <button data-b="osm">도로</button>
+    <button data-b="dark">단색</button>
+  </div>
+
+  <div class="sect">표시 모드</div>
+  <div class="btns">
+    <button id="bLow" class="on">저고도 강조</button>
+    <button id="bRing" class="on">UAM 참고원</button>
+    <button id="bFit">전체 보기</button>
+  </div>
+  <div class="sect">웨이포인트 표시</div>
+  <div class="btns">
+    <button id="bSym" class="on">심볼 △</button>
+    <button id="bName" class="on">이름</button>
+    <button id="bMajor" class="on">주요만</button>
+    <button id="bAlt">고도값</button>
+    <button id="bNone">전부 끄기</button>
+  </div>
+
+  <div class="sect">빠른 선택</div>
+  <div class="btns">
+    <button data-pre="all">전체</button>
+    <button data-pre="none">해제</button>
+    <button data-pre="STAR">STAR만</button>
+    <button data-pre="SID">SID만</button>
+    <button data-pre="IAP">IAP만</button>
+    <button data-pre="RKSI">RKSI만</button>
+    <button data-pre="RKSS">RKSS만</button>
+    <button data-pre="RKSM">RKSM만</button>
+    <button data-pre="red">5 000 ft 이하 절차만</button>
+    <button data-pre="prox" style="border-color:#ff2db0;color:#ff2db0">⚠ 근접위험만</button>
+  </div>
+  <div class="mini" style="font-size:10px;line-height:1.45">
+    <b style="color:#ff2db0">근접위험</b> = 절차의 5,000ft 이하 구간이 UAM 회랑(±0.5NM)에서 1NM 이내로 지나가는 경우.
+    5,000ft 이상에서만 근접하면 수직분리 충분으로 가정해 태그하지 않습니다.
+  </div>
+
+  <div class="sect">활주로별 접근경로 모음 (STAR→IAP)</div>
+  <div class="btns">
+    <button data-appr="RKSI:15L">RKSI 15L</button>
+    <button data-appr="RKSI:15R">RKSI 15R</button>
+    <button data-appr="RKSI:16L">RKSI 16L</button>
+    <button data-appr="RKSI:16R">RKSI 16R</button>
+    <button data-appr="RKSI:33L">RKSI 33L</button>
+    <button data-appr="RKSI:33R">RKSI 33R</button>
+    <button data-appr="RKSI:34L">RKSI 34L</button>
+    <button data-appr="RKSI:34R">RKSI 34R</button>
+    <button data-appr="RKSS:14L">RKSS 14L</button>
+    <button data-appr="RKSS:14R">RKSS 14R</button>
+    <button data-appr="RKSS:32L">RKSS 32L</button>
+    <button data-appr="RKSS:32R">RKSS 32R</button>
+  </div>
+  <div class="mini" style="font-size:10px;line-height:1.45">해당 활주로로 착륙할 때 실제로 이어지는 STAR(도착)+IAP(접근)만 모아서 보여줍니다. SID(출발)는 제외됩니다.</div>
+
+  <div class="sect">공시 홀딩패턴 · AIP</div>
+  <div class="btns">
+    <button id="bPubHold" class="on">전체 20</button>
+    <button id="bPubHoldStar" class="on">STAR 14</button>
+    <button id="bPubHoldIap" class="on">MAHF 6</button>
+    <button id="bPubHoldLbl" class="on">FIX 라벨</button>
+    <button id="bPubHoldFit">홀딩 보기</button>
+  </div>
+  <div class="mini" style="font-size:10px;line-height:1.45">첨부 AIP 코딩표의 인바운드 코스·좌/우선회·시간·고도·속도를 반영했습니다.
+    패턴 크기는 무풍 rate-one 선회를 가정한 도식입니다.</div>
+
+  <div class="sect">UAM 회랑 (추정)</div>
+  <div class="btns">
+    <button id="bUam" class="on">회랑 표시</button>
+    <button id="bUamBand" class="on">폭 ±0.5 NM</button>
+    <button id="bUamLbl" class="on">WP/HP 라벨</button>
+    <button id="bHold" class="on">UAM 홀딩</button>
+    <button id="bUamFit">회랑 보기</button>
+    <button id="bUamEdit">회랑 편집</button>
+    <button id="bUamCopy">좌표 복사(JSON)</button>
+    <button id="bUamReset" style="border-color:#ff8a80;color:#ff8a80">기본값 복원</button>
+  </div>
+  <div id="uamMsg"></div>
+  <textarea id="uamOut" spellcheck="false"></textarea>
+  <div class="mini" style="font-size:10px;line-height:1.45">노선도 이미지를 픽셀 디지타이즈한 <b>추정 좌표</b>입니다
+    (스케일바 1 km=46 px, WP4를 37.4900N/126.5180E로 가정). 절대 위치 ±1 km 오차 가능 — 편집으로 보정하세요.</div>
+
+  <div class="sect">버티포트</div>
+  <div class="btns">
+    <button id="bVp" class="on">버티포트</button>
+    <button id="bVpRing" class="on">참고원 150/500 m</button>
+    <button id="bVpLink" class="on">버티포트 접속</button>
+    <button id="bVpFit">회랑+포트 보기</button>
+    <button id="bVpEdit">버티포트 편집</button>
+    <button id="bVpCopy">좌표 복사(JSON)</button>
+  </div>
+  <div id="vpMsg" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#a7f3c0;margin:5px 16px 0"></div>
+
+  <div class="sect">실시간 항적 · OpenSky</div>
+  <div class="btns">
+    <button id="bLive">실시간 OFF</button>
+    <button id="bTrail" class="on">항적선</button>
+    <button id="bAcLbl" class="on">라벨</button>
+    <button id="bAcAir" class="on">공중만</button>
+    <button id="bAcNear">인천 80 NM</button>
+    <button id="bAcClr">항적 지우기</button>
+  </div>
+  <div class="mini">갱신 주기
+    <select id="acInt">
+      <option value="5" selected>5초 (Standard 권장)</option>
+      <option value="10">10초</option>
+      <option value="15">15초</option>
+      <option value="30">30초</option>
+      <option value="60">60초</option>
+      <option value="120">120초</option>
+    </select>
+  </div>
+  <div class="mini" style="font-size:10px;line-height:1.45">OpenSky에서 받은 실제 좌표만 5초마다 표시합니다. 예측 이동은 사용하지 않습니다. CORS 방지를 위해 동봉된 OpenSky_start.bat로 실행하세요.</div>
+  <div id="acStat">정지됨</div>
+  <div class="mini"><details>
+    <summary>OpenSky 계정 인증 (선택)</summary>
+    <input id="osId" placeholder="client_id (비우면 익명)">
+    <input id="osSec" type="password" placeholder="client_secret">
+    <input id="osJson" type="file" accept="application/json,.json" hidden>
+    <button id="acJson" style="margin-top:5px;font-family:'Barlow Condensed';font-size:11.5px;padding:3px 9px;
+      border:1px solid var(--rule);background:var(--panel2);color:var(--ink);border-radius:2px;cursor:pointer">인증 JSON 불러오기</button>
+    <button id="acSave" style="margin-top:5px;font-family:'Barlow Condensed';font-size:11.5px;padding:3px 9px;
+      border:1px solid var(--rule);background:var(--panel2);color:var(--ink);border-radius:2px;cursor:pointer">직접 입력 저장</button>
+    <div id="osAuth" style="margin-top:4px;font-size:10px">JSON의 clientId/clientSecret을 읽어 이 브라우저에만 저장합니다. HTML 파일에는 비밀키를 넣지 않습니다.</div>
+  </details></div>
+
+  <div class="sect">리플레이 · 92.5h 하이라이트</div>
+  <div class="mini">
+    <select id="rpSelect" style="width:100%"><option value="">이벤트 선택…</option></select>
+  </div>
+  <div class="btns" style="margin-top:6px">
+    <button id="rpPlay">▶ 재생</button>
+    <button id="rpPause">⏸ 정지</button>
+    <button id="rpReset">⏮ 처음</button>
+  </div>
+  <div class="mini">배속
+    <select id="rpSpeed">
+      <option value="1">1x (실시간)</option>
+      <option value="4" selected>4x</option>
+      <option value="10">10x</option>
+      <option value="30">30x</option>
+    </select>
+  </div>
+  <input id="rpSlider" type="range" min="0" max="0" value="0" style="width:calc(100% - 32px);margin:6px 16px 0">
+  <div id="rpStat" class="mini" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#a7f3c0">이벤트를 선택하세요</div>
+  <div class="mini" style="font-size:10px;line-height:1.45">2026-07-20~24 실제 92.5시간 녹화에서 확인된 고어라운드·근접 이벤트를 1초 간격 보간 궤적으로 재생합니다. 재생 중엔 실시간 수신은 자동으로 꺼집니다.</div>
+
+  <input id="q" placeholder="절차명 검색 (예: OLMEN, RNP 33L, RADAR)">
+  <div class="tree" id="tree"></div>
+</div>
+
+<div id="main">
+  <div id="map"></div>
+  <div id="count"></div>
+  <div id="hud"><div class="t">경로를 클릭하거나 올려놓으세요</div>
+    <div class="m">드래그 = 이동 · 휠 = 확대/축소</div></div>
+  <div id="rprev" style="display:none">
+    <div id="rprevClose">×</div>
+    <div id="rprevTitle" class="t"></div>
+    <div id="rprevSvg"></div>
+    <div id="rprevWps"></div>
+  </div>
+  <div id="lg">
+    <div><i style="border-color:#fff"></i> STAR (도착)</div>
+    <div><i style="border-color:#5aa9ff"></i> SID (출발)</div>
+    <div><i style="border-color:#c491ff"></i> IAP (접근)</div>
+    <div><i style="border-color:#ff3b30"></i> 5 000 ft 이하 가능</div>
+    <div><i style="border-color:#ff2db0"></i> ⚠ 근접위험 (회랑 1NM 이내)</div>
+    <div><i style="border-color:#2dd4bf"></i> STAR 공시 홀딩</div>
+    <div><i style="border-color:#facc15"></i> IAP MAHF 홀딩</div>
+    <div><i style="border-color:#ffa03c;border-top-style:dashed"></i> UAM 참고원 13 / 20 NM</div>
+    <div><i style="border-color:#3ea8ff"></i> RKSI/RKSS Class B (5·10·20 NM, AIP ENR 2.1)</div>
+    <div><i style="border-color:#ffa03c"></i> UAM 회랑 (추정)</div>
+    <div><i style="border-color:#4ade80"></i> 버티포트 · 접속 구간</div>
+    <div style="margin-top:4px;border-top:1px solid var(--rule);padding-top:4px">실시간 항공기 (고도색)</div>
+    <div><i style="border-color:#ff3b30"></i> ≤ 3 000 ft</div>
+    <div><i style="border-color:#ffd24a"></i> 5 000 – 12 000 ft</div>
+    <div><i style="border-color:#7fe3ff"></i> ≥ 12 000 ft</div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+<script src="replay_data.js"></script>
+<script>
+const D = {"routes":[{"id":"STAR_GUKDO1A","type":"STAR","name":"GUKDO 1A","rwy":"RWY 15L","chart":"AD 2-42","grp":"RWY 15L · 재래식","pts":[[37.019694,127.639694,"GUKDO","-"],[37.129056,127.443722,"KAKSO","+FL180"],[37.312472,127.112444,"KALMA","-"],[37.413611,126.928361,"SEL","+FL150"],[37.364167,126.455,"GC034","+10 000"],[37.472722,126.222778,"POSEP","+6 000"]],"red":[],"note":"재래식(VOR/DME) 절차. 전 구간 최저고도 6 000 ft 이상 → 5 000 ft 통과 없음."},{"id":"STAR_KARBU1A","type":"STAR","name":"KARBU 1A","rwy":"RWY 15L","chart":"AD 2-42","grp":"RWY 15L · 재래식","pts":[[37.533056,127.664444,"KARBU","-"],[37.487417,127.379417,"EGOBA","+FL170"],[37.413611,126.928361,"SEL","+FL150"],[37.364167,126.455,"GC034","+10 000"],[37.472722,126.222778,"POSEP","+6 000"]],"red":[],"note":"재래식(VOR/DME) 절차. 전 구간 최저고도 6 000 ft 이상."},{"id":"STAR_OLMEN2C","type":"STAR","name":"RNAV OLMEN 2C","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-43","grp":"RWY 15/16 · 2C","pts":[[36.737056,126.991,"OLMEN","-"],[36.908833,126.775028,"BOPKI","+FL180"],[37.029,126.623056,"DH050","+12 000"],[37.038889,126.516111,"DH047","-"],[37.227639,126.344167,"SANLA","+FL150"],[37.438639,126.582,"DC039","+12 000"],[37.4945,126.504278,"DC036","-"],[37.550333,126.426417,"DC035","-"],[37.612333,126.496556,"DC031","-"],[37.556472,126.574417,"DC032","-"],[37.483778,126.675472,"DC037","-"],[37.545639,126.74575,"GC036","+9 000"],[37.656806,126.591167,"GC026","+6 000"],[37.689444,126.483278,"GC020","-4 500 / +3 000"],[37.68,126.410028,"BITIM","-3 500 / +3 000"]],"red":[],"note":"2026-08-31: AIP 최신판(RKSI AD CHART 2-43-1, 14 NOV 2024, AMDT 12/24) 대조 검증 — 절차명 3C→2C로 정정, 구간(LASIG·ANPEM·GC022·GC021)을 현재 코딩표의 GC036·GC026·GC020으로 갱신. UDIDA→DH050, MABLO→DC039는 동일 위치의 개정 전 명칭이었음."},{"id":"STAR_GUKDO2C","type":"STAR","name":"RNAV GUKDO 2C","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-43","grp":"RWY 15/16 · 2C","pts":[[37.019694,127.639694,"GUKDO","-"],[37.129056,127.443722,"KAKSO","+FL180"],[37.186139,127.340972,"NODUN","+FL180"],[37.333611,127.420056,"GC072","+9 000"],[37.494028,127.420472,"GC071","+9 000"],[37.413611,126.928361,"SEL","+13 000"],[37.545639,126.74575,"GC036","+9 000"],[37.656806,126.591167,"GC026","+6 000"],[37.689444,126.483278,"GC020","-4 500 / +3 000"],[37.68,126.410028,"BITIM","-3 500 / +3 000"]],"red":[],"note":"NODUN·GC072·GC071 Bank Angle 25°. 2026-08-31: AIP 최신판(2-43-1, AMDT 12/24) 대조 검증 — 절차명 3C→2C로 정정, 구간(LASIG·ANPEM·GC022·GC021)을 GC036·GC026·GC020으로 갱신."},{"id":"STAR_KARBU2C","type":"STAR","name":"RNAV KARBU 2C","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-43","grp":"RWY 15/16 · 2C","pts":[[37.533056,127.664444,"KARBU","-"],[37.477444,127.317861,"UPSOM","+FL180"],[37.350417,127.317694,"KC067","-"],[37.233667,127.255222,"KC066","-"],[37.413611,126.928361,"SEL","+13 000"],[37.545639,126.74575,"GC036","+9 000"],[37.656806,126.591167,"GC026","+6 000"],[37.689444,126.483278,"GC020","-4 500 / +3 000"],[37.68,126.410028,"BITIM","-3 500 / +3 000"]],"red":[],"note":"UPSOM·KC067·KC066 Bank Angle 25°. 2026-08-31: AIP 최신판(2-43-2, AMDT 7/23) 대조 검증 — 절차명 3C→2C로 정정, 구간(LASIG·ANPEM·GC022·GC021)을 GC036·GC026·GC020으로 갱신."},{"id":"STAR_REBIT2H","type":"STAR","name":"RNAV REBIT 2H","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-44","grp":"RWY 15/16 · 2H","pts":[[37.200833,125.486861,"REBIT","-"],[37.333167,125.756861,"ELGUK","-FL170"],[37.289944,126.139472,"POMIM","+7 000"],[37.344278,126.090889,"DH030","-"],[37.398556,126.04225,"DH029","-"],[37.452833,125.993556,"DH028","-"],[37.511083,126.095722,"DH021","-"],[37.456778,126.144389,"DH022","-"],[37.402444,126.193,"DH024","-"],[37.348083,126.241528,"DH027","-"],[37.406111,126.34375,"DH023","-"],[37.4605,126.29525,"DH020","-"],[37.514889,126.246694,"DH017","+3 000 (RWY15) / -2 000 +1 600 (RWY16)"],[37.56925,126.198056,"MUNAN","-3 000 / +1 600"]],"red":[2,3,4,5,6,7,8,9,10,11,12],"note":"PH036 / PH037 좌표는 본 PDF의 코딩표에 포함되어 있지 않음(지도에서 파선 처리). POMIM(+7 000) 이후 MUNAN(1 600~3 000)까지 중간 고도제한이 없어 5 000 ft 통과 구간이 특정되지 않음 → 전 구간 적색. ※ AIP 상 ELGUK–POMIM 사이 PH036·PH037 2개 fix 누락 — 원본 차트 2-44-1(코딩표) 미확보로 좌표 미반영."},{"id":"STAR_OLMEN2H","type":"STAR","name":"RNAV OLMEN 2H","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-44","grp":"RWY 15/16 · 2H","pts":[[36.737056,126.991,"OLMEN","-"],[36.908833,126.775028,"BOPKI","+FL180"],[37.029,126.623056,"UDIDA","+12 000"],[37.038889,126.516111,"DH047","-"],[37.227639,126.344167,"SANLA","+FL150"],[37.235611,126.187972,"DH034","-"],[37.289944,126.139472,"POMIM","+7 000"],[37.344278,126.090889,"DH030","-"],[37.398556,126.04225,"DH029","-"],[37.452833,125.993556,"DH028","-"],[37.511083,126.095722,"DH021","-"],[37.456778,126.144389,"DH022","-"],[37.402444,126.193,"DH024","-"],[37.348083,126.241528,"DH027","-"],[37.406111,126.34375,"DH023","-"],[37.4605,126.29525,"DH020","-"],[37.514889,126.246694,"DH017","+3 000 (RWY15) / -2 000 +1 600 (RWY16)"],[37.56925,126.198056,"MUNAN","-3 000 / +1 600"]],"red":[6,7,8,9,10,11,12,13,14,15,16],"note":"POMIM(+7 000) 이후 강하 프로파일이 개방 → 5 000 ft 통과 가능 구간 전체 적색."},{"id":"STAR_GUKDO2H","type":"STAR","name":"RNAV GUKDO 2H","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-45","grp":"RWY 15/16 · 2H","pts":[[37.019694,127.639694,"GUKDO","-"],[37.129056,127.443722,"KAKSO","+13 000"],[37.186139,127.340972,"NODUN","+FL180"],[37.333611,127.420056,"GC072","-"],[37.494028,127.420472,"GC071","-"],[37.413611,126.928361,"SEL","+12 000"],[37.264944,126.460417,"GH034","-"],[37.227639,126.344167,"SANLA","-"],[37.235611,126.187972,"DH034","-"],[37.289944,126.139472,"POMIM","+7 000"],[37.344278,126.090889,"DH030","-"],[37.398556,126.04225,"DH029","-"],[37.452833,125.993556,"DH028","-"],[37.511083,126.095722,"DH021","-"],[37.456778,126.144389,"DH022","-"],[37.402444,126.193,"DH024","-"],[37.348083,126.241528,"DH027","-"],[37.406111,126.34375,"DH023","-"],[37.4605,126.29525,"DH020","-"],[37.514889,126.246694,"DH017","+3 000 (RWY15) / -2 000 +1 600 (RWY16)"],[37.56925,126.198056,"MUNAN","-3 000 / +1 600"]],"red":[9,10,11,12,13,14,15,16,17,18,19],"note":"Bank Angle 25° 구간 다수. POMIM 이후 적색."},{"id":"STAR_KARBU2H","type":"STAR","name":"RNAV KARBU 2H","rwy":"RWY 15L/R, 16L/R","chart":"AD 2-45","grp":"RWY 15/16 · 2H","pts":[[37.533056,127.664444,"KARBU","-"],[37.477444,127.317861,"UPSOM","+FL180"],[37.350417,127.317694,"KC067","-"],[37.233667,127.255222,"KC066","-"],[37.413611,126.928361,"SEL","+13 000"],[37.264944,126.460417,"GH034","-"],[37.227639,126.344167,"SANLA","-"],[37.235611,126.187972,"DH034","-"],[37.289944,126.139472,"POMIM","+7 000"],[37.344278,126.090889,"DH030","-"],[37.398556,126.04225,"DH029","-"],[37.452833,125.993556,"DH028","-"],[37.511083,126.095722,"DH021","-"],[37.456778,126.144389,"DH022","-"],[37.402444,126.193,"DH024","-"],[37.348083,126.241528,"DH027","-"],[37.406111,126.34375,"DH023","-"],[37.4605,126.29525,"DH020","-"],[37.514889,126.246694,"DH017","+3 000 (RWY15) / -2 000 +1 600 (RWY16)"],[37.56925,126.198056,"MUNAN","-3 000 / +1 600"]],"red":[8,9,10,11,12,13,14,15,16,17,18],"note":"Bank Angle 25° 구간 다수. POMIM 이후 적색."},{"id":"STAR_BIKSI2M","type":"STAR","name":"RNAV BIKSI 2M","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-46","grp":"RWY 33/34 · CDO","pts":[[37.675556,128.584444,"BIKSI","-"],[37.533056,127.664444,"KARBU","+FL180"],[37.271667,126.973111,"KE035","+10 000"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"CDO 절차. ENPIL 최저 7 000 ft → 5 000 ft 통과 없음. 운용시간 1400~1900 UTC."},{"id":"STAR_CUN2M","type":"STAR","name":"RNAV CUN(YECHEON) 2M","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-46","grp":"RWY 33/34 · CDO","pts":[[36.632028,128.325417,"CUN","-"],[36.723722,128.164444,"BIGOB","+FL220"],[36.843667,127.95275,"BASEM","+FL200"],[37.019694,127.639694,"GUKDO","+FL160"],[37.105444,127.128028,"GE041","+10 000"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"CDO 절차. 전 구간 7 000 ft 이상."},{"id":"STAR_GONAV3M","type":"STAR","name":"RNAV GONAV 3M","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-47","grp":"RWY 33/34 · CDO","pts":[[37.180111,124.414611,"GONAV","-"],[37.189333,124.831583,"BODOL","+FL200"],[37.200833,125.486861,"REBIT","+FL170"],[37.205056,125.799722,"BELTU","+FL150"],[37.208528,126.093,"PE054","+13 000"],[37.210333,126.224639,"PE048","+12 000"],[37.101722,126.59075,"PE029","+8 500"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"CDO 절차. 전 구간 7 000 ft 이상."},{"id":"STAR_MAKSA2M","type":"STAR","name":"RNAV MAKSA 2M","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-47","grp":"RWY 33/34 · CDO","pts":[[35.503139,126.906111,"MAKSA","-"],[35.895444,126.949167,"ATASO","+FL220"],[36.386333,127.003694,"PEBRI","+FL180"],[36.737056,126.991,"OLMEN","+FL150"],[37.040861,126.799333,"DE030","+9 500"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"CDO 절차. 전 구간 7 000 ft 이상."},{"id":"STAR_OLMEN2E","type":"STAR","name":"RNAV OLMEN 2E","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-48","grp":"RWY 33/34 · 2E","pts":[[36.737056,126.991,"OLMEN","-"],[36.936806,126.885667,"DY037","-"],[37.092111,127.066444,"BOBIB","+12 000"],[37.186444,126.983972,"DE031","-"],[37.271278,126.909583,"TESIK","+10 000"],[37.340778,126.822972,"GE023","-"],[37.387639,126.761222,"GE022","-"],[37.347333,126.689389,"GE016","-"],[37.29275,126.737528,"GE017","-"],[37.238194,126.785611,"GE020","-"],[37.183583,126.833611,"GE024","-"],[37.128972,126.881528,"GE028","-"],[37.081,126.796306,"GE027","-"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"ENPIL 최저 7 000 ft. 5 000 ft 통과 없음."},{"id":"STAR_GUKDO2E","type":"STAR","name":"RNAV GUKDO 2E","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-48","grp":"RWY 33/34 · 2E","pts":[[37.019694,127.639694,"GUKDO","-"],[37.129056,127.443722,"KAKSO","+FL180"],[37.199889,127.316194,"GE046","-"],[37.271111,127.187472,"ELMAP","-"],[37.271278,126.909583,"TESIK","+10 000"],[37.340778,126.822972,"GE023","-"],[37.387639,126.761222,"GE022","-"],[37.347333,126.689389,"GE016","-"],[37.29275,126.737528,"GE017","-"],[37.238194,126.785611,"GE020","-"],[37.183583,126.833611,"GE024","-"],[37.128972,126.881528,"GE028","-"],[37.081,126.796306,"GE027","-"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"ENPIL 최저 7 000 ft. 5 000 ft 통과 없음."},{"id":"STAR_KARBU2E","type":"STAR","name":"RNAV KARBU 2E","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-48","grp":"RWY 33/34 · 2E","pts":[[37.533056,127.664444,"KARBU","-"],[37.487417,127.379417,"EGOBA","+13 000"],[37.373278,127.277972,"KE044","-"],[37.271111,127.187472,"ELMAP","-"],[37.271278,126.909583,"TESIK","+10 000"],[37.340778,126.822972,"GE023","-"],[37.387639,126.761222,"GE022","-"],[37.347333,126.689389,"GE016","-"],[37.29275,126.737528,"GE017","-"],[37.238194,126.785611,"GE020","-"],[37.183583,126.833611,"GE024","-"],[37.128972,126.881528,"GE028","-"],[37.081,126.796306,"GE027","-"],[37.160833,126.726111,"ENPIL","+7 000"]],"red":[],"note":"ENPIL 최저 7 000 ft. 5 000 ft 통과 없음."},{"id":"STAR_REBIT1Y","type":"STAR","name":"RNAV REBIT 1Y","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-49","grp":"RWY 33/34 · 1Y","pts":[[37.200833,125.486861,"REBIT","-"],[37.111444,125.801778,"PY049","-"],[37.0925,126.017222,"PY036","+7 000"],[37.093556,126.121361,"LAPOP","-"],[37.09475,126.249972,"PY031","-"],[37.157222,126.359806,"DY025","@7 000"],[37.213389,126.310222,"NOKEB","-"],[37.267778,126.261833,"EMSOS","-"],[37.345139,126.398028,"DY020","-6 000 / +5 000"],[37.290694,126.446389,"DY017","-"],[37.236222,126.494667,"DY016","-3 600 / +2 600"],[37.18175,126.542889,"PAMBI","RWY33L/R +3 600 / RWY34L/R @2 600"]],"red":[5,6,7,8,9,10],"note":"DY025(7 000) 이후 PAMBI(2 600/3 600)까지 연속 강하 → 5 000 ft 통과 구간."},{"id":"STAR_OLMEN1Y","type":"STAR","name":"RNAV OLMEN 1Y","rwy":"RWY 33L/R, 34L/R","chart":"AD 2-49","grp":"RWY 33/34 · 1Y","pts":[[36.737056,126.991,"OLMEN","-"],[36.936806,126.885667,"DY037","-12 000"],[36.955056,126.769611,"DY034","+8 000"],[36.987528,126.561278,"LEGOP","+10 000 / -12 000"],[37.116389,126.395972,"DY027","+9 000"],[37.157222,126.359806,"DY025","@7 000"],[37.213389,126.310222,"NOKEB","-"],[37.267778,126.261833,"EMSOS","-"],[37.345139,126.398028,"DY020","-6 000 / +5 000"],[37.290694,126.446389,"DY017","-"],[37.236222,126.494667,"DY016","-3 600 / +2 600"],[37.18175,126.542889,"PAMBI","RWY33L/R +3 600 / RWY34L/R @2 600"]],"red":[5,6,7,8,9,10],"note":"DY027(+9 000) → DY025(7 000) → PAMBI(2 600/3 600) 연속 강하 → 5 000 ft 통과 구간."},{"id":"SID_BINIL3C","type":"SID","name":"RNAV BINIL 3C","rwy":"RWY 15L/R","chart":"AD 2-28","grp":"RWY 15L/R","pts":[[37.451343,126.458576,"DER RWY 15L/R","—"],[37.371778,126.585278,"CG050","-5 000"],[37.271194,126.628833,"CG100","-10 000"],[37.105611,126.482667,"CP101","-10 000"],[37.104417,126.314583,"ATNER","-"],[37.1025,126.097861,"HP121","-"],[37.205,125.799722,"BELTU","+FL 170"],[37.397,125.233139,"BINIL","+FL 180"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · CG050에 -5 000 ft 상한(ceiling)이 걸려 있어 이륙 후 7.7 NM 지점까지 반드시 5 000 ft 이하."},{"id":"SID_BOPTA3C","type":"SID","name":"RNAV BOPTA 3C","rwy":"RWY 15L/R","chart":"AD 2-28","grp":"RWY 15L/R","pts":[[37.451343,126.458576,"DER RWY 15L/R","—"],[37.371778,126.585278,"CG050","-5 000"],[37.271194,126.628833,"CG100","-8 000"],[37.124389,126.625333,"CD120","+9 000"],[36.984111,126.623583,"VIMER","-13 000"],[36.885722,126.624722,"EXUTO","+FL 145"],[36.735111,126.616222,"BOPTA","-"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · CG100 이후 남하. CD120(+9 000)부터 UAM 고도대 완전 이탈."},{"id":"SID_OSPOT2C","type":"SID","name":"RNAV OSPOT 2C","rwy":"RWY 15L/R","chart":"AD 2-29","grp":"RWY 15L/R","pts":[[37.451343,126.458576,"DER RWY 15L/R","—"],[37.371778,126.585278,"CG050","-5 000"],[37.271194,126.628833,"CG100","-10 000"],[37.28525,126.889528,"CG101","-10 000"],[37.16825,126.978611,"CG130","+13 000"],[37.094361,127.031667,"SOT","+FL 150"],[36.924778,127.162111,"CG200","+FL 200"],[36.838361,127.348583,"OSPOT","+FL 230"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · FL 230까지 6.5% 상승 요구. CG100 통과 후 UAM 고도대 이탈."},{"id":"SID_EGOBA2C","type":"SID","name":"RNAV EGOBA 2C","rwy":"RWY 15L/R","chart":"AD 2-29","grp":"RWY 15L/R","pts":[[37.451343,126.458576,"DER RWY 15L/R","—"],[37.371778,126.585278,"CG050","-5 000"],[37.271194,126.628833,"CG100","-10 000"],[37.28525,126.889528,"CG101","-10 000"],[37.306306,127.122611,"CK100","-"],[37.339222,127.247778,"CK099","-10 000"],[37.487417,127.379417,"EGOBA","-"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · EGOBA는 11 000 ft까지만 6.5% 요구(그 외 FL 230)."},{"id":"SID_BINIL3H","type":"SID","name":"RNAV BINIL 3H","rwy":"RWY 16L/R","chart":"AD 2-31","grp":"RWY 16L/R","pts":[[37.446418,126.449655,"DER RWY 16L/R","—"],[37.385722,126.484361,"HD050","-5 000"],[37.279722,126.520278,"HD100","-"],[37.104417,126.314583,"ATNER","-10 000"],[37.1025,126.097861,"HP121","-"],[37.205,125.799722,"BELTU","+FL 170"],[37.397,125.233139,"BINIL","+FL 180"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · HD050(-5 000)이 DER에서 4.0 NM으로 15계열보다 훨씬 가까움 — 공항 바로 남쪽이 저고도 구간."},{"id":"SID_BOPTA3H","type":"SID","name":"RNAV BOPTA 3H","rwy":"RWY 16L/R","chart":"AD 2-31","grp":"RWY 16L/R","pts":[[37.446418,126.449655,"DER RWY 16L/R","—"],[37.385722,126.484361,"HD050","-5 000"],[37.279722,126.520278,"HD100","-"],[37.124389,126.625333,"CD120","+9 000"],[36.984111,126.623583,"VIMER","-13 000"],[36.885722,126.624722,"EXUTO","+FL 145"],[36.735111,126.616222,"BOPTA","-"]],"red":[0,1,2],"dash":false,"note":"CG 6.8% · 5 000 ft 이탈 12.1 NM · BOPTA 3H만 상승구배 6.8% — 5 000 ft 이탈이 가장 빠름."},{"id":"SID_OSPOT2H","type":"SID","name":"RNAV OSPOT 2H","rwy":"RWY 16L/R","chart":"AD 2-32","grp":"RWY 16L/R","pts":[[37.446418,126.449655,"DER RWY 16L/R","—"],[37.385722,126.484361,"HD050","-5 000"],[37.279722,126.520278,"HD100","-"],[37.271194,126.628833,"CG100","-10 000"],[37.28525,126.889528,"CG101","-10 000"],[37.16825,126.978611,"CG130","+13 000"],[37.094361,127.031667,"SOT","+FL 150"],[36.924778,127.162111,"CG200","+FL 200"],[36.838361,127.348583,"OSPOT","+FL 230"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · HD100–CG100 구간에서 5 000 ft 통과."},{"id":"SID_EGOBA2H","type":"SID","name":"RNAV EGOBA 2H","rwy":"RWY 16L/R","chart":"AD 2-32","grp":"RWY 16L/R","pts":[[37.446418,126.449655,"DER RWY 16L/R","—"],[37.385722,126.484361,"HD050","-5 000"],[37.279722,126.520278,"HD100","-"],[37.271194,126.628833,"CG100","-10 000"],[37.28525,126.889528,"CG101","-10 000"],[37.306306,127.122611,"CK100","-"],[37.339222,127.247778,"CK099","-10 000"],[37.487417,127.379417,"EGOBA","-"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · HD100–CG100 구간에서 5 000 ft 통과."},{"id":"SID_NOPIK2A","type":"SID","name":"RNAV NOPIK 2A","rwy":"RWY 33L/R","chart":"AD 2-34","grp":"RWY 33L/R","pts":[[37.478234,126.42905,"DER RWY 33L/R","—"],[37.579194,126.355278,"AD020","+2 000"],[37.579639,126.2085,"AD050","+5 000"],[37.404694,125.755944,"AP140","+14 000"],[37.403333,125.651389,"NOPIK","+FL 160"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · AD020 +2 000 / AD050 +5 000 — 공시 최저고도 자체가 UAM 고도대와 겹침."},{"id":"SID_BOPTA2A","type":"SID","name":"RNAV BOPTA 2A","rwy":"RWY 33L/R","chart":"AD 2-34","grp":"RWY 33L/R","pts":[[37.478234,126.42905,"DER RWY 33L/R","—"],[37.579194,126.355278,"AD020","+2 000"],[37.579639,126.2085,"AD050","+5 000"],[37.408722,126.135833,"YD070","+9 000"],[37.326389,126.253889,"YD100","+11 000"],[37.194361,126.44225,"YD130","+FL 150"],[37.038778,126.516167,"YD160","+FL 180"],[36.877306,126.569444,"YD190","+FL 190"],[36.735111,126.616222,"BOPTA","-"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · AD050 통과 후 UAM 고도대 이탈."},{"id":"SID_OSPOT2A","type":"SID","name":"RNAV OSPOT 2A","rwy":"RWY 33L/R","chart":"AD 2-35","grp":"RWY 33L/R","pts":[[37.478234,126.42905,"DER RWY 33L/R","—"],[37.579194,126.355278,"AD020","+2 000"],[37.579639,126.2085,"AD050","+5 000"],[37.408722,126.135833,"YD070","+9 000"],[37.326389,126.253889,"YD100","+11 000"],[37.194361,126.44225,"YD130","+FL 150"],[37.121806,126.629139,"YG160","+FL 180"],[36.838361,127.348583,"OSPOT","-"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · AD050 통과 후 UAM 고도대 이탈."},{"id":"SID_EGOBA2A","type":"SID","name":"RNAV EGOBA 2A","rwy":"RWY 33L/R","chart":"AD 2-35","grp":"RWY 33L/R","pts":[[37.478234,126.42905,"DER RWY 33L/R","—"],[37.579194,126.355278,"AD020","+2 000"],[37.579639,126.2085,"AD050","+5 000"],[37.408722,126.135833,"YD070","+9 000"],[37.326389,126.253889,"YD100","+11 000"],[37.324611,126.458639,"YK130","+13 000"],[37.321722,126.710778,"YK170","-"],[37.318139,127.008722,"YK210","-"],[37.487417,127.379417,"EGOBA","-"]],"red":[0,1],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · AD050 통과 후 UAM 고도대 이탈."},{"id":"SID_OSPOT2E","type":"SID","name":"RNAV OSPOT 2E","rwy":"RWY 33L/R","chart":"AD 2-36","grp":"RWY 33L/R","pts":[[37.478526,126.429355,"DER RWY 33L/R","—"],[37.558778,126.373472,"EG020","- (MAX 230 kt)"],[37.640944,126.344194,"EG040","+4 000"],[37.670194,126.447361,"EKITO","-5 500"],[37.641444,126.546833,"EG070","+7 000"],[37.413194,126.807361,"EG140","+14 000"],[37.319889,126.895722,"EG160","+FL 160"],[36.838361,127.348583,"OSPOT","+FL 210"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · EKITO 상한 -5 500 — UAM 상한과 여유 500 ft. 공항 북쪽 강화 방면 저고도 선회 구간."},{"id":"SID_EGOBA2E","type":"SID","name":"RNAV EGOBA 2E","rwy":"RWY 33L/R","chart":"AD 2-36","grp":"RWY 33L/R","pts":[[37.478526,126.429355,"DER RWY 33L/R","—"],[37.558778,126.373472,"EG020","- (MAX 230 kt)"],[37.640944,126.344194,"EG040","+4 000"],[37.670194,126.447361,"EKITO","-5 500"],[37.641444,126.546833,"EG070","+7 000"],[37.413194,126.807361,"EG140","+14 000"],[37.413611,126.928361,"SEL","+FL 160"],[37.487417,127.379417,"EGOBA","+FL 210"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · EKITO 상한 -5 500 — UAM 상한과 여유 500 ft."},{"id":"SID_NOPIK2Y","type":"SID","name":"RNAV NOPIK 2Y","rwy":"RWY 34L/R","chart":"AD 2-38","grp":"RWY 34L/R","pts":[[37.474441,126.419919,"DER RWY 34L/R","—"],[37.503694,126.368806,"YD020","- (MAX 230 kt, Bank 20°)"],[37.508222,126.182472,"YD040","+4 000"],[37.407361,125.990111,"YP080","+8 000"],[37.403333,125.651389,"NOPIK","+13 000"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · YD020가 DER에서 3.0 NM — 전 SID 중 최단. 공항 서북서 인접 공역이 저고도."},{"id":"SID_BOPTA2Y","type":"SID","name":"RNAV BOPTA 2Y","rwy":"RWY 34L/R","chart":"AD 2-38","grp":"RWY 34L/R","pts":[[37.474441,126.419919,"DER RWY 34L/R","—"],[37.503694,126.368806,"YD020","- (MAX 230 kt, Bank 20°)"],[37.508222,126.182472,"YD040","+4 000"],[37.408722,126.135833,"YD070","+7 000"],[37.326389,126.253889,"YD100","+10 000"],[37.194361,126.44225,"YD130","+13 000"],[37.038778,126.516167,"YD160","+FL 160"],[36.877306,126.569444,"YD190","+FL 190"],[36.735111,126.616222,"BOPTA","-"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · YD040(+4 000) 이후 YD070(+7 000)에서 이탈."},{"id":"SID_OSPOT2Y","type":"SID","name":"RNAV OSPOT 2Y","rwy":"RWY 34L/R","chart":"AD 2-39","grp":"RWY 34L/R","pts":[[37.474441,126.419919,"DER RWY 34L/R","—"],[37.503694,126.368806,"YD020","- (MAX 230 kt, Bank 20°)"],[37.508222,126.182472,"YD040","+4 000"],[37.408722,126.135833,"YD070","+7 000"],[37.326389,126.253889,"YD100","+10 000"],[37.194361,126.44225,"YD130","+13 000"],[37.121806,126.629139,"YG160","+FL 160"],[36.838361,127.348583,"OSPOT","-"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · YD040(+4 000) 이후 YD070(+7 000)에서 이탈."},{"id":"SID_EGOBA2Y","type":"SID","name":"RNAV EGOBA 2Y","rwy":"RWY 34L/R","chart":"AD 2-39","grp":"RWY 34L/R","pts":[[37.474441,126.419919,"DER RWY 34L/R","—"],[37.503694,126.368806,"YD020","- (MAX 230 kt, Bank 20°)"],[37.508222,126.182472,"YD040","+4 000"],[37.408722,126.135833,"YD070","+7 000"],[37.326389,126.253889,"YD100","+10 000"],[37.324611,126.458639,"YK130","+13 000"],[37.321722,126.710778,"YK170","-"],[37.318139,127.008722,"YK210","-"],[37.487417,127.379417,"EGOBA","-"]],"red":[0,1,2],"dash":false,"note":"CG 6.5% · 5 000 ft 이탈 12.6 NM · YD040(+4 000) 이후 YD070(+7 000)에서 이탈."},{"id":"SID_SEL1S","type":"SID","name":"SEL(ANYANG) 1S","rwy":"RWY 15L/R","chart":"AD 2-30","grp":"RWY 15L/R · 재래식/RADAR","pts":[[37.462778,126.440355,"DER RWY 15L/R","—"],[37.358475,126.550766,"NCN R154/D10","-"],[37.336131,126.719167,"SEL R254/D11","+5 400"],[37.371349,126.814255,"SEL R254/D6","@7 000"],[37.413611,126.928361,"SEL","-"]],"red":[0,1],"dash":true,"note":"CG 5.5% · 5 000 ft 이탈 14.9 NM · CG 5.5%. Step climb: ATC 승인 전 7 000 ft 초과 금지. 5 000 ft 이탈까지 14.9 NM."},{"id":"SID_SOT1S","type":"SID","name":"SOT(SONGTAN) 1S","rwy":"RWY 15L/R","chart":"AD 2-30","grp":"RWY 15L/R · 재래식/RADAR","pts":[[37.462778,126.440396,"DER RWY 15L/R","—"],[37.33117,126.574864,"NCN R154/D12","-"],[37.235756,126.748148,"SOT R311/D16","+6 500"],[37.094361,127.031667,"SOT","+11 000"],[37.1651,126.889908,"SOT R311/D8","+FL 150"]],"red":[0,1],"dash":true,"note":"CG 6.0% · 5 000 ft 이탈 13.7 NM · CG 6.0%. ATC 지시 전 7 000 ft 유지. 5 000 ft 이탈까지 13.7 NM."},{"id":"SID_SEL2A","type":"SID","name":"SEL(ANYANG) 2A","rwy":"RWY 33L/R","chart":"AD 2-37","grp":"RWY 33L/R · 재래식/RADAR","pts":[[37.463202,126.439974,"DER RWY 33L/R","—"],[37.557727,126.361102,"NCN D5 (RWY33)","-"],[37.410556,126.3425,"SEL R279/D28","-"],[37.413611,126.928361,"SEL","-"]],"red":[0,1,2],"dash":true,"note":"CG 3.3% · 5 000 ft 이탈 24.8 NM · CG 3.3% — 전 SID 중 가장 완만. 5 000 ft 이탈까지 24.8 NM, 7 000 ft 유지. UAM 관점 최악 케이스."},{"id":"SID_SOT1A","type":"SID","name":"SOT(SONGTAN) 1A","rwy":"RWY 33L/R","chart":"AD 2-37","grp":"RWY 33L/R · 재래식/RADAR","pts":[[37.463202,126.439974,"DER RWY 33L/R","—"],[37.557727,126.361102,"NCN D5 (RWY33)","-"],[37.398611,126.288333,"SOT R306/D40","-"],[37.094361,127.031667,"SOT","-"]],"red":[0,1,2],"dash":true,"note":"CG 4.9% · 5 000 ft 이탈 16.7 NM · CG 4.9% to FL 170. 5 000 ft 이탈까지 16.7 NM, ATC 지시 전 7 000 ft 유지."},{"id":"SID_RADAR5S","type":"SID","name":"RADAR 5S","rwy":"RWY 15L/R","chart":"AD 2-33","grp":"RWY 15L/R · 재래식/RADAR","pts":[[37.462778,126.440663,"DER RWY 15L/R","—"],[37.266232,126.735377,"RADAR 5S 한계 (NCN D20)","-"]],"red":[0],"dash":true,"note":"CG 6.0% · 5 000 ft 이탈 13.7 NM · 레이더 유도. ATC 지시 전 7 000 ft 유지, CG 6.0% to FL 150. 5 000 ft 이탈까지 13.7 NM."},{"id":"SID_RADAR3U","type":"SID","name":"RADAR 3U","rwy":"RWY 16L/R","chart":"AD 2-33","grp":"RWY 16L/R · 재래식/RADAR","pts":[[37.462778,126.440439,"DER RWY 16L/R","—"],[37.226182,126.542913,"RADAR 3U 한계 (NCN D17)","-"]],"red":[0],"dash":true,"note":"CG 6.0% · 5 000 ft 이탈 13.7 NM · 레이더 유도. ATC 지시 전 7 000 ft 유지. 5 000 ft 이탈까지 13.7 NM."},{"id":"SID_RADAR3A","type":"SID","name":"RADAR 3A","rwy":"RWY 33L/R","chart":"AD 2-40","grp":"RWY 33L/R · 재래식/RADAR","pts":[[37.463308,126.439902,"DER RWY 33L/R","—"],[37.571737,126.34942,"NCN D6.0 (RWY33)","-"],[37.540296,126.098958,"RADAR 3A 한계 (NCN D16)","-"]],"red":[0,1],"dash":true,"note":"CG 6.0% · 5 000 ft 이탈 13.7 NM · 레이더 유도, 고도 유지 지시 없음. CG 6.0% 기준 5 000 ft 이탈까지 13.7 NM. NCN D16 내 체공."},{"id":"SID_RADAR3D","type":"SID","name":"RADAR 3D","rwy":"RWY 34L/R","chart":"AD 2-40","grp":"RWY 34L/R · 재래식/RADAR","pts":[[37.462778,126.440295,"DER RWY 34L/R","—"],[37.491079,126.347393,"WNG D6.0 (RWY34)","-"],[37.391413,126.120783,"RADAR 3D 한계 (NCN D16)","-"]],"red":[0,1],"dash":true,"note":"CG 6.0% · 5 000 ft 이탈 없음 · ⚠ ATC 지시 전 3 000 ft 유지 — 절차 전 구간이 UAM 고도대(SFC–5 000) 내부. RKSI SID 중 유일하게 상시 저고도이며, UAM 회랑과 수직 분리가 원천적으로 불가."},{"id":"IAP_2_53_1_44","type":"IAP","name":"RNP RWY 15L · via MUNAN → GC966(MAHF)","rwy":"15L","chart":"AD 2-53-1","grp":"RWY 15L","pts":[[37.56925,126.198056,"MUNAN","+3,000"],[37.631722,126.308333,"PUDIM","+3,000"],[37.548194,126.382917,"NOPEN","+1,600"],[37.524778,126.403806,"GC003","+1,000"],[37.504361,126.421983,"GC001","+540"],[37.470333,126.452278,"GC999","-210"],[37.443556,126.64825,"GC989","-210"],[37.295139,126.619333,"GC980","-"],[37.298056,126.316111,"GC966","+4,000"],[37.298056,126.316111,"GC966","-"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_53_1_45","type":"IAP","name":"RNP RWY 15L · via BITIM → GC966(MAHF)","rwy":"15L","chart":"AD 2-53-1","grp":"RWY 15L","pts":[[37.68,126.410028,"BITIM","-"],[37.671722,126.346194,"OLTEM","+3,000 / -180"],[37.631722,126.308333,"PUDIM","+3,000"],[37.548194,126.382917,"NOPEN","+1,600"],[37.524778,126.403806,"GC003","+1,000"],[37.504361,126.421983,"GC001","+540"],[37.470333,126.452278,"GC999","-210"],[37.443556,126.64825,"GC989","-210"],[37.295139,126.619333,"GC980","-"],[37.298056,126.316111,"GC966","+4,000"],[37.298056,126.316111,"GC966","-"]],"red":[0,1,2,3,4,5,6,7,8],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_57_1_46","type":"IAP","name":"RNP RWY 15R · via MUNAN → GC966(MAHF)","rwy":"15R","chart":"AD 2-57-1","grp":"RWY 15R","pts":[[37.56925,126.198056,"MUNAN","+3,000"],[37.629556,126.3045,"TASUR","+3,000"],[37.546028,126.379111,"UPROR","+1,600"],[37.522611,126.399972,"KC003","+1,000"],[37.502203,126.418167,"KC001","+540"],[37.468167,126.448444,"KC999","-210"],[37.443556,126.64825,"GC989","-210"],[37.295139,126.619333,"GC980","-"],[37.298056,126.316111,"GC966","+4,000"],[37.298056,126.316111,"GC966","-"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_57_1_47","type":"IAP","name":"RNP RWY 15R · via BITIM → GC966(MAHF)","rwy":"15R","chart":"AD 2-57-1","grp":"RWY 15R","pts":[[37.68,126.410028,"BITIM","-"],[37.671722,126.346194,"OLTEM","+3,000 / -180"],[37.629556,126.3045,"TASUR","+3,000"],[37.546028,126.379111,"UPROR","+1,600"],[37.522611,126.399972,"KC003","+1,000"],[37.502203,126.418167,"KC001","+540"],[37.468167,126.448444,"KC999","-210"],[37.443556,126.64825,"GC989","-210"],[37.295139,126.619333,"GC980","-"],[37.298056,126.316111,"GC966","+4,000"],[37.298056,126.316111,"GC966","-"]],"red":[0,1,2,3,4,5,6,7,8],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_59_1_48","type":"IAP","name":"RNP RWY 16L · via MUNAN → DH989(MAHF)","rwy":"16L","chart":"AD 2-59-1","grp":"RWY 16L","pts":[[37.56925,126.198056,"MUNAN","-2 000 / +1 600"],[37.618722,126.285361,"IPKOL","+1,600"],[37.536917,126.358444,"RUMRI","+1,600"],[37.504111,126.387694,"PH002","+820"],[37.472808,126.415572,"RW16L","+520"],[37.3535,126.41475,"DH993","-240"],[37.315278,126.333056,"DH989","+3,000 / -240"],[37.315278,126.333056,"DH989","-"]],"red":[0,1,2,3,4,5],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_59_1_49","type":"IAP","name":"RNP RWY 16L · via BITIM → DH989(MAHF)","rwy":"16L","chart":"AD 2-59-1","grp":"RWY 16L","pts":[[37.68,126.410028,"BITIM","-"],[37.566667,126.306389,"ATKON","+3,000 / -180"],[37.618722,126.285361,"IPKOL","+3,000"],[37.536917,126.358444,"RUMRI","+1,600"],[37.504111,126.387694,"PH002","+820"],[37.472808,126.415572,"RW16L","+520"],[37.3535,126.41475,"DH993","-240"],[37.315278,126.333056,"DH989","+3,000 / -240"],[37.315278,126.333056,"DH989","-"]],"red":[0,1,2,3,4,5,6],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_61_1_50","type":"IAP","name":"RNP RWY 16R · via MUNAN → DH989(MAHF)","rwy":"16R","chart":"AD 2-61-1","grp":"RWY 16R","pts":[[37.56925,126.198056,"MUNAN","-2,000"],[37.533056,126.356139,"OSERI","+1,600"],[37.500111,126.3855,"DH002","+820"],[37.468808,126.413383,"RW16R","+520"],[37.3535,126.41475,"DH993","-240"],[37.315278,126.333056,"DH989","+3,000 / -240"],[37.315278,126.333056,"DH989","-"]],"red":[0,1,2,3,4],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_61_1_51","type":"IAP","name":"RNP RWY 16R · via BITIM → DH989(MAHF)","rwy":"16R","chart":"AD 2-61-1","grp":"RWY 16R","pts":[[37.68,126.410028,"BITIM","-"],[37.566667,126.306389,"ATKON","+3,000 / -180"],[37.616556,126.281528,"OLKIK","+3,000"],[37.533056,126.356139,"OSERI","+1,600"],[37.500111,126.3855,"DH002","+820"],[37.468808,126.413383,"RW16R","+520"],[37.3535,126.41475,"DH993","-240"],[37.315278,126.333056,"DH989","+3,000 / -240"],[37.315278,126.333056,"DH989","-"]],"red":[0,1,2,3,4,5,6],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_63_1_52","type":"IAP","name":"RNP RWY 33L · via PAMBI → GE973(MAHF)","rwy":"33L","chart":"AD 2-63-1","grp":"RWY 33L","pts":[[37.18175,126.542889,"PAMBI","+3,600"],[37.24175,126.649056,"POSOK","+3,600"],[37.304028,126.594056,"LEGUN","+3,600"],[37.346917,126.556083,"KE008","+2,600"],[37.389778,126.518083,"KIDAB","+1,600"],[37.454225,126.460856,"RW33L","+560"],[37.6065,126.469194,"GE991","-"],[37.612556,126.291083,"GE982","-"],[37.463056,126.224722,"GE973","+4,000"],[37.463056,126.224722,"GE973","+3,000"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_63_1_53","type":"IAP","name":"RNP RWY 33L · via ENPIL → GE973(MAHF)","rwy":"33L","chart":"AD 2-63-1","grp":"RWY 33L","pts":[[37.160833,126.726111,"ENPIL","+7,000"],[37.199611,126.68625,"KE019","+6,000"],[37.24175,126.649056,"POSOK","+5,000"],[37.304028,126.594056,"LEGUN","+3,600"],[37.346917,126.556083,"KE008","+2,600"],[37.389778,126.518083,"KIDAB","+1,600"],[37.454225,126.460856,"RW33L","+560"],[37.6065,126.469194,"GE991","-"],[37.612556,126.291083,"GE982","-"],[37.463056,126.224722,"GE973","+4,000"],[37.463056,126.224722,"GE973","+3,000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_65_1_54","type":"IAP","name":"RNP RWY 33R · via PAMBI → GE973(MAHF)","rwy":"33R","chart":"AD 2-65-1","grp":"RWY 33R","pts":[[37.18175,126.542889,"PAMBI","+3,600"],[37.243917,126.652889,"BIRIN","+3,600"],[37.306167,126.597861,"PIBAK","+3,600"],[37.349056,126.559917,"GE008","+2,600"],[37.391944,126.521889,"ENBUK","+1,600"],[37.456381,126.464672,"RW33R","+560"],[37.6065,126.469194,"GE991","-"],[37.612556,126.291083,"GE982","-"],[37.463056,126.224722,"GE973","+3,000"],[37.463056,126.224722,"GE973","+3,000"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_65_1_55","type":"IAP","name":"RNP RWY 33R · via ENPIL → GE973(MAHF)","rwy":"33R","chart":"AD 2-65-1","grp":"RWY 33R","pts":[[37.160833,126.726111,"ENPIL","+7,000"],[37.20175,126.690083,"GE019","+6,000"],[37.243917,126.652889,"BIRIN","+5,000"],[37.306167,126.597861,"PIBAK","+3,600"],[37.349056,126.559917,"GE008","+2,600"],[37.391944,126.521889,"ENBUK","+1,600"],[37.456381,126.464672,"RW33R","+560"],[37.6065,126.469194,"GE991","-"],[37.612556,126.291083,"GE982","-"],[37.463056,126.224722,"GE973","+3,000"],[37.463056,126.224722,"GE973","-"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_68_1_56","type":"IAP","name":"RNP RWY 34L · via PAMBI → PY985(MAHF)","rwy":"34L","chart":"AD 2-68-1","grp":"RWY 34L","pts":[[37.18175,126.542889,"PAMBI","@2,600"],[37.228833,126.626167,"KAGOK","+1,600"],[37.291056,126.571139,"LENBI","+1,600"],[37.377028,126.494972,"BODEK","+1,600"],[37.44125,126.437903,"RW34L","+510"],[37.457472,126.31875,"DY994","-220"],[37.388778,126.098722,"PY985","+3,000 / -220"],[37.388778,126.098722,"PY985","@3,000"]],"red":[0,1,2,3,4,5],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_68_1_57","type":"IAP","name":"RNP RWY 34L · via ENPIL → PY985(MAHF)","rwy":"34L","chart":"AD 2-68-1","grp":"RWY 34L","pts":[[37.160833,126.726111,"ENPIL","+7,000"],[37.186667,126.663333,"DY019","+6,000"],[37.228833,126.626167,"KAGOK","+5,000"],[37.291056,126.571139,"LENBI","+3,600"],[37.377028,126.494972,"BODEK","+1,600"],[37.44125,126.437903,"RW34L","+510"],[37.457472,126.31875,"DY994","-220"],[37.388778,126.098722,"PY985","+3,000 / -220"],[37.388778,126.098722,"PY985","-"]],"red":[1,2,3,4,5,6],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_70_1_58","type":"IAP","name":"RNP RWY 34R · via PAMBI → PY985(MAHF)","rwy":"34R","chart":"AD 2-70-1","grp":"RWY 34R","pts":[[37.18175,126.542889,"PAMBI","@2,600"],[37.230972,126.629972,"NIPUT","+1,600"],[37.293222,126.574944,"DALKA","+1,600"],[37.379194,126.498778,"PIPAN","+1,600"],[37.443414,126.441725,"RW34R","+510"],[37.457472,126.31875,"DY994","-220"],[37.388778,126.098722,"PY985","+3,000 / -220"],[37.388778,126.098722,"PY985","-"]],"red":[0,1,2,3,4,5],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_70_1_59","type":"IAP","name":"RNP RWY 34R · via ENPIL → PY985(MAHF)","rwy":"34R","chart":"AD 2-70-1","grp":"RWY 34R","pts":[[37.160833,126.726111,"ENPIL","+7,000"],[37.189,126.667,"PY019","+6,000"],[37.230972,126.629972,"NIPUT","+5,000"],[37.293222,126.574944,"DALKA","+3,600"],[37.379194,126.498778,"PIPAN","+1,600"],[37.443414,126.441725,"RW34R","+510"],[37.457472,126.31875,"DY994","-220"],[37.388778,126.098722,"PY985","+3,000 / -220"],[37.388778,126.098722,"PY985","@3,000"]],"red":[1,2,3,4,5,6],"dash":false,"note":"RNP 코딩표 기반"},{"id":"IAP_2_51_1_60","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15L from MUNAN to PUDIM(IF)","rwy":"15L","chart":"AD 2-51-1","grp":"RWY 15L","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.631722,126.308333,"PUDIM","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_51_1_61","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15L from BITIM to PUDIM(IF)","rwy":"15L","chart":"AD 2-51-1","grp":"RWY 15L","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.671722,126.346194,"OLTEM","— (차트 프로파일 참조)"],[37.631722,126.308333,"PUDIM","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_51_1_62","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15L from PUDIM(IF) to MAHF","rwy":"15L","chart":"AD 2-51-1","grp":"RWY 15L","pts":[[37.589556,126.346028,"SAKOS","— (차트 프로파일 참조)"],[37.522556,126.405778,"D3.0","— (차트 프로파일 참조)"],[37.495306,126.430056,"D1.0","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.483944,126.440156,"THR","— (차트 프로파일 참조)"],[37.482333,126.443222,"ISLL","— (차트 프로파일 참조)"],[37.298056,126.316111,"GC966","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_52_1_63","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15L from MUNAN to PUDIM(IF)","rwy":"15L","chart":"AD 2-52-1","grp":"RWY 15L","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.631722,126.308333,"PUDIM","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_52_1_64","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15L from BITIM to PUDIM(IF)","rwy":"15L","chart":"AD 2-52-1","grp":"RWY 15L","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.671722,126.346194,"OLTEM","— (차트 프로파일 참조)"],[37.631722,126.308333,"PUDIM","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_52_1_65","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15L from PUDIM(IF) to MAHF","rwy":"15L","chart":"AD 2-52-1","grp":"RWY 15L","pts":[[37.548194,126.382917,"NOPEN","— (차트 프로파일 참조)"],[37.522556,126.405778,"D3.0 ISLL","— (차트 프로파일 참조)"],[37.495306,126.430056,"D1.0 ISLL","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.483944,126.440156,"THR","— (차트 프로파일 참조)"],[37.482333,126.443222,"ISLL","— (차트 프로파일 참조)"],[37.298056,126.316111,"GC966","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_54_1_66","type":"IAP","name":"VOR Approach to RWY 15L from POSEP","rwy":"15L","chart":"AD 2-54-1","grp":"RWY 15L","pts":[[37.472722,126.222778,"POSEP","— (차트 프로파일 참조)"],[37.631222,126.309361,"D10","— (차트 프로파일 참조)"],[37.553444,126.378444,"D4.3","— (차트 프로파일 참조)"],[37.515278,126.412278,"D1.5","— (차트 프로파일 참조)"],[37.500278,126.425583,"D0.4","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.483944,126.440156,"THR","— (차트 프로파일 참조)"],[37.411139,126.560861,"D8","— (차트 프로파일 참조)"],[37.298056,126.316111,"GC966","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5,6,7],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_55_1_67","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15R from MUNAN to TASUR(IF)","rwy":"15R","chart":"AD 2-55-1","grp":"RWY 15R","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.629556,126.3045,"TASUR","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_55_1_68","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15R from BITIM to TASUR(IF)","rwy":"15R","chart":"AD 2-55-1","grp":"RWY 15R","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.671722,126.346194,"OLTEM","— (차트 프로파일 참조)"],[37.629556,126.3045,"TASUR","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_55_1_69","type":"IAP","name":"ILS Z/LOC Z Approach to RWY 15R from TASUR(IF) to MAHF","rwy":"15R","chart":"AD 2-55-1","grp":"RWY 15R","pts":[[37.587389,126.342194,"ANBOG","— (차트 프로파일 참조)"],[37.520389,126.401972,"D3.0","— (차트 프로파일 참조)"],[37.493167,126.426222,"D1.0","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.481789,126.436339,"THR","— (차트 프로파일 참조)"],[37.480194,126.439417,"ISRR","— (차트 프로파일 참조)"],[37.298056,126.316111,"GC966","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_56_1_70","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15R from MUNAN to TASUR(IF)","rwy":"15R","chart":"AD 2-56-1","grp":"RWY 15R","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.629556,126.3045,"TASUR","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_56_1_71","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15R from BITIM to TASUR(IF)","rwy":"15R","chart":"AD 2-56-1","grp":"RWY 15R","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.671722,126.346194,"OLTEM","— (차트 프로파일 참조)"],[37.629556,126.3045,"TASUR","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_56_1_72","type":"IAP","name":"ILS Y/LOC Y Approach to RWY 15R from TASUR(IF) to MAHF","rwy":"15R","chart":"AD 2-56-1","grp":"RWY 15R","pts":[[37.546028,126.379111,"UPROR","— (차트 프로파일 참조)"],[37.520389,126.401972,"D3.0","— (차트 프로파일 참조)"],[37.493167,126.426222,"D1.0","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.481789,126.436339,"THR","— (차트 프로파일 참조)"],[37.480194,126.439417,"ISRR","— (차트 프로파일 참조)"],[37.298056,126.316111,"GC966","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_58_1_73","type":"IAP","name":"ILS/LOC Approach to RWY 16L from MUNAN to IPKOL(IF)","rwy":"16L","chart":"AD 2-58-1","grp":"RWY 16L","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.618722,126.285361,"IPKOL","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_58_1_74","type":"IAP","name":"ILS/LOC Approach to RWY 16L from BITIM to IPKOL(IF)","rwy":"16L","chart":"AD 2-58-1","grp":"RWY 16L","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.566667,126.306389,"ATKON","— (차트 프로파일 참조)"],[37.618722,126.285361,"IPKOL","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_58_1_75","type":"IAP","name":"ILS/LOC Approach to RWY 16L from IPKOL(IF) to MAHF","rwy":"16L","chart":"AD 2-58-1","grp":"RWY 16L","pts":[[37.536917,126.358444,"RUMRI","— (차트 프로파일 참조)"],[37.511278,126.381306,"D3.0","— (차트 프로파일 참조)"],[37.485389,126.404361,"D1.1","— (차트 프로파일 참조)"],[37.472808,126.415569,"THR","— (차트 프로파일 참조)"],[37.469833,126.416583,"IRKS","— (차트 프로파일 참조)"],[37.432944,126.45,"WNG","— (차트 프로파일 참조)"],[37.315278,126.333056,"DH989","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_60_1_76","type":"IAP","name":"ILS/LOC Approach to RWY 16R from MUNAN to OLKIK(IF)","rwy":"16R","chart":"AD 2-60-1","grp":"RWY 16R","pts":[[37.56925,126.198056,"MUNAN","— (차트 프로파일 참조)"],[37.616556,126.281528,"OLKIK","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_60_1_77","type":"IAP","name":"ILS/LOC Approach to RWY 16R from BITIM to OLKIK(IF)","rwy":"16R","chart":"AD 2-60-1","grp":"RWY 16R","pts":[[37.68,126.410028,"BITIM","— (차트 프로파일 참조)"],[37.566667,126.306389,"ATKON","— (차트 프로파일 참조)"],[37.616556,126.281528,"OLKIK","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_60_1_78","type":"IAP","name":"ILS/LOC Approach to RWY 16R from OLKIK(IF) to MAHF","rwy":"16R","chart":"AD 2-60-1","grp":"RWY 16R","pts":[[37.533056,126.356139,"OSERI","— (차트 프로파일 참조)"],[37.507278,126.379111,"D3.0","— (차트 프로파일 참조)"],[37.481444,126.402139,"D1.1","— (차트 프로파일 참조)"],[37.468808,126.413383,"THR","— (차트 프로파일 참조)"],[37.465833,126.414361,"IRFS","— (차트 프로파일 참조)"],[37.432944,126.45,"WNG","— (차트 프로파일 참조)"],[37.315278,126.333056,"DH989","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_62_1_79","type":"IAP","name":"ILS/LOC Approach to RWY 33L from PAMBI to POSOK(IF)","rwy":"33L","chart":"AD 2-62-1","grp":"RWY 33L","pts":[[37.18175,126.542889,"PAMBI","— (차트 프로파일 참조)"],[37.24175,126.649056,"POSOK","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_62_1_80","type":"IAP","name":"ILS/LOC Approach to RWY 33L from ENPIL to POSOK(IF)","rwy":"33L","chart":"AD 2-62-1","grp":"RWY 33L","pts":[[37.160833,126.726111,"ENPIL","— (차트 프로파일 참조)"],[37.199611,126.68625,"KE019","— (차트 프로파일 참조)"],[37.24175,126.649056,"POSOK","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_62_1_81","type":"IAP","name":"ILS/LOC Approach to RWY 33L from POSOK(IF) to MAHF","rwy":"33L","chart":"AD 2-62-1","grp":"RWY 33L","pts":[[37.304028,126.594056,"LEGUN","— (차트 프로파일 참조)"],[37.348528,126.554667,"BATAP","— (차트 프로파일 참조)"],[37.442833,126.471,"D1.0","— (차트 프로파일 참조)"],[37.454225,126.460856,"THR","— (차트 프로파일 참조)"],[37.457056,126.459972,"INLL","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.463056,126.224722,"GE973","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_64_1_82","type":"IAP","name":"ILS/LOC Approach to RWY 33R from PAMBI to BIRIN(IF)","rwy":"33R","chart":"AD 2-64-1","grp":"RWY 33R","pts":[[37.18175,126.542889,"PAMBI","— (차트 프로파일 참조)"],[37.243917,126.652889,"BIRIN","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_64_1_83","type":"IAP","name":"ILS/LOC Approach to RWY 33R from ENPIL to BIRIN(IF)","rwy":"33R","chart":"AD 2-64-1","grp":"RWY 33R","pts":[[37.160833,126.726111,"ENPIL","— (차트 프로파일 참조)"],[37.20175,126.690083,"GE019","— (차트 프로파일 참조)"],[37.243917,126.652889,"BIRIN","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_64_1_84","type":"IAP","name":"ILS/LOC Approach to RWY 33R from BIRIN(IF) to MAHF","rwy":"33R","chart":"AD 2-64-1","grp":"RWY 33R","pts":[[37.306167,126.597861,"PIBAK","— (차트 프로파일 참조)"],[37.350667,126.558472,"GOKAK","— (차트 프로파일 참조)"],[37.444972,126.474806,"D1.0","— (차트 프로파일 참조)"],[37.456381,126.464672,"THR","— (차트 프로파일 참조)"],[37.459222,126.463806,"INRR","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.463056,126.224722,"GE973","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_66_1_85","type":"IAP","name":"VOR Approach to RWY 33R from ENPIL","rwy":"33R","chart":"AD 2-66-1","grp":"RWY 33R","pts":[[37.160833,126.726111,"ENPIL","— (차트 프로파일 참조)"],[37.276528,126.623,"D16","— (차트 프로파일 참조)"],[37.3475,126.560528,"D10.8","— (차트 프로파일 참조)"],[37.391167,126.522028,"D7.6","— (차트 프로파일 참조)"],[37.447111,126.472639,"D3.5","— (차트 프로파일 참조)"],[37.456381,126.464672,"THR","— (차트 프로파일 참조)"],[37.494917,126.430333,"NCN","— (차트 프로파일 참조)"],[37.588806,126.386917,"D6","— (차트 프로파일 참조)"],[37.463056,126.224722,"GE973","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5,6,7],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_67_1_86","type":"IAP","name":"ILS/LOC Approach to RWY 34L from PAMBI to KAGOK(IF)","rwy":"34L","chart":"AD 2-67-1","grp":"RWY 34L","pts":[[37.18175,126.542889,"PAMBI","— (차트 프로파일 참조)"],[37.228833,126.626167,"KAGOK","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_67_1_87","type":"IAP","name":"ILS/LOC Approach to RWY 34L from ENPIL to KAGOK(IF)","rwy":"34L","chart":"AD 2-67-1","grp":"RWY 34L","pts":[[37.160833,126.726111,"ENPIL","— (차트 프로파일 참조)"],[37.186667,126.663333,"DY019","— (차트 프로파일 참조)"],[37.228833,126.626167,"KAGOK","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_67_1_88","type":"IAP","name":"ILS/LOC Approach to RWY 34L from KAGOK(IF) to MAHF","rwy":"34L","chart":"AD 2-67-1","grp":"RWY 34L","pts":[[37.291056,126.571139,"LENBI","— (차트 프로파일 참조)"],[37.377028,126.494972,"BODEK","— (차트 프로파일 참조)"],[37.43,126.447889,"D1.0","— (차트 프로파일 참조)"],[37.432944,126.45,"WNG","— (차트 프로파일 참조)"],[37.44125,126.437903,"THR","— (차트 프로파일 참조)"],[37.442972,126.434694,"IRFN","— (차트 프로파일 참조)"],[37.388778,126.098722,"PY985","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_69_1_89","type":"IAP","name":"ILS/LOC Approach to RWY 34R from PAMBI to NIPUT(IF)","rwy":"34R","chart":"AD 2-69-1","grp":"RWY 34R","pts":[[37.18175,126.542889,"PAMBI","— (차트 프로파일 참조)"],[37.230972,126.629972,"NIPUT","— (차트 프로파일 참조)"]],"red":[0],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_69_1_90","type":"IAP","name":"ILS/LOC Approach to RWY 34R from ENPIL to NIPUT(IF)","rwy":"34R","chart":"AD 2-69-1","grp":"RWY 34R","pts":[[37.160833,126.726111,"ENPIL","— (차트 프로파일 참조)"],[37.189,126.667,"PY019","— (차트 프로파일 참조)"],[37.230972,126.629972,"NIPUT","— (차트 프로파일 참조)"]],"red":[0,1],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"},{"id":"IAP_2_69_1_91","type":"IAP","name":"ILS/LOC Approach to RWY 34R from NIPUT(IF) to MAHF","rwy":"34R","chart":"AD 2-69-1","grp":"RWY 34R","pts":[[37.293222,126.574944,"DALKA","— (차트 프로파일 참조)"],[37.379194,126.498778,"PIPAN","— (차트 프로파일 참조)"],[37.432139,126.45175,"D1.0","— (차트 프로파일 참조)"],[37.432944,126.45,"WNG","— (차트 프로파일 참조)"],[37.443414,126.441725,"THR","— (차트 프로파일 참조)"],[37.445139,126.438556,"IRKN","— (차트 프로파일 참조)"],[37.388778,126.098722,"PY985","— (차트 프로파일 참조)"]],"red":[0,1,2,3,4,5],"dash":true,"note":"ILS/LOC·VOR — 원본에 고도 미수록, 보수적으로 전 구간 적색"}],"wp":{"GUKDO":{"lat":37.019694,"lon":127.639694,"alt":"+FL160"},"KAKSO":{"lat":37.129056,"lon":127.443722,"alt":"+FL180"},"KALMA":{"lat":37.312472,"lon":127.112444,"alt":null},"SEL":{"lat":37.413611,"lon":126.928361,"alt":"+FL150"},"GC034":{"lat":37.364167,"lon":126.455,"alt":"+10 000"},"POSEP":{"lat":37.472722,"lon":126.222778,"alt":"+6 000"},"KARBU":{"lat":37.533056,"lon":127.664444,"alt":"+FL180"},"EGOBA":{"lat":37.487417,"lon":127.379417,"alt":"+FL170"},"OLMEN":{"lat":36.737056,"lon":126.991,"alt":"+FL150"},"BOPKI":{"lat":36.908833,"lon":126.775028,"alt":"+FL180"},"DH050":{"lat":37.029,"lon":126.623056,"alt":"+12 000"},"DH047":{"lat":37.038889,"lon":126.516111,"alt":null},"SANLA":{"lat":37.227639,"lon":126.344167,"alt":"+FL150"},"DC039":{"lat":37.438639,"lon":126.582,"alt":"+10 000"},"DC036":{"lat":37.4945,"lon":126.504278,"alt":null},"DC035":{"lat":37.550333,"lon":126.426417,"alt":null},"DC031":{"lat":37.612333,"lon":126.496556,"alt":null},"DC032":{"lat":37.556472,"lon":126.574417,"alt":null},"DC037":{"lat":37.483778,"lon":126.675472,"alt":null},"GC036":{"lat":37.545639,"lon":126.74575,"alt":"+9 000"},"GC026":{"lat":37.656806,"lon":126.591167,"alt":"+6 000"},"GC020":{"lat":37.689444,"lon":126.483278,"alt":"-4 500 / +3 000"},"BITIM":{"lat":37.68,"lon":126.410028,"alt":"-3 500 / +3 000"},"NODUN":{"lat":37.186139,"lon":127.340972,"alt":"+FL180"},"GC072":{"lat":37.333611,"lon":127.420056,"alt":"+9 000"},"GC071":{"lat":37.494028,"lon":127.420472,"alt":"+9 000"},"UPSOM":{"lat":37.477444,"lon":127.317861,"alt":"+FL180"},"KC067":{"lat":37.350417,"lon":127.317694,"alt":null},"KC066":{"lat":37.233667,"lon":127.255222,"alt":null},"REBIT":{"lat":37.200833,"lon":125.486861,"alt":"+FL170"},"ELGUK":{"lat":37.333167,"lon":125.756861,"alt":"-FL170"},"POMIM":{"lat":37.289944,"lon":126.139472,"alt":"+7 000"},"DH030":{"lat":37.344278,"lon":126.090889,"alt":null},"DH029":{"lat":37.398556,"lon":126.04225,"alt":null},"DH028":{"lat":37.452833,"lon":125.993556,"alt":null},"DH021":{"lat":37.511083,"lon":126.095722,"alt":null},"DH022":{"lat":37.456778,"lon":126.144389,"alt":null},"DH024":{"lat":37.402444,"lon":126.193,"alt":null},"DH027":{"lat":37.348083,"lon":126.241528,"alt":null},"DH023":{"lat":37.406111,"lon":126.34375,"alt":null},"DH020":{"lat":37.4605,"lon":126.29525,"alt":null},"DH017":{"lat":37.514889,"lon":126.246694,"alt":"+3 000 (RWY15) / -2 000 +1 600 (RWY16)"},"MUNAN":{"lat":37.56925,"lon":126.198056,"alt":"-3 000 / +1 600"},"DH034":{"lat":37.235611,"lon":126.187972,"alt":null},"GH034":{"lat":37.264944,"lon":126.460417,"alt":null},"BIKSI":{"lat":37.675556,"lon":128.584444,"alt":null},"KE035":{"lat":37.271667,"lon":126.973111,"alt":"+10 000"},"ENPIL":{"lat":37.160833,"lon":126.726111,"alt":"+7 000"},"CUN":{"lat":36.632028,"lon":128.325417,"alt":null},"BIGOB":{"lat":36.723722,"lon":128.164444,"alt":"+FL220"},"BASEM":{"lat":36.843667,"lon":127.95275,"alt":"+FL200"},"GE041":{"lat":37.105444,"lon":127.128028,"alt":"+10 000"},"GONAV":{"lat":37.180111,"lon":124.414611,"alt":null},"BODOL":{"lat":37.189333,"lon":124.831583,"alt":"+FL200"},"BELTU":{"lat":37.205056,"lon":125.799722,"alt":"+FL150"},"PE054":{"lat":37.208528,"lon":126.093,"alt":"+13 000"},"PE048":{"lat":37.210333,"lon":126.224639,"alt":"+12 000"},"PE029":{"lat":37.101722,"lon":126.59075,"alt":"+8 500"},"MAKSA":{"lat":35.503139,"lon":126.906111,"alt":null},"ATASO":{"lat":35.895444,"lon":126.949167,"alt":"+FL220"},"PEBRI":{"lat":36.386333,"lon":127.003694,"alt":"+FL180"},"DE030":{"lat":37.040861,"lon":126.799333,"alt":"+9 500"},"DY037":{"lat":36.936806,"lon":126.885667,"alt":"-12 000"},"BOBIB":{"lat":37.092111,"lon":127.066444,"alt":"+12 000"},"DE031":{"lat":37.186444,"lon":126.983972,"alt":null},"TESIK":{"lat":37.271278,"lon":126.909583,"alt":"+10 000"},"GE023":{"lat":37.340778,"lon":126.822972,"alt":null},"GE022":{"lat":37.387639,"lon":126.761222,"alt":null},"GE016":{"lat":37.347333,"lon":126.689389,"alt":null},"GE017":{"lat":37.29275,"lon":126.737528,"alt":null},"GE020":{"lat":37.238194,"lon":126.785611,"alt":null},"GE024":{"lat":37.183583,"lon":126.833611,"alt":null},"GE028":{"lat":37.128972,"lon":126.881528,"alt":null},"GE027":{"lat":37.081,"lon":126.796306,"alt":null},"GE046":{"lat":37.199889,"lon":127.316194,"alt":null},"ELMAP":{"lat":37.271111,"lon":127.187472,"alt":null},"KE044":{"lat":37.373278,"lon":127.277972,"alt":null},"PY049":{"lat":37.111444,"lon":125.801778,"alt":null},"PY036":{"lat":37.0925,"lon":126.017222,"alt":"+7 000"},"LAPOP":{"lat":37.093556,"lon":126.121361,"alt":null},"PY031":{"lat":37.09475,"lon":126.249972,"alt":null},"DY025":{"lat":37.157222,"lon":126.359806,"alt":"@7 000"},"NOKEB":{"lat":37.213389,"lon":126.310222,"alt":null},"EMSOS":{"lat":37.267778,"lon":126.261833,"alt":null},"DY020":{"lat":37.345139,"lon":126.398028,"alt":"-6 000 / +5 000"},"DY017":{"lat":37.290694,"lon":126.446389,"alt":null},"DY016":{"lat":37.236222,"lon":126.494667,"alt":"-3 600 / +2 600"},"PAMBI":{"lat":37.18175,"lon":126.542889,"alt":"RWY33L/R +3 600 / RWY34L/R @2 600"},"DY034":{"lat":36.955056,"lon":126.769611,"alt":"+8 000"},"LEGOP":{"lat":36.987528,"lon":126.561278,"alt":"+10 000 / -12 000"},"DY027":{"lat":37.116389,"lon":126.395972,"alt":"+9 000"},"DER RWY 15L/R":{"lat":37.451343,"lon":126.458576,"alt":null},"CG050":{"lat":37.371778,"lon":126.585278,"alt":"-5 000"},"CG100":{"lat":37.271194,"lon":126.628833,"alt":"-10 000"},"CP101":{"lat":37.105611,"lon":126.482667,"alt":"-10 000"},"ATNER":{"lat":37.104417,"lon":126.314583,"alt":"-10 000"},"HP121":{"lat":37.1025,"lon":126.097861,"alt":null},"BINIL":{"lat":37.397,"lon":125.233139,"alt":"+FL 180"},"CD120":{"lat":37.124389,"lon":126.625333,"alt":"+9 000"},"VIMER":{"lat":36.984111,"lon":126.623583,"alt":"-13 000"},"EXUTO":{"lat":36.885722,"lon":126.624722,"alt":"+FL 145"},"BOPTA":{"lat":36.735111,"lon":126.616222,"alt":null},"CG101":{"lat":37.28525,"lon":126.889528,"alt":"-10 000"},"CG130":{"lat":37.16825,"lon":126.978611,"alt":"+13 000"},"SOT":{"lat":37.094361,"lon":127.031667,"alt":"+FL 150"},"CG200":{"lat":36.924778,"lon":127.162111,"alt":"+FL 200"},"OSPOT":{"lat":36.838361,"lon":127.348583,"alt":"+FL 230"},"CK100":{"lat":37.306306,"lon":127.122611,"alt":null},"CK099":{"lat":37.339222,"lon":127.247778,"alt":"-10 000"},"DER RWY 16L/R":{"lat":37.446418,"lon":126.449655,"alt":null},"HD050":{"lat":37.385722,"lon":126.484361,"alt":"-5 000"},"HD100":{"lat":37.279722,"lon":126.520278,"alt":null},"DER RWY 33L/R":{"lat":37.478234,"lon":126.42905,"alt":null},"AD020":{"lat":37.579194,"lon":126.355278,"alt":"+2 000"},"AD050":{"lat":37.579639,"lon":126.2085,"alt":"+5 000"},"AP140":{"lat":37.404694,"lon":125.755944,"alt":"+14 000"},"NOPIK":{"lat":37.403333,"lon":125.651389,"alt":"+FL 160"},"YD070":{"lat":37.408722,"lon":126.135833,"alt":"+9 000"},"YD100":{"lat":37.326389,"lon":126.253889,"alt":"+11 000"},"YD130":{"lat":37.194361,"lon":126.44225,"alt":"+FL 150"},"YD160":{"lat":37.038778,"lon":126.516167,"alt":"+FL 180"},"YD190":{"lat":36.877306,"lon":126.569444,"alt":"+FL 190"},"YG160":{"lat":37.121806,"lon":126.629139,"alt":"+FL 180"},"YK130":{"lat":37.324611,"lon":126.458639,"alt":"+13 000"},"YK170":{"lat":37.321722,"lon":126.710778,"alt":null},"YK210":{"lat":37.318139,"lon":127.008722,"alt":null},"EG020":{"lat":37.558778,"lon":126.373472,"alt":"- (MAX 230 kt)"},"EG040":{"lat":37.640944,"lon":126.344194,"alt":"+4 000"},"EKITO":{"lat":37.670194,"lon":126.447361,"alt":"-5 500"},"EG070":{"lat":37.641444,"lon":126.546833,"alt":"+7 000"},"EG140":{"lat":37.413194,"lon":126.807361,"alt":"+14 000"},"EG160":{"lat":37.319889,"lon":126.895722,"alt":"+FL 160"},"DER RWY 34L/R":{"lat":37.474441,"lon":126.419919,"alt":null},"YD020":{"lat":37.503694,"lon":126.368806,"alt":"- (MAX 230 kt, Bank 20°)"},"YD040":{"lat":37.508222,"lon":126.182472,"alt":"+4 000"},"YP080":{"lat":37.407361,"lon":125.990111,"alt":"+8 000"},"NCN R154/D10":{"lat":37.358475,"lon":126.550766,"alt":null},"SEL R254/D11":{"lat":37.336131,"lon":126.719167,"alt":"+5 400"},"SEL R254/D6":{"lat":37.371349,"lon":126.814255,"alt":"@7 000"},"NCN R154/D12":{"lat":37.33117,"lon":126.574864,"alt":null},"SOT R311/D16":{"lat":37.235756,"lon":126.748148,"alt":"+6 500"},"SOT R311/D8":{"lat":37.1651,"lon":126.889908,"alt":"+FL 150"},"NCN D5 (RWY33)":{"lat":37.557727,"lon":126.361102,"alt":null},"SEL R279/D28":{"lat":37.410556,"lon":126.3425,"alt":null},"SOT R306/D40":{"lat":37.398611,"lon":126.288333,"alt":null},"RADAR 5S 한계 (NCN D20)":{"lat":37.266232,"lon":126.735377,"alt":null},"RADAR 3U 한계 (NCN D17)":{"lat":37.226182,"lon":126.542913,"alt":null},"NCN D6.0 (RWY33)":{"lat":37.571737,"lon":126.34942,"alt":null},"RADAR 3A 한계 (NCN D16)":{"lat":37.540296,"lon":126.098958,"alt":null},"WNG D6.0 (RWY34)":{"lat":37.491079,"lon":126.347393,"alt":null},"RADAR 3D 한계 (NCN D16)":{"lat":37.391413,"lon":126.120783,"alt":null},"PUDIM":{"lat":37.631722,"lon":126.308333,"alt":"+3,000"},"NOPEN":{"lat":37.548194,"lon":126.382917,"alt":"+1,600"},"GC003":{"lat":37.524778,"lon":126.403806,"alt":"+1,000"},"GC001":{"lat":37.504361,"lon":126.421983,"alt":"+540"},"GC999":{"lat":37.470333,"lon":126.452278,"alt":"-210"},"GC989":{"lat":37.443556,"lon":126.64825,"alt":"-210"},"GC980":{"lat":37.295139,"lon":126.619333,"alt":null},"GC966":{"lat":37.298056,"lon":126.316111,"alt":"+4,000"},"OLTEM":{"lat":37.671722,"lon":126.346194,"alt":"+3,000 / -180"},"TASUR":{"lat":37.629556,"lon":126.3045,"alt":"+3,000"},"UPROR":{"lat":37.546028,"lon":126.379111,"alt":"+1,600"},"KC003":{"lat":37.522611,"lon":126.399972,"alt":"+1,000"},"KC001":{"lat":37.502203,"lon":126.418167,"alt":"+540"},"KC999":{"lat":37.468167,"lon":126.448444,"alt":"-210"},"IPKOL":{"lat":37.618722,"lon":126.285361,"alt":"+1,600"},"RUMRI":{"lat":37.536917,"lon":126.358444,"alt":"+1,600"},"PH002":{"lat":37.504111,"lon":126.387694,"alt":"+820"},"RW16L":{"lat":37.472808,"lon":126.415572,"alt":"+520"},"DH993":{"lat":37.3535,"lon":126.41475,"alt":"-240"},"DH989":{"lat":37.315278,"lon":126.333056,"alt":"+3,000 / -240"},"ATKON":{"lat":37.666556,"lon":126.306444,"alt":"+3,000 / -180"},"OSERI":{"lat":37.533056,"lon":126.356139,"alt":"+1,600"},"DH002":{"lat":37.500111,"lon":126.3855,"alt":"+820"},"RW16R":{"lat":37.468808,"lon":126.413383,"alt":"+520"},"OLKIK":{"lat":37.616556,"lon":126.281528,"alt":"+3,000"},"POSOK":{"lat":37.24175,"lon":126.649056,"alt":"+3,600"},"LEGUN":{"lat":37.304028,"lon":126.594056,"alt":"+3,600"},"KE008":{"lat":37.346917,"lon":126.556083,"alt":"+2,600"},"KIDAB":{"lat":37.389778,"lon":126.518083,"alt":"+1,600"},"RW33L":{"lat":37.454225,"lon":126.460856,"alt":"+560"},"GE991":{"lat":37.6065,"lon":126.469194,"alt":null},"GE982":{"lat":37.612556,"lon":126.291083,"alt":null},"GE973":{"lat":37.463056,"lon":126.224722,"alt":"+4,000"},"KE019":{"lat":37.199611,"lon":126.68625,"alt":"+6,000"},"BIRIN":{"lat":37.243917,"lon":126.652889,"alt":"+3,600"},"PIBAK":{"lat":37.306167,"lon":126.597861,"alt":"+3,600"},"GE008":{"lat":37.349056,"lon":126.559917,"alt":"+2,600"},"ENBUK":{"lat":37.391944,"lon":126.521889,"alt":"+1,600"},"RW33R":{"lat":37.456381,"lon":126.464672,"alt":"+560"},"GE019":{"lat":37.20175,"lon":126.690083,"alt":"+6,000"},"KAGOK":{"lat":37.228833,"lon":126.626167,"alt":"+1,600"},"LENBI":{"lat":37.291056,"lon":126.571139,"alt":"+1,600"},"BODEK":{"lat":37.377028,"lon":126.494972,"alt":"+1,600"},"RW34L":{"lat":37.44125,"lon":126.437903,"alt":"+510"},"DY994":{"lat":37.457472,"lon":126.31875,"alt":"-220"},"PY985":{"lat":37.388778,"lon":126.098722,"alt":"+3,000 / -220"},"DY019":{"lat":37.186667,"lon":126.663333,"alt":"+6,000"},"NIPUT":{"lat":37.230972,"lon":126.629972,"alt":"+1,600"},"DALKA":{"lat":37.293222,"lon":126.574944,"alt":"+1,600"},"PIPAN":{"lat":37.379194,"lon":126.498778,"alt":"+1,600"},"RW34R":{"lat":37.443414,"lon":126.441725,"alt":"+510"},"PY019":{"lat":37.189,"lon":126.667,"alt":"+6,000"},"SAKOS":{"lat":37.589556,"lon":126.346028,"alt":"— (차트 프로파일 참조)"},"D3.0":{"lat":37.522556,"lon":126.405778,"alt":"— (차트 프로파일 참조)"},"D1.0":{"lat":37.495306,"lon":126.430056,"alt":"— (차트 프로파일 참조)"},"NCN":{"lat":37.494917,"lon":126.430333,"alt":"— (차트 프로파일 참조)"},"THR":{"lat":37.483944,"lon":126.440156,"alt":"— (차트 프로파일 참조)"},"ISLL":{"lat":37.482333,"lon":126.443222,"alt":"— (차트 프로파일 참조)"},"D3.0 ISLL":{"lat":37.522556,"lon":126.405778,"alt":"— (차트 프로파일 참조)"},"D1.0 ISLL":{"lat":37.495306,"lon":126.430056,"alt":"— (차트 프로파일 참조)"},"D10":{"lat":37.631222,"lon":126.309361,"alt":"— (차트 프로파일 참조)"},"D4.3":{"lat":37.553444,"lon":126.378444,"alt":"— (차트 프로파일 참조)"},"D1.5":{"lat":37.515278,"lon":126.412278,"alt":"— (차트 프로파일 참조)"},"D0.4":{"lat":37.500278,"lon":126.425583,"alt":"— (차트 프로파일 참조)"},"D8":{"lat":37.411139,"lon":126.560861,"alt":"— (차트 프로파일 참조)"},"ANBOG":{"lat":37.587389,"lon":126.342194,"alt":"— (차트 프로파일 참조)"},"ISRR":{"lat":37.480194,"lon":126.439417,"alt":"— (차트 프로파일 참조)"},"D1.1":{"lat":37.485389,"lon":126.404361,"alt":"— (차트 프로파일 참조)"},"IRKS":{"lat":37.469833,"lon":126.416583,"alt":"— (차트 프로파일 참조)"},"WNG":{"lat":37.432944,"lon":126.45,"alt":"— (차트 프로파일 참조)"},"IRFS":{"lat":37.465833,"lon":126.414361,"alt":"— (차트 프로파일 참조)"},"BATAP":{"lat":37.348528,"lon":126.554667,"alt":"— (차트 프로파일 참조)"},"INLL":{"lat":37.457056,"lon":126.459972,"alt":"— (차트 프로파일 참조)"},"GOKAK":{"lat":37.350667,"lon":126.558472,"alt":"— (차트 프로파일 참조)"},"INRR":{"lat":37.459222,"lon":126.463806,"alt":"— (차트 프로파일 참조)"},"D16":{"lat":37.276528,"lon":126.623,"alt":"— (차트 프로파일 참조)"},"D10.8":{"lat":37.3475,"lon":126.560528,"alt":"— (차트 프로파일 참조)"},"D7.6":{"lat":37.391167,"lon":126.522028,"alt":"— (차트 프로파일 참조)"},"D3.5":{"lat":37.447111,"lon":126.472639,"alt":"— (차트 프로파일 참조)"},"D6":{"lat":37.588806,"lon":126.386917,"alt":"— (차트 프로파일 참조)"},"IRFN":{"lat":37.442972,"lon":126.434694,"alt":"— (차트 프로파일 참조)"},"IRKN":{"lat":37.445139,"lon":126.438556,"alt":"— (차트 프로파일 참조)"}},"nav":[{"id":"SEL","lat":37.41361111111111,"lon":126.92836111111112,"desc":"ANYANG VORTAC 115.5"},{"id":"NCN","lat":37.495,"lon":126.43027777777779,"desc":"INCHEON VOR/DME 113.8"},{"id":"SOT","lat":37.09444444444445,"lon":127.03166666666667,"desc":"SONGTAN VORTAC 116.9"},{"id":"WNG","lat":37.433055555555555,"lon":126.45,"desc":"WANGSAN VOR/DME 112.9"},{"id":"CUN","lat":36.63202777777778,"lon":128.32541666666665,"desc":"YECHEON VOR/DME 114.8"}],"arp":{"lat":37.46277777777778,"lon":126.44027777777778}};
++
+/* ================= RKSS / Gimpo procedures =================
+   KOCA eAIP current set: SID/STAR effective 10 JUN 2026; IAP through 5 FEB 2026.
+   Coordinates come from published aeronautical data/coding tables. Conventional
+   radial-intercept SIDs are dashed because their turn/intercept points are schematic. */
+D.routes.forEach(r=>r.airport='RKSI');
+const GMP_ROUTES=[{"id":"RKSS_SID_OSPOT2U","airport":"RKSS","type":"SID","name":"GMP · RNAV OSPOT 2U","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-14","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.371278,126.917944,"UD060","-6 000"],[37.23425,127.035722,"UD080","@8 000"],[37.106694,127.137194,"UG100","+10 000"],[36.962694,127.250333,"UG130","@13 000"],[36.838361,127.348583,"OSPOT","+FL 145"]],"red":[0,1,2],"dash":false,"note":"UD060 상한 6 000 ft 이후 8 000 ft로 상승."},{"id":"RKSS_SID_EGOBA2U","airport":"RKSS","type":"SID","name":"GMP · RNAV EGOBA 2U","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-14","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.413611,126.928361,"SEL","-6 000"],[37.487417,127.379417,"EGOBA","-9 000"]],"red":[0,1],"dash":false,"note":"SEL까지 6 000 ft 이하 제한."},{"id":"RKSS_SID_NOPIK2U","airport":"RKSS","type":"SID","name":"GMP · RNAV NOPIK 2U","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-15","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.395056,126.908139,"UP050","-"],[37.358472,126.769139,"UP060","@6 000"],[37.412167,126.593806,"UP059","@6 000"],[37.41075,126.373278,"UP100","+10 000"],[37.403333,125.651389,"NOPIK","-"]],"red":[0,1,2],"dash":false,"note":"UP060/UP059 6 000 ft."},{"id":"RKSS_SID_BULTI2U","airport":"RKSS","type":"SID","name":"GMP · RNAV BULTI 2U","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-15","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.371278,126.917944,"UD060","-6 000"],[37.23425,127.035722,"UD080","@8 000"],[37.090667,126.980694,"UD100","-"],[36.931,126.919806,"UPDET","-"],[36.722861,126.824917,"BULTI","@FL 160"]],"red":[0,1,2],"dash":false,"note":"UD060 상한 6 000 ft."},{"id":"RKSS_SID_BULTI2Z","airport":"RKSS","type":"SID","name":"GMP · RNAV BULTI 2Z","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-16","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.395056,126.908139,"UP050","-6 000"],[37.2295,127.095306,"ZD080","@8 000"],[37.140889,127.195028,"ZD100","+10 000"],[37.037278,127.19475,"ZD120","-12 000"],[36.825083,126.944667,"ZD119","-12 000"],[36.722861,126.824917,"BULTI","+FL 145"]],"red":[0,1,2],"dash":false,"note":"UP050 상한 6 000 ft."},{"id":"RKSS_SID_OSPOT2Z","airport":"RKSS","type":"SID","name":"GMP · RNAV OSPOT 2Z","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-16","grp":"RKSS · RWY 14 · RNAV","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.500528,126.866306,"UD050","-"],[37.395056,126.908139,"UP050","-6 000"],[37.2295,127.095306,"ZD080","@8 000"],[37.140889,127.195028,"ZD100","+10 000"],[36.983861,127.274889,"ZG130","-13 000"],[36.838361,127.348583,"OSPOT","+FL 145"]],"red":[0,1,2],"dash":false,"note":"UP050 상한 6 000 ft."},{"id":"RKSS_SID_SEL1F","airport":"RKSS","type":"SID","name":"GMP · SEL 1F","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-17","grp":"RKSS · RWY 14 · 재래식","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.499472,126.86725,"KIP D5 SOUTH","-"],[37.413611,126.928361,"SEL","+4 000"]],"red":[0,1],"dash":true,"note":"KIP D5 후 SEL R339 포착. 재래식 절차 형상은 개략 표시."},{"id":"RKSS_SID_SOT1E","airport":"RKSS","type":"SID","name":"GMP · SOT 1E","rwy":"RKSS RWY 14L/R","chart":"RKSS AD 2-17","grp":"RKSS · RWY 14 · 재래식","pts":[[37.548,126.804,"RKSS DER 14L/R","—"],[37.499472,126.86725,"KIP D5 SOUTH","-"],[37.094444,127.031667,"SOT","+11 000"]],"red":[0,1],"dash":true,"note":"KIP D5 후 SOT R350 포착. 재래식 절차 형상은 개략 표시."},{"id":"RKSS_SID_NOPIK2T","airport":"RKSS","type":"SID","name":"GMP · RNAV NOPIK 2T","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-18","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"TD040","-"],[37.561417,126.593639,"TD050","-5 000"],[37.521583,126.539528,"TP080","-"],[37.409861,126.258139,"TP120","+12 000"],[37.403333,125.651389,"NOPIK","+FL 200"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_BULTI2T","airport":"RKSS","type":"SID","name":"GMP · RNAV BULTI 2T","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-18","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"TD040","-"],[37.561417,126.593639,"TD050","-5 000"],[37.405222,126.572556,"TD100","-"],[37.323556,126.594639,"TD120","+10 000 / -12 000"],[37.222389,126.628028,"TD130","+13 000"],[37.017611,126.695306,"TD180","+FL 180"],[36.902389,126.733139,"TD200","+FL 200"],[36.722861,126.824917,"BULTI","-"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_OSPOT2T","airport":"RKSS","type":"SID","name":"GMP · RNAV OSPOT 2T","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-18","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"TD040","-"],[37.561417,126.593639,"TD050","-5 000"],[37.405222,126.572556,"TD100","-"],[37.323556,126.594639,"TD120","+10 000 / -12 000"],[36.838361,127.348583,"OSPOT","+FL 190"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_EGOBA2T","airport":"RKSS","type":"SID","name":"GMP · RNAV EGOBA 2T","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-18","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"TD040","-"],[37.561417,126.593639,"TD050","-5 000"],[37.405222,126.572556,"TD100","-"],[37.323556,126.594639,"TD120","+10 000 / -12 000"],[37.368306,126.85,"TK130","@13 000"],[37.487417,127.379417,"EGOBA","+FL 190"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_NOPIK2Q","airport":"RKSS","type":"SID","name":"GMP · RNAV NOPIK 2Q","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-19","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"QD040","-"],[37.561417,126.593639,"QD050","-5 000"],[37.521583,126.539528,"QP080","-8 000"],[37.484472,126.44575,"QP079","-8 000"],[37.409861,126.258139,"QP120","+12 000"],[37.403333,125.651389,"NOPIK","+FL 200"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_BULTI2Q","airport":"RKSS","type":"SID","name":"GMP · RNAV BULTI 2Q","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-19","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"QD040","-"],[37.561417,126.593639,"QD050","-5 000"],[37.478139,126.589972,"QD080","+6 000 / -8 000"],[37.371778,126.585278,"QD090","@9 000"],[37.271194,126.628833,"QD110","@11 000"],[37.044333,126.814611,"QD150","-"],[36.889694,126.819583,"QD160","-"],[36.722861,126.824917,"BULTI","@FL 160"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_OSPOT2Q","airport":"RKSS","type":"SID","name":"GMP · RNAV OSPOT 2Q","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-19","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"QD040","-"],[37.561417,126.593639,"QD050","-5 000"],[37.478139,126.589972,"QD080","+6 000 / -8 000"],[37.371778,126.585278,"QD090","@9 000"],[37.271194,126.628833,"QD110","@11 000"],[37.044333,126.814611,"QD150","-"],[36.924778,127.162111,"QG180","+FL 180"],[36.838361,127.348583,"OSPOT","-"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_EGOBA2Q","airport":"RKSS","type":"SID","name":"GMP · RNAV EGOBA 2Q","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-19","grp":"RKSS · RWY 32 · RNAV","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.634167,126.692694,"QD040","-"],[37.561417,126.593639,"QD050","-5 000"],[37.478139,126.589972,"QD080","+6 000 / -8 000"],[37.412556,126.665889,"QK080","+7 000 / -8 000"],[37.413611,126.928361,"SEL","@9 000"],[37.487417,127.379417,"EGOBA","@9 000"]],"red":[0,1,2],"dash":false,"note":"TD/QD050 상한 5 000 ft. UAM 고도대와 직접 중첩 가능."},{"id":"RKSS_SID_SEL1W","airport":"RKSS","type":"SID","name":"GMP · SEL 1W","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-20","grp":"RKSS · RWY 32 · 재래식","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.613,126.718,"KIP D5 NW","-"],[37.449,126.718,"R291 SEL INT","@4 000"],[37.413611,126.928361,"SEL","@4 000"]],"red":[0,1,2],"dash":true,"note":"KIP D5/SEL D16 후 HDG 190, SEL R291 포착. 개략 표시."},{"id":"RKSS_SID_SOT1W","airport":"RKSS","type":"SID","name":"GMP · SOT 1W","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-20","grp":"RKSS · RWY 32 · 재래식","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.613,126.718,"KIP D5 NW","-"],[37.42,126.718,"R329 SOT INT","@4 000"],[37.094444,127.031667,"SOT","@4 000"]],"red":[0,1,2],"dash":true,"note":"KIP D5/SEL D16 후 HDG 190, SOT R329 포착. 개략 표시."},{"id":"RKSS_SID_KARBU1W","airport":"RKSS","type":"SID","name":"GMP · KARBU 1W","rwy":"RKSS RWY 32L/R","chart":"RKSS AD 2-21","grp":"RKSS · RWY 32 · 재래식","pts":[[37.57,126.777,"RKSS DER 32L/R","—"],[37.624,126.703,"KIP D6 NW","-"],[37.695,126.724,"R265 YJU/D13","+4 300"],[37.748056,126.991111,"YJU","-"],[37.714,127.077,"R127 YJU/D5","8 000–10 000"],[37.487417,127.379417,"EGOBA","-"]],"red":[0,1],"dash":true,"note":"요청형 절차. YJU D13 4 300 ft 이상, 이후 8 000–10 000 ft. 개략 표시."},{"id":"RKSS_STAR_OLMEN2U","airport":"RKSS","type":"STAR","name":"GMP · RNAV OLMEN 2U","rwy":"RWY 14L/R","chart":"RKSS AD 2-23","grp":"RKSS · RWY 14 · RNAV","pts":[[36.737056,126.991,"OLMEN","-"],[37.023778,127.321222,"UPKIG","@FL 150"],[37.129056,127.443722,"KAKSO","-"],[37.230333,127.444306,"DU063","-"],[37.362972,127.204778,"SUPOM","+12 000"],[37.413611,126.928361,"SEL","+8 000 / -9 000"],[37.457833,126.802611,"DU030","@8 000"],[37.486667,126.7,"DUDOT","+7 000"],[37.498222,126.596694,"DU022","-"],[37.569361,126.507417,"DU018","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[8,9],"dash":false,"note":"SEL 이후 DU022–DU018 구간이 인천 북측 UAM 회랑을 직접 횡단. DOKDO 4 000 ft 이상."},{"id":"RKSS_STAR_GUKDO2U","airport":"RKSS","type":"STAR","name":"GMP · RNAV GUKDO 2U","rwy":"RWY 14L/R","chart":"RKSS AD 2-23","grp":"RKSS · RWY 14 · RNAV","pts":[[37.019694,127.639611,"GUKDO","-"],[37.170806,127.551278,"GU069","-"],[37.230333,127.444306,"DU063","-"],[37.362972,127.204778,"SUPOM","+12 000"],[37.413611,126.928361,"SEL","+8 000 / -9 000"],[37.457833,126.802611,"DU030","@8 000"],[37.486667,126.7,"DUDOT","+7 000"],[37.498222,126.596694,"DU022","-"],[37.569361,126.507417,"DU018","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[7,8],"dash":false,"note":"SEL 이후 DU022–DU018 구간이 인천 북측 UAM 회랑을 직접 횡단. DOKDO 4 000 ft 이상."},{"id":"RKSS_STAR_KARBU2U","airport":"RKSS","type":"STAR","name":"GMP · RNAV KARBU 2U","rwy":"RWY 14L/R","chart":"RKSS AD 2-23","grp":"RKSS · RWY 14 · RNAV","pts":[[37.533056,127.664444,"KARBU","-"],[37.487417,127.379417,"EGOBA","+13 000"],[37.413611,126.928361,"SEL","+8 000 / -9 000"],[37.457833,126.802611,"DU030","@8 000"],[37.486667,126.7,"DUDOT","+7 000"],[37.498222,126.596694,"DU022","-"],[37.569361,126.507417,"DU018","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[5,6],"dash":false,"note":"SEL 이후 DU022–DU018 구간이 인천 북측 UAM 회랑을 직접 횡단. DOKDO 4 000 ft 이상."},{"id":"RKSS_STAR_REBIT2U","airport":"RKSS","type":"STAR","name":"GMP · RNAV REBIT 2U","rwy":"RWY 14L/R","chart":"RKSS AD 2-24","grp":"RKSS · RWY 14 · RNAV","pts":[[37.200833,125.486861,"REBIT","-"],[37.3035,125.696139,"PU060","-"],[37.428389,125.9525,"PU046","+12 000"],[37.540556,126.184444,"PU033","+9 000"],[37.577528,126.345083,"PU025","+7 000"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[4],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_REBIT2Z","airport":"RKSS","type":"STAR","name":"GMP · RNAV REBIT 2Z","rwy":"RWY 14L/R","chart":"RKSS AD 2-24","grp":"RKSS · RWY 14 · RNAV","pts":[[37.200833,125.486861,"REBIT","-FL 170"],[37.138306,125.801278,"PZ061","-"],[37.141139,126.057,"PZ049","-"],[37.1795,126.332194,"PZ040","@11 000"],[37.272861,126.443556,"PZ035","+9 000"],[37.354139,126.540778,"PZ030","+8 000"],[37.42825,126.629694,"PZ026","+7 000"],[37.498222,126.596694,"DU022","-"],[37.569361,126.507417,"DU018","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[6,7,8],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_OLMEN2T","airport":"RKSS","type":"STAR","name":"GMP · RNAV OLMEN 2T","rwy":"RWY 32L/R","chart":"RKSS AD 2-25","grp":"RKSS · RWY 32 · RNAV","pts":[[36.737056,126.991,"OLMEN","-"],[36.962694,127.250333,"DT043","-13 000"],[37.129056,127.443722,"KAKSO","+10 000"],[37.230333,127.444306,"DT038","-"],[37.279833,127.355083,"DT034","-"],[37.252833,127.169333,"BUMSI","+8 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_GUKDO2T","airport":"RKSS","type":"STAR","name":"GMP · RNAV GUKDO 2T","rwy":"RWY 32L/R","chart":"RKSS AD 2-25","grp":"RKSS · RWY 32 · RNAV","pts":[[37.019694,127.639611,"GUKDO","-"],[37.170806,127.551278,"GT044","-"],[37.230333,127.444306,"DT038","-"],[37.279833,127.355083,"DT034","-"],[37.252833,127.169333,"BUMSI","+8 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_KARBU2T","airport":"RKSS","type":"STAR","name":"GMP · RNAV KARBU 2T","rwy":"RWY 32L/R","chart":"RKSS AD 2-25","grp":"RKSS · RWY 32 · RNAV","pts":[[37.533056,127.664444,"KARBU","-"],[37.487417,127.379417,"EGOBA","+12 000"],[37.346778,127.288083,"KT033","-"],[37.252833,127.169333,"BUMSI","+8 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_REBIT2T","airport":"RKSS","type":"STAR","name":"GMP · RNAV REBIT 2T","rwy":"RWY 32L/R","chart":"RKSS AD 2-26","grp":"RKSS · RWY 32 · RNAV","pts":[[37.200833,125.486861,"REBIT","-"],[37.138306,125.801278,"PT091","+FL 150"],[37.144139,126.410389,"PT062","+11 000 / -12 000"],[37.145028,126.549806,"PT055","-11 000"],[37.066222,126.619333,"PT053","-"],[37.066806,126.91,"PT041","@10 000"],[37.177722,127.123944,"PT030","+8 000 / -9 000"],[37.252833,127.169333,"BUMSI","+8 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_REBIT2Q","airport":"RKSS","type":"STAR","name":"GMP · RNAV REBIT 2Q","rwy":"RWY 32L/R","chart":"RKSS AD 2-27","grp":"RKSS · RWY 32 · RNAV","pts":[[37.200833,125.486861,"REBIT","-"],[37.138306,125.801278,"PQ091","-13 000"],[37.141222,126.065944,"PQ078","@8 000"],[37.142833,126.239722,"PQ070","@8 000"],[37.032972,126.53175,"PQ058","-"],[37.154861,127.07975,"PQ032","-"],[37.252833,127.169333,"BUMSI","+8 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_LEGAK1U","airport":"RKSS","type":"STAR","name":"GMP · RNAV LEGAK 1U","rwy":"RWY 14L/R","chart":"RKSS AD 2-28","grp":"RKSS · RWY 14 · RNAV","pts":[[37.055833,124.830861,"LEGAK","+FL 150"],[37.071556,125.797306,"PU063","+FL 150"],[37.279139,126.092528,"PU044","+13 000"],[37.452806,126.33675,"PU029","+9 000"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[3],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_LEGAK1T","airport":"RKSS","type":"STAR","name":"GMP · RNAV LEGAK 1T","rwy":"RWY 32L/R","chart":"RKSS AD 2-28","grp":"RKSS · RWY 32 · RNAV","pts":[[37.055833,124.830861,"LEGAK","+FL 150"],[37.071556,125.797306,"PT075","+FL 150"],[37.076333,126.248389,"PT054","+11 000"],[37.144528,126.468528,"PT042","+10 000"],[37.233528,126.7055,"PT029","+9 000"],[37.2835,126.839417,"SUNEM","+7 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_GONAV_LEGAK1U","airport":"RKSS","type":"STAR","name":"GMP · RNAV LEGAK 1U (GONAV TRANS)","rwy":"RWY 14L/R","chart":"RKSS AD 2-28","grp":"RKSS · RWY 14 · RNAV","pts":[[37.180111,124.414611,"GONAV","-"],[37.055833,124.830861,"LEGAK","+FL 150"],[37.071556,125.797306,"PU063","+FL 150"],[37.279139,126.092528,"PU044","+13 000"],[37.452806,126.33675,"PU029","+9 000"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[4],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_STAR_GONAV_LEGAK1T","airport":"RKSS","type":"STAR","name":"GMP · RNAV LEGAK 1T (GONAV TRANS)","rwy":"RWY 32L/R","chart":"RKSS AD 2-28","grp":"RKSS · RWY 32 · RNAV","pts":[[37.180111,124.414611,"GONAV","-"],[37.055833,124.830861,"LEGAK","+FL 150"],[37.071556,125.797306,"PT075","+FL 150"],[37.076333,126.248389,"PT054","+11 000"],[37.144528,126.468528,"PT042","+10 000"],[37.233528,126.7055,"PT029","+9 000"],[37.2835,126.839417,"SUNEM","+7 000"]],"red":[],"dash":false,"note":"김포 공시 RNAV STAR."},{"id":"RKSS_IAP_ILS_Z_14L","airport":"RKSS","type":"IAP","name":"GMP · ILS Z/LOC Z RWY 14L","rwy":"RWY 14L","chart":"RKSS AD 2-29","grp":"RKSS · RWY 14 · IAP","pts":[[37.60475,126.551972,"DOKDO","+4 000"],[37.677778,126.6435,"GU009","+2 800"],[37.618639,126.718,"GU004","+1 400"],[37.592278,126.751194,"D2.0 ISEL","-"],[37.578083,126.769,"D0.8 ISEL","-"],[37.570708,126.778278,"RW14L","-"],[37.498472,126.866,"DU994","-"],[37.41925,126.770444,"DU987","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_Y_14L","airport":"RKSS","type":"IAP","name":"GMP · ILS Y/LOC Y RWY 14L","rwy":"RWY 14L","chart":"RKSS AD 2-30","grp":"RKSS · RWY 14 · IAP","pts":[[37.533889,126.560278,"CAVOI","+4 000"],[37.655722,126.671306,"D7.4 ISEL","+3 000"],[37.618639,126.718,"GU004","+1 400"],[37.592278,126.751194,"D2.0 ISEL","-"],[37.578083,126.769,"D0.8 ISEL","-"],[37.570708,126.778278,"RW14L","-"],[37.498472,126.866,"DU994","-"],[37.41925,126.770444,"DU987","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_14L","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 14L","rwy":"RWY 14L","chart":"RKSS AD 2-31","grp":"RKSS · RWY 14 · IAP","pts":[[37.60475,126.551972,"DOKDO","+4 000"],[37.677778,126.6435,"GU009","+2 800"],[37.618639,126.718,"GU004","+1 400"],[37.598389,126.7435,"GU002","+840"],[37.570708,126.778278,"RW14L","+480"],[37.498472,126.866,"DU994","-"],[37.41925,126.770444,"DU987","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[0,1,2,3,4,5,6],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_14R","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 14R","rwy":"RWY 14R","chart":"RKSS AD 2-32","grp":"RKSS · RWY 14 · IAP","pts":[[37.60475,126.551972,"DOKDO","+4 000"],[37.6755,126.640611,"DU009","+2 800"],[37.616389,126.715083,"DU004","+1 400"],[37.589972,126.748306,"D2.0 IOFR","-"],[37.575806,126.766139,"D0.8 IOFR","-"],[37.568386,126.775444,"RW14R","-"],[37.498472,126.866,"DU994","-"],[37.41925,126.770444,"DU987","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[0,1,2,3,4,5,6,7],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_14R","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 14R","rwy":"RWY 14R","chart":"RKSS AD 2-33","grp":"RKSS · RWY 14 · IAP","pts":[[37.60475,126.551972,"DOKDO","+4 000"],[37.6755,126.640611,"DU009","+2 800"],[37.616389,126.715083,"DU004","+1 400"],[37.596,126.740722,"DU002","+840"],[37.568386,126.775444,"RW14R","+450"],[37.498472,126.866,"DU994","-"],[37.41925,126.770444,"DU987","-"],[37.60475,126.551972,"DOKDO","+4 000"]],"red":[0,1,2,3,4,5,6],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32L_APOMO","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32L · APOMO","rwy":"RWY 32L","chart":"RKSS AD 2-34","grp":"RKSS · RWY 32L · ILS/LOC","pts":[[37.455806,127.184556,"APOMO","+7 000"],[37.428306,127.086417,"KT018","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32L_APOMO","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32L · APOMO","rwy":"RWY 32L","chart":"RKSS AD 2-35","grp":"RKSS · RWY 32L · RNP","pts":[[37.455806,127.184556,"APOMO","+7 000"],[37.428306,127.086417,"KT018","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32L_BUMSI","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32L · BUMSI","rwy":"RWY 32L","chart":"RKSS AD 2-34","grp":"RKSS · RWY 32L · ILS/LOC","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.340694,127.060167,"PUDUB","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32L_BUMSI","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32L · BUMSI","rwy":"RWY 32L","chart":"RKSS AD 2-35","grp":"RKSS · RWY 32L · RNP","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.340694,127.060167,"PUDUB","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32L_SUNEM","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32L · SUNEM","rwy":"RWY 32L","chart":"RKSS AD 2-34","grp":"RKSS · RWY 32L · ILS/LOC","pts":[[37.2835,126.839417,"SUNEM","+7 000"],[37.341861,126.914083,"PT017","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32L_SUNEM","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32L · SUNEM","rwy":"RWY 32L","chart":"RKSS AD 2-35","grp":"RKSS · RWY 32L · RNP","pts":[[37.2835,126.839417,"SUNEM","+7 000"],[37.341861,126.914083,"PT017","+5 500"],[37.400556,126.985556,"WONKO","+4 000"],[37.443361,126.932111,"DT009","+2 800"],[37.462472,126.908194,"DT007","+2 300"],[37.478583,126.888056,"DT006","+2 000"],[37.538222,126.813333,"D1.0 IKMO","-"],[37.548008,126.801031,"RW32L","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32R_APOMO","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32R · APOMO","rwy":"RWY 32R","chart":"RKSS AD 2-37","grp":"RKSS · RWY 32R · ILS/LOC","pts":[[37.455806,127.184556,"APOMO","+7 000"],[37.428306,127.086417,"KT018","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32R_APOMO","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32R · APOMO","rwy":"RWY 32R","chart":"RKSS AD 2-38","grp":"RKSS · RWY 32R · RNP","pts":[[37.455806,127.184556,"APOMO","+7 000"],[37.428306,127.086417,"KT018","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32R_BUMSI","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32R · BUMSI","rwy":"RWY 32R","chart":"RKSS AD 2-37","grp":"RKSS · RWY 32R · ILS/LOC","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.307167,127.107528,"GT020","-"],[37.347667,127.057167,"NOGUB","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8,9],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32R_BUMSI","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32R · BUMSI","rwy":"RWY 32R","chart":"RKSS AD 2-38","grp":"RKSS · RWY 32R · RNP","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.307167,127.107528,"GT020","-"],[37.347667,127.057167,"NOGUB","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8,9],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_ILS_32R_SUNEM","airport":"RKSS","type":"IAP","name":"GMP · ILS/LOC RWY 32R · SUNEM","rwy":"RWY 32R","chart":"RKSS AD 2-37","grp":"RKSS · RWY 32R · ILS/LOC","pts":[[37.2835,126.839417,"SUNEM","+7 000"],[37.341861,126.914083,"PT017","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_RNP_32R_SUNEM","airport":"RKSS","type":"IAP","name":"GMP · RNP RWY 32R · SUNEM","rwy":"RWY 32R","chart":"RKSS AD 2-38","grp":"RKSS · RWY 32R · RNP","pts":[[37.2835,126.839417,"SUNEM","+7 000"],[37.341861,126.914083,"PT017","+5 300"],[37.401306,126.990333,"MOBAK","+4 000"],[37.44425,126.936722,"GT009","+2 800"],[37.463167,126.913056,"GT007","+2 300"],[37.478389,126.894139,"GT006","+2 000"],[37.537972,126.819361,"D1.0 ISKP","-"],[37.547747,126.807106,"RW32R","-"],[37.635417,126.694333,"DT993","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[1,2,3,4,5,6,7,8],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_VOR_32L","airport":"RKSS","type":"IAP","name":"GMP · VOR RWY 32L","rwy":"RWY 32L","chart":"RKSS AD 2-36","grp":"RKSS · RWY 32L · VOR","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.316778,127.081861,"V32L D20","-"],[37.340889,127.052972,"V32L D18","-"],[37.398722,126.983528,"V32L D13.2","+4 000"],[37.442056,126.931361,"V32L D9.6","-"],[37.478167,126.887861,"V32L D6.6","-"],[37.521472,126.835611,"V32L D3.0","-"],[37.541889,126.810889,"V32L D1.3","-"],[37.548008,126.801031,"RW32L","-"],[37.557528,126.792028,"KIP","-"],[37.616583,126.717944,"D5 KIP 324","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[2,3,4,5,6,7,8,9,10],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."},{"id":"RKSS_IAP_VOR_32R","airport":"RKSS","type":"IAP","name":"GMP · VOR RWY 32R","rwy":"RWY 32R","chart":"RKSS AD 2-39","grp":"RKSS · RWY 32R · VOR","pts":[[37.252833,127.169333,"BUMSI","+8 000"],[37.324972,127.092222,"V32R D20","-"],[37.348278,127.062278,"V32R D17.3","-"],[37.404222,126.990472,"V32R D12.6","+4 000"],[37.446083,126.936444,"V32R D9.3","-"],[37.479722,126.892806,"V32R D6.7","-"],[37.516889,126.844694,"V32R D3.5","-"],[37.539667,126.811583,"V32R D1.3","-"],[37.547747,126.807106,"RW32R","-"],[37.557528,126.792028,"KIP","-"],[37.616583,126.717944,"D5 KIP 324","-"],[37.533889,126.560278,"CAVOI","+4 000"]],"red":[2,3,4,5,6,7,8,9,10],"dash":false,"note":"김포 공시 계기접근 및 실패접근 경로."}];
+D.routes.push(...GMP_ROUTES);
+GMP_ROUTES.forEach(r=>r.pts.forEach(p=>{
+  const cur=D.wp[p[2]];
+  if(!cur) D.wp[p[2]]={lat:p[0],lon:p[1],alt:p[3]};
+}));
+
+/* 성남(서울공항, RKSM) SID — 오산(RKSO)·수원(RKSW)은 공시 AIP에 계기절차가 없어(순수 군용,
+   민간 공개 안 됨) 추가하지 못함. RKSM만 국토부 eAIP(aim.koca.go.kr)에 SID·IAP가 공개돼 있음.
+   여기 SID 11개는 실제 코딩표 좌표. DER(출발단) 좌표는 공시 안 돼 있어 공항기준점(ARP,
+   37°26'45"N 127°06'51"E)으로 근사 — dash:false 절차는 DER 이후 구간이 실제 코딩표 좌표,
+   dash:true(SEOUL1/2, EGOBA5, PINEV5)는 선회/인터셉트 지점 좌표가 공시에 없어 개략 표시.
+   회랑(UAM corridor)과 40km 이상 떨어져 있어 근접위험(red) 해당 없음. IAP는 별도 확인 후 추가 예정. */
+const RKSM_ROUTES=[
+  {"id":"RKSM_SID_SEOUL1","airport":"RKSM","type":"SID","name":"SEOUL 1","rwy":"RWY 01/02","chart":"RKSM AD 2-3","grp":"RKSM · RWY 01/02 · 재래식","pts":[[37.445833,127.114167,"RKSM DER 01/02","—"],[37.533056,127.664444,"KARBU","+5 000"]],"red":[],"dash":true,"note":"ANYANG VORTAC 경유 KARBU 직항. 선회/인터셉트 구간 좌표 미공시로 개략 표시."},
+  {"id":"RKSM_SID_SEOUL2","airport":"RKSM","type":"SID","name":"SEOUL 2","rwy":"RWY 01/02, RWY 19/20","chart":"RKSM AD 2-4","grp":"RKSM · RWY 01/02·19/20 · 재래식","pts":[[37.445833,127.114167,"RKSM DER","—"],[37.533056,127.664444,"KARBU","+5 500"]],"red":[],"dash":true,"note":"SOL/KSM D15 ARC 경유 KARBU. ARC 구간 좌표 미공시로 개략 표시."},
+  {"id":"RKSM_SID_EGOBA5","airport":"RKSM","type":"SID","name":"EGOBA 5","rwy":"RWY 01/02, RWY 19/20","chart":"RKSM AD 2-5","grp":"RKSM · RWY 01/02·19/20 · 재래식","pts":[[37.445833,127.114167,"RKSM DER","—"],[37.487500,127.379444,"EGOBA","+6 000"]],"red":[],"dash":true,"note":"R088 SOL/KSM 경유 EGOBA. VOR/DME 또는 TACAN, RADAR 필요."},
+  {"id":"RKSM_SID_PINEV5","airport":"RKSM","type":"SID","name":"PINEV 5","rwy":"RWY 01/02, RWY 19/20","chart":"RKSM AD 2-6","grp":"RKSM · RWY 01/02·19/20 · 재래식","pts":[[37.445833,127.114167,"RKSM DER","—"],[37.295972,127.319056,"MUGAR","+6 000"],[37.252778,127.317778,"PINEV","-"]],"red":[],"dash":true,"note":"R141 SOL/KSM 경유 MUGAR·PINEV. VOR/DME 또는 TACAN, RADAR 필요."},
+  {"id":"RKSM_SID_MEESA1_KARBU","airport":"RKSM","type":"SID","name":"RNAV MEESA 1 · KARBU Transition","rwy":"RWY 01/02","chart":"RKSM AD 2-7 · 2-7-1","grp":"RKSM · RWY 01/02 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 01/02","—"],[37.578861,127.245778,"MEESA","+5 000"],[37.533056,127.664444,"KARBU","-"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 코딩표 좌표(MEESA~KARBU) 정확, DER~MEESA 구간만 근사."},
+  {"id":"RKSM_SID_MEESA1_EGOBA","airport":"RKSM","type":"SID","name":"RNAV MEESA 1 · EGOBA Transition","rwy":"RWY 01/02","chart":"RKSM AD 2-7 · 2-7-1","grp":"RKSM · RWY 01/02 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 01/02","—"],[37.578861,127.245778,"MEESA","+5 000"],[37.487500,127.379444,"EGOBA","-"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 코딩표 좌표(MEESA~EGOBA) 정확, DER~MEESA 구간만 근사."},
+  {"id":"RKSM_SID_MEESA1_PINEV","airport":"RKSM","type":"SID","name":"RNAV MEESA 1 · PINEV Transition","rwy":"RWY 01/02","chart":"RKSM AD 2-7 · 2-7-1","grp":"RKSM · RWY 01/02 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 01/02","—"],[37.578861,127.245778,"MEESA","+5 000"],[37.487500,127.379444,"EGOBA","+6 000"],[37.295972,127.319056,"MUGAR","+6 000"],[37.252778,127.317778,"PINEV","-"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 코딩표 좌표(MEESA~EGOBA~MUGAR~PINEV) 정확, DER~MEESA 구간만 근사."},
+  {"id":"RKSM_SID_MUGAR1","airport":"RKSM","type":"SID","name":"RNAV MUGAR 1","rwy":"RWY 19/20","chart":"RKSM AD 2-8 · 2-8-1","grp":"RKSM · RWY 19/20 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 19/20","—"],[37.295972,127.319056,"MUGAR","+6 000"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요, RADAR 필요. MUGAR 좌표는 코딩표 정확값."},
+  {"id":"RKSM_SID_SONGTAN1","airport":"RKSM","type":"SID","name":"RNAV SONGTAN 1","rwy":"RWY 19/20","chart":"RKSM AD 2-9 · 2-9-1","grp":"RKSM · RWY 19/20 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 19/20","—"],[37.094361,127.031667,"SOT","+8 000"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 군 당국 별도 승인 및 NOTAM 필요 절차. SOT(SONGTAN VORTAC) 좌표는 코딩표 정확값 — 오산기지 인근."},
+  {"id":"RKSM_SID_YEOJU1_KARBU","airport":"RKSM","type":"SID","name":"RNAV YEOJU 1 · KARBU Transition","rwy":"RWY 19/20","chart":"RKSM AD 2-10 · 2-10-1","grp":"RKSM · RWY 19/20 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 19/20","—"],[37.342583,127.320694,"BIDBA","+3 000"],[37.412889,127.447194,"YEOJU","+6 500"],[37.533056,127.664444,"KARBU","-"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 코딩표 좌표(BIDBA~YEOJU~KARBU) 정확, DER~BIDBA 구간만 근사."},
+  {"id":"RKSM_SID_YEOJU1_ANYANG","airport":"RKSM","type":"SID","name":"RNAV YEOJU 1 · ANYANG(SEL) Transition","rwy":"RWY 19/20","chart":"RKSM AD 2-10 · 2-10-1","grp":"RKSM · RWY 19/20 · RNAV","pts":[[37.445833,127.114167,"RKSM DER 19/20","—"],[37.342583,127.320694,"BIDBA","+3 000"],[37.412889,127.447194,"YEOJU","+6 500"],[37.539250,127.336778,"VEMUM","+6 500"],[37.455917,127.184500,"UPTAD","+7 500"],[37.413611,126.928361,"SEL","-"]],"red":[],"dash":false,"note":"RNAV1/GNSS 필요. 코딩표 좌표(BIDBA~YEOJU~VEMUM~UPTAD~SEL) 정확, DER~BIDBA 구간만 근사."}
+];
+D.routes.push(...RKSM_ROUTES);
+RKSM_ROUTES.forEach(r=>r.pts.forEach(p=>{
+  const cur=D.wp[p[2]];
+  if(!cur) D.wp[p[2]]={lat:p[0],lon:p[1],alt:p[3]};
+}));
+
+D.nav.push(
+  {id:'GMP',lat:37.556944,lon:126.797500,desc:'GIMPO INTL / RKSS'},
+  {id:'KIP',lat:37.557528,lon:126.792028,desc:'GIMPO VOR/DME 113.6'},
+  {id:'YJU',lat:37.748056,lon:126.991111,desc:'YANGJU VOR/DME 114.9'},
+  {id:'RKSM',lat:37.445833,lon:127.114167,desc:'SEONGNAM (SEOUL AB) / RKSM'}
+);
+
+/*
+ * SID departure points
+ * --------------------
+ * A SID starts at the departure end of its assigned runway (DER), not at the
+ * RKSI ARP and not at a synthetic midpoint shared by the L/R runways.
+ * Coordinates are the reciprocal runway thresholds published in RKSI/RKSS AD 2.12
+ * (WGS-84). A single procedure checkbox still controls both runway variants;
+ * only the first leg is branched, after which both variants join the published
+ * common fix sequence.
+ */
+const SID_DER_BY_GROUP = Object.freeze({
+  'RWY 15L/R': [
+    [37.456381,126.464672,'DER RWY 15L','—'], // reciprocal THR 33R
+    [37.454225,126.460856,'DER RWY 15R','—']  // reciprocal THR 33L
+  ],
+  'RWY 16L/R': [
+    [37.443414,126.441728,'DER RWY 16L','—'], // reciprocal THR 34R
+    [37.441250,126.437903,'DER RWY 16R','—']  // reciprocal THR 34L
+  ],
+  'RWY 33L/R': [
+    [37.481789,126.436339,'DER RWY 33L','—'], // reciprocal THR 15R
+    [37.483944,126.440156,'DER RWY 33R','—']  // reciprocal THR 15L
+  ],
+  'RWY 34L/R': [
+    [37.468808,126.413383,'DER RWY 34L','—'], // reciprocal THR 16R
+    [37.472808,126.415572,'DER RWY 34R','—']  // reciprocal THR 16L
+  ],
+  'RKSS RWY 14L/R': [
+    [37.547747,126.807106,'DER GMP 14L','—'], // reciprocal THR 32R
+    [37.548008,126.801031,'DER GMP 14R','—']  // reciprocal THR 32L
+  ],
+  'RKSS RWY 32L/R': [
+    [37.568386,126.775444,'DER GMP 32L','—'], // reciprocal THR 14R
+    [37.570708,126.778278,'DER GMP 32R','—']  // reciprocal THR 14L
+  ]
+});
+
+const sidStarts = r => r.type==='SID' ? SID_DER_BY_GROUP[r.rwy] : null;
+const routeWaypoints = r => {
+  const starts=sidStarts(r);
+  return starts ? [...starts,...r.pts.slice(1)] : r.pts;
+};
+const routeSegments = r => {
+  const out=[];
+  const starts=sidStarts(r);
+  if(starts && r.pts.length>1){
+    starts.forEach(a=>out.push({a,b:r.pts[1],i:0}));
+    for(let i=1;i<r.pts.length-1;i++) out.push({a:r.pts[i],b:r.pts[i+1],i});
+  }else{
+    for(let i=0;i<r.pts.length-1;i++) out.push({a:r.pts[i],b:r.pts[i+1],i});
+  }
+  return out;
+};
+
+/* Make the eight individual DERs available to the normal waypoint renderer. */
+Object.values(SID_DER_BY_GROUP).flat().forEach(p=>{
+  D.wp[p[2]]={lat:p[0],lon:p[1],alt:null};
+});
+
+const COL = {STAR:'#ffffff', SID:'#5aa9ff', IAP:'#c491ff'};
+const RED = '#ff3b30';
+const TYPES = ['STAR','SID','IAP'];
+const TLABEL = {STAR:'STAR · 도착', SID:'SID · 출발', IAP:'IAP · 접근'};
+const ESRI_ATTR = 'Tiles &copy; Esri — Esri, USGS, NOAA, i-cubed, USDA, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP';
+
+const map = L.map('map', {preferCanvas:true, zoomControl:true, worldCopyJump:false,
+  attributionControl:true}).setView([D.arp.lat, D.arp.lon], 9);
+L.control.scale({metric:true, imperial:true, position:'bottomright'}).addTo(map);
+
+/* ---------- basemaps ---------- */
+const T = (u,o={}) => L.tileLayer(u, Object.assign({maxZoom:18, maxNativeZoom:17}, o));
+const BASE = {
+  sat : T('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:ESRI_ATTR}),
+  terr: T('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',{attribution:ESRI_ATTR, maxNativeZoom:13}),
+  osm : T('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}),
+  dark: L.layerGroup([])
+};
+const REF = T('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{attribution:ESRI_ATTR});
+let curBase = null, refOn = false;
+function setBase(b){
+  if(curBase) map.removeLayer(curBase);
+  if(refOn){ map.removeLayer(REF); refOn=false; }
+  const key = (b==='hyb') ? 'sat' : b;
+  curBase = BASE[key]; map.addLayer(curBase); curBase.bringToBack();
+  if(b==='hyb'){ map.addLayer(REF); REF.bringToFront(); refOn=true; }
+  document.getElementById('map').style.background = (b==='osm'||b==='terr') ? '#e8e4dc' : '#0c1116';
+  document.querySelectorAll('#base button').forEach(x=>x.classList.toggle('on', x.dataset.b===b));
+}
+
+/* ---------- panes ---------- */
+map.createPane('casing').style.zIndex = 400;
+map.createPane('lines').style.zIndex  = 410;
+map.createPane('rings').style.zIndex  = 415;
+map.createPane('arrows').style.zIndex = 416;
+map.getPane('arrows').style.pointerEvents = 'none';
+
+/* ---------- routes ---------- */
+const routeLayers = {};
+D.routes.forEach(r=>{
+  const grp = L.layerGroup();
+  const redset = new Set(r.red);
+  r.__legs = [];
+  routeSegments(r).forEach(({a,b,i})=>{
+    if(a[2]===b[2]) return;
+    const ll = [[a[0],a[1]],[b[0],b[1]]];
+    const isRed = redset.has(i);
+    const cas = L.polyline(ll,{pane:'casing', color:'#000', weight:(isRed?6.5:5.5),
+                               opacity:.55, lineCap:'round'});
+    const ln  = L.polyline(ll,{pane:'lines', color:(isRed?RED:COL[r.type]),
+                               weight:(isRed?3.1:2.3), opacity:1, lineCap:'round',
+                               dashArray:(r.dash?'8,5':null)});
+    ln.__red = isRed; cas.__red = isRed;
+    ln.on('mouseover',()=>{hud(r); focusLabels(r,true);});
+    ln.on('mouseout', ()=>focusLabels(r,false));
+    ln.on('click',    ()=>{hud(r); focusLabels(r,true); showRoutePreview(r);});
+    cas.on('mouseover',()=>{hud(r); focusLabels(r,true);});
+    cas.on('mouseout', ()=>focusLabels(r,false));
+    cas.on('click',    ()=>{hud(r); focusLabels(r,true); showRoutePreview(r);});
+    grp.addLayer(cas); grp.addLayer(ln);
+    r.__legs.push([cas,ln]);
+  });
+  r.__redAny = redset.size>0;
+  const fullLL = routeWaypoints(r).map(p=>[p[0],p[1]]);
+  r.__deco = L.polylineDecorator(fullLL,{
+    patterns:[{offset:'6%', repeat:'10%', symbol:L.Symbol.arrowHead({
+      pixelSize:12, headAngle:40, polygon:true,
+      pathOptions:{pane:'arrows', stroke:true, color:'#000', weight:1.3, opacity:1,
+                   fillColor:(r.__redAny?RED:COL[r.type]), fillOpacity:1}
+    })}]
+  });
+  grp.addLayer(r.__deco);
+  routeLayers[r.id]=grp;
+});
+
+let lowMode=true, showRing=true;
+let showSym=true, showName=true, showAlt=false, majorOnly=true;
+
+/* 주요 fix = 각 경로의 시작·끝점 + 4개 이상 절차가 공유하는 fix */
+const useCount={}, MAJOR=new Set();
+D.routes.forEach(r=>{
+  const pts=routeWaypoints(r);
+  pts.forEach(p=>useCount[p[2]]=(useCount[p[2]]||0)+1);
+  MAJOR.add(pts[0][2]);
+  if(sidStarts(r)) MAJOR.add(pts[1][2]);
+  MAJOR.add(pts[pts.length-1][2]);
+});
+Object.keys(useCount).forEach(n=>{ if(useCount[n]>=4) MAJOR.add(n); });
+
+function syncWpCss(){
+  const c=document.getElementById('map').classList;
+  c.toggle('hide-sym',  !showSym);
+  c.toggle('hide-name', !showName);
+  c.toggle('hide-alt',  !showAlt);
+  c.toggle('only-major', majorOnly);
+  document.getElementById('bSym').classList.toggle('on',showSym);
+  document.getElementById('bName').classList.toggle('on',showName);
+  document.getElementById('bAlt').classList.toggle('on',showAlt);
+  document.getElementById('bMajor').classList.toggle('on',majorOnly);
+}
+const vis = new Set(D.routes.filter(r=>r.type!=='IAP').map(r=>r.id));
+
+function styleLow(){
+  D.routes.forEach(r=>{
+    r.__legs.forEach(([cas,ln])=>{
+      const dim = lowMode && !ln.__red;
+      ln.setStyle({opacity: dim?0.16:1});
+      cas.setStyle({opacity: dim?0.10:0.55});
+    });
+    // arrows stay fully visible regardless of low-altitude dim mode — their whole point is direction at a glance
+  });
+}
+function apply(){
+  D.routes.forEach(r=>{
+    const on = vis.has(r.id), has = map.hasLayer(routeLayers[r.id]);
+    if(on && !has) map.addLayer(routeLayers[r.id]);
+    if(!on && has) map.removeLayer(routeLayers[r.id]);
+  });
+  const need={};
+  vis.forEach(id=>{ const r=D.routes.find(x=>x.id===id); routeWaypoints(r).forEach(p=>need[p[2]]=1); });
+  Object.keys(wpMarkers).forEach(nm=>{
+    const anyWp = showSym||showName||showAlt;
+    const m=wpMarkers[nm], want = !!need[nm] && anyWp, has = map.hasLayer(m);
+    if(want && !has) map.addLayer(m);
+    if(!want && has) map.removeLayer(m);
+  });
+  const c={STAR:0,SID:0,IAP:0};
+  vis.forEach(id=>c[D.routes.find(x=>x.id===id).type]++);
+  const t={STAR:0,SID:0,IAP:0};
+  D.routes.forEach(r=>t[r.type]++);
+  document.getElementById('count').textContent =
+    'STAR '+c.STAR+'/'+t.STAR+'   SID '+c.SID+'/'+t.SID+'   IAP '+c.IAP+'/'+t.IAP+'   ·   표시 '+vis.size+'/'+D.routes.length;
+  document.querySelectorAll('input[data-id]').forEach(cb=>cb.checked = vis.has(cb.dataset.id));
+  syncParents(); styleLow();
+}
+
+
+/* ---------- waypoints ---------- */
+const TRI = '<svg width="14" height="14"><polygon points="7,0 0.5,11 13.5,11" fill="rgba(0,0,0,.45)" stroke="#fff" stroke-width="1.6"/></svg>';
+const HEX = '<svg width="18" height="18"><polygon points="9,0 17,4.5 17,13.5 9,18 1,13.5 1,4.5" fill="rgba(0,0,0,.45)" stroke="#7fe3ff" stroke-width="1.4"/></svg>';
+const APT = '<svg width="18" height="18"><circle cx="9" cy="9" r="6" fill="none" stroke="#ffe27a" stroke-width="1.8"/><line x1="2" y1="16" x2="16" y2="2" stroke="#ffe27a" stroke-width="2.6"/></svg>';
+const wpMarkers = {};
+Object.keys(D.wp).forEach(nm=>{
+  const w=D.wp[nm];
+  const alt = (w.alt && w.alt!=='-' && !w.alt.startsWith('—')) ? '<em>'+w.alt.replace(/\s/g,'')+'</em>' : '';
+  const cls = 'wp' + (MAJOR.has(nm)?'':' minor');
+  const ic = L.divIcon({className:cls, html:TRI+'<b>'+nm+'</b>'+alt, iconSize:[0,0], iconAnchor:[0,0]});
+  wpMarkers[nm] = L.marker([w.lat,w.lon],{icon:ic, interactive:false, keyboard:false});
+});
+const staticMk = L.layerGroup();
+D.nav.forEach(n=>{
+  staticMk.addLayer(L.marker([n.lat,n.lon],{interactive:false,
+    icon:L.divIcon({className:'wp nav', html:HEX+'<b>'+n.id+'</b>', iconSize:[0,0], iconAnchor:[0,0]})}));
+});
+staticMk.addLayer(L.marker([D.arp.lat,D.arp.lon],{interactive:false,
+  icon:L.divIcon({className:'wp arp', html:APT+'<b>RKSI</b>', iconSize:[0,0], iconAnchor:[0,0]})}));
+staticMk.addTo(map);
+
+function focusLabels(r,on){
+  routeWaypoints(r).forEach(p=>{
+    const m=wpMarkers[p[2]]; if(!m) return;
+    const e=m.getElement(); if(!e) return;
+    e.classList.toggle('force',on);
+  });
+}
+
+/* ---------- UAM rings ---------- */
+const NM = 1852;
+const rings = L.layerGroup([13,20].map(n=>
+  L.circle([D.arp.lat,D.arp.lon],{pane:'rings', radius:n*NM, fill:false,
+    color:'#ffa03c', weight:1.6, opacity:.9, dashArray:'7,6'})
+));
+const ringLbl = L.layerGroup([13,20].map(n=>
+  L.marker([D.arp.lat + n/60, D.arp.lon],{interactive:false,
+    icon:L.divIcon({className:'wp', html:'<b style="color:#ffa03c">'+n+' NM</b>', iconSize:[0,0], iconAnchor:[0,0]})})
+));
+rings.addTo(map); ringLbl.addTo(map);
+
+/* ---------- RKSI / RKSS Class B airspace (AIP Korea ENR 2.1, 2026-03-05 개정판 기준) ----------
+   동심원 3단(5·10·20 NM), 각 단의 수직 한계는 AIP 원문 그대로:
+   0–5NM SFC(GND)–10,000ft / 5–10NM 1,000ft AGL–10,000ft / 10–20NM 5,000ft AGL–10,000ft.
+   중심좌표는 AIP상 Class B 지정 중심점(RKSI 372745N/1262621E, RKSS 373325N/1264751E)이며,
+   위의 주황 점선(13/20NM)은 RKSI ARP 기준 UAM 참고원일 뿐 실제 관제공역 경계가 아니므로
+   구분을 위해 파란 실선으로 그린다. 링을 클릭하면 단별 수직 한계를 팝업으로 보여준다. */
+map.createPane('classb').style.zIndex = 413;
+const CLASSB_AP = [
+  {id:'RKSI', lat:37.462500, lon:126.439167},
+  {id:'RKSS', lat:37.556944, lon:126.797500}
+];
+const CLASSB_RINGS = [
+  {r:5,  vert:'SFC – 10,000 ft'},
+  {r:10, vert:'1,000 ft AGL – 10,000 ft'},
+  {r:20, vert:'5,000 ft AGL – 10,000 ft'}
+];
+const classB = L.layerGroup(), classBLbl = L.layerGroup();
+CLASSB_AP.forEach(ap=>{
+  CLASSB_RINGS.forEach(cr=>{
+    const c = L.circle([ap.lat,ap.lon],{pane:'classb', radius:cr.r*NM, fill:false,
+      color:'#3ea8ff', weight:1.4, opacity:.85});
+    c.bindPopup(ap.id+' Class B · '+cr.r+' NM 링 · '+cr.vert);
+    classB.addLayer(c);
+  });
+  classBLbl.addLayer(L.marker([ap.lat + 20/60, ap.lon],{interactive:false,
+    icon:L.divIcon({className:'wp', html:'<b style="color:#3ea8ff">'+ap.id+' Class B</b>', iconSize:[0,0], iconAnchor:[0,0]})}));
+});
+classB.addTo(map); classBLbl.addTo(map);
+
+/* ---------- state ---------- */
+/* ---------- tree ---------- */
+const tree = document.getElementById('tree');
+TYPES.forEach(tp=>{
+  const rs = D.routes.filter(r=>r.type===tp);
+  const grpNames = [...new Set(rs.map(r=>r.grp))];
+  const wrap = el('div','grpwrap');
+  wrap.appendChild(rowEl('t0', TLABEL[tp], rs.length, {type:tp}, true));
+  const kids = el('div','kids');
+  grpNames.forEach(gn=>{
+    const grs = rs.filter(r=>r.grp===gn);
+    const gw = el('div','grpwrap');
+    gw.appendChild(rowEl('t1', gn, grs.length, {type:tp,grp:gn}, true));
+    const gk = el('div','kids');
+    grs.forEach(r=> gk.appendChild(rowEl('t2', r.name, null, {id:r.id}, false, tp, r.red.length>0)));
+    gw.appendChild(gk); kids.appendChild(gw);
+  });
+  wrap.appendChild(kids); tree.appendChild(wrap);
+});
+function el(t,c){ const e=document.createElement(t); if(c)e.className=c; return e; }
+function rowEl(cls,label,n,data,isParent,tp,hasRed){
+  const d = el('div','row '+cls);
+  if(isParent){ const ca=el('span','caret'); ca.textContent='▼'; d.appendChild(ca); }
+  const cb=document.createElement('input'); cb.type='checkbox';
+  for(const k in data) cb.dataset[k]=data[k];
+  d.appendChild(cb);
+  if(!isParent){ const sw=el('span','sw'); sw.style.borderColor = hasRed ? RED : COL[tp]; d.appendChild(sw); }
+  const nm=el('span','n'); nm.textContent=label; nm.title=label; d.appendChild(nm);
+  if(n!=null){ const c=el('span','c'); c.textContent=n; d.appendChild(c); }
+  d.addEventListener('click',e=>{
+    if(e.target.tagName==='INPUT') return;
+    if(e.target.classList.contains('caret')){ d.parentElement.classList.toggle('collapsed'); return; }
+    cb.checked=!cb.checked; cb.dispatchEvent(new Event('change',{bubbles:true}));
+  });
+  cb.addEventListener('change',()=>{
+    filterBy(cb.dataset).forEach(r=> cb.checked ? vis.add(r.id) : vis.delete(r.id));
+    apply();
+  });
+  return d;
+}
+function filterBy(ds){
+  if(ds.id) return D.routes.filter(r=>r.id===ds.id);
+  return D.routes.filter(r=>(!ds.type||r.type===ds.type)&&(!ds.grp||r.grp===ds.grp));
+}
+function syncParents(){
+  document.querySelectorAll('input[data-type]').forEach(cb=>{
+    const sel=filterBy(cb.dataset), on=sel.filter(r=>vis.has(r.id)).length;
+    cb.checked = on===sel.length && on>0;
+    cb.indeterminate = on>0 && on<sel.length;
+  });
+}
+
+/* ---------- HUD ---------- */
+function hud(r){
+  const lowN=r.red.length, tot=r.pts.length-1;
+  const starts=sidStarts(r);
+  const fixInfo=starts ? 'DER '+starts.map(p=>p[2].replace('DER RWY ','')).join('/')+' · 공통 fix '+(r.pts.length-1)
+                       : 'fix '+r.pts.length;
+  document.getElementById('hud').innerHTML =
+    '<div class="t" style="color:'+(lowN?RED:COL[r.type])+'">'+esc(r.name)+'</div>'
+    +'<div class="m">'+esc(r.airport||'RKSI')+' · '+esc(r.chart)+' · '+esc(r.rwy)+' · '+fixInfo
+    +' · <span style="color:'+RED+'">5 000 ft 이하 leg '+lowN+'/'+tot+'</span></div>'
+    +'<div style="margin-top:4px">'+esc(r.note||'')+'</div>';
+}
+const esc = s => String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+/* ---------- 경로 클릭 시 미니 시현(SVG, 방향 애니메이션) ---------- */
+function showRoutePreview(r){
+  const pts=routeWaypoints(r); // [lat,lon,name,alt], 이미 비행 방향 순서
+  if(pts.length<2) return;
+  const W=280,H=190,PAD=26;
+  const lats=pts.map(p=>p[0]), lons=pts.map(p=>p[1]);
+  const latMid=(Math.min(...lats)+Math.max(...lats))/2;
+  const cosLat=Math.cos(latMid*Math.PI/180);
+  const xs=pts.map(p=>p[1]*cosLat), ys=pts.map(p=>p[0]);
+  const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
+  const spanX=Math.max(1e-6,x1-x0), spanY=Math.max(1e-6,y1-y0);
+  const scale=Math.min((W-2*PAD)/spanX,(H-2*PAD)/spanY);
+  const cx=(x0+x1)/2, cy=(y0+y1)/2;
+  const px = x => W/2 + (x-cx)*scale;
+  const py = y => H/2 - (y-cy)*scale; // 위도가 클수록 화면 위쪽
+  const col = r.red&&r.red.length ? RED : COL[r.type];
+
+  const coords = pts.map(p=>[px(p[1]*cosLat), py(p[0])]);
+  const d = coords.map((c,i)=>(i===0?'M':'L')+c[0].toFixed(1)+','+c[1].toFixed(1)).join(' ');
+  const dots = coords.map((c,i)=>{
+    const isEnd = i===0||i===coords.length-1;
+    return '<circle cx="'+c[0].toFixed(1)+'" cy="'+c[1].toFixed(1)+'" r="'+(isEnd?3.4:2)+'" '
+         +'fill="'+(isEnd?'#fff':col)+'" stroke="#05080b" stroke-width="1"/>';
+  }).join('');
+  const dur=Math.max(2.2,Math.min(6,coords.length*0.35));
+
+  document.getElementById('rprevTitle').innerHTML =
+    '<span style="color:'+col+'">'+esc(r.name)+'</span>';
+  document.getElementById('rprevSvg').innerHTML =
+    '<svg viewBox="0 0 '+W+' '+H+'">'
+    +'<path id="rprevPath" d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>'
+    +dots
+    +'<polygon points="-6,-4 8,0 -6,4" fill="'+col+'" stroke="#05080b" stroke-width="1">'
+    +'<animateMotion dur="'+dur+'s" repeatCount="indefinite" rotate="auto">'
+    +'<mpath href="#rprevPath"/></animateMotion></polygon>'
+    +'</svg>';
+  document.getElementById('rprevWps').textContent =
+    (sidStarts(r)?'출발(DER) → ':'') + pts.map(p=>p[2]).join(' → ');
+  document.getElementById('rprev').style.display='block';
+}
+document.getElementById('rprevClose').onclick=()=>{ document.getElementById('rprev').style.display='none'; };
+
+/* ---------- controls ---------- */
+function fitAll(){
+  const b=L.latLngBounds([]);
+  D.routes.forEach(r=>routeWaypoints(r).forEach(p=>b.extend([p[0],p[1]])));
+  PUBLISHED_HOLDS.forEach(h=>(h.__pts||[]).forEach(p=>b.extend(p)));
+  map.fitBounds(b,{padding:[40,40]});
+}
+document.querySelectorAll('#base button').forEach(b=>b.onclick=()=>setBase(b.dataset.b));
+document.getElementById('bFit').onclick=fitAll;
+document.getElementById('bLow').onclick=e=>{lowMode=!lowMode;e.target.classList.toggle('on',lowMode);styleLow();};
+document.getElementById('bSym').onclick  =()=>{showSym=!showSym;   syncWpCss(); apply();};
+document.getElementById('bName').onclick =()=>{showName=!showName; syncWpCss(); apply();};
+document.getElementById('bAlt').onclick  =()=>{showAlt=!showAlt;   syncWpCss(); apply();};
+document.getElementById('bMajor').onclick=()=>{majorOnly=!majorOnly;syncWpCss();};
+document.getElementById('bNone').onclick =()=>{showSym=showName=showAlt=false; syncWpCss(); apply();};
+document.getElementById('bRing').onclick=e=>{showRing=!showRing;e.target.classList.toggle('on',showRing);
+  if(showRing){rings.addTo(map);ringLbl.addTo(map);}else{map.removeLayer(rings);map.removeLayer(ringLbl);}};
+document.querySelectorAll('[data-pre]').forEach(b=>b.onclick=()=>{
+  const p=b.dataset.pre; vis.clear();
+  if(p==='all') D.routes.forEach(r=>vis.add(r.id));
+  else if(p==='red') D.routes.filter(r=>r.red.length>0).forEach(r=>vis.add(r.id));
+  else if(p==='RKSI'||p==='RKSS'||p==='RKSM') D.routes.filter(r=>r.airport===p).forEach(r=>vis.add(r.id));
+  else if(TYPES.includes(p)) D.routes.filter(r=>r.type===p).forEach(r=>vis.add(r.id));
+  apply();
+});
+document.querySelectorAll('[data-appr]').forEach(b=>b.onclick=()=>{
+  const [airport,rwy]=b.dataset.appr.split(':');
+  const pairLabel = rwy.replace(/[LR]$/,'L/R');
+  vis.clear();
+  D.routes.forEach(r=>{
+    if(r.airport!==airport) return;
+    if(r.type==='STAR' && r.rwy.includes(pairLabel)) vis.add(r.id);
+    else if(r.type==='IAP' && r.rwy.endsWith(rwy)) vis.add(r.id);
+  });
+  apply();
+  document.querySelectorAll('[data-appr]').forEach(x=>x.classList.toggle('on', x===b));
+});
+document.getElementById('q').addEventListener('input',e=>{
+  const v=e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.row.t2').forEach(row=>{
+    const t=row.querySelector('.n').textContent.toLowerCase();
+    row.style.display=(!v||t.includes(v))?'':'none';
+  });
+});
+map.on('zoomend',()=>{
+  const z=map.getZoom();
+  /* 넓게 볼 땐 이름이 뭉치므로 자동으로 주요 fix만 */
+  document.getElementById('map').classList.toggle('only-major', majorOnly || z<9);
+});
+
+/* ================= UAM 회랑 (인천 영종~청라~월미 노선) =================
+   ※ 좌표는 업로드된 노선도 이미지를 픽셀 디지타이즈해서 환산한 "추정값"입니다.
+     - 축척: 이미지 내 Google 스케일바 1 km = 46 px
+     - 기준점(앵커): WP4(New airport IC)를 37.4900N / 126.5180E 로 가정
+     - 형상(각 점의 상대 위치)은 원본에 충실하지만, 절대 위치는 ±1 km 오차 가능
+     - 사이드바 "회랑 편집"으로 점을 끌어 보정한 뒤 "좌표 복사(JSON)"로 내보내세요.
+   ================================================================= */
+const UAM = {
+  note:'인천 UAM 회랑 — 강화남단 ↔ 영종 ↔ 홍대염전VP ↔ 인천대교 ↔ 월미도 ↔ 시화 (2026-09-04 북측 정북 재정렬)',
+  alt :'고도분리 운용(2026-09-04): SOUTHBOUND 2 150 ft · NORTHBOUND 2 450 ft (300 ft 층분리) — 실측 빈 층(1 700–2 900 ft) 정중앙. 아래 1 700 ft 벽·위 2 900 ft 벽에서 각 450 ft 여유',
+  /* 북측(WP6) → 영종 → 남측 → 월미도 → 시화 순서.
+     2026-08-24: 북쪽 회랑은 WP6까지만 표시 — "서울로 복귀" 스텁(SEOUL-N)과 그 구간의 회랑선은
+     삭제. 시화 구간은 공시 노선도에 없는 신규 연장 — WP1(월미도)에서 시화호 위를 대략 가로지르는
+     개략 경로로 추가함(SIHWA는 두 점의 중점을 잡은 스케치).
+     2026-08-31: 공항 근처 회랑에만 집중하기로 방향을 좁혀 SIHWA 이남 구간(오이도·동탄 연장,
+     2026-08-24 추가분)을 삭제 — 회랑은 다시 SIHWA에서 종결.
+     2026-09-04: 운용고도 재조정 SB 2 000/NB 2 400 → SB 2 150/NB 2 450 ft (층분리 400→300 ft).
+     이유 — 500 ft 단위 집계로는 "1 500–2 000 ft가 혼잡(14.7%)"으로 보였으나, 100 ft 단위로
+     다시 뽑으니 그 트래픽이 전부 1 500–1 700 ft에 몰려 있고 1 700 ft 위는 거의 비어 있었다.
+     즉 실제 빈 층은 2 000–2 500 ft(500 ft)가 아니라 1 700–2 900 ft(1 200 ft)였다.
+     구간별로도 확인: WP1-SIHWA는 1 700–2 600 ft가 완전 공백(고정익 최저 1 600 ft),
+     WP3-WP1은 1 700–2 900 ft에 13샘플뿐, HDY-WP3도 동일 경향. 23일 전수 기준 조우
+     샘플이 SB2000/NB2400 = 303개 → SB2150/NB2450 = 150개로 절반이 되고, 헬기 조우는 0이다.
+     층분리 300 ft는 σ_z,rel 16 m 기준 5.7σ(겹침확률 1.1e-08)로 충분하다.
+     2026-09-01: 운용고도를 SB 1 500/NB 1 900 → SB 2 000/NB 2 400 ft로 상향.
+     이유 — VM 23일 연속녹화(543,703라인) 전수 스캔 결과, 회랑 밴드 안을 지나는 헬기
+     8대(HL9628 도서연결 358샘플, IC003, KNP973 경찰, CARD10/16/67·KEEP22 미군, KCGB521 해경)의
+     실측 고도 상한이 1 550 ft였다. 기존 SB 1 500 ft는 이들과 고도가 정확히 겹쳐(밴드 내 헬기
+     샘플의 44.6%가 500 ft 이내로 접근) 유지 불가. K-UAM ConOps는 "헬기는 300 m(984 ft) 이하"를
+     전제하고 회랑 밴드를 300–600 m로 잡았으나, 실측은 그 전제가 이 구간에서 성립하지 않음을
+     보여준다 — 밴드 하단이 실질적으로 사용 불가하므로 ConOps의 수치가 아니라 취지(헬기와의
+     수직분리 확보)를 따라 상향했다. 헬기 상한 대비 450 ft(경찰 제외 시 775 ft) 확보.
+     2026-08-31: 왕복 운용 방식을 "수평 2개 항로선"에서 "단일 평면경로 + 고도분리"로 변경.
+     이유 — Reich CRM으로 계산해보니, 수평으로 왕복 2선을 벌리면(TLS 1e-7 기준 항로선 간격
+     1.84NM 필요) 상용기 복행경로에 가까운 쪽 항로선이 WP3-WP2 구간(중심선 실측 0.912NM)에서
+     음수가 되어 상용기 보호구역을 침범한다 — 수평 왕복 2선은 이 회랑에서 기하학적으로 성립 불가.
+     따라서 평면경로는 하나로 두고 SOUTHBOUND 1 500 ft / NORTHBOUND 1 900 ft로 층을 나눈다.
+     단, 15L 복행기가 HDY-WP3 교차점을 약 1 332 ft(차트 명시 2.5% 상승률 기준)로 통과하므로
+     두 층 모두와 수직분리가 확보되지 않는다 — 복행 시에는 고도분리로도 해결 불가, 기존대로
+     회랑 CLOSED(시간분리)로 대응한다.
+     2026-09-04: ★북쪽 정렬 변경★ — WP6 (37.57793,126.60336)→(37.63382,126.50688),
+     WP5 (37.519681,126.539662)→(37.53942,126.49658), WP3 (37.44391,126.53280)→(37.45060,126.51993).
+     북쪽 구간을 김포 접근류가 흐르는 동북동에서 거의 정북(침로 184.9°/187.6°, 침로차 2.7°)으로 틀었다.
+     실측 효과(주간 597,978라인 전수): 회랑 밴드 42,391→13,151샘플(-69%),
+     WP6-WP5 38,640→9,424(-76%), VFR 경항공기 조우 SB78/NB184 → 0/0(완전 제거),
+     김포 ARP 이격 8.99→14.24NM, SID EGOBA/OSPOT 2E 이격 0.564→1.082NM,
+     STAR OLMEN 2C 이격 0.197→0.379NM. RKSI 절차 관통 수는 15개로 동일(공항 인접부는 불가피).
+     기하: 최대 선회 36.0°(WP4), 코너컷 편차 ≤0.025NM, 총연장 34.20km(특별법 50km의 68%).
+     운용고도는 신안 기준 재최적화에서도 SB2150/NB2450이 최적(조우 319 < 1700/2000안 425,
+     1750/2050안 420)이라 유지 — 1,500-1,700ft에 고정익 288샘플 벽이 있어 저층 이동 불가.
+     단 구간별로는 WP6-WP5만 SB1700/NB2000이 최적(조우 32 vs 현행 138)이라 향후 구간별
+     고도 차등을 검토할 여지가 있다.
+     AIP ENR 5.1 대조(신규): P-518 한국전술구역(GND~UNL 비행금지)까지 WP6 중심선 3.56NM,
+     회랑 가장자리 2.31NM. 인천공항 계기비행절차 보호구역 S1(1,600-6,000ft AMSL,
+     "Seoul Approach 관제 IFR 전용, VFR 사용금지")까지 가장자리 2.33NM. 둘 다 침범 없음.
+     ※ S1은 "특정 고도대를 관제 IFR 전용으로 지정하고 VFR을 배제"하는 국내 선례로, UAM 회랑의
+       제도적 근거로 원용 가능.
+     RKSI Class B 구조(AIP RKSI AD 2-73 AMDT 10/25: 0-5NM SFC~10,000AMSL /
+     5-10NM 1,000ft AGL~ / 10-20NM 5,000ft AGL~)로 판정하면 운용고도 2,150/2,450ft 기준
+     WP6(ARP 10.78NM)과 SIHWA(10.69NM)는 Class B 하부 이탈 → 양 끝단은 Class E이며
+     그곳에서는 VFR이 관제허가 없이 비행하고 ATC 분리도 제공되지 않는다.
+     2026-09-04 결정: WP6·SIHWA를 그대로 유지하고 이 조건을 인지·수용한다(미해결 리스크로 관리).
+     ※ 주의 — WP6/WP5는 좌표만 옮겼고 명칭('Buk-Incheon IC' 등)은 옛 지상 기준점 이름이라
+     2026-09-06: 북측 추가 직선화 — WP6 (37.63382,126.50688)→(37.63490,126.49109) 0.75 NM 서진,
+     WP4 (37.48855,126.48802)→(37.47786,126.50105) 0.89 NM 남동진.
+     효과: 침로 184.9/187.6/151.6° → 177.4/176.7/173.2°로 WP6-WP5-WP4가 사실상 단일 직선
+     (침로차 0.7°). 최대 선회 36.0°(WP4) → 33.0°(HDY). 절차 관통 RKSI 15+RKSS 13=28개 →
+     RKSI 13+RKSS 11=24개로 감소. 총연장 34.20 → 33.94 km.
+     대가 — 버티포트(HDY) 진입·이탈 분리각 168.5° → 147.0°(FAA EB-105 기준 135°는 충족하나
+     이상치 180°에서 멀어짐). WP4-HDY 구간이 1.47 → 0.66 NM(290 km/h로 약 4.5초)로 짧아진 탓.
+     P-518/S1 가장자리 여유 2.31 → 2.13 NM. */
+  pts:[
+    [37.63490,126.49109,'WP6','Buk-Incheon IC Report Point','wp'],
+    [37.53942,126.49658,'WP5','Report Point','wp'],
+    [37.47786,126.50105,'WP4','New airport IC Report Point','wp'],
+    [37.46700,126.50269,'HDY','홍대염전 버티포트 경유(VP1)','stub'],
+    [37.45060,126.51993,'WP3','Incheon Bridge','wp'],
+    [37.40750,126.61709,'WP1','Wolmi-do Report Point','wp'],
+    [37.40466,126.65125,'SIHWA','시화호 경유(개략)','wp']
+  ],
+  /* 회랑 반폭 근거 (2026-08-31 재산출).
+     1차로 복행경로(15L MAHF) 기준 0.312NM을 냈으나, 이는 잘못된 기준이었다 —
+     복행경로는 상시 점유 공역이 아니고(복행 발생 시에만 사용), 그때는 회랑을 CLOSED로
+     전환하기로 이미 결정했기 때문이다. 게다가 전 구간 검사 시 WP4-HDY(0.211NM)와
+     WP1-SIHWA(교차)가 더 좁아, 복행경로 기준으로는 애초에 어떤 폭도 성립하지 않는다.
+     따라서 폭 기준은 "상시 사용되는 절차"로 잡는다:
+       RWY15L 최종접근 3.288NM / RWY33L 2.072NM / RWY33R 1.848NM ← 최협착
+     1.848 − 0.6(상용기 2×RNP0.3 containment) = 1.248NM.
+     총폭 4624m로 도심항공교통 특별법 최소폭 600m를 크게 상회하고,
+     역산 RNP_u ≤ 0.624로 상용기 RNP0.3보다도 느슨해 달성 부담이 없다.
+     290km/h 최대 선회이탈 27m는 이 예산의 2.3%에 불과하다. */
+  halfWidthNM: 1.248,
+  /* 홀딩패턴: 표준 우선회, 1분 직선구간, 선회반경 R = V/188.5 NM (rate one turn) */
+  hold:{ speedKt:80, legMin:1.0, dir:'R' },
+  /* 그리지 않을 본선 구간 */
+  skipLegs:[],
+  /* 2026-08-31: 본선(WP4-HDY-WP3)이 버티포트(HDY)를 직접 지나가도록 바뀌어서
+     별도 접속 구간(feeder)이 더 이상 필요 없음. */
+  feeders:[]
+};
+
+/* 회랑 점 드래그 위치를 localStorage에 저장/복원 — 새로고침해도 유지되게.
+   이름(p[2])으로 매칭해서 저장하므로 UAM.pts 배열 순서가 바뀌어도 안전하다. */
+const UAM_LS_KEY='uam_pts_override_v3';
+const UAM_DEFAULT_PTS = UAM.pts.map(p=>[p[0],p[1]]); // 복원용 원본 좌표 백업
+(function loadUamOverrides(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(UAM_LS_KEY)||'null');
+    if(saved) UAM.pts.forEach(p=>{ if(saved[p[2]]){ p[0]=saved[p[2]][0]; p[1]=saved[p[2]][1]; } });
+  }catch(e){}
+})();
+function saveUamOverrides(){
+  const out={};
+  UAM.pts.forEach(p=>{ out[p[2]]=[p[0],p[1]]; });
+  localStorage.setItem(UAM_LS_KEY, JSON.stringify(out));
+}
+function resetUamOverrides(){
+  UAM.pts.forEach((p,i)=>{ p[0]=UAM_DEFAULT_PTS[i][0]; p[1]=UAM_DEFAULT_PTS[i][1]; });
+  localStorage.removeItem(UAM_LS_KEY);
+  uamMarkers.forEach(m=>m.setLatLng([m.__pt[0],m.__pt[1]]));
+  uamRefresh();
+  document.getElementById('uamMsg').textContent='기본값으로 복원됨';
+  /* 2026-09-06 버그수정: 복원 후에도 좌표 텍스트박스에 드래그 이전 값이 그대로 남아
+     "복원이 안 됐다"고 오해하게 만들었다. 텍스트박스가 열려 있으면 함께 갱신한다. */
+  const ta=document.getElementById('uamOut');
+  if(ta && ta.style.display!=='none') uamExport();
+}
+
+map.createPane('uamband').style.zIndex = 405;
+map.createPane('uamline').style.zIndex = 418;
+map.createPane('uampt').style.zIndex   = 640;
+
+const uamBand = L.layerGroup(), uamLine = L.layerGroup(), uamPt = L.layerGroup();
+let uamOn=true, uamBandOn=true, uamLblOn=true, uamEdit=false;
+let uamPoly=null, uamCas=null, uamBandPoly=null;
+const uamMarkers=[];
+
+const NM2M = 1852;
+function mPerDeg(lat){ return {lat:110574, lon:111320*Math.cos(lat*Math.PI/180)}; }
+function offsetPolygon(pts, halfM){
+  const L1=[], R1=[];
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i], a=pts[Math.max(i-1,0)], b=pts[Math.min(i+1,pts.length-1)];
+    const k=mPerDeg(p[0]);
+    let dx=(b[1]-a[1])*k.lon, dy=(b[0]-a[0])*k.lat;
+    const n=Math.hypot(dx,dy)||1; dx/=n; dy/=n;
+    const nx=-dy, ny=dx;                       /* 좌측 법선 */
+    L1.push([p[0]+ (ny*halfM)/k.lat, p[1]+ (nx*halfM)/k.lon]);
+    R1.push([p[0]- (ny*halfM)/k.lat, p[1]- (nx*halfM)/k.lon]);
+  }
+  return L1.concat(R1.reverse());
+}
+
+function uamChains(){
+  const sk=(UAM.skipLegs||[]).map(p=>p.join('>'));
+  const out=[]; let cur=[UAM.pts[0]];
+  for(let i=0;i<UAM.pts.length-1;i++){
+    const a=UAM.pts[i], b=UAM.pts[i+1];
+    if(sk.indexOf(a[2]+'>'+b[2])>=0 || sk.indexOf(b[2]+'>'+a[2])>=0){
+      if(cur.length>1) out.push(cur);
+      cur=[b];
+    } else cur.push(b);
+  }
+  if(cur.length>1) out.push(cur);
+  return out;
+}
+const UWP='<svg width="16" height="16"><polygon points="8,1 15,8 8,15 1,8" fill="#151a20" stroke="#ffa03c" stroke-width="2"/></svg>';
+const UHP='<svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#ff3b30" stroke="#fff" stroke-width="1.6"/></svg>';
+const UTN='<svg width="14" height="14"><polygon points="7,14 1,3 13,3" fill="#ff3b30" stroke="#fff" stroke-width="1.4"/></svg>';
+
+function uamHud(p){
+  document.getElementById('hud').innerHTML =
+    '<div class="t" style="color:#ffa03c">'+esc(p[2])+'</div>'
+   +'<div class="m">'+esc(p[3])+' · UAM 회랑 (추정 좌표)</div>'
+   +'<div style="margin-top:4px">'+p[0].toFixed(5)+'N  '+p[1].toFixed(5)+'E<br>'+esc(UAM.alt)+'</div>';
+}
+
+function uamBuild(){
+  uamBand.clearLayers(); uamLine.clearLayers(); uamPt.clearLayers(); uamMarkers.length=0;
+  const ch = uamChains();
+  const ll = ch.map(c=>c.map(p=>[p[0],p[1]]));
+
+  uamBandPoly = L.polygon(ch.map(c=>offsetPolygon(c, UAM.halfWidthNM*NM2M)),
+    {pane:'uamband', color:'#ffa03c', weight:1, opacity:.55, fillColor:'#ffa03c', fillOpacity:.10, dashArray:'5,5'});
+  uamBand.addLayer(uamBandPoly);
+
+  uamCas  = L.polyline(ll,{pane:'uamline', color:'#000', weight:7, opacity:.5, lineCap:'round', lineJoin:'round'});
+  uamPoly = L.polyline(ll,{pane:'uamline', color:'#ffa03c', weight:3.4, opacity:1, lineCap:'round', lineJoin:'round'});
+  uamPoly.on('mouseover click',()=>{
+    document.getElementById('hud').innerHTML =
+      '<div class="t" style="color:#ffa03c">UAM 회랑 (추정)</div>'
+     +'<div class="m">'+esc(UAM.note)+'</div>'
+     +'<div style="margin-top:4px">회랑 폭 ±'+UAM.halfWidthNM+' NM 가정 · '+esc(UAM.alt)+'</div>';
+  });
+  uamLine.addLayer(uamCas); uamLine.addLayer(uamPoly);
+
+  UAM.pts.forEach((p,i)=>{
+    if(p[4]==='stub') return;
+    const html = (p[4]==='hp'?UHP : p[4]==='turn'?UTN : UWP)
+      + '<b>'+p[2]+'</b>';
+    const mk=L.marker([p[0],p[1]],{pane:'uampt', draggable:true,
+      icon:L.divIcon({className:'uwp'+(uamLblOn?'':' nolbl'), html, iconSize:[16,16], iconAnchor:[8,8]})});
+    mk.__pt=p;
+    mk.on('click',()=>uamHud(p)); mk.on('mouseover',()=>uamHud(p));
+    mk.on('drag',()=>{ const c=mk.getLatLng(); p[0]=c.lat; p[1]=c.lng; uamRefresh(); });
+    mk.on('dragend',saveUamOverrides);
+    uamPt.addLayer(mk); uamMarkers.push(mk);
+    if(!uamEdit && mk.dragging) mk.dragging.disable();
+  });
+  uamApply();
+}
+function uamRefresh(){
+  const ch=uamChains();
+  const ll=ch.map(c=>c.map(p=>[p[0],p[1]]));
+  uamPoly.setLatLngs(ll); uamCas.setLatLngs(ll);
+  uamBandPoly.setLatLngs(ch.map(c=>offsetPolygon(c, UAM.halfWidthNM*NM2M)));
+  if(typeof vpLinkDraw==='function') vpLinkDraw();
+  if(typeof holdBuild==='function') holdBuild();
+}
+function uamApply(){
+  [[uamLine,uamOn],[uamPt,uamOn],[uamBand,uamOn&&uamBandOn],[uamHold,uamOn&&holdOn]].forEach(([lyr,on])=>{
+    if(on && !map.hasLayer(lyr)) map.addLayer(lyr);
+    if(!on && map.hasLayer(lyr)) map.removeLayer(lyr);
+  });
+}
+function uamExport(){
+  const j = UAM.pts.map(p=>'  ['+p[0].toFixed(5)+','+p[1].toFixed(5)+',"'+p[2]+'","'+p[3]+'","'+p[4]+'"]').join(',\n');
+  const txt='[\n'+j+'\n]';
+  const ta=document.getElementById('uamOut'); ta.style.display='block'; ta.value=txt; ta.select();
+  try{ navigator.clipboard.writeText(txt); document.getElementById('uamMsg').textContent='클립보드에 복사됨'; }
+  catch(e){ document.getElementById('uamMsg').textContent='아래 상자에서 직접 복사하세요'; }
+}
+
+document.getElementById('bUam').onclick    =e=>{ uamOn=!uamOn;  e.target.classList.toggle('on',uamOn); uamApply(); };
+document.getElementById('bUamBand').onclick=e=>{ uamBandOn=!uamBandOn; e.target.classList.toggle('on',uamBandOn); uamApply(); };
+document.getElementById('bUamLbl').onclick =e=>{ uamLblOn=!uamLblOn; e.target.classList.toggle('on',uamLblOn);
+  uamMarkers.forEach(m=>m.getElement().classList.toggle('nolbl',!uamLblOn)); };
+document.getElementById('bUamEdit').onclick=e=>{ uamEdit=!uamEdit; e.target.classList.toggle('on',uamEdit);
+  uamMarkers.forEach(m=>{ if(m.dragging) uamEdit?m.dragging.enable():m.dragging.disable(); });
+  document.getElementById('uamMsg').textContent = uamEdit ? '점을 끌어서 위치를 보정하세요' : ''; };
+document.getElementById('bHold').onclick=e=>{ holdOn=!holdOn; e.target.classList.toggle('on',holdOn); uamApply(); };
+document.getElementById('bUamCopy').onclick =uamExport;
+document.getElementById('bUamReset').onclick=()=>{ if(confirm('회랑 점을 전부 기본값으로 되돌릴까요? (드래그로 옮긴 것 전부 취소됨)')) resetUamOverrides(); };
+document.getElementById('bUamFit').onclick  =()=>map.fitBounds(L.latLngBounds(UAM.pts.map(p=>[p[0],p[1]])),{padding:[50,50]});
+
+/* ---- Jeppesen 스타일 홀딩패턴 ---- */
+const uamHold = L.layerGroup(); let holdOn = true;
+function holdShape(F, inbTrueDeg, opt){
+  const V=opt.speedKt, R=(V/188.5)*NM2M, L=(V*(opt.legMin/60))*NM2M;
+  const right = (opt.dir||'R')==='R';
+  const k=mPerDeg(F[0]);
+  const th=inbTrueDeg*Math.PI/180;
+  const u=[Math.sin(th),Math.cos(th)];                 /* 진입방향 (동,북) */
+  const n=right?[u[1],-u[0]]:[-u[1],u[0]];             /* 선회측 법선 */
+  const P=(e,nn)=>[F[0]+nn/k.lat, F[1]+e/k.lon];
+  const add=(e,nn,ar)=>ar.push(P(e,nn));
+  const pts=[];
+  add(-u[0]*L, -u[1]*L, pts);                          /* A: 진입 시작 */
+  add(0,0,pts);                                        /* F: 홀딩 픽스 */
+  const c1=[n[0]*R, n[1]*R];                           /* 1차 선회 중심 */
+  for(let i=1;i<=18;i++){
+    const a=(right?-1:1)*(Math.PI*i/18);
+    const vx=-c1[0], vy=-c1[1];
+    const cs=Math.cos(a), sn=Math.sin(a);
+    add(c1[0]+vx*cs-vy*sn, c1[1]+vx*sn+vy*cs, pts);
+  }
+  const B=[n[0]*2*R, n[1]*2*R];
+  add(B[0]-u[0]*L, B[1]-u[1]*L, pts);                  /* D: 이탈 끝 */
+  const c2=[B[0]-u[0]*L+ -n[0]*R, B[1]-u[1]*L+ -n[1]*R];
+  const s0=[B[0]-u[0]*L-c2[0], B[1]-u[1]*L-c2[1]];
+  for(let i=1;i<=18;i++){
+    const a=(right?-1:1)*(Math.PI*i/18);
+    const cs=Math.cos(a), sn=Math.sin(a);
+    add(c2[0]+s0[0]*cs-s0[1]*sn, c2[1]+s0[0]*sn+s0[1]*cs, pts);
+  }
+  return {pts, R, L};
+}
+function holdBuild(){
+  uamHold.clearLayers();
+  const o=UAM.hold||{speedKt:80,legMin:1,dir:'R'};
+  UAM.pts.forEach((p,i)=>{
+    if(p[4]!=='hp'||i===0) return;
+    const a=UAM.pts[i-1], k=mPerDeg(p[0]);
+    const inb=(Math.atan2((p[1]-a[1])*k.lon,(p[0]-a[0])*k.lat)*180/Math.PI+360)%360;
+    const h=holdShape([p[0],p[1]], inb, o);
+    uamHold.addLayer(L.polyline(h.pts,{pane:'uamline',color:'#000',weight:4.5,opacity:.45,lineCap:'round',lineJoin:'round'}));
+    const ln=L.polyline(h.pts,{pane:'uamline',color:'#ffa03c',weight:2,opacity:1,lineCap:'round',lineJoin:'round'});
+    ln.on('mouseover click',()=>{
+      document.getElementById('hud').innerHTML=
+        '<div class="t" style="color:#ffa03c">'+esc(p[2])+' — 홀딩</div>'
+       +'<div class="m">진입침로 '+inb.toFixed(0)+'°T · '+((o.dir||'R')==='R'?'우선회':'좌선회')+' · '+o.legMin+' MIN</div>'
+       +'<div style="margin-top:4px">MAX '+o.speedKt+' kt · 선회반경 '+(h.R/NM2M).toFixed(2)
+       +' NM · 직선구간 '+(h.L/NM2M).toFixed(2)+' NM</div>';
+    });
+    uamHold.addLayer(ln);
+  });
+  if(holdOn && uamOn) map.addLayer(uamHold); else if(map.hasLayer(uamHold)) map.removeLayer(uamHold);
+}
+
+/* ================= 공시 AIP 홀딩패턴 =================
+   STAR: RKSI AD 2-43-3, 2-44-2, 2-45-2, 2-48-3, 2-49-2
+   IAP : RKSI AD 2-53-1, 2-57-1, 2-59-1, 2-61-1,
+         2-63-1, 2-65-1, 2-68-1, 2-70-1
+   inbM/inbT = published inbound course magnetic/true.
+   IAP HM rows without a speed limit use 230 kt only to size the schematic. */
+const PUBLISHED_HOLDS = [
+  {id:'STAR_BOPKI', kind:'STAR', fix:'BOPKI', inbM:323, inbT:314.8, dir:'R', legMin:1.5, maxKt:250,
+    alt:'FL180', applies:'RNAV OLMEN 3C · OLMEN 2H', chart:'AD 2-43-3 · 2-44-2'},
+  {id:'STAR_SANLA', kind:'STAR', fix:'SANLA', inbM:333, inbT:323.9, dir:'R', legMin:1.0, maxKt:230,
+    alt:'12 000–13 000 (3C) / 12 000–FL180 (2H)', applies:'RNAV OLMEN 3C · OLMEN 2H', chart:'AD 2-43-3 · 2-44-2'},
+  {id:'STAR_NODUN', kind:'STAR', fix:'NODUN', inbM:314, inbT:304.8, dir:'R', legMin:1.5, maxKt:250,
+    alt:'FL160–FL180', applies:'RNAV GUKDO 3C · GUKDO 2H', chart:'AD 2-43-3 · 2-45-2'},
+  {id:'STAR_UPSOM', kind:'STAR', fix:'UPSOM', inbM:268, inbT:258.7, dir:'R', legMin:1.5, maxKt:250,
+    alt:'FL170–FL180', applies:'RNAV KARBU 3C · KARBU 2H', chart:'AD 2-43-3 · 2-45-2'},
+  {id:'STAR_ANPEM', kind:'STAR', fix:'ANPEM', inbM:321, inbT:312.2, dir:'L', legMin:1.0, maxKt:210,
+    alt:'6 500', applies:'RNAV OLMEN/GUKDO/KARBU 3C', chart:'AD 2-43-3'},
+  {id:'STAR_ELGUK', kind:'STAR', fix:'ELGUK', inbM:67, inbT:58.4, dir:'L', legMin:1.5, maxKt:250,
+    alt:'7 000–FL170', applies:'RNAV REBIT 2H', chart:'AD 2-44-2'},
+  {id:'STAR_MUNAN', kind:'STAR', fix:'MUNAN', inbM:333, inbT:324.5, dir:'L', legMin:1.0, maxKt:210,
+    alt:'1 600–3 000', applies:'RNAV REBIT/OLMEN/GUKDO/KARBU 2H', chart:'AD 2-44-2 · 2-45-2'},
+  {id:'STAR_BOBIB', kind:'STAR', fix:'BOBIB', inbM:52, inbT:43.0, dir:'L', legMin:1.5, maxKt:250,
+    alt:'11 000–FL150', applies:'RNAV OLMEN 2E', chart:'AD 2-48-3'},
+  {id:'STAR_KAKSO', kind:'STAR', fix:'KAKSO', inbM:314, inbT:304.9, dir:'R', legMin:1.5, maxKt:250,
+    alt:'FL170–FL180', applies:'RNAV GUKDO 2E', chart:'AD 2-48-3'},
+  {id:'STAR_EGOBA', kind:'STAR', fix:'EGOBA', inbM:268, inbT:258.7, dir:'R', legMin:1.5, maxKt:250,
+    alt:'FL170–FL180', applies:'RNAV KARBU 2E', chart:'AD 2-48-3'},
+  {id:'STAR_TESIK', kind:'STAR', fix:'TESIK', inbM:279, inbT:270.1, dir:'R', legMin:1.0, maxKt:230,
+    alt:'10 000–11 000', applies:'RNAV GUKDO/KARBU 2E', chart:'AD 2-48-3'},
+  {id:'STAR_GE024', kind:'STAR', fix:'GE024', inbM:154, inbT:144.9, dir:'L', legMin:1.0, maxKt:210,
+    alt:'7 000–8 000', applies:'RWY 33/34 · 모든 2E 절차', chart:'AD 2-48-3'},
+  {id:'STAR_LAPOP', kind:'STAR', fix:'LAPOP', inbM:98, inbT:89.2, dir:'L', legMin:1.0, maxKt:230,
+    alt:'7 000–11 000', applies:'RNAV REBIT 1Y', chart:'AD 2-49-2'},
+  {id:'STAR_LEGOP', kind:'STAR', fix:'LEGOP', inbM:290, inbT:281.1, dir:'R', legMin:1.0, maxKt:230,
+    alt:'10 000–12 000', applies:'RNAV OLMEN 1Y', chart:'AD 2-49-2'},
+
+  {id:'IAP_GC966', kind:'IAP', fix:'GC966', inbM:34, inbT:24.8, dir:'R', legMin:1.0, drawKt:230,
+    alt:'4 000–5 000', applies:'RWY 15L/R · MAHF', chart:'AD 2-53-1 · 2-57-1'},
+  {id:'IAP_DH989', kind:'IAP', fix:'DH989', inbM:47, inbT:38.4, dir:'R', legMin:1.0, drawKt:230,
+    alt:'3 000–4 000', applies:'RWY 16L/R · MAHF', chart:'AD 2-59-1 · 2-61-1'},
+  {id:'IAP_GE973', kind:'IAP', fix:'GE973', inbM:88, inbT:78.9, dir:'L', legMin:1.0, drawKt:230,
+    alt:'3 000–5 000', applies:'RWY 33L/R · MAHF', chart:'AD 2-63-1 · 2-65-1'},
+  {id:'IAP_PY985', kind:'IAP', fix:'PY985', inbM:90, inbT:80.9, dir:'R', legMin:1.0, drawKt:220,
+    alt:'3 000', applies:'RWY 34L/R · MAHF', chart:'AD 2-68-1 · 2-70-1'},
+
+  {id:'IAP_DOKDO', kind:'IAP', fix:'DOKDO', inbM:324, inbT:314.9, dir:'R', legMin:1.0, drawKt:200,
+    alt:'4 000–5 000', applies:'RKSS RWY 14L/R · MAHF', chart:'RKSS AD 2-29 · 2-30 · 2-31'},
+  {id:'IAP_CAVOI', kind:'IAP', fix:'CAVOI', inbM:301, inbT:292.2, dir:'R', legMin:1.0, drawKt:220,
+    alt:'4 000–6 000', applies:'RKSS RWY 32L/R · MAHF', chart:'RKSS AD 2-34 · 2-35 · 2-37 · 2-38 · 2-39'}
+];
+
+map.createPane('pubhold').style.zIndex=422;
+map.createPane('pubholdpt').style.zIndex=647;
+const pubHoldStar=L.layerGroup(), pubHoldIap=L.layerGroup();
+const pubHoldStarLbl=L.layerGroup(), pubHoldIapLbl=L.layerGroup();
+let pubHoldOn=true, pubHoldStarOn=true, pubHoldIapOn=true, pubHoldLblOn=true;
+const PUB_HOLD_COL={STAR:'#2dd4bf',IAP:'#facc15'};
+
+function publishedHoldHud(h){
+  const spd=h.maxKt ? 'MAX '+h.maxKt+' kt' : 'HM 속도 제한 미공시 · 도식 '+h.drawKt+' kt';
+  document.getElementById('hud').innerHTML=
+    '<div class="t" style="color:'+PUB_HOLD_COL[h.kind]+'">'+esc(h.fix)+' · '+(h.kind==='STAR'?'STAR HOLD':'MAHF HOLD')+'</div>'
+   +'<div class="m">'+esc(h.applies)+' · '+esc(h.chart)+'</div>'
+   +'<div style="margin-top:4px">INBD '+String(h.inbM).padStart(3,'0')+'°M ('+h.inbT.toFixed(1)+'°T) · '
+   +(h.dir==='R'?'우선회':'좌선회')+' · '+h.legMin.toFixed(1)+' MIN<br>ALT '+esc(h.alt)+' · '+esc(spd)+'</div>';
+}
+
+function publishedHoldBuild(){
+  [pubHoldStar,pubHoldIap,pubHoldStarLbl,pubHoldIapLbl].forEach(g=>g.clearLayers());
+  PUBLISHED_HOLDS.forEach(h=>{
+    const w=D.wp[h.fix];
+    if(!w){ console.warn('Holding fix missing:',h.fix); return; }
+    const shape=holdShape([w.lat,w.lon],h.inbT,{speedKt:h.maxKt||h.drawKt,legMin:h.legMin,dir:h.dir});
+    h.__pts=shape.pts;
+    const lineGroup=h.kind==='STAR'?pubHoldStar:pubHoldIap;
+    const labelGroup=h.kind==='STAR'?pubHoldStarLbl:pubHoldIapLbl;
+    const cas=L.polyline(shape.pts,{pane:'pubhold',color:'#000',weight:6,opacity:.72,lineCap:'round',lineJoin:'round'});
+    const ln=L.polyline(shape.pts,{pane:'pubhold',color:PUB_HOLD_COL[h.kind],weight:2.6,opacity:1,lineCap:'round',lineJoin:'round'});
+    ln.on('mouseover',()=>{publishedHoldHud(h);ln.setStyle({weight:4});});
+    ln.on('mouseout',()=>ln.setStyle({weight:2.6}));
+    ln.on('click',()=>publishedHoldHud(h));
+    lineGroup.addLayer(cas); lineGroup.addLayer(ln);
+    const dot='<svg width="12" height="12"><circle cx="6" cy="6" r="4.3" fill="#151a20" stroke="'+PUB_HOLD_COL[h.kind]+'" stroke-width="2"/></svg>';
+    labelGroup.addLayer(L.marker([w.lat,w.lon],{pane:'pubholdpt',interactive:false,keyboard:false,
+      icon:L.divIcon({className:'phold '+h.kind.toLowerCase(),html:dot+'<b>'+h.fix+'</b><em>'+(h.kind==='STAR'?'STAR HOLD':'MAHF HOLD')+'</em>',iconSize:[0,0],iconAnchor:[6,6]})}));
+  });
+  publishedHoldApply();
+}
+
+function publishedHoldApply(){
+  const layers=[
+    [pubHoldStar,pubHoldOn&&pubHoldStarOn],
+    [pubHoldIap,pubHoldOn&&pubHoldIapOn],
+    [pubHoldStarLbl,pubHoldOn&&pubHoldStarOn&&pubHoldLblOn],
+    [pubHoldIapLbl,pubHoldOn&&pubHoldIapOn&&pubHoldLblOn]
+  ];
+  layers.forEach(([g,on])=>{
+    if(on&&!map.hasLayer(g)) map.addLayer(g);
+    if(!on&&map.hasLayer(g)) map.removeLayer(g);
+  });
+}
+
+function publishedHoldFit(){
+  const active=PUBLISHED_HOLDS.filter(h=>pubHoldOn&&((h.kind==='STAR'&&pubHoldStarOn)||(h.kind==='IAP'&&pubHoldIapOn))&&h.__pts);
+  if(!active.length) return;
+  const b=L.latLngBounds([]); active.forEach(h=>h.__pts.forEach(p=>b.extend(p)));
+  map.fitBounds(b,{padding:[50,50]});
+}
+
+document.getElementById('bPubHold').onclick=e=>{pubHoldOn=!pubHoldOn;e.target.classList.toggle('on',pubHoldOn);publishedHoldApply();};
+document.getElementById('bPubHoldStar').onclick=e=>{pubHoldStarOn=!pubHoldStarOn;e.target.classList.toggle('on',pubHoldStarOn);publishedHoldApply();};
+document.getElementById('bPubHoldIap').onclick=e=>{pubHoldIapOn=!pubHoldIapOn;e.target.classList.toggle('on',pubHoldIapOn);publishedHoldApply();};
+document.getElementById('bPubHoldLbl').onclick=e=>{pubHoldLblOn=!pubHoldLblOn;e.target.classList.toggle('on',pubHoldLblOn);publishedHoldApply();};
+document.getElementById('bPubHoldFit').onclick=publishedHoldFit;
+
+uamBuild(); holdBuild(); publishedHoldBuild();
+
+/* ================= 버티포트 =================
+   ※ 위치는 잠정값. "버티포트 편집"으로 끌어서 보정 후 "좌표 복사(JSON)"로 내보내세요. */
+const VP = {
+  fatoR: 150,      /* FATO/TLOF 중심 반경(m) — 표시용 */
+  safeR: 500,      /* 주변 안전·소음 참고원(m) */
+  /* 좌표 받으면 아래 배열에 추가 (형식 그대로 복사해서 쓰면 됨)
+     {id:'VP1', name:'홍대', sub:'설명', lat:37.55700, lon:126.92500},   */
+  list: [
+    {id:'VP1', name:'홍대염전', sub:'인천 영종구 운서동 1055-7', lat:37.46700, lon:126.50269}
+  ],
+  linkOn:true
+};
+
+map.createPane('vpring').style.zIndex = 408;
+map.createPane('vppt').style.zIndex   = 645;
+const vpLayer=L.layerGroup(), vpRing=L.layerGroup(), vpLink=L.layerGroup();
+let vpOn=true, vpRingOn=true, vpEdit=false;
+const vpMk=[], vpCircles=[];
+
+const VPICON='<svg width="26" height="26" viewBox="0 0 26 26">'
+ +'<circle cx="13" cy="13" r="11" fill="#0d1218" stroke="#4ade80" stroke-width="2.4"/>'
+ +'<path d="M8 7 L13 19 L18 7" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+ +'</svg>';
+
+function segDist(p,a,b){
+  const k=mPerDeg(p[0]);
+  const ax=(a[1]-p[1])*k.lon, ay=(a[0]-p[0])*k.lat;
+  const bx=(b[1]-p[1])*k.lon, by=(b[0]-p[0])*k.lat;
+  const dx=bx-ax, dy=by-ay; const dd=dx*dx+dy*dy;
+  const t = dd===0?0:Math.max(0,Math.min(1,-(ax*dx+ay*dy)/dd));
+  return Math.hypot(ax+t*dx, ay+t*dy);
+}
+function vpNearest(v,n){
+  const out=[];
+  D.routes.forEach(r=>{
+    let best=Infinity, red=false;
+    routeSegments(r).forEach(({a,b,i})=>{
+      if(a[2]===b[2]) return;
+      const d=segDist([v.lat,v.lon],a,b);
+      if(d<best){ best=d; red=r.red.indexOf(i)>=0; }
+    });
+    out.push({d:best,name:r.name,type:r.type,red});
+  });
+  out.sort((a,b)=>a.d-b.d);
+  return out.slice(0,n||4);
+}
+function vpHud(v){
+  const arp=segDist([v.lat,v.lon],[D.arp.lat,D.arp.lon],[D.arp.lat,D.arp.lon]);
+  const near=vpNearest(v,4).map(o=>'<span style="color:'+(o.red?RED:COL[o.type])+'">'
+      +(o.d/1852).toFixed(2)+' NM</span> '+esc(o.name)).join('<br>');
+  document.getElementById('hud').innerHTML =
+    '<div class="t" style="color:#4ade80">'+esc(v.name)+'</div>'
+   +'<div class="m">'+esc(v.sub)+' · '+esc(v.id)+' · RKSI ARP '+(arp/1852).toFixed(2)+' NM</div>'
+   +'<div style="margin-top:4px">'+v.lat.toFixed(5)+'N  '+v.lon.toFixed(5)+'E'
+   +' · FATO '+VP.fatoR+' m / 안전원 '+VP.safeR+' m</div>'
+   +'<div style="margin-top:5px;border-top:1px solid var(--rule);padding-top:4px">최근접 절차<br>'+near+'</div>';
+}
+function vpBuild(){
+  vpLayer.clearLayers(); vpRing.clearLayers(); vpLink.clearLayers();
+  vpMk.length=0; vpCircles.length=0;
+  VP.list.forEach(v=>{
+    const c1=L.circle([v.lat,v.lon],{pane:'vpring',radius:VP.fatoR,color:'#4ade80',weight:1.6,opacity:.9,
+              fillColor:'#4ade80',fillOpacity:.14});
+    const c2=L.circle([v.lat,v.lon],{pane:'vpring',radius:VP.safeR,color:'#4ade80',weight:1.2,opacity:.6,
+              dashArray:'6,6',fill:false});
+    vpRing.addLayer(c1); vpRing.addLayer(c2); vpCircles.push([v,c1,c2]);
+    const mk=L.marker([v.lat,v.lon],{pane:'vppt',draggable:true,
+      icon:L.divIcon({className:'vp',html:VPICON+'<b>'+esc(v.name)+'</b>',iconSize:[26,26],iconAnchor:[13,13]})});
+    mk.on('click',()=>vpHud(v)); mk.on('mouseover',()=>vpHud(v));
+    mk.on('drag',()=>{ const p=mk.getLatLng(); v.lat=p.lat; v.lon=p.lng;
+      c1.setLatLng(p); c2.setLatLng(p); vpLinkDraw(); });
+    if(!vpEdit && mk.dragging) mk.dragging.disable();
+    vpLayer.addLayer(mk); vpMk.push(mk);
+  });
+  vpLinkDraw(); vpApply();
+  if(!VP.list.length) document.getElementById('vpMsg').textContent =
+    '등록된 버티포트 없음 — VP.list 에 좌표를 넣으세요';
+  else document.getElementById('vpMsg').textContent = '버티포트 '+VP.list.length+'개소';
+}
+/* 버티포트 ↔ 회랑 접속 구간(feeder) */
+function vpLinkDraw(){
+  vpLink.clearLayers();
+  (UAM.feeders||[]).forEach(f=>{
+    const v=VP.list.find(x=>x.id===f.vp);
+    const n=UAM.pts.find(p=>p[2]===f.node);
+    if(!v||!n) return;
+    const A=[v.lat,v.lon], B=[n[0],n[1]];
+    const k=mPerDeg(A[0]);
+    const dist=Math.hypot((B[1]-A[1])*k.lon,(B[0]-A[0])*k.lat);
+    const brg=(Math.atan2((B[1]-A[1])*k.lon,(B[0]-A[0])*k.lat)*180/Math.PI+360)%360;
+    const band=offsetPolygon([[A[0],A[1]],[B[0],B[1]]], (f.halfNM||0.5)*NM2M);
+    vpLink.addLayer(L.polygon(band,{pane:'uamband',color:'#ffa03c',weight:1,opacity:.55,
+      fillColor:'#ffa03c',fillOpacity:.10,dashArray:'5,5'}));
+    vpLink.addLayer(L.polyline([A,B],{pane:'uamline',color:'#000',weight:7,opacity:.5,lineCap:'round'}));
+    const ln=L.polyline([A,B],{pane:'uamline',color:'#ffa03c',weight:3.4,opacity:1,lineCap:'round'});
+    ln.on('mouseover click',()=>{
+      document.getElementById('hud').innerHTML=
+        '<div class="t" style="color:#ffa03c">'+esc(f.id)+' — '+esc(f.label)+'</div>'
+       +'<div class="m">'+esc(v.name)+' ↔ '+esc(f.node)+'</div>'
+       +'<div style="margin-top:4px">거리 '+(dist/1852).toFixed(2)+' NM ('+Math.round(dist)+' m)'
+       +' · 방위 '+brg.toFixed(0)+'°T · 폭 ±'+(f.halfNM||0.5)+' NM</div>';
+    });
+    vpLink.addLayer(ln);
+    vpLink.addLayer(L.marker([(A[0]+B[0])/2,(A[1]+B[1])/2],{pane:'uampt',interactive:false,
+      icon:L.divIcon({className:'uwp',html:'<b style="left:0;top:-8px;color:#ffd7a3">'+f.id+'</b>',
+      iconSize:[0,0],iconAnchor:[0,0]})}));
+  });
+}
+function vpApply(){
+  [[vpLayer,vpOn],[vpRing,vpOn&&vpRingOn],[vpLink,vpOn&&VP.linkOn]].forEach(([l,on])=>{
+    if(on&&!map.hasLayer(l)) map.addLayer(l);
+    if(!on&&map.hasLayer(l)) map.removeLayer(l);
+  });
+}
+function vpExport(){
+  const j=VP.list.map(v=>'  {id:"'+v.id+'", name:"'+v.name+'", sub:"'+v.sub+'", lat:'+v.lat.toFixed(5)
+          +', lon:'+v.lon.toFixed(5)+'}').join(',\n');
+  const txt='[\n'+j+'\n]';
+  const ta=document.getElementById('uamOut'); ta.style.display='block'; ta.value=txt; ta.select();
+  try{ navigator.clipboard.writeText(txt); document.getElementById('uamMsg').textContent='버티포트 좌표 복사됨'; }
+  catch(e){ document.getElementById('uamMsg').textContent='아래 상자에서 직접 복사하세요'; }
+}
+
+document.getElementById('bVp').onclick    =e=>{ vpOn=!vpOn; e.target.classList.toggle('on',vpOn); vpApply(); };
+document.getElementById('bVpRing').onclick=e=>{ vpRingOn=!vpRingOn; e.target.classList.toggle('on',vpRingOn); vpApply(); };
+document.getElementById('bVpLink').onclick=e=>{ VP.linkOn=!VP.linkOn; e.target.classList.toggle('on',VP.linkOn); vpApply(); };
+document.getElementById('bVpEdit').onclick=e=>{ vpEdit=!vpEdit; e.target.classList.toggle('on',vpEdit);
+  vpMk.forEach(m=>{ if(m.dragging) vpEdit?m.dragging.enable():m.dragging.disable(); });
+  document.getElementById('uamMsg').textContent = vpEdit?'버티포트를 끌어서 부지 위치에 맞추세요':''; };
+document.getElementById('bVpCopy').onclick=vpExport;
+document.getElementById('bVpFit').onclick =()=>map.fitBounds(
+  L.latLngBounds(VP.list.map(v=>[v.lat,v.lon]).concat(UAM.pts.map(p=>[p[0],p[1]]))),{padding:[50,50]});
+
+vpBuild();
+
+/* ================= OpenSky 실시간 항적 ================= */
+map.createPane('trail').style.zIndex = 425;
+map.createPane('ac').style.zIndex    = 660;
+
+const acLayer    = L.layerGroup().addTo(map);
+const trailLayer = L.layerGroup().addTo(map);
+const AC = new Map();                 /* icao24 -> marker, actual trail, state */
+
+let liveOn=false, acTimer=null, acBusy=false;
+let showTrail=true, showAcLbl=true, acAirOnly=true, acNear=false;
+let acIntv=5, acFail=0, acRetryAt=0, acRemaining=null;
+let tok=null, tokExp=0;
+
+const M2FT = 3.28084, MS2KT = 1.94384;
+const acColor = ft => (ft==null) ? '#9aa6b2' : (ft<=3000 ? '#ff3b30' : ft<12000 ? '#ffd24a' : '#7fe3ff');
+
+function planeSVG(deg, col){
+  return '<svg width="24" height="24" viewBox="0 0 24 24" style="transform:rotate('+(deg||0)+'deg)">'
+   +'<path d="M12 1.6 L13.9 9.8 L22.4 13.1 L22.4 15.1 L13.9 13.4 L13.3 19.9 L16.1 21.6 L16.1 22.9 '
+   +'L12 21.9 L7.9 22.9 L7.9 21.6 L10.7 19.9 L10.1 13.4 L1.6 15.1 L1.6 13.1 L10.1 9.8 Z" '
+   +'fill="'+col+'" stroke="#05080b" stroke-width="1"/></svg>';
+}
+function acLabel(s){
+  const cs=(s[1]||'').trim()||s[0].toUpperCase();
+  const ft=s[7]!=null?Math.round(s[7]*M2FT):(s[13]!=null?Math.round(s[13]*M2FT):null);
+  const alt = s[8] ? 'GND' : (ft==null?'--':(ft>=14000? 'FL'+String(Math.round(ft/100)).padStart(3,'0')
+                                                      : ft.toLocaleString()+'ft'));
+  const gs = s[9]!=null ? Math.round(s[9]*MS2KT)+'kt' : '';
+  const vs = s[11]!=null ? (s[11]>1.5?'↑':s[11]<-1.5?'↓':'→') : '';
+  return '<b>'+esc(cs)+'</b><em>'+alt+' '+vs+' '+gs+'</em>';
+}
+function acHud(s){
+  const ft=s[7]!=null?Math.round(s[7]*M2FT):null;
+  const col=acColor(s[8]?0:ft);
+  document.getElementById('hud').innerHTML =
+    '<div class="t" style="color:'+col+'">'+esc((s[1]||'').trim()||'(콜사인 없음)')+'</div>'
+   +'<div class="m">ICAO24 '+esc(s[0])+' · '+esc(s[2]||'')+' · '+(s[8]?'지상':'공중')+'</div>'
+   +'<div style="margin-top:4px">기압고도 '+(ft!=null?ft.toLocaleString()+' ft':'—')
+   +' · GS '+(s[9]!=null?Math.round(s[9]*MS2KT)+' kt':'—')
+   +' · TRK '+(s[10]!=null?Math.round(s[10])+'°':'—')
+   +' · V/S '+(s[11]!=null?Math.round(s[11]*M2FT*60).toLocaleString()+' fpm':'—')
+   +(s[14]?' · SQ '+esc(s[14]):'')+'</div>';
+}
+
+/* ---- 인증(선택) : client_id/secret 입력 시 OAuth2 토큰 사용 ---- */
+async function acToken(){
+  const id=(localStorage.getItem('os_id')||'').trim(), sec=(localStorage.getItem('os_sec')||'').trim();
+  if(!id||!sec) return null;
+  if(tok && Date.now()<tokExp-60000) return tok;
+  const body=new URLSearchParams({grant_type:'client_credentials',client_id:id,client_secret:sec});
+  const authUrl=LIVE_PROXIED ? '/auth/token'
+    : 'https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token';
+  const r=await fetch(authUrl,
+                      {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
+  if(!r.ok) throw new Error('토큰 발급 실패 '+r.status);
+  const j=await r.json();
+  tok=j.access_token; tokExp=Date.now()+(j.expires_in||1800)*1000;
+  return tok;
+}
+
+function acBox(){
+  if(acNear){ /* 인천 중심 ±1.4° (약 80 NM) */
+    return {lamin:D.arp.lat-1.4, lamax:D.arp.lat+1.4, lomin:D.arp.lon-1.8, lomax:D.arp.lon+1.8};
+  }
+  const b=map.getBounds(), pad=0.05;
+  return {lamin:Math.max(-90,b.getSouth()-pad), lamax:Math.min(90,b.getNorth()+pad),
+          lomin:Math.max(-180,b.getWest()-pad), lomax:Math.min(180,b.getEast()+pad)};
+}
+
+function acStat(txt, cls){
+  const e=document.getElementById('acStat');
+  e.textContent=txt; e.className = cls||'';
+}
+
+/* 기본은 OpenSky 직결. 동봉 로컬 서버가 ?proxy=1을 붙여 CORS 없는 중계를 사용한다. */
+const LIVE_PROXIED = new URLSearchParams(location.search).get('proxy')==='1';
+const LIVE_BASE    = LIVE_PROXIED ? '' : 'https://opensky-network.org';
+
+/* 익명 데이터 해상도는 10초, OAuth2 인증은 5초.
+   사용자가 5초를 선택해도 인증정보가 없으면 실제 호출은 10초로 보호한다. */
+function acHasSavedAuth(){
+  return !!((localStorage.getItem('os_id')||'').trim() && (localStorage.getItem('os_sec')||'').trim());
+}
+function acPollSeconds(){
+  const floor=acHasSavedAuth()?5:10;
+  return Math.max(floor,acIntv);
+}
+
+async function acPoll(){
+  const now=Date.now();
+  if(acBusy||now<acRetryAt) return;
+  acBusy=true;
+  try{
+    const q=acBox();
+    const url=LIVE_BASE+'/api/states/all?lamin='+q.lamin.toFixed(3)
+             +'&lomin='+q.lomin.toFixed(3)+'&lamax='+q.lamax.toFixed(3)+'&lomax='+q.lomax.toFixed(3);
+    /* OAuth 토큰은 브라우저가 보유하고, 로컬 프록시는 Authorization 헤더만 전달한다. */
+    const t=await acToken();
+    const r=await fetch(url, t?{headers:{Authorization:'Bearer '+t}}:{});
+    const remain=r.headers.get('X-Rate-Limit-Remaining');
+    if(remain!=null&&remain!=='') acRemaining=Number(remain);
+    if(r.status===429){
+      acFail++;
+      const retry=Math.max(5,Number(r.headers.get('X-Rate-Limit-Retry-After-Seconds'))||60);
+      acRetryAt=Date.now()+retry*1000;
+      acStat('요청 한도 초과(429) — 서버 지시에 따라 '+retry+'초 동안 자동 대기','err');
+      return;
+    }
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j=await r.json();
+    acDraw(j.states||[], j.time);
+    acFail=0; acRetryAt=0;
+  }catch(e){
+    acFail++;
+    const hint = LIVE_PROXIED ? '' : ' — 동봉된 OpenSky_start.bat로 실행하면 CORS를 우회할 수 있습니다';
+    acStat('수신 실패: '+e.message+(acFail>2?hint:''), 'err');
+  }finally{ acBusy=false; }
+}
+
+function acDraw(states, t){
+  const now=Date.now(); let n=0;
+  states.forEach(s=>{
+    if(s[5]==null||s[6]==null) return;
+    if(acAirOnly && s[8]) return;
+    n++;
+    const ll=[s[6],s[5]];
+    const ft = s[8] ? 0 : (s[7]!=null?s[7]*M2FT:(s[13]!=null?s[13]*M2FT:null));
+    const col=acColor(ft);
+    let a=AC.get(s[0]);
+    if(!a){
+      const mk=L.marker(ll,{pane:'ac',icon:L.divIcon({className:'ac',html:'',iconSize:[0,0],iconAnchor:[0,0]}),
+                            riseOnHover:true, keyboard:false});
+      const tr=L.polyline([ll],{pane:'trail',color:col,weight:1.6,opacity:.75});
+      mk.on('click',()=>acHud(a.st)); mk.on('mouseover',()=>acHud(a.st));
+      tr.on('click',()=>acHud(a.st)); tr.on('mouseover',()=>acHud(a.st));
+      a={mk,tr,pts:[ll],st:s,seen:now};
+      AC.set(s[0],a); acLayer.addLayer(mk); trailLayer.addLayer(tr);
+    }else{
+      const last=a.pts[a.pts.length-1];
+      if(Math.abs(last[0]-ll[0])>1e-5||Math.abs(last[1]-ll[1])>1e-5){
+        a.pts.push(ll); if(a.pts.length>90) a.pts.shift();
+        a.tr.setLatLngs(a.pts);
+      }
+      a.mk.setLatLng(ll);
+      a.st=s; a.seen=now;
+    }
+    a.tr.setStyle({color:col});
+    a.mk.getElement() && a.mk.getElement().classList.toggle('nolbl', !showAcLbl);
+    a.mk._icon.innerHTML = planeSVG(s[10], col) + (showAcLbl?acLabel(s):'');
+  });
+  /* 3분 이상 미수신 정리 */
+  AC.forEach((a,k)=>{ if(now-a.seen>180000){ acLayer.removeLayer(a.mk); trailLayer.removeLayer(a.tr); AC.delete(k); } });
+  const credit=Number.isFinite(acRemaining)?' · 잔여 '+acRemaining+' cr':'';
+  acStat('수신 '+n+'대 · '+new Date((t?t*1000:now)).toLocaleTimeString('ko-KR')
+        +' · 실제 좌표 '+acPollSeconds()+'초'+credit,'ok');
+}
+
+function acStart(){
+  liveOn=true;
+  document.getElementById('bLive').classList.add('on');
+  document.getElementById('bLive').textContent='실시간 ON';
+  acStat('수신 중…','');
+  acPoll();
+  clearInterval(acTimer);
+  acTimer=setInterval(()=>{ if(!document.hidden) acPoll(); },acPollSeconds()*1000);
+}
+function acStop(){
+  liveOn=false; clearInterval(acTimer); acTimer=null;
+  document.getElementById('bLive').classList.remove('on');
+  document.getElementById('bLive').textContent='실시간 OFF';
+  acStat('정지됨','');
+}
+function acClear(){
+  AC.forEach(a=>{ acLayer.removeLayer(a.mk); trailLayer.removeLayer(a.tr); }); AC.clear();
+}
+
+document.getElementById('bLive').onclick =()=> liveOn?acStop():acStart();
+document.getElementById('bTrail').onclick=e=>{ showTrail=!showTrail; e.target.classList.toggle('on',showTrail);
+  showTrail?trailLayer.addTo(map):map.removeLayer(trailLayer); };
+document.getElementById('bAcLbl').onclick=e=>{ showAcLbl=!showAcLbl; e.target.classList.toggle('on',showAcLbl);
+  AC.forEach(a=>{ a.mk._icon.innerHTML = planeSVG(a.st[10], acColor(a.st[8]?0:(a.st[7]!=null?a.st[7]*M2FT:null)))
+                    + (showAcLbl?acLabel(a.st):''); }); };
+document.getElementById('bAcAir').onclick=e=>{ acAirOnly=!acAirOnly; e.target.classList.toggle('on',acAirOnly); if(liveOn) acPoll(); };
+document.getElementById('bAcNear').onclick=e=>{ acNear=!acNear; e.target.classList.toggle('on',acNear); if(liveOn) acPoll(); };
+document.getElementById('bAcClr').onclick=acClear;
+document.getElementById('acInt').onchange=e=>{ acIntv=+e.target.value; if(liveOn) acStart(); };
+function acSetAuth(id,sec){
+  id=(id||'').trim(); sec=(sec||'').trim();
+  if(!id||!sec) throw new Error('clientId 또는 clientSecret이 비어 있습니다');
+  localStorage.setItem('os_id',id); localStorage.setItem('os_sec',sec);
+  document.getElementById('osId').value=id; document.getElementById('osSec').value=sec;
+  tok=null; tokExp=0;
+}
+async function acVerifyAuth(){
+  const msg=document.getElementById('osAuth');
+  msg.textContent='OpenSky 토큰 확인 중…';
+  try{
+    await acToken();
+    msg.textContent='인증 성공 · Standard 5초 갱신 사용 가능'; msg.style.color='#7ee2a8';
+    acStat('OpenSky 인증 성공 · 5초 갱신 준비됨','ok');
+    if(liveOn) acStart();
+  }catch(e){
+    msg.textContent='인증 정보는 저장됨 · 토큰 확인 실패: '+e.message; msg.style.color='#ff8a80';
+    acStat('OpenSky 토큰 확인 실패: '+e.message,'err');
+  }
+}
+document.getElementById('acJson').onclick=()=>document.getElementById('osJson').click();
+document.getElementById('osJson').onchange=async e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  try{
+    const j=JSON.parse(await f.text());
+    acSetAuth(j.clientId||j.client_id,j.clientSecret||j.client_secret);
+    await acVerifyAuth();
+  }catch(err){
+    const msg=document.getElementById('osAuth');
+    msg.textContent='JSON 불러오기 실패: '+err.message; msg.style.color='#ff8a80';
+  }finally{ e.target.value=''; }
+};
+document.getElementById('acSave').onclick=async()=>{
+  try{
+    acSetAuth(document.getElementById('osId').value,document.getElementById('osSec').value);
+    await acVerifyAuth();
+  }catch(err){
+    const msg=document.getElementById('osAuth');
+    msg.textContent='저장 실패: '+err.message; msg.style.color='#ff8a80';
+  }
+};
+(function(){ const a=document.getElementById('osId'), b=document.getElementById('osSec');
+  a.value=localStorage.getItem('os_id')||''; b.value=localStorage.getItem('os_sec')||'';
+  if(a.value&&b.value){ const m=document.getElementById('osAuth'); m.textContent='저장된 인증 정보 있음 · JSON을 다시 선택할 필요 없음'; m.style.color='#7ee2a8'; }
+})();
+
+/* ================= 리플레이 (92.5h 하이라이트) =================
+   REPLAY_EVENTS(별도 replay_data.js)의 [t,[state,...]] 프레임을 그대로
+   실시간 항적 렌더러(acDraw)에 먹여서, 실시간 트래픽과 동일한 마커/항적선/HUD로 재생한다. */
+let rpKey=null, rpFrames=null, rpIdx=0, rpTimer=null, rpPlaying=false, rpFocusId=null, rpFocusMk=null;
+map.createPane('rpfocus').style.zIndex = 670;
+map.getPane('rpfocus').style.pointerEvents = 'none';
+
+(function rpInit(){
+  const sel=document.getElementById('rpSelect');
+  if(typeof REPLAY_EVENTS==='undefined'){
+    document.getElementById('rpStat').textContent='replay_data.js를 찾을 수 없습니다 (같은 폴더에 있어야 함)';
+    return;
+  }
+  Object.keys(REPLAY_EVENTS).forEach(k=>{
+    const o=document.createElement('option'); o.value=k; o.textContent=REPLAY_EVENTS[k].label;
+    sel.appendChild(o);
+  });
+})();
+
+function rpLoad(key){
+  rpStopTimer();
+  rpKey=key; rpIdx=0; rpPlaying=false;
+  acClear();
+  if(rpFocusMk){ map.removeLayer(rpFocusMk); rpFocusMk=null; }
+  if(!key){ rpFrames=null; rpFocusId=null; document.getElementById('rpSlider').max=0;
+    document.getElementById('rpStat').textContent='이벤트를 선택하세요'; return; }
+  const ev=REPLAY_EVENTS[key];
+  rpFrames=ev.frames; rpFocusId=ev.focus||null;
+  const slider=document.getElementById('rpSlider');
+  slider.max=Math.max(0,rpFrames.length-1); slider.value=0;
+  if(ev.bounds) map.fitBounds([[ev.bounds[0],ev.bounds[1]],[ev.bounds[2],ev.bounds[3]]],{padding:[60,60]});
+  rpRenderFrame(0,true);
+}
+/* clearFirst=true : 슬라이더 점프/이벤트 전환처럼 임의 지점으로 이동할 때만 마커를 리셋한다.
+   재생 중(순차 증가)에는 지우지 않아야 acDraw가 항적선을 이어서 그린다. */
+function rpRenderFrame(idx, clearFirst){
+  if(!rpFrames||!rpFrames[idx]) return;
+  const [t,states]=rpFrames[idx];
+  if(clearFirst) acClear();
+  acDraw(states, t);
+  rpUpdateFocus(states);
+  document.getElementById('rpSlider').value=idx;
+  const pct=rpFrames.length>1?Math.round(idx/(rpFrames.length-1)*100):100;
+  document.getElementById('rpStat').textContent=
+    new Date(t*1000).toLocaleString('ko-KR')+' · '+(idx+1)+'/'+rpFrames.length+' ('+pct+'%) · '+states.length+'대';
+}
+/* 이 이벤트의 "주인공" 항공기(rpFocusId)를 분홍 펄스 링+굵은 라벨로 강조하고,
+   실시간 항적 라벨 on/off 설정과 무관하게 항상 보이도록 acDraw와 별도로 그린다.
+   카메라도 매 프레임 그 위치로 따라간다 — 여러 항공기 사이에서 놓치기 쉬워서. */
+function rpUpdateFocus(states){
+  if(!rpFocusId) return;
+  const st=states.find(s=>s[0]===rpFocusId);
+  const acEntry=AC.get(rpFocusId);
+  if(acEntry && acEntry.mk.getElement()) acEntry.mk.getElement().classList.add('focus');
+  if(!st) return;
+  const ll=[st[6],st[5]];
+  if(!rpFocusMk){
+    rpFocusMk=L.marker(ll,{pane:'rpfocus',icon:L.divIcon({className:'rpfocus',html:'',iconSize:[0,0],iconAnchor:[0,0]}),
+      interactive:false});
+    rpFocusMk.addTo(map);
+  }
+  rpFocusMk.setLatLng(ll);
+  const cs=(st[1]||rpFocusId).trim();
+  rpFocusMk._icon.innerHTML='<div class="ring"></div><div class="lbl">◀ '+esc(cs)+'</div>';
+  map.panTo(ll,{animate:false});
+}
+function rpStopTimer(){ clearInterval(rpTimer); rpTimer=null; rpPlaying=false; }
+function rpPlay(){
+  if(!rpFrames||rpFrames.length===0) return;
+  if(liveOn) acStop();
+  if(rpIdx>=rpFrames.length-1){ rpIdx=0; acClear(); }
+  rpPlaying=true;
+  const speed=+document.getElementById('rpSpeed').value||4;
+  clearInterval(rpTimer);
+  rpTimer=setInterval(()=>{
+    if(rpIdx>=rpFrames.length){ rpStopTimer(); return; }
+    rpRenderFrame(rpIdx,false); rpIdx++;
+  }, Math.max(15,1000/speed));
+}
+document.getElementById('rpSelect').onchange=e=>rpLoad(e.target.value);
+document.getElementById('rpPlay').onclick=rpPlay;
+document.getElementById('rpPause').onclick=rpStopTimer;
+document.getElementById('rpReset').onclick=()=>{ rpStopTimer(); rpIdx=0; rpRenderFrame(0,true); };
+document.getElementById('rpSpeed').onchange=()=>{ if(rpPlaying) rpPlay(); };
+document.getElementById('rpSlider').oninput=e=>{ rpStopTimer(); rpIdx=+e.target.value; rpRenderFrame(rpIdx,true); };
+
+setBase('sat'); syncWpCss(); apply(); fitAll();
+
+/* ================= 근접위험 태그: UAM 회랑 vs 5,000ft 이하 절차 구간 =================
+   절차의 5,000ft 이하(빨간) 구간이 UAM 회랑 중심선에서 PROX_SCREEN_NM 이내로 지나가면
+   "근접위험"으로 태그합니다. 5,000ft 이상에서만 근접하는 구간은 수직분리 충분으로 가정해
+   제외합니다 (사용자 지정 가정). 회랑 반폭 0.5NM + 디지타이징 오차 여유를 감안해 스크리닝
+   거리는 1.0NM로 설정했습니다.
+   ================================================================================= */
+const PROX = '#ff2db0';
+const PROX_SCREEN_NM = 1.0;
+
+/* 2026-08-31: 본선(UAM.pts)이 이제 버티포트(HDY)를 WP4-HDY-WP3로 직접 지나가므로
+   더 이상 별도로 끼워넣을 게 없다 — UAM.pts 좌표를 그대로 쓴다. */
+function buildOperationalCorridor(){
+  return UAM.pts.map(p=>[p[0],p[1]]);
+}
+const UAM_CORRIDOR = buildOperationalCorridor();
+
+function distPtToCorridor(p){
+  let best = Infinity;
+  for(let i=0;i<UAM_CORRIDOR.length-1;i++){
+    const d = segDist(p, UAM_CORRIDOR[i], UAM_CORRIDOR[i+1]);
+    if(d < best) best = d;
+  }
+  return best;
+}
+function densifySeg(a, b, stepM){
+  const k = mPerDeg(a[0]);
+  const dx = (b[1]-a[1])*k.lon, dy = (b[0]-a[0])*k.lat;
+  const n = Math.max(1, Math.round(Math.hypot(dx,dy)/stepM));
+  const out = [];
+  for(let i=0;i<=n;i++) out.push([a[0]+(b[0]-a[0])*i/n, a[1]+(b[1]-a[1])*i/n]);
+  return out;
+}
+
+D.routes.forEach(r=>{
+  const redset = new Set(r.red);
+  let bestNM = Infinity;
+  const riskyLegs = new Set();
+  routeSegments(r).forEach(({a,b,i})=>{
+    if(a[2]===b[2]) return;
+    if(!redset.has(i)) return;
+    let legBestM = Infinity;
+    densifySeg(a,b,25).forEach(p=>{
+      const d = distPtToCorridor(p);
+      if(d < legBestM) legBestM = d;
+    });
+    const legBestNM = legBestM / NM2M;
+    if(legBestNM <= PROX_SCREEN_NM) riskyLegs.add(i);
+    if(legBestNM < bestNM) bestNM = legBestNM;
+  });
+  r.__proxDistNM = isFinite(bestNM) ? bestNM : null;
+  r.__proxLegs = riskyLegs;
+  r.__proxRisk = riskyLegs.size > 0;
+});
+
+/* 위험 leg만 지도에서 별도 색상으로 재도색 */
+D.routes.forEach(r=>{
+  if(!r.__proxRisk) return;
+  const segs = routeSegments(r).filter(({a,b})=>a[2]!==b[2]);
+  segs.forEach(({i}, idx)=>{
+    if(!r.__proxLegs.has(i)) return;
+    const pair = r.__legs[idx];
+    if(!pair) return;
+    const [cas, ln] = pair;
+    ln.setStyle({color:PROX, weight:3.6});
+    cas.setStyle({weight:7});
+    ln.__prox = true;
+  });
+});
+
+/* 사이드바 트리에 ⚠ 태그 표시 */
+document.querySelectorAll('input[data-id]').forEach(cb=>{
+  const r = D.routes.find(x=>x.id===cb.dataset.id);
+  if(!r || !r.__proxRisk) return;
+  const row = cb.closest('.row');
+  if(!row) return;
+  row.classList.add('proxrow');
+  const nm = row.querySelector('.n');
+  if(nm && !nm.textContent.startsWith('⚠ ')) nm.textContent = '⚠ ' + nm.textContent;
+  const sw = row.querySelector('.sw');
+  if(sw) sw.style.borderColor = PROX;
+});
+
+/* "⚠ 근접위험만" 빠른선택 버튼 (기존 [data-pre] 제네릭 핸들러를 이 버튼에서만 override) */
+document.querySelectorAll('[data-pre="prox"]').forEach(b=>{
+  b.onclick = ()=>{
+    vis.clear();
+    D.routes.filter(r=>r.__proxRisk).forEach(r=>vis.add(r.id));
+    apply();
+  };
+});
+
+/* HUD에 근접위험 거리 표시 (기존 hud()를 감싸서 확장) */
+const _hudBase = hud;
+hud = function(r){
+  _hudBase(r);
+  if(r.__proxRisk){
+    const box = document.getElementById('hud');
+    box.innerHTML += '<div style="margin-top:4px;color:'+PROX+';font-weight:700">⚠ 근접위험 — UAM 회랑까지 '
+      + r.__proxDistNM.toFixed(2) + ' NM (5,000ft 이하 구간 기준 · 스크리닝 ' + PROX_SCREEN_NM + ' NM)</div>';
+  }
+};
+
+{
+  const n = D.routes.filter(r=>r.__proxRisk).length;
+  console.log('근접위험 태그:', n, '/', D.routes.length, '개 절차');
+}
+</script></body></html>

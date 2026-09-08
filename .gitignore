@@ -1,0 +1,7 @@
+# 148 MB — GitHub 파일 크기 한도(100 MB) 초과. 리플레이 기능용 로컬 전용 파일.
+replay_data.js
+tiles/
+*.ndjson
+credentials*.json
+cred_*.json
+*.key
