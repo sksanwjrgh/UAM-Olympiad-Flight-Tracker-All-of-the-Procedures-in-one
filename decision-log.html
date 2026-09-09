@@ -239,8 +239,9 @@ q::before{content:'"'} q::after{content:'"'}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천공항–WP1 구간의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 19 · 2026-09-06</b><br>
+    <b>REV 21 · 2026-09-09</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
+    기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway
   </div>
@@ -265,7 +266,7 @@ q::before{content:'"'} q::after{content:'"'}
           <td class="k">SOUTHBOUND 고도</td>
           <td class="v">2 150 ft</td>
           <td><span class="pill ok">확정</span></td>
-          <td class="src">관측상 최저 조우 고도대(1 700–2 900 ft) 중앙 · 헬기와 600 ft 이격 · 실시간 감시 병행 전제(REV 14·15)</td>
+          <td class="src">관측상 최저 조우 고도대(1 700–2 900 ft) 중앙 · 헬기와 600 ft 이격(ConOps 4-3-4 요구 492 ft의 1.22배) · ConOps 4-3-2-1 상한 +181 ft 초과이나 <b>각주 29 관계기관 협의 변경</b> 경로로 정당화(REV 20)</td>
         </tr>
         <tr>
           <td class="k">NORTHBOUND 고도</td>
@@ -326,6 +327,24 @@ q::before{content:'"'} q::after{content:'"'}
           <td class="v">RKSI Class B</td>
           <td><span class="pill prov">부분수용</span></td>
           <td class="src">중심선 ARP 8.752 NM 이내여야 전폭 수용. WP6(10.78)·SIHWA(10.69)는 하부 이탈 → Class E, <b>인지·수용 결정</b>(REV 16·17). P-518 가장자리 2.31 NM · S1 2.33 NM 침범 없음</td>
+        </tr>
+        <tr>
+          <td class="k">홀딩 선회방향</td>
+          <td class="v">공항 반대쪽 고정</td>
+          <td><span class="pill ok">확정</span></td>
+          <td class="src">WP6-WP5~WP3-WP1 좌선회(L) · WP1-SIHWA만 우선회(R). 패턴 횡폭 2R=0.966 NM &lt; 반폭 1.248이라 한쪽 선회 시 회랑 내 수용(REV 21)</td>
+        </tr>
+        <tr>
+          <td class="k">홀딩 지정구역</td>
+          <td class="v">WP6-WP5 · WP5-WP4</td>
+          <td><span class="pill ok">확정</span></td>
+          <td class="src">남쪽 절반은 15L/15R 복행경로(하한 540 ft) 위라 전면 금지. 홀딩픽스는 WP6에서 2.00 NM 이상 남쪽 → 실질 7.44 NM(REV 21)</td>
+        </tr>
+        <tr>
+          <td class="k">감시장비</td>
+          <td class="v">ADS-B IN 필수</td>
+          <td><span class="pill crit">ConOps 초과</span></td>
+          <td class="src">ConOps 1.5는 OUT만 요구(4-5-3)하나 OUT은 송신 전용이라 TCAS 협조 불가. 최후 방어층 확보를 위해 자체 상향(REV 21)</td>
         </tr>
         <tr>
           <td class="k">PSU 관할</td>
@@ -423,9 +442,9 @@ q::before{content:'"'} q::after{content:'"'}
         <tr><td class="no">03</td><td class="item">경로 직선화</td><td class="concl">WP2 제거</td><td class="src">최대 꺾임 38.9°→22.6° · 코너컷 이탈 81 m→27 m</td><td class="revc">11</td></tr>
         <tr><td class="no">04</td><td class="item">북측 정렬</td><td class="concl">동북동 → <b>정북</b> 재정렬</td><td class="src">WP6·WP5·WP3 이동 후 WP6·WP4 추가 조정 · <b>북측 침로차 0.7°</b> · 최대선회 33.0° · 총연장 33.94 km(법정 50 km의 68%)</td><td class="revc">17·19</td></tr>
         <tr><td class="no">05</td><td class="item">회랑 반폭</td><td class="concl"><b>1.248 NM</b> (총폭 4,624 m)</td><td class="src">상시 절차 최협착 RWY33R 최종접근 1.848 − 상용기 containment 0.6</td><td class="revc">11</td></tr>
-        <tr><td class="no">06</td><td class="item">UAM 항법성능</td><td class="concl">RNP<sub>u</sub> ≤ <b>0.624</b></td><td class="src">반폭에서 역산. 상용기 RNP 0.3보다 느슨 · 290 km/h 선회이탈 27 m는 예산의 2.3%</td><td class="revc">11</td></tr>
+        <tr><td class="no">06</td><td class="item">UAM 항법성능</td><td class="concl">RNP<sub>u</sub> ≤ <b>0.624</b></td><td class="src">반폭에서 역산. 상용기 RNP 0.3보다 느슨 · 290 km/h 선회이탈 27 m는 예산의 2.3%. ConOps <b>4-3-4-3 각주 30</b>이 &ldquo;RNP 개념 참고하되 운항환경에 맞게 조정 가능&rdquo;으로 이 방식을 허용(REV 20)</td><td class="revc">11</td></tr>
         <tr><td class="cat" rowspan="4">운용<br>고도</td><td class="no">07</td><td class="item">왕복 운용 방식</td><td class="concl">수평 2선 → <b>고도분리</b></td><td class="src">Reich CRM: 수평 2선은 안쪽 항로선이 −0.008 NM로 상용기 보호구역 침범 → 기하학적 불가</td><td class="revc">09</td></tr>
-        <tr><td class="no">08</td><td class="item">운용 고도</td><td class="concl">SB <b>2,150 ft</b> / NB <b>2,450 ft</b></td><td class="src">100 ft 해상도 재분석. 실측 빈 층 1,700–2,900 ft 중앙 · 조우 303→150</td><td class="revc">14</td></tr>
+        <tr><td class="no">08</td><td class="item">운용 고도</td><td class="concl">SB <b>2,150 ft</b> / NB <b>2,450 ft</b></td><td class="src">100 ft 해상도 재분석. 실측 빈 층 1,700–2,900 ft 중앙 · 조우 303→150. ConOps 1.5 상한(1,969 ft) 초과분은 <b>4-3-2-1 각주 29</b> 협의 변경으로 정당화(REV 20)</td><td class="revc">14</td></tr>
         <tr><td class="no">09</td><td class="item">층분리</td><td class="concl"><b>300 ft</b></td><td class="src">σ<sub>z,rel</sub> 16 m 기준 5.7σ · 겹침확률 1.1e-08</td><td class="revc">14</td></tr>
         <tr><td class="no">10</td><td class="item">재정렬 후 재검토</td><td class="concl"><b>변경 없음</b> — 현행 유지</td><td class="src">신안 기준 재최적화에서도 최적(조우 319 &lt; 후보 1,700/2,000의 425)</td><td class="revc">17</td></tr>
         <tr><td class="cat" rowspan="4">공역</td><td class="no">11</td><td class="item">공역 등급</td><td class="concl"><b>RKSI Class B</b> 편입</td><td class="src">Class B는 IFR·VFR 전 항공기가 관제허가를 받고 ATC가 상호분리 제공 → 기존 항공기와 같은 관제 우산</td><td class="revc">16</td></tr>
@@ -455,6 +474,160 @@ q::before{content:'"'} q::after{content:'"'}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <div class="log">
+
+    <article class="entry">
+      <div class="meta"><span class="rev">REV 21</span><span class="tag">홀딩·최후방어</span></div>
+      <div class="body">
+        <h3>홀딩 선회방향&middot;금지구역 확정, 그리고 TCAS를 최후 방어층으로 편입</h3>
+        <p>간격분리 홀딩은 회랑 어디서나 발생할 수 있게 두되 <b>선회는 항상 공항 반대쪽</b>으로 고정하고, <b>3,000 ft 이하로 항행 가능성이 있는 절차와 겹치는 구간은 홀딩을 금지</b>한다. 그리고 지금까지 위계에 빠져 있던 <b>TCAS</b>를 최후 방어층으로 넣는다.</p>
+        <div class="calc">
+홀딩 패턴 제원 <span class="dim">(91 kt 표준선회, REV 02)</span>
+  선회반경 R = 91/188.5 = <b>0.483 NM</b>   직선구간 1분 = <b>1.517 NM</b>
+  패턴 횡폭 2R = <b>0.966 NM</b>  &lt;  회랑 반폭 1.248 NM
+  &rArr; <b>한쪽으로만 돌면 패턴이 회랑 안에 들어간다</b> — 방향 고정이 기하학적으로 성립
+  패턴 종방향 점유 : 홀딩픽스 상류로 LEG+R = <b>2.00 NM</b>, 하류로 R = 0.48 NM
+        </div>
+        <div class="calc">
+① 선회방향 — RKSI ARP 기준 <span class="dim">(공항이 회랑 서쪽에 있음)</span>
+  WP6&ndash;WP5    공항 우측 (7.9 NM)  &rarr;  <b>좌선회 (L)</b>
+  WP5&ndash;WP4    공항 우측 (4.0 NM)  &rarr;  <b>좌선회 (L)</b>
+  WP4&ndash;HDY    공항 우측 (3.0 NM)  &rarr;  <b>좌선회 (L)</b>
+  HDY&ndash;WP3    공항 우측 (3.4 NM)  &rarr;  <b>좌선회 (L)</b>
+  WP3&ndash;WP1    공항 우측 (6.5 NM)  &rarr;  <b>좌선회 (L)</b>
+  <span class="c">WP1&ndash;SIHWA  공항 좌측 (9.9 NM)  &rarr;  우선회 (R)  ← 유일한 반대</span>
+
+  남행&middot;북행 관계없이 결과는 &ldquo;동쪽으로 돈다&rdquo;로 같다.
+  WP1&ndash;SIHWA만 회랑이 동쪽으로 꺾여 공항이 좌측으로 넘어간다 &rarr; <b>조종사 혼동 위험</b>,
+  구간별 선회방향을 회랑도에 명시할 것.
+        </div>
+        <div class="calc">
+② 홀딩 금지구역 <span class="dim">(패턴이 저고도 절차와 0.3 NM 이내 접근 시 금지)</span>
+
+  판정기준 — 고도표기 부호를 반영해 &lsquo;보장되는 하한&rsquo;을 산출
+     +X = at or above &rarr; 하한 X      -X = at or below &rarr; <b>하한 없음</b>
+     @X = at &rarr; 하한 X               미공시 &rarr; 앞뒤 하한으로 보간
+     &rArr; 3,000 ft 미만 가능 leg <b>366개</b> (하한 완전 미상 134개)
+
+  구간            홀딩 가능      비고
+  <span class="g">WP6&ndash;WP5        100%</span>       패턴 최대 횡이탈 2.07 NM <span class="c">(반폭 초과 — 북단 제한 필요)</span>
+  <span class="g">WP5&ndash;WP4        100%</span>       패턴 횡이탈 0.97 NM  이상 없음
+  WP4&ndash;HDY         36%       0~31% 구간만 가능
+  <span class="c">HDY&ndash;WP3          0%       전면 금지</span>
+  WP3&ndash;WP1          8%       68~75% 구간만 가능
+  <span class="c">WP1&ndash;SIHWA        0%       전면 금지</span> (패턴 횡이탈 1.52 NM, 반폭 초과)
+
+  <span class="c">금지 원인이 거의 하나 — RKSI 15L/15R 복행경로</span>
+     IAP_2_53_1_44 / IAP_2_57_1_46  GC999&rarr;GC989, GC989&rarr;GC980   <b>하한 540 ft</b>
+     회랑 남쪽 절반이 이 경로 위에 얹혀 있다.
+        </div>
+        <div class="ev">
+          <span class="lbl">확정 규칙</span>
+          <b>홀딩 지정구역 = WP6&ndash;WP5 및 WP5&ndash;WP4 구간에 한정</b>(합 9.44 NM). 단 홀딩픽스는 <b>WP6에서 남쪽으로 2.00 NM 이상</b> 떨어져야 한다(패턴이 상류로 LEG+R만큼 뻗어 회랑 북단을 벗어나므로) &rarr; <b>실질 홀딩 가능 길이 7.44 NM</b>.<br><br>
+          <b>남쪽 절반(WP4&ndash;HDY 이남)에서는 홀딩하지 않는다.</b> 간격분리가 필요하면 북쪽 홀딩구역으로 유도하거나 속도조절로 처리한다. 이는 REV 06&middot;08의 &ldquo;복행 시 CLOSED&rdquo;와 같은 뿌리다 — <b>복행경로가 관통하는 구간 위에 멈춰 있으면 안 된다</b>.
+        </div>
+        <div class="ev" style="margin-top:12px">
+          <span class="lbl">★ TCAS &mdash; 지금까지 위계에 없던 최후 방어층</span>
+          REV 20의 수직위계는 L4(ATC) &rarr; L2(PSU) &rarr; L1(기장)까지였고, <b>그 전부가 실패했을 때의 층이 없었다</b>. 항공 안전의 대원칙상 <b>TCAS RA는 관제사 지시와 충돌해도 RA를 따른다</b> — 협상 대상이 아닌 절대 규칙이다.<br><br>
+          <code>L&minus;1  TCAS RA / DAA &mdash; 어떤 지시보다 우선, 즉시 반응</code>
+        </div>
+        <div class="calc">
+TCAS를 UAM에 연결할 때의 쟁점 3가지
+
+<span class="c">1) ConOps 1.5는 ADS-B <b>OUT</b>만 요구한다</span> <span class="dim">(4-5-3, 표 4)</span>
+   OUT은 <b>송신 전용</b> — 상대를 보지 못한다. TCAS는 트랜스폰더 질문/응답이 필요하므로
+   UAM 기체에 <b>ADS-B IN 또는 TCAS II</b>가 없으면 RA를 받을 수 없다.
+   &rArr; <b>ConOps 최소요건만 갖추면 TCAS 협조가 원천 불가능</b>
+
+2) 상용기 TCAS가 UAM을 어떻게 볼 것인가
+   TCAS II는 상승/강하로 회피하는데 <b>eVTOL의 상승률&middot;강하율은 제트와 전혀 다르다</b>.
+   RA 협조(coordination)가 성립하려면 UAM도 TCAS II 호환 로직이 필요하고,
+   없으면 상용기는 UAM을 <b>비협조 침입기</b>로 처리한다.
+
+3) 홀딩 중 RA가 뜨면
+   홀딩은 저속 선회 중이라 <b>수직 회피 여유가 가장 적은 상태</b>다.
+   위에서 정한 홀딩 금지구역이 곧 <b>&ldquo;RA 발생 시 가장 위험한 곳&rdquo;</b>과 겹친다.
+        </div>
+        <div class="was"><b>ConOps를 초과하는 요구를 스스로 부과한다:</b> 우리는 <b>ADS-B IN을 필수</b>로 놓는다. ConOps 1.5가 요구하는 최소요건(OUT)을 넘어서는 사양이며, 운용고도처럼 &ldquo;각주가 허용한 협의 변경&rdquo;이 아니라 <b>우리가 안전을 위해 상향한 것</b>이다. 성격이 다르므로 발표에서 구분해 말할 것.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">Tideway 반영사항</span>
+          RA 발생을 감지하면 ① 해당 회랑 <b>자동 CLOSED</b> ② 이해관계자 즉시 전파 ③ RA 종료 후 &ldquo;Clear of Conflict&rdquo; 확인 전까지 재개방 금지. 홀딩 로직에는 <b>선회방향 고정</b>과 <b>금지구역 판정</b>을 넣어, 남쪽 구간에서 홀딩 지시가 나가지 않도록 한다.
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="meta"><span class="rev">REV 20</span><span class="tag">규정근거</span></div>
+      <div class="body">
+        <h3>K-UAM ConOps 1.5를 1차 근거로 채택 &mdash; 우리 설계는 &ldquo;독자 개념&rdquo;이 아니라 &ldquo;ConOps 구체화&rdquo;다</h3>
+        <p>지금까지 각 수치를 자체 계산과 실측으로만 정당화해 왔다. <b>「한국형 도심항공교통(K-UAM) 운용개념서 1.5」</b>(UAM Team Korea 발간, 국토교통부 도심항공교통정책과 기획, <b>2025년 8월</b>) 원문을 대조해, 조항별로 우리 값이 어디에 걸리는지 전수 확인했다. ConOps 1.0(&rsquo;21.9)의 개정판이며, 2.0이 아닌 1.5인 이유는 &ldquo;초기 시장 개방에 초점, 성장&middot;성숙기는 방향성만 제시&rdquo;이기 때문이다.</p>
+        <div class="calc">
+조항별 대조 <span class="dim">(절 번호는 ConOps 1.5 기준)</span>
+
+<span class="c">4-3-2-1</span>  회랑 순항구간 <b>지상고도 450 &plusmn;150 m</b> = 984 &ndash; 1,969 ft
+      우리 SB 2,150 ft (655 m) &rarr; 상한 <span class="c">+181 ft</span> 초과
+      우리 NB 2,450 ft (747 m) &rarr; 상한 <span class="c">+481 ft</span> 초과
+
+<span class="g">4-3-4</span>    기존 헬기 회랑과 고도분리 <b>&plusmn;150 m(492 ft) 기준 검토</b>
+      실측 헬기 상한 1,550 ft &rarr; SB와 <span class="g">600 ft</span> 확보 = 요구치의 <span class="g">1.22배</span>  충족
+
+<span class="g">4-3-4</span>    회랑 크기는 &ldquo;K-UAM 실증사업(GC) 결과 등을 고려해 설계&rdquo;
+      &rarr; ConOps는 <b>폭 수치를 정하지 않음</b>. 우리 반폭 1.248 NM 자체 산출이 정당
+
+<span class="g">4-3-3</span>    고밀도 교통량은 <b>고도분리 회랑 추가</b>&middot;수평분리 회랑 추가로 관리
+      &rarr; 우리 SB/NB 고도분리가 ConOps가 명시한 용량관리 수단 그 자체
+
+<span class="g">4-3-4-3</span>  회랑 이탈 모니터링은 <b>&ldquo;운항 성능 기준(예: RNP)을 검토하여 관리&rdquo;</b>
+      각주 30: &ldquo;기존 RNP 개념을 참고하되 VFR에서도 안정적으로 운용되도록 설정 가능,
+              EASA U-space RUNP도 필수 아니며 <b>운항환경에 맞게 조정 가능</b>&rdquo;
+      &rarr; 반폭에서 역산한 <b>RNP<sub>u</sub> &le; 0.624</b>가 이 문구에 정확히 부합
+
+<span class="g">6-2-2</span>    <b>운용모델 2 「준도심 공항 연계형」이 우리 모델</b>
+      공역 B&middot;C&middot;D&middot;E + 비관제 포함 / VFR(자동조종 보조) / 지정 경로 /
+      순항 SBAS &middot; 입출항 DGNSS(RTK) / ADS-B OUT 필수 / ATC 관제 또는 협력 운용
+        </div>
+        <div class="ev">
+          <span class="lbl">★ 가장 중요한 발견 &mdash; 4-3-4-3이 우리 회랑을 특정한다</span>
+          <q>&ldquo;<b>관제공역 내 회랑 등 공간적 범위가 엄격히 제한되는 회랑</b>의 경우 <b>교통당국의 역할이 보다 강화될 수 있다</b>&rdquo;</q><br><br>
+          우리 회랑은 ① <b>RKSI Class B 내부</b>(REV 16) ② <b>반폭 1.248 NM으로 공간 엄격 제한</b>(REV 11) &mdash; 두 조건을 모두 만족한다. ConOps가 예외적으로 교통당국 역할 강화를 지목한 바로 그 유형이다.<br><br>
+          이것이 <b>REV 18의 서울접근관제소 LOA 권고를 ConOps가 직접 뒷받침</b>한다. &ldquo;우리가 관제기관 개입을 요청한다&rdquo;가 아니라 <b>&ldquo;ConOps가 이 유형에 대해 교통당국 역할 강화를 명시했다&rdquo;</b>가 된다.<br><br>
+          <b>4-3-1</b>과 묶으면 완성된다 &mdash; 일반 회랑은 &ldquo;이탈금지 등 <b>법적 의무 부담은 지양</b>, 사업자 자체 시스템으로&rdquo;이나, &ldquo;<b>관제공역이나 고밀도 인구밀집지역 등 안전 우려가 있는 경우는 법적 의무 부여 등 탄력적으로 제도 적용 가능</b>&rdquo;. 즉 우리 회랑은 ConOps 체계 안에서 <b>법적 구속력을 부여할 수 있는 예외 유형</b>이다.
+        </div>
+        <div class="was"><b>논리를 교체한다 &mdash; REV 13의 방어 논리:</b> 그동안 &ldquo;ConOps 밴드를 초과하지만 수치가 아니라 취지를 따랐다&rdquo;고 방어해 왔다. 이제 근거를 <b>ConOps 4-3-2-1 각주 29</b>로 옮긴다 &mdash; <q>UAM 운용 고도는 운용지역에 따라 항공교통 관제기관, 군 등 관계기관과 <b>사전 협의를 통해 변경될 수 있다</b></q>. 즉 <b>&ldquo;기준을 지켰다&rdquo;가 아니라 &ldquo;기준이 예정해둔 협의 변경 절차를 따랐고, 그 협의의 근거를 실측으로 갖췄다&rdquo;</b>가 우리 주장이다. 헬기 실측 상한 1,550 ft가 그 근거다.</div>
+        <div class="was" style="margin-top:10px"><b>주의 &mdash; 기술로드맵을 단독 인용하지 말 것:</b> 「K-UAM 기술개발 로드맵」(&rsquo;21.3)은 &ldquo;도심지역에서 고도 1,500 ft 이상(최대 4,000 ft)&rdquo;이라 우리 고도가 범위 안이지만, <b>ConOps 1.5가 더 최신(2025.8)이면서 더 낮은 범위</b>를 제시한다. 로드맵만 인용하면 &ldquo;더 최신 문서가 있는데 왜&rdquo;로 반박당한다. 두 문서를 함께 제시하고 각주 29를 근거로 삼을 것.</div>
+        <div class="calc">
+회랑 관리 <span class="c">수직위계</span> &mdash; ConOps 그림 2(초기 K-UAM 교통체계의 구조) 준용
+
+  L4  <b>교통당국 / ATC</b> (인천접근관제소&middot;타워)
+        회랑 개폐 지시 &middot; 구역 이탈 관리 &middot; 비상시 직접 통제
+        <span class="c">4-3-4-3에 따라 우리 회랑은 이 층의 권한이 강화됨</span>
+        &updownarrow; 정보교환 프로토콜 (NOTAM&middot;지시/규제 &harr; UAM 교통상황&middot;비상상황)
+  L3  <b>도심항공교통정보시스템</b>
+        회랑&middot;버티포트 위치/형상 정보 관리 &middot; 운항안전정보 공유
+  L2  <b>PSU</b> (UAM 교통관리서비스 제공자)  <span class="c">&larr; Tideway 회랑관리자</span>
+        전략적 분리 : 비행계획 승인 (사전 충돌 방지)
+        전술적 분리 : 실시간 감시 &rarr; 속도&middot;고도&middot;방향 변경, 홀딩
+        회랑 이탈 모니터링 (RNP<sub>u</sub> 0.624 기준)
+  L1  <b>UAM 운항자 / 기장</b>
+        비행계획 수립&middot;제출 &middot; 항공기 상태 공유 &middot; 최종 안전 책임
+  L0  <b>기체</b>
+        ADS-B OUT (필수) &middot; V2V
+        </div>
+        <div class="calc">
+Tideway 기능 &rarr; ConOps 근거 매핑
+  ATC 요청 버튼 &rarr; 즉시 CLOSED      L4&rarr;L2   4-3-4-3 교통당국 역할 강화
+  레이더 2 NM 자동감지 &rarr; 자동 CLOSED  L2      4-2-4-1 전술적 분리 지원
+  선택적 홀딩(진행방향 차단 시만)         L2      4-3-4-2 전술적 분리
+  60초 간격분리                       L2      4-3-4-2
+  2 NM 이탈 시 자동 홀드 해제            L2      4-2-4-2 항로이탈 모니터링
+  3구간 독립 개폐                      L2      4-3-3 회랑 용량 관리
+        </div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">발표에서 쓸 프레이밍</span>
+          Tideway의 관제 기능은 <b>새로 만든 개념이 아니라 ConOps 그림 2의 정보흐름 프로토콜을 준용해 구현한 것</b>이다. &ldquo;전략적 분리&rdquo;&middot;&ldquo;전술적 분리&rdquo;라는 ConOps 용어를 그대로 쓰고, 각 기능에 절 번호를 붙여 제시한다.
+        </div>
+        <div class="was" style="margin-top:10px"><b>정정 &mdash; REV 19의 계산 오류:</b> WP4&ndash;HDY 0.66 NM 구간을 &ldquo;290 km/h로 약 4.5초&rdquo;라 적었으나 <b>틀렸다. 실제 15.2초</b>다(1,222 m &divide; 80.6 m/s). 다만 정정 후에도 이 구간은 빠듯하다 &mdash; 순항 290 km/h에서 접근속도 91 kt까지 이 구간 안에서 감속하려면 <b>0.18 g</b>가 필요하고, 승객 안락 기준(0.10&ndash;0.15 g)으로는 각각 1.18 / 0.79 NM이 필요해 구간 길이(0.66 NM)를 넘는다.</div>
+      </div>
+    </article>
 
     <article class="entry">
       <div class="meta"><span class="rev">REV 19</span><span class="tag">회랑정렬</span></div>
@@ -1163,6 +1336,22 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
       <p>REV 17에서 좌표만 옮기고 명칭은 그대로 뒀다. 새 WP6(37.63382N 126.50688E)은 <b>북인천IC가 아니라 강화도 남단 해상</b>이고 WP5도 원래 지상 기준점에서 벗어났다. 발표자료에 쓰기 전 <b>명칭 재정의</b> 필요.</p>
     </div>
     <div class="openItem">
+      <h4>TCAS 협조 가능성 — eVTOL 상승률과 RA 로직 호환성</h4>
+      <p>REV 21에서 ADS-B IN을 필수로 올려 RA 수신은 확보했으나, <b>상용기 TCAS II와 협조(coordination)가 성립하는지는 별개 문제</b>다. TCAS II는 상승/강하로 회피하는데 eVTOL의 상승률·강하율 특성이 제트와 달라, UAM에 TCAS II 호환 로직이 없으면 상용기는 UAM을 <b>비협조 침입기</b>로 처리한다. 기종 스펙 확정 후 ① UAM측 회피 능력(수직속도) ② RA 협조 프로토콜 지원 여부 ③ 미지원 시 대체수단(DAA)을 정해야 한다. 홀딩 중에는 저속 선회로 수직 회피 여유가 가장 적으므로, <b>홀딩 금지구역이 곧 RA 최악 지점</b>이라는 점도 함께 다뤄야 한다.</p>
+    </div>
+    <div class="openItem">
+      <h4>천이·역천이 구간 미정의 — ConOps 6-3-1 및 EB-105 관련</h4>
+      <p>회랑에 <b>고정익↔회전익 천이 지점이 정의돼 있지 않다</b>. WP4·WP3는 단순 경유점이다. REV 19의 직선화로 WP4–HDY가 1.47 → <b>0.66 NM</b>로 줄어, 순항 290 km/h에서 접근속도 91 kt까지 감속하려면 <b>0.18 g</b>가 필요하다(승객 안락 기준 0.10~0.15 g로는 1.18 / 0.79 NM 필요). FAA EB-105 원문에는 접근표면 <b>8:1</b>, 천이표면 2:1, 접근·이탈 최소 <b>135°</b>가 규정돼 있고, 2,150 ft를 8:1로 강하하려면 수평 <b>2.83 NM</b>이 필요하다. 다만 EB-105는 <q>제작사 자료상 UAM 기체는 ETL(유효천이양력)이 불필요하고 HOGE가 가능</q>하다고 명시해, 천이에 최소 전진거리가 강제되지는 않는다 — <b>문제의 성격은 &ldquo;천이 가능 여부&rdquo;가 아니라 &ldquo;감속을 얼마나 완만하게 할 것인가&rdquo;</b>다. 감속 개시점을 WP5–WP4 구간(3.70 NM)으로 앞당겨 <b>천이개시점(TP)을 신설</b>하는 방향이 유력하며, 그 경우 회랑 통과시간·처리량 계산을 그 전제로 다시 해야 한다.</p>
+    </div>
+    <div class="openItem">
+      <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
+      <p>ConOps 1.5 표 4의 「준도심 공항 연계형」은 버티포트 운영방식을 <b>복수 버티포트</b>로 규정한다(6-2-2: &ldquo;복수 버티포트 간 지정된 경로 운항&rdquo;). 현재 우리 회랑에는 <b>HDY(홍대염전) 단일 버티포트</b>뿐이다. 양 끝단(WP6 강화 남단 해상, SIHWA)에 버티포트를 두거나, 회랑 성격을 &ldquo;단일 버티포트 + 지정 구역&rdquo;(운용모델 1)으로 재규정하는 두 갈래가 있다. 발표에서 운용모델 2를 표방하려면 이 항목을 정리해야 한다.</p>
+    </div>
+    <div class="openItem">
+      <h4>해상 운용 안전대책 미검토 — ConOps 6-3-3</h4>
+      <p>ConOps 1.5 6-3-3은 <q>해상 지역에서는 <b>강풍, 안개, 해무</b> 등 기상 변화에 따른 운항 안전 대책과 <b>비상착수를 위한 장비</b> 등의 안전 대책이 필요</q>하다고 규정한다. 우리 회랑은 <b>7개 지점 전부 해상·연안</b>(강화 남단 해상 → 영종 → 인천대교 → 월미도 → 시화)이라 정면으로 해당한다. 빌딩풍·GNSS 멀티패스를 회피한다는 입지 이점의 <b>반대급부</b>이며, 지금까지 이점만 주장하고 이 요건은 다루지 않았다. 해무는 인천 연안에서 실제로 빈번하므로 <b>기상 최저치와 비상착수 장비</b>를 운용조건에 넣어야 한다.</p>
+    </div>
+    <div class="openItem">
       <h4>서울접근관제소 LOA — 회랑 상공 최저 유도고도 4,000 ft</h4>
       <p>REV 18에서 잔여 리스크가 <b>민항 0.77 회/일</b>로 좁혀졌고, 그 전부가 <b>공시 고도가 없는 구간(DU022→DU018)에서 관제 재량으로 낮게 유도된 경우</b>임이 확인됐다. 회랑 설계로는 더 줄일 수 없고 <b>협정으로만 해결</b>된다. 실측이 이미 74.9~98.87% 4,000 ft를 지키고 있어 관제 부담 증가가 거의 없다는 점을 근거로 협의해야 한다. 협정 없이 갈 경우 이 0.77 회/일은 <b>Tideway 실시간 감시가 전담</b>하는 것으로 프레이밍할 것.</p>
     </div>
@@ -1186,7 +1375,7 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 19 · 2026-09-06</span>
+  <span>회랑1 설계결정 로그 · REV 21 · 2026-09-09</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
