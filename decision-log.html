@@ -264,6 +264,9 @@ h2{scroll-margin-top:60px}
   .nvin a{padding:2px 4px}
 }
 
+.entry .meta .dt{display:block; margin-top:6px; font-size:10px;
+  color:var(--ink-faint); letter-spacing:.02em}
+
 /* ── 미결 사항 ── */
 .open{display:grid; gap:12px}
 .openItem{
@@ -311,11 +314,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천공항–WP1 구간의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 21 · 2026-09-09</b><br>
+    <b>REV 22 · 2026-09-09 09:26</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
-    분석지도: v17 · 시연앱: Tideway
+    분석지도: v17 · 시연앱: Tideway<br>
+    <span style="color:var(--rule)">최종 갱신 2026-09-09 09:26</span>
   </div>
 </header>
 
@@ -390,9 +394,9 @@ h2{scroll-margin-top:60px}
         </tr>
         <tr>
           <td class="k">33L/33R 대응</td>
-          <td class="v">조치 불필요</td>
-          <td><span class="pill ok">검증</span></td>
-          <td class="src">최종접근·복행 모두 1.85–2.07 NM 이격(REV 07)</td>
+          <td class="v">복행 시 CLOSED</td>
+          <td><span class="pill crit">불가피</span></td>
+          <td class="src">최종접근은 1.85–2.07 NM로 여유 있으나, <b>복행경로가 회랑 밴드 안 1.120 NM</b> 관통(REV 07 값 1.96 NM은 오류). 15L/15R과 동일 처리(REV 22)</td>
         </tr>
         <tr>
           <td class="k">공역 등급</td>
@@ -514,7 +518,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">03</td><td class="item">경로 직선화</td><td class="concl">WP2 제거</td><td class="src">최대 꺾임 38.9°→22.6° · 코너컷 이탈 81 m→27 m</td><td class="revc">11</td></tr>
         <tr><td class="no">04</td><td class="item">북측 정렬</td><td class="concl">동북동 → <b>정북</b> 재정렬</td><td class="src">WP6·WP5·WP3 이동 후 WP6·WP4 추가 조정 · <b>북측 침로차 0.7°</b> · 최대선회 33.0° · 총연장 33.94 km(법정 50 km의 68%)</td><td class="revc">17·19</td></tr>
         <tr><td class="no">05</td><td class="item">회랑 반폭</td><td class="concl"><b>1.248 NM</b> (총폭 4,624 m)</td><td class="src">상시 절차 최협착 RWY33R 최종접근 1.848 − 상용기 containment 0.6</td><td class="revc">11</td></tr>
-        <tr><td class="no">06</td><td class="item">UAM 항법성능</td><td class="concl">RNP<sub>u</sub> ≤ <b>0.624</b></td><td class="src">반폭에서 역산. 상용기 RNP 0.3보다 느슨 · 290 km/h 선회이탈 27 m는 예산의 2.3%. ConOps <b>4-3-4-3 각주 30</b>이 &ldquo;RNP 개념 참고하되 운항환경에 맞게 조정 가능&rdquo;으로 이 방식을 허용(REV 20)</td><td class="revc">11</td></tr>
+        <tr><td class="no">06</td><td class="item">UAM 항법성능</td><td class="concl">RNP<sub>u</sub> ≤ <b>0.624</b> <span style="font-size:10px;color:var(--good)">재검증</span></td><td class="src">반폭에서 역산. 상용기 RNP 0.3보다 느슨 · 290 km/h 선회이탈 27 m는 예산의 2.3%. ConOps <b>4-3-4-3 각주 30</b>이 &ldquo;RNP 개념 참고하되 운항환경에 맞게 조정 가능&rdquo;으로 이 방식을 허용(REV 20)</td><td class="revc">11</td></tr>
         <tr><td class="cat" rowspan="4">운용<br>고도</td><td class="no">07</td><td class="item">왕복 운용 방식</td><td class="concl">수평 2선 → <b>고도분리</b></td><td class="src">Reich CRM: 수평 2선은 안쪽 항로선이 −0.008 NM로 상용기 보호구역 침범 → 기하학적 불가</td><td class="revc">09</td></tr>
         <tr><td class="no">08</td><td class="item">운용 고도</td><td class="concl">SB <b>2,150 ft</b> / NB <b>2,450 ft</b></td><td class="src">100 ft 해상도 재분석. 실측 빈 층 1,700–2,900 ft 중앙 · 조우 303→150. ConOps 1.5 상한(1,969 ft) 초과분은 <b>4-3-2-1 각주 29</b> 협의 변경으로 정당화(REV 20)</td><td class="revc">14</td></tr>
         <tr><td class="no">09</td><td class="item">층분리</td><td class="concl"><b>300 ft</b></td><td class="src">σ<sub>z,rel</sub> 16 m 기준 5.7σ · 겹침확률 1.1e-08</td><td class="revc">14</td></tr>
@@ -524,7 +528,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">13</td><td class="item">금지·제한구역</td><td class="concl">침범 <b>없음</b></td><td class="src">P-518 회랑 가장자리 2.31 NM · 인천 IFP 보호구역 S1 2.33 NM (AIP ENR 5.1)</td><td class="revc">16</td></tr>
         <tr><td class="no">14</td><td class="item">제도적 선례</td><td class="concl"><b>S1 방식 원용</b></td><td class="src">S1은 1,600–6,000 ft를 관제 IFR 전용 지정 + VFR 명시 배제 → 새 법제 없이 동일 틀 적용 가능</td><td class="revc">16</td></tr>
         <tr><td class="cat" rowspan="4">RKSI<br>리스크</td><td class="no">15</td><td class="item">15L/15R 복행</td><td class="concl"><b>즉시 CLOSED</b> (시간분리)</td><td class="src">회랑과 기하학적 <b>교차</b>(이격 0) + 수직 168 ft → 공간분리 양방향 불가</td><td class="revc">06·08</td></tr>
-        <tr><td class="no">16</td><td class="item">33L/33R</td><td class="concl">조치 불필요</td><td class="src">최종접근·복행 모두 1.85–2.07 NM 이격</td><td class="revc">07</td></tr>
+        <tr><td class="no">16</td><td class="item">33L/33R</td><td class="concl"><b>복행 시 CLOSED</b></td><td class="src">최종접근 1.85–2.07 NM은 여유. 단 <b>복행경로가 밴드 안 1.120 NM</b> 관통 → 15L/15R과 동일 처리(REV 22)</td><td class="revc">07·22</td></tr>
         <tr><td class="no">17</td><td class="item">버티포트 분리각</td><td class="concl">≥ <b>135°</b> (이상 180°)</td><td class="src">FAA EB-105 · EASA PTS-VPT-DSN 원문 일치 확인. 직선화로 168.5°→<b>147.0°</b>로 감소했으나 기준 충족(REV 19)</td><td class="revc">04·19</td></tr>
         <tr><td class="no">18</td><td class="item">절차 좌표 정확성</td><td class="concl">오류 2건 발견·수정</td><td class="src">ATKON 위도 0.1° 오타(11 km) · STAR OLMEN/GUKDO/KARBU 3C→2C 전면 개정</td><td class="revc">03</td></tr>
         <tr><td class="cat" rowspan="3">RKSS<br>리스크</td><td class="no">19</td><td class="item">공시 절차 관통</td><td class="concl"><b>고도분리로 해소</b></td><td class="src">52개 중 <b>11개</b> 관통하나(직선화로 13→11) 관통 leg <b>최저 4,000 ft</b> → NB 2,450 대비 <b>+1,550 ft</b></td><td class="revc">18</td></tr>
@@ -580,6 +584,65 @@ h2{scroll-margin-top:60px}
 
 
   <div class="log">
+
+    <article class="entry" id="rev22">
+      <div class="meta"><span class="rev">REV 22</span><span class="tag">수치감사</span><span class="dt">2026-09-09 09:26</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">현 회랑 기준 반폭&middot;RNP 재산출 + 구 좌표 수치 전수 감사 &mdash; 정정 4건</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>REV 11의 반폭&middot;RNP 역산은 <b>구 회랑 좌표</b>로 계산한 값이었다. REV 17&middot;19에서 WP6&middot;WP5&middot;WP4&middot;WP3가 모두 이동했으므로 전면 재계산하고, 다른 REV에 남아 있는 구 좌표 기준 수치도 함께 감사했다.</p>
+        <div class="calc">
+① 반폭&middot;RNP 재산출 &mdash; <span class="g">결론: 변경 없음</span>
+
+  최종접근(상시 사용 절차) &rarr; 현 회랑 중심선 최소거리
+     <span class="c">33R  ENBUK&rarr;RW33R    1.848 NM</span>  [WP4-HDY]   ← 최협착
+     33L  KIDAB&rarr;RW33L    2.071 NM  [WP4-HDY]
+     34R  PIPAN&rarr;RW34R    3.189 NM
+     34L  BODEK&rarr;RW34L    3.413 NM
+     16L  PH002&rarr;RW16L    4.083 NM
+     16R  DH002&rarr;RW16R    4.211 NM
+     RKSS 32L/32R/14L/14R   11.1 &ndash; 11.7 NM
+
+  가용 반폭 = 1.848 &minus; 0.600(상용기 2&times;RNP 0.3) = <b>1.248 NM</b>  (총폭 4,624 m)
+  RNP<sub>u</sub> &le; <b>0.624</b> (1,156 m)   &mdash; REV 11 값과 동일
+
+  <span class="c">왜 안 바뀌었나 &mdash; 최근접점이 HDY 그 자체이기 때문</span>
+     최근접 : WP4-HDY 구간의 <b>100.0% 지점 = HDY(37.46700N 126.50269E)</b>
+     HDY는 버티포트라 한 번도 이동하지 않았다. 재정렬로 WP6&middot;WP5&middot;WP4&middot;WP3를
+     모두 옮겼지만 <b>제약을 만드는 점이 HDY</b>여서 1.8476 NM이 그대로 유지됐다.
+     (구 회랑 1.8476 / 현 회랑 1.8476 &mdash; 소수 4자리까지 동일)
+     &rArr; 재정렬로 더 가까워진 최종접근은 <b>없다</b>.
+        </div>
+        <div class="was"><b>정정 ① &mdash; REV 11 코너컷 이탈량:</b> &ldquo;최대 27 m(WP1 22.6&deg;), 예산의 2.3%&rdquo; &rarr; REV 19 직선화로 최대 선회가 <b>HDY 33.0&deg;</b>로 옮겨가 <b>61 m, 예산의 2.6%</b>가 됐다. 구간별로는 WP5 0.7&deg;(0 m) &middot; WP4 3.5&deg;(1 m) &middot; <b>HDY 33.0&deg;(61 m)</b> &middot; WP3 21.0&deg;(24 m) &middot; WP1 23.2&deg;(30 m). 2.3배 늘었으나 여전히 무시할 수준.</div>
+        <div class="was" style="margin-top:10px"><b>정정 ② &mdash; REV 08 복행기 통과고도:</b> HDY&ndash;WP3 교차점 통과고도 &ldquo;약 1,332 ft&rdquo; &rarr; 현 회랑에서 <b>1,322 ft</b>(MAPt에서 5.15 NM). 10 ft 차이로 <b>결론은 그대로</b> &mdash; SB 2,150과 828 ft, NB 2,450과 1,128 ft 아래라 어느 층과도 수직분리 기준(1,000 ft)을 만족하지 못하는 상황은 동일하다.</div>
+        <div class="ev">
+          <span class="lbl">★ 신규 발견 &mdash; 15L 복행은 회랑을 <b>두 번</b> 가로지른다</span>
+          REV 06&middot;08은 HDY&ndash;WP3 교차 한 곳만 다뤘으나, 감사 결과 <b>WP1&ndash;SIHWA 구간에서도 교차</b>한다.<br><br>
+          <code>GC989&rarr;GC980 leg  &times;  WP1&ndash;SIHWA  @ 37.40553N 126.64084E</code><br>
+          MAPt에서 14.28 NM &rarr; 통과고도 <b>2,710 ft</b><br>
+          <b>SB 2,150 대비 +560 ft / NB 2,450 대비 +260 ft</b><br><br>
+          첫 교차(1,322 ft)는 우리 층 <b>아래</b>를 지나지만, 두 번째 교차는 <b>NB 바로 위 260 ft</b>를 지난다. 수직분리 기준 1,000 ft에 한참 못 미친다. 15L 복행 시 CLOSED 결정(REV 06&middot;08)은 유지되지만, <b>그 근거가 한 곳이 아니라 두 곳</b>이고 남단 교차가 오히려 더 촘촘하다는 점을 발표에 반영해야 한다.
+        </div>
+        <div class="was" style="margin-top:12px"><b>정정 ③ &mdash; REV 07 &ldquo;33L/33R 조치 불필요&rdquo;는 틀렸다:</b> REV 07은 33L/33R 공용 복행(MAPt&rarr;GE991) 이격을 <b>1.96 NM</b>으로 적고 &ldquo;조치 불필요&rdquo;로 판정했으나, 현재 데이터로 재계산하면 <b>구 회랑 1.066 NM / 현 회랑 1.120 NM</b>이다. <b>둘 다 회랑 반폭 1.248 NM 안</b>이므로 당시에도 이미 밴드를 관통하고 있었다. 최종접근(33L 2.071 / 33R 1.848)은 REV 07 값이 맞다 &mdash; <b>복행 수치만 틀렸다</b>.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">따라 바뀌는 결정</span>
+          <b>33L/33R 복행도 15L/15R과 동일하게 &ldquo;복행 시 회랑 CLOSED&rdquo; 트리거에 포함한다.</b> GE991(복행 선회점)이 회랑 밴드 안 1.12 NM에 있고(REV 21), 그 지점 고도는 560 ft에서 상승 중이다. 회랑 재설계로는 해결되지 않으며 &mdash; REV 11의 논리대로 <b>복행경로는 상시 점유 공역이 아니므로 시간분리(CLOSED)로 대응</b>한다. 이미 만들어둔 메커니즘이라 추가 비용이 없다.<br><br>
+          단 실측 뒷받침 &mdash; 50일 관측에서 <b>33 복행기가 GE991을 저고도로 통과한 사례는 0건</b>이다(REV 21). RKSI가 주로 15 방향을 쓰고 복행 자체가 드물기 때문이며, <b>기하학적 필요성은 있으나 발생 빈도는 매우 낮다</b>는 두 사실을 함께 제시할 것.
+        </div>
+        <div class="calc">
+② 검증 결과 &mdash; 값이 유지된 항목
+  회랑 반폭 1.248 NM             변경 없음 (제약점 HDY 불변)
+  RNP<sub>u</sub> &le; 0.624              변경 없음
+  33L 최종접근 2.071 NM          변경 없음
+  33R 최종접근 1.848 NM          변경 없음
+  15L 복행 HDY-WP3 교차 존재      유지 (위치만 0.06 NM 이동)
+  총폭 4,624 m / 특별법 600 m의 7.7배   변경 없음
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
 
     <article class="entry" id="rev21">
       <div class="meta"><span class="rev">REV 21</span><span class="tag">홀딩·최후방어</span></div>
@@ -1565,7 +1628,7 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 21 · 2026-09-09</span>
+  <span>회랑1 설계결정 로그 · REV 22 · 2026-09-09 09:26</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
