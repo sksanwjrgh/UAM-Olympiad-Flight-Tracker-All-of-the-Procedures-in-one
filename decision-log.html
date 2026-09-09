@@ -205,6 +205,65 @@ q::before{content:'"'} q::after{content:'"'}
 .mapCap{margin-top:7px; font-size:12px; color:var(--ink-dim); line-height:1.6}
 .calc .dim{color:var(--ink-faint)}
 
+
+/* ── 가독성 개선 (2026-09-09) ── */
+.topnav{position:sticky; top:0; z-index:50; background:var(--paper);
+  border-bottom:1px solid var(--line); backdrop-filter:saturate(180%) blur(8px)}
+.nvin{max-width:1080px; margin:0 auto; padding:9px 24px; display:flex;
+  align-items:center; gap:14px; flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px}
+.nvin b{color:var(--rule); letter-spacing:.02em}
+.nvin a{color:var(--ink-dim); text-decoration:none; padding:3px 7px; border-radius:3px}
+.nvin a:hover{color:var(--ink); background:var(--surface-2)}
+.nvsp{flex:1}
+.nvin button{font:600 10.5px "IBM Plex Mono",monospace; letter-spacing:.06em;
+  color:var(--ink-dim); background:var(--surface); border:1px solid var(--line-strong);
+  border-radius:3px; padding:4px 9px; cursor:pointer}
+.nvin button:hover{color:var(--rule); border-color:var(--rule)}
+.chartHead{padding-top:26px}
+
+/* REV 항목 접기 */
+.revd > summary{list-style:none; cursor:pointer; display:flex; align-items:baseline;
+  gap:12px; padding:2px 0}
+.revd > summary::-webkit-details-marker{display:none}
+.revd > summary::before{content:"▸"; color:var(--rule); font-size:12px; flex:none;
+  transition:transform .12s}
+.revd[open] > summary::before{content:"▾"}
+.revd > summary .rvt{font-size:16px; font-weight:600; letter-spacing:-.01em;
+  text-wrap:balance; flex:1}
+.revd > summary:hover .rvt{color:var(--rule)}
+.revd > summary .rvx{font-family:"IBM Plex Mono",monospace; font-size:10px;
+  letter-spacing:.1em; color:var(--ink-faint); flex:none}
+.revd[open] > summary .rvx{visibility:hidden}
+.rvb{margin-top:6px}
+
+/* REV 색인 */
+.revidx{margin:0 0 22px}
+.revidx > summary{cursor:pointer; font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px; letter-spacing:.06em; color:var(--rule); font-weight:600;
+  padding:8px 12px; background:var(--surface-2); border-radius:3px;
+  border-left:2.5px solid var(--rule)}
+.revidx td.k2{font-family:"IBM Plex Mono",monospace; font-size:11px;
+  color:var(--ink-dim); white-space:nowrap}
+.revidx a{color:var(--rule); text-decoration:none; font-weight:600}
+.revidx a:hover{text-decoration:underline}
+
+/* calc 블록 가독성 */
+.calc{line-height:1.75; font-size:12px}
+.entry{scroll-margin-top:60px}
+h2{scroll-margin-top:60px}
+
+#toTop{position:fixed; right:22px; bottom:22px; z-index:60; display:none;
+  font:600 11px "IBM Plex Mono",monospace; letter-spacing:.06em;
+  color:var(--ink-dim); background:var(--surface); border:1px solid var(--line-strong);
+  border-radius:3px; padding:9px 12px; cursor:pointer; box-shadow:var(--shadow)}
+#toTop:hover{color:var(--rule); border-color:var(--rule)}
+
+@media (max-width:680px){
+  .nvin{font-size:10.5px; gap:8px; padding:8px 14px}
+  .nvin a{padding:2px 4px}
+}
+
 /* ── 미결 사항 ── */
 .open{display:grid; gap:12px}
 .openItem{
@@ -227,6 +286,19 @@ q::before{content:'"'} q::after{content:'"'}
 }
 </style>
 
+<nav class="topnav">
+  <div class="nvin">
+    <b>회랑1 설계결정 로그</b>
+    <a href="#s01">확정사양</a>
+    <a href="#s02">제원·지도</a>
+    <a href="#s03">요약표</a>
+    <a href="#s04">결정로그</a>
+    <a href="#s05">미결사항</a>
+    <span class="nvsp"></span>
+    <button type="button" id="expAll">전체 펼치기</button>
+    <button type="button" id="colAll">전체 접기</button>
+  </div>
+</nav>
 </head>
 <body>
 <div style="max-width:1080px;margin:0 auto;padding:16px 24px 0"><a href="./" style="font:600 13px/1.6 'IBM Plex Mono',monospace;color:#e87326;text-decoration:none">← RKSI · RKSS 통합 항로도로 돌아가기</a></div>
@@ -248,7 +320,7 @@ q::before{content:'"'} q::after{content:'"'}
 </header>
 
 <section>
-  <h2><span class="idx">01</span>현재 확정 사양</h2>
+  <h2 id="s01"><span class="idx">01</span>현재 확정 사양</h2>
   <p class="secNote">아래 값은 모두 실좌표 또는 원문 대조를 거친 것이다. 미확정 항목은 <span class="pill prov">잠정</span>으로 표기하고, 확정 근거가 무엇인지 함께 적었다.</p>
   <div class="tableWrap">
     <table>
@@ -365,7 +437,7 @@ q::before{content:'"'} q::after{content:'"'}
 
 <!--CORRIDOR-SECTION-->
 <section>
-  <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
+  <h2 id="s02"><span class="idx">02</span>회랑 제원 · 지도</h2>
   <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-09-09 07:56)</span></p>
 
   <div class="mapWrap">
@@ -429,7 +501,7 @@ q::before{content:'"'} q::after{content:'"'}
 <!--/CORRIDOR-SECTION-->
 
 <section>
-  <h2><span class="idx">03</span>결정 · 검증 요약</h2>
+  <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
   <p class="secNote">REV 01–18에서 내린 결정과 검증 결과를 한 표로 모았다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
@@ -470,15 +542,51 @@ q::before{content:'"'} q::after{content:'"'}
 </section>
 
 <section>
-  <h2><span class="idx">04</span>결정 로그</h2>
+  <h2 id="s04"><span class="idx">04</span>결정 로그</h2>
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
+
+  <details class="revidx">
+    <summary>REV 색인 — 21건 (클릭해 펼치기)</summary>
+    <div class="tableWrap" style="margin-top:10px">
+      <table>
+        <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
+        <tbody>
+        <tr><td class="v"><a href="#rev21">REV 21</a></td><td class="k2">홀딩·최후방어</td><td class="src">홀딩 선회방향&middot;금지구역 확정, 그리고 TCAS를 최후 방어층으로 편입</td></tr>
+        <tr><td class="v"><a href="#rev20">REV 20</a></td><td class="k2">규정근거</td><td class="src">K-UAM ConOps 1.5를 1차 근거로 채택 &mdash; 우리 설계는 &ldquo;독자 개념&rdquo;이 아니라 &ldquo;ConOps 구체화&rdquo;다</td></tr>
+        <tr><td class="v"><a href="#rev19">REV 19</a></td><td class="k2">회랑정렬</td><td class="src">북측 추가 직선화 &mdash; 침로차 0.7&deg;, 절차 관통 28 &rarr; 24개</td></tr>
+        <tr><td class="v"><a href="#rev18">REV 18</a></td><td class="k2">공시절차대조</td><td class="src">김포 공시절차 전수 대조 &mdash; 관통 13개, 최저 4,000 ft &middot; 그리고 침범자의 절반은 계기점검기였다</td></tr>
+        <tr><td class="v"><a href="#rev17">REV 17</a></td><td class="k2">회랑정렬</td><td class="src">북측 정북 재정렬 &mdash; 김포 접근류를 비껴서 VFR 조우를 0으로</td></tr>
+        <tr><td class="v"><a href="#rev16">REV 16</a></td><td class="k2">공역근거</td><td class="src">공역 등급으로 근거를 세우다 &mdash; Class B 편입 &middot; P-518 &middot; S1 선례 &middot; VFR 전수조사</td></tr>
+        <tr><td class="v"><a href="#rev15">REV 15</a></td><td class="k2">데이터검증</td><td class="src">샘플링 공백 검증 — &ldquo;빈 층&rdquo;이 아니라 &ldquo;빠르게 통과하는 층&rdquo;이었다</td></tr>
+        <tr><td class="v"><a href="#rev14">REV 14</a></td><td class="k2">운용고도</td><td class="src">100 ft 해상도 재분석 — SB 2 150 / NB 2 450 ft로 재조정</td></tr>
+        <tr><td class="v"><a href="#rev13">REV 13</a></td><td class="k2">운용고도</td><td class="src">헬기 실측을 근거로 운용고도 상향 — SB 2 000 / NB 2 400 ft</td></tr>
+        <tr><td class="v"><a href="#rev12">REV 12</a></td><td class="k2">리스크</td><td class="src">김포(RKSS) 절차 검증 — 수평은 겹치나 수직으로 분리, 진짜 위협은 헬기</td></tr>
+        <tr><td class="v"><a href="#rev11">REV 11</a></td><td class="k2">회랑제원</td><td class="src">WP2 제거로 직선화 · 회랑 반폭을 상시 절차 기준으로 재산출(1.248 NM)</td></tr>
+        <tr><td class="v"><a href="#rev10">REV 10</a></td><td class="k2">회랑제원</td><td class="src">회랑 반폭 0.5 → 0.312 NM · UAM 항법성능 요구치 역산</td></tr>
+        <tr><td class="v"><a href="#rev09">REV 09</a></td><td class="k2">운용방식</td><td class="src">왕복 운용을 수평 2선에서 고도분리로 전환</td></tr>
+        <tr><td class="v"><a href="#rev08">REV 08</a></td><td class="k2">리스크</td><td class="src">복행기가 UAM 회랑 고도대를 관통한다 — 고도분리로도 해결 불가</td></tr>
+        <tr><td class="v"><a href="#rev07">REV 07</a></td><td class="k2">리스크</td><td class="src">33L/33R은 별도 조치 불필요</td></tr>
+        <tr><td class="v"><a href="#rev06">REV 06</a></td><td class="k2">리스크</td><td class="src">회랑과 15L 복행경로가 실제로 교차한다</td></tr>
+        <tr><td class="v"><a href="#rev05">REV 05</a></td><td class="k2">수치정합</td><td class="src">수직분리 1 000 ft로 단일화 · RNP는 잠정 표기로 전환</td></tr>
+        <tr><td class="v"><a href="#rev04">REV 04</a></td><td class="k2">원문검증</td><td class="src">버티포트 분리각 135° — 원문 대조 완료, 수정 불필요</td></tr>
+        <tr><td class="v"><a href="#rev03">REV 03</a></td><td class="k2">데이터정정</td><td class="src">절차 좌표 전수 검증 — 실제 오류 2건 발견·수정</td></tr>
+        <tr><td class="v"><a href="#rev02">REV 02</a></td><td class="k2">구조단순화</td><td class="src">홀딩포인트·선회점 제거, 버티포트를 본선에 편입</td></tr>
+        <tr><td class="v"><a href="#rev01">REV 01</a></td><td class="k2">범위</td><td class="src">분석 범위를 공항 인근 회랑으로 축소</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+
 
   <div class="log">
 
-    <article class="entry">
+    <article class="entry" id="rev21">
       <div class="meta"><span class="rev">REV 21</span><span class="tag">홀딩·최후방어</span></div>
       <div class="body">
-        <h3>홀딩 선회방향&middot;금지구역 확정, 그리고 TCAS를 최후 방어층으로 편입</h3>
+        <details class="revd" open>
+        <summary><span class="rvt">홀딩 선회방향&middot;금지구역 확정, 그리고 TCAS를 최후 방어층으로 편입</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>간격분리 홀딩은 회랑 어디서나 발생할 수 있게 두되 <b>선회는 항상 공항 반대쪽</b>으로 고정하고, <b>3,000 ft 이하로 항행 가능성이 있는 절차와 겹치는 구간은 홀딩을 금지</b>한다. 그리고 지금까지 위계에 빠져 있던 <b>TCAS</b>를 최후 방어층으로 넣는다.</p>
         <div class="calc">
 홀딩 패턴 제원 <span class="dim">(91 kt 표준선회, REV 02)</span>
@@ -552,13 +660,17 @@ TCAS를 UAM에 연결할 때의 쟁점 3가지
           <span class="lbl">Tideway 반영사항</span>
           RA 발생을 감지하면 ① 해당 회랑 <b>자동 CLOSED</b> ② 이해관계자 즉시 전파 ③ RA 종료 후 &ldquo;Clear of Conflict&rdquo; 확인 전까지 재개방 금지. 홀딩 로직에는 <b>선회방향 고정</b>과 <b>금지구역 판정</b>을 넣어, 남쪽 구간에서 홀딩 지시가 나가지 않도록 한다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev20">
       <div class="meta"><span class="rev">REV 20</span><span class="tag">규정근거</span></div>
       <div class="body">
-        <h3>K-UAM ConOps 1.5를 1차 근거로 채택 &mdash; 우리 설계는 &ldquo;독자 개념&rdquo;이 아니라 &ldquo;ConOps 구체화&rdquo;다</h3>
+        <details class="revd" open>
+        <summary><span class="rvt">K-UAM ConOps 1.5를 1차 근거로 채택 &mdash; 우리 설계는 &ldquo;독자 개념&rdquo;이 아니라 &ldquo;ConOps 구체화&rdquo;다</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>지금까지 각 수치를 자체 계산과 실측으로만 정당화해 왔다. <b>「한국형 도심항공교통(K-UAM) 운용개념서 1.5」</b>(UAM Team Korea 발간, 국토교통부 도심항공교통정책과 기획, <b>2025년 8월</b>) 원문을 대조해, 조항별로 우리 값이 어디에 걸리는지 전수 확인했다. ConOps 1.0(&rsquo;21.9)의 개정판이며, 2.0이 아닌 1.5인 이유는 &ldquo;초기 시장 개방에 초점, 성장&middot;성숙기는 방향성만 제시&rdquo;이기 때문이다.</p>
         <div class="calc">
 조항별 대조 <span class="dim">(절 번호는 ConOps 1.5 기준)</span>
@@ -626,13 +738,17 @@ Tideway 기능 &rarr; ConOps 근거 매핑
           Tideway의 관제 기능은 <b>새로 만든 개념이 아니라 ConOps 그림 2의 정보흐름 프로토콜을 준용해 구현한 것</b>이다. &ldquo;전략적 분리&rdquo;&middot;&ldquo;전술적 분리&rdquo;라는 ConOps 용어를 그대로 쓰고, 각 기능에 절 번호를 붙여 제시한다.
         </div>
         <div class="was" style="margin-top:10px"><b>정정 &mdash; REV 19의 계산 오류:</b> WP4&ndash;HDY 0.66 NM 구간을 &ldquo;290 km/h로 약 4.5초&rdquo;라 적었으나 <b>틀렸다. 실제 15.2초</b>다(1,222 m &divide; 80.6 m/s). 다만 정정 후에도 이 구간은 빠듯하다 &mdash; 순항 290 km/h에서 접근속도 91 kt까지 이 구간 안에서 감속하려면 <b>0.18 g</b>가 필요하고, 승객 안락 기준(0.10&ndash;0.15 g)으로는 각각 1.18 / 0.79 NM이 필요해 구간 길이(0.66 NM)를 넘는다.</div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev19">
       <div class="meta"><span class="rev">REV 19</span><span class="tag">회랑정렬</span></div>
       <div class="body">
-        <h3>북측 추가 직선화 &mdash; 침로차 0.7&deg;, 절차 관통 28 &rarr; 24개</h3>
+        <details class="revd" open>
+        <summary><span class="rvt">북측 추가 직선화 &mdash; 침로차 0.7&deg;, 절차 관통 28 &rarr; 24개</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 17의 정북 재정렬에서 WP6&ndash;WP5&ndash;WP4가 아직 침로차 2.7&deg;/36.0&deg;로 꺾여 있었다. WP6를 서쪽으로, WP4를 남동쪽으로 옮겨 <b>세 점을 사실상 하나의 직선</b>으로 만들었다.</p>
         <div class="calc">
 좌표 변경 <span class="dim">(WP5&middot;HDY&middot;WP3&middot;WP1&middot;SIHWA는 불변)</span>
@@ -684,13 +800,17 @@ Tideway 기능 &rarr; ConOps 근거 매핑
           <span class="lbl">이 변경이 만든 것</span>
           북측 3구간이 <b>침로차 0.7&deg;의 단일 직선</b>이 되면서 선회 자체가 사라졌다. RNP 예산에서 선회이탈 몫이 없어져 <b>TSE 예산 전부를 항법·제어 오차에 배분</b>할 수 있고, 절차 관통이 4개 줄어 회랑 폐쇄 트리거가 될 수 있는 대상도 함께 감소했다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev18">
       <div class="meta"><span class="rev">REV 18</span><span class="tag">공시절차대조</span></div>
       <div class="body">
-        <h3>김포 공시절차 전수 대조 &mdash; 관통 13개, 최저 4,000 ft &middot; 그리고 침범자의 절반은 계기점검기였다</h3>
+        <details class="revd">
+        <summary><span class="rvt">김포 공시절차 전수 대조 &mdash; 관통 13개, 최저 4,000 ft &middot; 그리고 침범자의 절반은 계기점검기였다</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 17은 김포를 <b>실교통(ADS-B)</b>으로만 검증했다. 공시 절차와의 기하 대조가 빠져 있었는데, 두 가지가 해결됐다 &mdash; AIP 차트 원문(AMDT 9/20&middot;12/20)을 확보했고, <b>v17에 이미 RKSS 절차 52개가 들어 있었다</b>.</p>
         <div class="was"><b>정정 &mdash; REV 17의 미결사항이 사실과 달랐다:</b> &ldquo;v17의 절차 데이터에는 RKSI 92개만 있고 RKSS 공시 SID/STAR/IAP가 없다&rdquo;고 적었으나 <b>틀렸다</b>. <code>D.routes</code>(RKSI 92개)만 확인하고 <code>GMP_ROUTES</code>(RKSS <b>52개</b> = SID 19 / STAR 14 / IAP 19, 파일 360행)를 놓쳤다. v17은 제목부터 &ldquo;RKSI &middot; RKSS 통합 항로도&rdquo;였다.</div>
         <div class="calc">
@@ -770,13 +890,17 @@ RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)
           <span class="lbl">도출된 권고 &mdash; 서울접근관제소 LOA</span>
           잔여 리스크 0.77 회/일은 전부 <b>공시 고도가 없는 구간에서 관제 재량으로 낮게 유도된 민항기</b>다. 따라서 필요한 것은 회랑 재설계가 아니라 <b>협정(LOA)</b>이다 &mdash; &ldquo;UAM 회랑 상공 통과 시 최저 유도고도 4,000 ft&rdquo;. 실측이 이미 74.9%&ndash;98.87% 그 값을 지키고 있으므로 <b>관제 부담을 늘리지 않는 협정</b>이라는 점이 설득 포인트다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev17">
       <div class="meta"><span class="rev">REV 17</span><span class="tag">회랑정렬</span></div>
       <div class="body">
-        <h3>북측 정북 재정렬 &mdash; 김포 접근류를 비껴서 VFR 조우를 0으로</h3>
+        <details class="revd">
+        <summary><span class="rvt">북측 정북 재정렬 &mdash; 김포 접근류를 비껴서 VFR 조우를 0으로</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 16에서 경항공기(VFR) 조우가 <b>북측 WP6&ndash;WP5 한 구간에 집중</b>된다는 것이 드러났다. 그 구간이 김포 접근류가 흐르는 동북동을 향하고 있었기 때문이다. 북측 3개 점을 옮겨 <b>거의 정북</b>으로 세웠다.</p>
         <div class="calc">
 좌표 변경 <span class="dim">(WP4&middot;HDY&middot;WP1&middot;SIHWA는 불변)</span>
@@ -837,13 +961,17 @@ RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)
           <span class="lbl">수용한 조건</span>
           WP6(ARP 10.78 NM)과 SIHWA(10.69 NM)는 운용고도 기준 <b>Class B 하부로 이탈</b>한다. 회랑을 Class B 안으로 한정하려면 WP6을 2.09 NM 남하시켜야 하나(가장자리 기준), <b>2026-09-04 결정으로 두 점을 그대로 두고 이 조건을 인지&middot;수용</b>하기로 했다. 해당 양 끝단은 Class E이며 그곳에서는 VFR이 관제허가 없이 비행하고 ATC 분리도 제공되지 않는다 &mdash; 미결 사항으로 관리한다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev16">
       <div class="meta"><span class="rev">REV 16</span><span class="tag">공역근거</span></div>
       <div class="body">
-        <h3>공역 등급으로 근거를 세우다 &mdash; Class B 편입 &middot; P-518 &middot; S1 선례 &middot; VFR 전수조사</h3>
+        <details class="revd">
+        <summary><span class="rvt">공역 등급으로 근거를 세우다 &mdash; Class B 편입 &middot; P-518 &middot; S1 선례 &middot; VFR 전수조사</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>&ldquo;왜 이 회랑이 적절한가&rdquo;를 절차 이격거리만으로 설명하고 있었다. <b>공역 등급</b>이라는 상위 틀을 AIP 원문으로 확인해 근거를 다시 세웠다.</p>
         <div class="calc">
 RKSI Class B 수직구조 <span class="dim">(AIP RKSI AD 2-73, AMDT 10/25 &middot; ARP 37&deg;27&prime;45&Prime;N 126&deg;26&prime;21&Prime;E)</span>
@@ -903,13 +1031,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
           <span class="lbl">참조 지위 명확화 &mdash; FAA GENOT N JO 7110.801</span>
           &ldquo;Class B&middot;C&middot;TRSA 내에서 헬리콥터&middot;파워드리프트가 도착&middot;출발 경로를 횡단할 때 육안분리 적용 금지&rdquo;(2026-03-18 발효)는 <b>미국 FAA의 국내 관제사 지시이며 한국 AIP&middot;NOTAM에 없다 &mdash; 한국 공역에 법적 효력이 없다.</b> 발표에서는 &ldquo;지켜야 할 기준&rdquo;이 아니라 <b>국제적 규제 동향의 참조사례</b>로만 인용할 것. 다만 eVTOL이 FAA 분류상 정확히 powered-lift이고 우리 회랑이 도착&middot;출발 경로를 횡단한다는 점에서 시사점은 유효하다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev15">
       <div class="meta"><span class="rev">REV 15</span><span class="tag">데이터검증</span></div>
       <div class="body">
-        <h3>샘플링 공백 검증 — &ldquo;빈 층&rdquo;이 아니라 &ldquo;빠르게 통과하는 층&rdquo;이었다</h3>
+        <details class="revd">
+        <summary><span class="rvt">샘플링 공백 검증 — &ldquo;빈 층&rdquo;이 아니라 &ldquo;빠르게 통과하는 층&rdquo;이었다</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 13·14의 고도 결정은 전부 5초 폴링 ADS-B 관측에 기댄 것이다. <b>회랑을 빠르게 가로지르는 항공기가 폴링 사이에 통째로 씹혀 관측에서 빠질 수 있다</b>는 점을 검증하지 않고 &ldquo;빈 층&rdquo;이라 결론냈다. 이를 직접 검출해 보정했다.</p>
         <div class="calc">
 검출 방법 — 연속한 두 샘플이 회랑 <span class="dim">양쪽 바깥</span>에 있고 그 사이 선분이
@@ -947,13 +1079,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
           <q>이 고도가 관측상 가장 조용하다. 단 5초 폴링의 구조적 한계로 고속 통과 항공기가 과소집계되며, 보간 검증 결과 23일간 8건이 이 층을 실제로 통과했다. 따라서 <b>고도분리만으로는 불충분하며 실시간 감시가 필수</b>다.</q><br><br>
           이는 Tideway의 자동 간격분리·레이더 감시가 왜 필요한지에 대한 정량적 근거가 된다 — 고도분리는 <b>기저 리스크를 낮추는 1차 방어선</b>이고, 실시간 감시가 <b>잔여 리스크를 담당하는 2차 방어선</b>이라는 이중 구조로 설명된다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev14">
       <div class="meta"><span class="rev">REV 14</span><span class="tag">운용고도</span></div>
       <div class="body">
-        <h3>100 ft 해상도 재분석 — SB 2 150 / NB 2 450 ft로 재조정</h3>
+        <details class="revd">
+        <summary><span class="rvt">100 ft 해상도 재분석 — SB 2 150 / NB 2 450 ft로 재조정</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 13의 고도는 <b>500 ft 단위 집계</b>로 판단한 값이었다. 100 ft 단위로 다시 뽑으니 그 집계가 실제 구조를 가리고 있었다.</p>
         <div class="calc">
 500 ft 집계로 본 그림 <span class="dim">(REV 13 근거)</span>
@@ -1009,13 +1145,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
           <span class="lbl">방법론 교훈</span>
           같은 데이터라도 <b>집계 단위가 결론을 바꾼다</b>. 500 ft 구간으로는 "1,500–2,000 ft 혼잡"이었지만 실제로는 1,500–1,700 ft에만 몰려 있었고, 그 차이가 최종 고도를 300 ft 움직였다. 발표에서 수치를 제시할 때 <b>어떤 해상도로 집계했는지</b>를 함께 밝히는 것이 안전하다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev13">
       <div class="meta"><span class="rev">REV 13</span><span class="tag">운용고도</span></div>
       <div class="body">
-        <h3>헬기 실측을 근거로 운용고도 상향 — SB 2 000 / NB 2 400 ft</h3>
+        <details class="revd">
+        <summary><span class="rvt">헬기 실측을 근거로 운용고도 상향 — SB 2 000 / NB 2 400 ft</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>REV 12에서 드러난 헬기 문제를 해결하기 위해 <b>VM 23일 연속녹화 전수 스캔</b>(543,703 라인)으로 표본을 넓혔다. 6일치 로컬 CSV로는 표본이 얇아, 관측된 1 500 ft가 실제 상한인지 표본 한계인지 판별할 수 없었기 때문이다.</p>
         <div class="calc">
 회랑 밴드(1.248 NM) 내 헬기 실측 <span class="dim">— 23일 전수, 속도 119–126 kt로 일관된 기체만</span>
@@ -1049,13 +1189,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
           K-UAM ConOps는 <q>헬기는 300 m(984 ft) 이하</q>를 전제하고 회랑 밴드를 300–600 m로 설정했다. 그러나 본 구간 실측은 헬기가 최고 1 550 ft(472 m)까지 운용함을 보여준다 — <b>ConOps 밴드의 하단 절반이 이 구간에서는 실질적으로 사용 불가</b>하며, 밴드를 그대로 적용하면 오히려 ConOps가 의도한 &ldquo;헬기와의 수직분리&rdquo;라는 목적 자체가 달성되지 않는다. 본 설계는 ConOps의 <b>수치가 아니라 취지</b>를 따라 밴드를 상향했다. 규정을 무시한 것이 아니라, 규정의 전제를 실측으로 검증해 목적에 맞게 조정한 것이다.
         </div>
         <p style="margin-top:12px"><b>남은 리스크</b> — KNP973(경찰)은 긴급임무 특성상 고도·경로를 예고 없이 바꿀 수 있고, 실제로 헬기 중 유일하게 1 500 ft대로 올라온 기체다. 고도 분리만으로는 완결되지 않으며, Tideway의 실시간 감시·자동 간격분리가 최종 방어선 역할을 한다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev12">
       <div class="meta"><span class="rev">REV 12</span><span class="tag">리스크</span></div>
       <div class="body">
-        <h3>김포(RKSS) 절차 검증 — 수평은 겹치나 수직으로 분리, 진짜 위협은 헬기</h3>
+        <details class="revd">
+        <summary><span class="rvt">김포(RKSS) 절차 검증 — 수평은 겹치나 수직으로 분리, 진짜 위협은 헬기</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>김포 SID가 회랑 WP3–WP1 구간을 <b>거의 정확히 관통</b>한다(0.001 NM). 그런데 차트로는 판정이 불가능했다 — 교차점이 걸린 <code>TD050→TD100</code> 구간에 고도 제약이 아예 공표돼 있지 않고, 직전 TD050의 <code>-5 000</code>은 상한이라 하한을 보장하지 않는다. 그래서 VM 연속 녹화 ADS-B로 실측했다.</p>
         <div class="calc">
 교차점 <span class="dim">(37.4256N 126.5753E, 김포 이륙 후 37.4 km)</span> 반경 2 km · 6일 · 793대 · 8,620샘플
@@ -1091,13 +1235,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
   CARD10/16/67 <span class="dim">(hex AE62xx = 미군)</span>  675–1,075 ft  ~120 kt
         </div>
         <p style="margin-top:12px">덱 13쪽의 <q>헬기회랑 수직분리 ±150 m</q> 항목이 막연한 우려가 아니라 <b>실측으로 확인된 실제 문제</b>였다. K-UAM ConOps는 헬기가 300 m(984 ft) 이하로 다닌다고 전제하지만, 실측 헬기들은 최고 1 700 ft(518 m)까지 올라와 <b>UAM 밴드 안으로 들어온다</b>. 별도 리스크 항목으로 다뤄야 한다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev11">
       <div class="meta"><span class="rev">REV 11</span><span class="tag">회랑제원</span></div>
       <div class="body">
-        <h3>WP2 제거로 직선화 · 회랑 반폭을 상시 절차 기준으로 재산출(1.248 NM)</h3>
+        <details class="revd">
+        <summary><span class="rvt">WP2 제거로 직선화 · 회랑 반폭을 상시 절차 기준으로 재산출(1.248 NM)</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p><b>직선화 —</b> 290 km/h 순항에서 선회반경이 <code>R = V²/(g·tanθ)</code>로 속도 제곱에 비례해, 큰 꺾임각이 TSE 예산을 크게 잠식한다. 회랑의 유일한 큰 꺾임이던 <b>WP2(38.9°)를 제거</b>하고 WP3→WP1을 직결했다.</p>
         <div class="calc">
 290 km/h · bank 25° · R = 1,419 m 기준 코너컷 이탈량
@@ -1123,13 +1271,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
           <b>복행 시</b> — 복행경로가 회랑을 3곳에서 관통 → 어떤 폭·RNP로도 해결 불가 → CLOSED가 유일 해법<br>
           두 상황을 분리해서 보는 것이 옳았고, 이것이 오히려 CLOSED의 필연성을 더 선명하게 만든다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev10">
       <div class="meta"><span class="rev">REV 10</span><span class="tag">회랑제원</span></div>
       <div class="body">
-        <h3>회랑 반폭 0.5 → 0.312 NM · UAM 항법성능 요구치 역산</h3>
+        <details class="revd">
+        <summary><span class="rvt">회랑 반폭 0.5 → 0.312 NM · UAM 항법성능 요구치 역산</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>근거 없이 박혀 있던 회랑 반폭을 기하학으로 역산해 교체했다. 전제는 하나 — <b>회랑 가장자리가 상용기 보호구역과 닿지 않아야 한다.</b> 상용기 보호반폭은 ICAO 표준 containment(2×RNP)로 <code>0.6 NM</code>이며, RNP 0.3은 RKSI 차트 원문에서 확인된 값이라 가정이 아니다.</p>
         <div class="calc">
 가용 반폭 = 중심선 실측거리 − 상용기 보호반폭(0.6 NM)
@@ -1161,13 +1313,17 @@ TSE 예산 분해 <span class="dim">(TSE = √(NSE² + FTE²))</span>
           <span class="lbl">고도분리 결정의 파급효과</span>
           REV 09에서 수평 왕복 2선을 포기하면서 회랑이 한 층에 한 방향만 담게 됐다. 나란한 2선을 수용할 필요가 없어져 폭 요구가 크게 줄었고, 그래서 0.312 NM이라는 좁은 폭이 성립할 수 있게 됐다.
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev09">
       <div class="meta"><span class="rev">REV 09</span><span class="tag">운용방식</span></div>
       <div class="body">
-        <h3>왕복 운용을 수평 2선에서 고도분리로 전환</h3>
+        <details class="revd">
+        <summary><span class="rvt">왕복 운용을 수평 2선에서 고도분리로 전환</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>평면경로는 하나로 두고 <b>SOUTHBOUND 1 500 ft · NORTHBOUND 1 900 ft</b>로 층을 나눈다. 400 ft 층분리는 수직 TSE 기반 <code>~350 ft</code> 요구치를 넘고, 두 층 모두 K-UAM ConOps 회랑 밴드(984–1 969 ft) 안에 들어간다.</p>
         <div class="was"><b>이전:</b> 회랑 안에 SOUTHBOUND·NORTHBOUND 2개 항로선을 수평으로 나란히 두는 안. 처음엔 당연한 구성으로 봤으나 계산 결과 성립하지 않음이 드러났다.</div>
         <div class="calc">
@@ -1183,13 +1339,17 @@ WP3–WP2 구간 적용 <span class="dim">(중심선–복행경로 실측 0.912
           <span class="lbl">검증 도구</span>
           <code>corridor_crm_toolkit.py</code> — TSE→분리거리 계산기, Reich 겹침확률(정규·fat-tail), 몬테카를로 TLS 검증, 교차 시나리오 모듈
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev08">
       <div class="meta"><span class="rev">REV 08</span><span class="tag">리스크</span></div>
       <div class="body">
-        <h3>복행기가 UAM 회랑 고도대를 관통한다 — 고도분리로도 해결 불가</h3>
+        <details class="revd">
+        <summary><span class="rvt">복행기가 UAM 회랑 고도대를 관통한다 — 고도분리로도 해결 불가</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>15L 복행기는 교차점을 <b>약 1 332 ft</b>로 통과한다. SOUTHBOUND 1 500 ft와는 <b>168 ft</b>, NORTHBOUND 1 900 ft와도 668 ft 차이로, 어느 층과도 수직분리 기준(1 000 ft)을 만족하지 못한다.</p>
         <div class="calc">
 GC001(MAPt, 540 ft) → GC999 → 교차점 : 누적 9.651 km
@@ -1199,13 +1359,17 @@ GC001(MAPt, 540 ft) → GC999 → 교차점 : 누적 9.651 km
   vs NB 1 900 ft → 수직간격 <span class="c">668 ft</span>
         </div>
         <p style="margin-top:12px">수평으로는 교차(이격 0), 수직으로는 168 ft — <b>공간분리가 양방향 모두 불가능</b>하다. 따라서 복행 시 회랑 CLOSED(시간분리)는 보수적 선택이 아니라 <b>유일하게 성립하는 대응</b>이다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev07">
       <div class="meta"><span class="rev">REV 07</span><span class="tag">리스크</span></div>
       <div class="body">
-        <h3>33L/33R은 별도 조치 불필요</h3>
+        <details class="revd">
+        <summary><span class="rvt">33L/33R은 별도 조치 불필요</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>회랑과 RWY 33L/33R 최종접근·복행 경로의 최근접거리를 실좌표로 계산한 결과, 논의된 어떤 버퍼 기준(0.6·1.2·1.5 NM)에도 여유 있게 통과한다.</p>
         <div class="calc">
 RWY 33L 최종접근 (KIDAB→RW33L)      <span class="g">2.07 NM</span>
@@ -1214,39 +1378,51 @@ RWY 33R 최종접근 (INRR→THR33R)      <span class="g">1.85 NM</span>
   <span class="dim">셋 다 최근접 구간은 회랑 HDY–WP3</span>
         </div>
         <p style="margin-top:12px">공교롭게 세 경우 모두 최근접 지점이 HDY–WP3 구간이다. 이 구간은 15L 복행과는 교차하면서 33L/33R과는 안전거리를 유지하는, <b>방향별로 위험도가 완전히 갈리는 핫스팟</b>이다. 결과적으로 회랑1의 리스크는 <b>15L/15R 복행 하나로 수렴</b>한다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev06">
       <div class="meta"><span class="rev">REV 06</span><span class="tag">리스크</span></div>
       <div class="body">
-        <h3>회랑과 15L 복행경로가 실제로 교차한다</h3>
+        <details class="revd">
+        <summary><span class="rvt">회랑과 15L 복행경로가 실제로 교차한다</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>HDY–WP3 구간과 복행경로 GC999–GC989 구간이 <code>37.4627 N 126.5083 E</code>(HDY 남쪽 약 0.9 km)에서 <b>기하학적으로 교차</b>한다. 최근접이 아니라 교차이므로, 그 지점의 수평 이격은 정의상 0이다.</p>
         <div class="calc">
 교차점 통과 타이밍 <span class="dim">(290 km/h 기준)</span>
   HDY 출발 후 <span class="c">8.6초</span> 지점 <span class="dim">(HDY–WP3 레그 45.9초 중 18.7%)</span>
         </div>
         <p style="margin-top:12px">이 발견은 덱 6쪽의 <q>평면 분리의 한계 — 3차원 검토 필요</q>가 신중론이 아니라 <b>수학적으로 강제되는 결론</b>임을 보여준다. 어떤 TSE 버퍼값을 적용해도 교차점의 리스크는 해소되지 않는다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev05">
       <div class="meta"><span class="rev">REV 05</span><span class="tag">수치정합</span></div>
       <div class="body">
-        <h3>수직분리 1 000 ft로 단일화 · RNP는 잠정 표기로 전환</h3>
+        <details class="revd">
+        <summary><span class="rvt">수직분리 1 000 ft로 단일화 · RNP는 잠정 표기로 전환</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>덱 12쪽 KPI(<code>1 000 ft</code>)와 13쪽 파라미터 표(<code>±150 m ≈ 492 ft</code>)가 서로 다른 값으로 남아 있던 것을 <b>1 000 ft로 통일</b>한다. 항법성능은 <code>RNP 0.3 → ?</code>라는 물음표를 없애되, 검증되지 않은 숫자로 채우지 않고 <b>잠정</b>으로 명시한다.</p>
         <div class="ev">
           <span class="lbl">확정 문구</span>
           RNP 0.3(잠정) — 구체적 목표치는 TSE 기반 정량 분석 결과에 따라 확정 예정(국토부 회랑 설계기준 발표 시 재조정)
         </div>
         <div class="was"><b>배경:</b> 멘토가 <q>수치에 민감한 심사위원이 있다</q>, <q>수치를 이렇게 잡았으면 왜 그런지 근거를 다 제시할 것</q>을 강조. 덱 내부에서 값이 충돌하거나 물음표로 남은 항목이 가장 먼저 지적당할 지점이라 판단.</div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev04">
       <div class="meta"><span class="rev">REV 04</span><span class="tag">원문검증</span></div>
       <div class="body">
-        <h3>버티포트 분리각 135° — 원문 대조 완료, 수정 불필요</h3>
+        <details class="revd">
+        <summary><span class="rvt">버티포트 분리각 135° — 원문 대조 완료, 수정 불필요</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>덱에 근거 없이 인용돼 있던 <code>135°</code>를 두 규정 원문에서 직접 확인했다. 덱의 <q>135° 이상, 이상적 기준은 180°</q>가 두 원문과 정확히 일치한다.</p>
         <div class="ev">
           <span class="lbl">FAA EB-105</span>
@@ -1256,13 +1432,17 @@ RWY 33R 최종접근 (INRR→THR33R)      <span class="g">1.85 NM</span>
           <span class="lbl">EASA PTS-VPT-DSN</span>
           <q>The vertiport should have at least two take-off and climb and approach surfaces with a recommend separation of at least 135° but ideally separated by 180°.</q>
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev03">
       <div class="meta"><span class="rev">REV 03</span><span class="tag">데이터정정</span></div>
       <div class="body">
-        <h3>절차 좌표 전수 검증 — 실제 오류 2건 발견·수정</h3>
+        <details class="revd">
+        <summary><span class="rvt">절차 좌표 전수 검증 — 실제 오류 2건 발견·수정</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>공식 AIP ENR 4.4(1 105개 지점)를 파싱해 v17의 고유 지점 389개와 자동 대조하고, 불일치 항목은 실제 차트 PDF 코딩표로 개별 확인했다.</p>
         <div class="calc">
 ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="dim">(ATKON 제외)</span>
@@ -1276,13 +1456,17 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
           <span class="lbl">독립 확인</span>
           GE991(AD 2-63-1)·GC980(AD 2-53-1) — 코딩표 원문과 좌표까지 정확히 일치, 오류 아님
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev02">
       <div class="meta"><span class="rev">REV 02</span><span class="tag">구조단순화</span></div>
       <div class="body">
-        <h3>홀딩포인트·선회점 제거, 버티포트를 본선에 편입</h3>
+        <details class="revd">
+        <summary><span class="rvt">홀딩포인트·선회점 제거, 버티포트를 본선에 편입</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>회랑에서 <b>HP1–HP4를 모두 삭제</b>하고, <b>TURN(135° 선회점)도 제거</b>해 WP4→HDY→WP3로 직결했다. 버티포트(홍대염전)가 본선 위에 놓이면서 별도 접속 구간(feeder)도 불필요해졌다.</p>
         <div class="was"><b>이전:</b> WP4→TURN→WP3 본선에 HP1–HP4 고정 홀딩포인트를 두고, 버티포트는 feeder로 접속. 회랑 CLOSED 시 각 기체가 <b>가장 가까운 HP까지 비행 후 대기</b>하는 방식.</div>
         <p style="margin-top:12px">회랑을 짧은 구간으로 나눠 관리하는 방식으로 바뀌면서, 지정 홀딩포인트까지 이동하는 것보다 <b>그 자리에서 표준 레이스트랙 홀딩</b>이 더 효율적이라고 판단했다. HP 삭제 후에도 리스크 계산값은 거의 변하지 않았다(HP들이 본선 직선에 거의 붙어 있었기 때문).</p>
@@ -1291,16 +1475,22 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
           반경 R ≈ 894 m(0.48 NM) · 직선구간 L ≈ 1 NM — 표준선회(rate one turn) <code>R(NM)=V/188.5</code>, 홀딩속도 91 kt<br>
           <span style="font-size:11.5px">S-A1 실속속도 미공개 → 동급 리프트+크루즈 eVTOL(Archer Maker 70 kt)에 여유율 1.3배 적용</span>
         </div>
+        </div>
+        </details>
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" id="rev01">
       <div class="meta"><span class="rev">REV 01</span><span class="tag">범위</span></div>
       <div class="body">
-        <h3>분석 범위를 공항 인근 회랑으로 축소</h3>
+        <details class="revd">
+        <summary><span class="rvt">분석 범위를 공항 인근 회랑으로 축소</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
         <p>회랑을 <b>SIHWA에서 종결</b>하고, 그 이남 연장구간(오이도·수원·동탄)을 분석지도에서 삭제했다. 15분 발표에서 초점을 분산시키지 않기 위해, 항공기 운항과 실제로 간섭하는 <b>공항 인근 구간에 집중</b>한다.</p>
         <div class="was"><b>이전:</b> 인천공항–동탄 전 구간(61.6 km)을 3개 회랑으로 나눠 관리하는 안. 오이도·수원·동탄 버티포트 포함.</div>
         <p style="margin-top:12px">시연앱(Tideway)은 서비스 전체 흐름을 보여주는 역할이므로 <b>동탄까지의 전 구간을 그대로 유지</b>한다. 분석지도(v17)만 공항 인근으로 좁혔다.</p>
+        </div>
+        </details>
       </div>
     </article>
 
@@ -1308,7 +1498,7 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
 </section>
 
 <section>
-  <h2><span class="idx">05</span>미결 사항</h2>
+  <h2 id="s05"><span class="idx">05</span>미결 사항</h2>
   <p class="secNote">아직 근거가 확보되지 않아 의도적으로 빈칸으로 남긴 항목들. 숨기지 않고 명시하는 것이 방어에 유리하다고 판단했다.</p>
   <div class="open">
     <div class="openItem">
@@ -1378,6 +1568,30 @@ ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="d
   <span>회랑1 설계결정 로그 · REV 21 · 2026-09-09</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
+
+<button type="button" id="toTop">↑ 맨 위로</button>
+<script>
+(function(){
+  var ds=function(){return document.querySelectorAll('details.revd')};
+  var e=document.getElementById('expAll'), c=document.getElementById('colAll');
+  if(e) e.onclick=function(){ds().forEach(function(d){d.open=true})};
+  if(c) c.onclick=function(){ds().forEach(function(d){d.open=false})};
+  var t=document.getElementById('toTop');
+  addEventListener('scroll',function(){ t.style.display = scrollY>500?'block':'none'; },{passive:true});
+  t.onclick=function(){ scrollTo({top:0,behavior:'smooth'}) };
+  // 해시로 들어오면 해당 REV 펼치기
+  function openHash(){
+    var h=location.hash; if(!h) return;
+    var el=document.querySelector(h); if(!el) return;
+    var d=el.querySelector('details.revd'); if(d) d.open=true;
+    setTimeout(function(){el.scrollIntoView({block:'start'})},30);
+  }
+  addEventListener('hashchange',openHash); openHash();
+  document.querySelectorAll('.revidx a').forEach(function(a){
+    a.addEventListener('click',function(){ setTimeout(openHash,10) });
+  });
+})();
+</script>
 
 </div>
 
