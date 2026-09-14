@@ -287,6 +287,30 @@ h2{scroll-margin-top:60px}
   .entry .meta{display:flex; gap:12px; align-items:baseline}
   .entry .meta .tag{margin-top:0}
 }
+/* ── 계산 카드(cx) ── */
+.cx{background:var(--surface); border:1px solid var(--line); border-radius:3px;
+  padding:13px 16px 14px; margin-top:12px; font-size:13.5px; line-height:1.6; color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.cx .c{color:var(--critical); font-weight:600}
+.cx .g{color:var(--good); font-weight:600}
+.cx .dim{color:var(--ink-faint); font-weight:400}
+.cx-title{font-weight:600; font-size:14px; line-height:1.45; text-wrap:balance; margin:0 0 6px}
+.cx-cap{font-size:12.5px; font-weight:600; color:var(--ink-dim); margin:14px 0 4px}
+.cx-title + .cx-cap{margin-top:8px}
+.cx-p{margin:4px 0; color:var(--ink)}
+.cx-tw{overflow-x:auto; margin:4px 0 2px}
+.cx table{border-collapse:collapse; width:auto; min-width:0; font-size:13px}
+.cx tbody td{padding:5px 18px 5px 0; border-bottom:1px solid var(--line); vertical-align:top}
+.cx tbody tr:last-child td{border-bottom:0}
+.cx td:first-child{color:var(--ink-dim)}
+.cx td.nw{white-space:nowrap}
+.cx tr.hd td{font-size:12px; font-weight:600; white-space:nowrap;
+  color:var(--ink-faint); border-bottom:1px solid var(--line-strong)}
+.cx-concl{margin:12px 0 2px; padding:8px 12px; background:var(--surface-2);
+  border-left:2.5px solid var(--good); border-radius:2px; font-weight:500}
+.cx-pre{font-family:"IBM Plex Mono",monospace; font-size:12px; line-height:1.5;
+  white-space:pre; overflow-x:auto; margin:6px 0; color:var(--ink-dim)}
+@media (max-width:680px){ .cx{padding:11px 12px} .cx tbody td{padding-right:12px} }
 </style>
 
 <nav class="topnav">
@@ -534,13 +558,10 @@ h2{scroll-margin-top:60px}
     </table>
   </div>
 
-  <div class="calc" style="margin-top:14px">
-총 연장 14.35 NM = <b>26.57 km</b>   <span class="dim">(도심항공교통 특별법 상한 50 km의 53%)</span>
-회랑 반폭 1.248 NM   총폭 4623 m   <span class="dim">(특별법 최소폭 600 m의 7.7배)</span>
-선회각  WP5 0.7° · WP4 3.5° · HDY 33.0° · WP3 21.0°
-최대 선회 <b>33.0°</b>
-운용고도 고도분리 운용(2026-09-14, REV 24): SOUTHBOUND 1 950 ft · NORTHBOUND 2 450 ft AMSL(QNH), 층간격 500 ft — 헬기 실측 상한 1 218 ft(QNH)와 7…
-  </div>
+  <div class="cx" style="margin-top:14px">
+<div class="cx-tw"><table><tbody><tr><td>총 연장 14.35 NM = <b>26.57 km</b></td><td><span class="dim">(도심항공교통 특별법 상한 50 km의 53%)</span></td><td></td></tr><tr><td class="nw">회랑 반폭 1.248 NM</td><td>총폭 4623 m</td><td><span class="dim">(특별법 최소폭 600 m의 7.7배)</span></td></tr><tr><td class="nw">선회각</td><td>WP5 0.7° · WP4 3.5° · HDY 33.0° · WP3 21.0°</td><td></td></tr></tbody></table></div>
+<div class="cx-p">최대 선회 <b>33.0°</b> 운용고도 고도분리 운용(2026-09-14, REV 24): SOUTHBOUND 1 950 ft · NORTHBOUND 2 450 ft AMSL(QNH), 층간격 500 ft — 헬기 실측 상한 1 218 ft(QNH)와 7…</div>
+</div>
 </section>
 <!--/CORRIDOR-SECTION-->
 
@@ -644,140 +665,93 @@ h2{scroll-margin-top:60px}
 
         <div class="was"><b>정정 ① &mdash; &ldquo;상용기 보호반폭 = 2&times;RNP 0.3 = 0.6 NM&rdquo;은 적용 범위가 틀렸다.</b> 2&times;RNP는 <b>RNP AR 접근의 장애물 평가구역 반폭</b>(ICAO Doc 9905, 보조구역 없음)이다. 일반 RNP APCH는 &frac12;AW = 1.5&times;XTT + BV로 더 넓고, RKSI에서 실제로 주로 쓰는 ILS는 또 다른 기준면을 쓴다. 무엇보다 보호구역은 <b>장애물 회피용</b>이지 <b>항공기 간 분리 기준</b>이 아니다. REV 11의 &ldquo;1.848 &minus; 0.6 = 1.248&rdquo; 근거는 철회한다.</div>
 
-        <div class="calc">
-① 분리기준으로 다시 본 반폭 <span class="dim">(공시절차 최악고도 모델: 최종접근 3&deg; 활공 · SID는 PDG 3.3% · STAR는 보간 하한 · 복행은 CLOSED로 제외)</span>
-
-  IFR식 <b>3 NM 또는 1,000 ft</b>   전 구간 가용 반폭 <span class="c">음수</span> (최악 &minus;2.05 NM, NOPIK SID) &rarr; 성립 불가
-  VFR Class B식 <b>1.5 NM 또는 500 ft</b> <span class="dim">(FAA JO 7110.65 7-9-4: 19,000 lb 초과&middot;제트기 대상)</span>
-     15계열 운영   북쪽 3구간 <span class="g">제약 없음</span> &middot; 남쪽 2구간 +0.28 NM (15L/R SID, 1.78 NM @521 ft)
-     33계열 운영   <span class="g">전 구간 제약 없음</span>
-
-  초기 UAM은 VFR 운항(ConOps 3-2-1)이므로 VFR 기준이 맞다. 파워드리프트는 GENOT 7110.801로 육안분리가 불가해 1.5 NM/500 ft만 쓸 수 있다.
-  <span class="dim">국내 항공교통업무기준의 대응 조항은 원문 미확인 &mdash; 미결 사항으로 관리</span>
-
-  &rArr; <b>반폭 1.248 NM 유지</b>, 근거는 &ldquo;활성 회랑 안에서 VFR Class B 분리 1.5 NM 기준 공시절차 제약 없음 + 실측 충돌&rdquo;로 교체
-        </div>
+        <div class="cx">
+<div class="cx-title">① 분리기준으로 다시 본 반폭 <span class="dim">(공시절차 최악고도 모델: 최종접근 3&deg; 활공 · SID는 PDG 3.3% · STAR는 보간 하한 · 복행은 CLOSED로 제외)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">IFR식 <b>3 NM 또는 1,000 ft</b></td><td>전 구간 가용 반폭 <span class="c">음수</span> (최악 &minus;2.05 NM, NOPIK SID) &rarr; 성립 불가</td></tr></tbody></table></div>
+<div class="cx-cap">VFR Class B식 <b>1.5 NM 또는 500 ft</b> <span class="dim">(FAA JO 7110.65 7-9-4: 19,000 lb 초과&middot;제트기 대상)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">15계열 운영</td><td>북쪽 3구간 <span class="g">제약 없음</span> &middot; 남쪽 2구간 +0.28 NM (15L/R SID, 1.78 NM @521 ft)</td></tr><tr><td class="nw">33계열 운영</td><td><span class="g">전 구간 제약 없음</span></td></tr></tbody></table></div>
+<div class="cx-p">초기 UAM은 VFR 운항(ConOps 3-2-1)이므로 VFR 기준이 맞다. 파워드리프트는 GENOT 7110.801로 육안분리가 불가해 1.5 NM/500 ft만 쓸 수 있다.</div>
+<div class="cx-p"><span class="dim">국내 항공교통업무기준의 대응 조항은 원문 미확인 &mdash; 미결 사항으로 관리</span></div>
+<div class="cx-concl">&rArr; <b>반폭 1.248 NM 유지</b>, 근거는 &ldquo;활성 회랑 안에서 VFR Class B 분리 1.5 NM 기준 공시절차 제약 없음 + 실측 충돌&rdquo;로 교체</div>
+</div>
 
         <div class="was" style="margin-top:12px"><b>정정 ② &mdash; 녹화 고도는 QNH 고도가 아니었다.</b> OpenSky <code>baro_altitude</code>는 <b>표준기압 1013.25 hPa 기준 기압고도</b>다. GNSS 고도와의 차이를 QNH 보정량에 회귀하면 일평균 기울기 0.83&middot;r=0.954(QNH 보정이 이미 돼 있다면 기울기 0). 녹화에는 QNH가 없어 <b>RKSI METAR(30분 간격)</b>로 시각별 보간해 조종사 고도계 지시값으로 변환했다. 녹화 기간 QNH 1003&ndash;1023 hPa, 보정량 중앙 &minus;89 ft &middot; 5&ndash;95% &minus;223 ~ +183 ft &mdash; 층간격 300 ft와 같은 크기다. <b>REV 13&ndash;19의 조우&middot;침범 수치는 보정 전 값</b>이다.</div>
 
         <div class="was" style="margin-top:10px"><b>정정 ③ &mdash; &sigma;<sub>z,rel</sub> 16 m는 출처가 없다.</b> 2026-08-31 사이드 논의의 추정치를 문헌 확인 없이 계산에 썼다. 근거 있는 값으로 바꾸면 결론이 달라진다.</div>
-        <div class="calc">
-층간격별 겹칠 확률 (정규분포 가정)            300 ft      400 ft      500 ft
-  기존 &sigma;<sub>rel</sub> 16 m (출처 없음)             1.1e-08     2.5e-14     &mdash;
-  FAA ACS 고도유지 &plusmn;100 ft를 2&sigma;로 &rarr; 21.6 m    <span class="c">2.2e-05</span>     1.5e-08     <span class="g">1.5e-12</span>
-  ICAO Doc 9574 2.3.1 역산 &rarr; 41.8 m          2.9e-02     3.6e-03     2.7e-04
-  <span class="dim">Doc 9574: |TVE| &gt; 300 ft 비율 &lt; 2.0&times;10&#8315;&sup3; (FL290&ndash;410 제트기 기준이라 저고도에는 보수적)</span>
-        </div>
+        <div class="cx">
+<div class="cx-tw"><table><tbody><tr><td class="nw">층간격별 겹칠 확률 (정규분포 가정)</td><td>300 ft</td><td>400 ft</td><td>500 ft</td></tr><tr><td class="nw" style="padding-left:0.9em">기존 &sigma;<sub>rel</sub> 16 m (출처 없음)</td><td>1.1e-08</td><td>2.5e-14</td><td>&mdash;</td></tr><tr><td style="padding-left:0.9em">FAA ACS 고도유지 &plusmn;100 ft를 2&sigma;로 &rarr; 21.6 m</td><td><span class="c">2.2e-05</span></td><td>1.5e-08</td><td><span class="g">1.5e-12</span></td></tr><tr><td style="padding-left:0.9em">ICAO Doc 9574 2.3.1 역산 &rarr; 41.8 m</td><td>2.9e-02</td><td>3.6e-03</td><td>2.7e-04</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">Doc 9574: |TVE| &gt; 300 ft 비율 &lt; 2.0&times;10&#8315;&sup3; (FL290&ndash;410 제트기 기준이라 저고도에는 보수적)</span></div>
+</div>
 
-        <div class="calc">
-② QNH 보정 후 재분석 <span class="dim">(REV 23 회랑 4 NM 이내 631,144샘플 · 실효 45.9일)</span>
+        <div class="cx">
+<div class="cx-title">② QNH 보정 후 재분석 <span class="dim">(REV 23 회랑 4 NM 이내 631,144샘플 · 실효 45.9일)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">위쪽 벽</td><td>기압고도 2,900&ndash;3,200 ft에 퍼짐 &rarr; <b>QNH 3,000 ft 한 층에 집중</b> (관제 지정고도)</td></tr><tr><td class="nw">헬기 상한</td><td><b>1,218 ft</b> (KNP973, 현 회랑) &middot; 기존 1,550 ft는 절단된 WP1&ndash;SIHWA 값</td></tr><tr><td class="nw">1,400&ndash;2,000 ft 뭉치</td><td>계기점검기 FC78 (헬기 아님)</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">층 선정 조건</td><td>SB &ge; 1,218 + 500 &middot; NB &le; 3,000 &minus; 500 &middot; 운영방향별 활성 회랑 &middot; HDY 발착 프로파일 반영</td><td></td><td></td></tr><tr class="hd"><td class="nw"></td><td>현행 2,150 / 2,450</td><td><b>채택 1,950 / 2,450</b></td><td></td></tr><tr><td class="nw">충돌 (15계열 북 / 33계열 북)</td><td>0.90 / 0.34</td><td>0.96 / 0.34</td><td><span class="dim">통과/운영24h</span></td></tr><tr><td class="nw">층간격</td><td>300 ft</td><td><span class="g">500 ft</span></td><td></td></tr><tr><td>ConOps 4-3-2-1 상한 1,969 ft</td><td>SB 초과(각주 29)</td><td><span class="g">SB 이내</span></td><td></td></tr><tr><td class="nw">헬기와 간격</td><td>932 ft</td><td>732 ft (ConOps 4-3-4 492 ft 충족)</td><td></td></tr><tr><td class="nw">3,000 ft 층과 간격</td><td>550 ft</td><td>550 ft</td><td></td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">1,750/2,250처럼 더 낮추면 15계열 북 WP4&ndash;HDY 18.6 &middot; 33계열 남 234로 급증 &mdash; 공항 근처 도착&middot;출발기 고도에 걸림</span></div>
+</div>
 
-  위쪽 벽      기압고도 2,900&ndash;3,200 ft에 퍼짐 &rarr; <b>QNH 3,000 ft 한 층에 집중</b> (관제 지정고도)
-  헬기 상한    <b>1,218 ft</b> (KNP973, 현 회랑) &middot; 기존 1,550 ft는 절단된 WP1&ndash;SIHWA 값
-  1,400&ndash;2,000 ft 뭉치   계기점검기 FC78 (헬기 아님)
-
-  층 선정 조건  SB &ge; 1,218 + 500 &middot; NB &le; 3,000 &minus; 500 &middot; 운영방향별 활성 회랑 &middot; HDY 발착 프로파일 반영
-                          현행 2,150 / 2,450     <b>채택 1,950 / 2,450</b>
-  충돌 (15계열 북 / 33계열 북)   0.90 / 0.34           0.96 / 0.34     <span class="dim">통과/운영24h</span>
-  층간격                   300 ft                <span class="g">500 ft</span>
-  ConOps 4-3-2-1 상한 1,969 ft   SB 초과(각주 29)       <span class="g">SB 이내</span>
-  헬기와 간격               932 ft                732 ft (ConOps 4-3-4 492 ft 충족)
-  3,000 ft 층과 간격          550 ft                550 ft
-  <span class="dim">1,750/2,250처럼 더 낮추면 15계열 북 WP4&ndash;HDY 18.6 &middot; 33계열 남 234로 급증 &mdash; 공항 근처 도착&middot;출발기 고도에 걸림</span>
-        </div>
-
-        <div class="calc">
-③ 활주로 운영방향별 회랑 <span class="dim">(녹화에서 인천 활주로 부근 저고도 제트기 진행방향으로 시간별 판정)</span>
-
-  운영시간  15계열 425 h (40%) &middot; 33계열 638 h (60%) &middot; 혼합 42 h   <span class="dim">7&ndash;9월 한정, 겨울 미확인</span>
-
-  1.5+1.248 NM &middot; 500 ft 이내 통과/운영24h (층고도 기준)
-                    북쪽 회랑 GATE-N~HDY     남쪽 회랑 HDY~GATE-S
-  15계열            <span class="g">0.96</span>                    <span class="c">283</span> (99.2% 15L/R 출발기, 중심선 1.6&ndash;1.75 NM)
-  33계열            <span class="g">0.34</span>                    <span class="g">2.2</span>
-
-  &rArr; <b>15계열 = 북쪽 회랑만 운영(남쪽 CLOSED) &middot; 33계열 = 남북 모두 운영</b>
-     15계열 동안 남쪽 도시 수요는 <b>GATE-N으로 진입</b> (게이트 밖 경로는 설계 범위 외)
-        </div>
+        <div class="cx">
+<div class="cx-title">③ 활주로 운영방향별 회랑 <span class="dim">(녹화에서 인천 활주로 부근 저고도 제트기 진행방향으로 시간별 판정)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">운영시간</td><td>15계열 425 h (40%) &middot; 33계열 638 h (60%) &middot; 혼합 42 h</td><td><span class="dim">7&ndash;9월 한정, 겨울 미확인</span></td></tr></tbody></table></div>
+<div class="cx-cap">1.5+1.248 NM &middot; 500 ft 이내 통과/운영24h (층고도 기준)</div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>북쪽 회랑 GATE-N~HDY</td><td>남쪽 회랑 HDY~GATE-S</td></tr><tr><td class="nw">15계열</td><td><span class="g">0.96</span></td><td><span class="c">283</span> (99.2% 15L/R 출발기, 중심선 1.6&ndash;1.75 NM)</td></tr><tr><td class="nw">33계열</td><td><span class="g">0.34</span></td><td><span class="g">2.2</span></td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; <b>15계열 = 북쪽 회랑만 운영(남쪽 CLOSED) &middot; 33계열 = 남북 모두 운영</b></div>
+<div class="cx-p">15계열 동안 남쪽 도시 수요는 <b>GATE-N으로 진입</b> (게이트 밖 경로는 설계 범위 외)</div>
+</div>
         <div class="ev">
           <span class="lbl">규정 근거</span>
           FAA EB-105 2.5.2 6항 <q>To the extent practicable, design vertiport approach/departure paths to be <b>independent of approaches to, and departures from, active runways</b></q> &mdash; 사용 중인 활주로에 따라 회랑을 바꾸는 방식이 이 조항의 구체화다. ConOps 1.5 4-3-4-3의 &ldquo;관제공역 회랑은 교통당국 역할 강화&rdquo;와도 맞물린다(활주로 운영은 관제기관이 결정).
         </div>
 
-        <div class="calc">
-④ 33계열 남쪽 회랑 &mdash; 발착 경사 결정 (A안 채택)
+        <div class="cx">
+<div class="cx-title">④ 33계열 남쪽 회랑 &mdash; 발착 경사 결정 (A안 채택)</div>
+<div class="cx-cap">HDY 발착 프로파일을 넣자 33계열 남쪽이 <span class="c">337 통과/24h</span>로 급증</div>
+<div class="cx-p">원인: 33L/R 최종접근 도착기(600&ndash;1,230 ft, 중심선 1.9&ndash;2.6 NM)와 HDY 1&ndash;3 NM에서 8:1로 오르내리는 UAM이 겹침 HDY 3 NM 밖 순항 구간은 0.7</div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>33계열 남</td><td>비고</td></tr><tr><td class="nw">8:1 (7.1&deg;)</td><td>337.4</td><td></td></tr><tr><td class="nw">6:1 (9.5&deg;)</td><td>308.0</td><td>효과 없음</td></tr><tr><td class="nw"><b>4:1 (14.0&deg;)</b></td><td><span class="g">2.3</span></td><td><b>채택</b> &mdash; 반폭 1.248 유지</td></tr><tr><td class="nw">반폭 0.25 NM (8:1)</td><td>0.5</td><td>RNP 0.125 필요 &rarr; 기각</td></tr></tbody></table></div>
+<div class="cx-p">EB-105의 8:1은 <b>장애물이 없어야 하는 표면</b>의 경사(2.5.1)이며 경로는 &ldquo;8:1을 보장&rdquo;(2.5.2 5항)하면 되므로, 더 가파른 경로는 표면 위를 날아 기준에 부합한다. 조명표(Table 3-1)도 접근각 16&ndash;90&deg;를 따로 다룬다.</div>
+<div class="cx-p"><span class="dim">조건: Joby S4의 14&deg; 접근&middot;출발 가능 여부는 공개 자료 없음 &mdash; 제작사 확인 필요</span></div>
+</div>
 
-  HDY 발착 프로파일을 넣자 33계열 남쪽이 <span class="c">337 통과/24h</span>로 급증
-    원인: 33L/R 최종접근 도착기(600&ndash;1,230 ft, 중심선 1.9&ndash;2.6 NM)와 HDY 1&ndash;3 NM에서 8:1로 오르내리는 UAM이 겹침
-    HDY 3 NM 밖 순항 구간은 0.7
+        <div class="cx">
+<div class="cx-title">⑤ 속도&middot;고도 프로파일 <span class="dim">(Joby S4 174 kt &harr; 91 kt, 0.15 g = 1.07 NM&middot;29초 · 모든 고도 ft AMSL QNH)</span></div>
+<div class="cx-cap">북쪽 회랑 (8:1)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">착륙 SB 1,950</td><td>감속 시작 HDY 전 <b>3.63 NM</b> (WP5 지나 0.73) &rarr; 강하 시작 <b>2.57 NM</b> (WP5 지나 1.79) &middot; 게이트까지 여유 4.48</td></tr><tr><td class="nw">이륙 NB 2,450</td><td>상승 완료 HDY 후 3.23 NM &rarr; 순항 도달 <b>4.29 NM</b> (WP5 직전 0.07) &middot; 여유 3.82</td></tr></tbody></table></div>
+<div class="cx-cap">남쪽 회랑 (4:1)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">착륙 NB 2,450</td><td>감속 시작 HDY 전 <b>2.68 NM</b> (WP3 지나 1.39) &rarr; 강하 시작 <b>1.61 NM</b> (WP3 지나 0.32) &middot; 여유 3.56</td></tr><tr><td class="nw">이륙 SB 1,950</td><td>상승 완료 HDY 후 1.28 NM (WP3) &rarr; 순항 도달 <b>2.35 NM</b> (WP3 지나 1.06) &middot; 여유 3.89</td></tr></tbody></table></div>
+<div class="cx-p">모든 경우 게이트 안에서 급감속 없이 수용. 발착기는 HDY(33.0&deg;)&middot;WP3(21.0&deg;)를 91 kt로 지나 코너컷 21 m &mdash; 75 m(3.3%)는 HDY에 서지 않는 통과기에만 해당</div>
+</div>
 
-                          33계열 남      비고
-  8:1 (7.1&deg;)              337.4
-  6:1 (9.5&deg;)              308.0          효과 없음
-  <b>4:1 (14.0&deg;)</b>            <span class="g">2.3</span>           <b>채택</b> &mdash; 반폭 1.248 유지
-  반폭 0.25 NM (8:1)       0.5            RNP 0.125 필요 &rarr; 기각
+        <div class="cx">
+<div class="cx-title">⑥ 복행 시 회랑 폐쇄 절차 <span class="pill prov">초안</span></div>
+<div class="cx-cap">충돌구간 (GATE-N 기점 거리)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">15계열</td><td>15L/R 복행 &times; <b>7.06&ndash;11.48 NM</b> &rarr; 활성인 북쪽 회랑의 WP4&ndash;HDY 끝 1.05 NM과 <b>HDY</b> 포함 · 16L/R 복행은 충돌 없음</td></tr><tr><td class="nw">33계열</td><td>33L/R 복행 &times; <b>0.00&ndash;1.55 NM</b> (GATE-N 부근) &middot; 남쪽 회랑 무관 · 34L/R 충돌 없음</td></tr></tbody></table></div>
+<div class="cx-p">복행기 실제형 상승(7%)으로 충돌구간 통과고도 2,500&ndash;4,350 ft &rarr; 우리 층과 겹침</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시간 예산</td><td>복행기 충돌구간 진입: MAPt 후 <b>92초</b>(15L, 180 kt) ~ 124초(15R, 140 kt) / 33R 144 ~ 33L 200초</td></tr><tr><td style="padding-left:0.9em">① 조종사 &ldquo;Going around&rdquo; &rarr; RKSI 관제탑</td><td>0초</td></tr><tr><td class="nw" style="padding-left:0.9em">② 관제탑&middot;접근관제 &rarr; PSU 자동 통보</td><td>&le; 10초</td></tr></tbody></table></div>
+<div class="cx-p">+ PSU(Tideway) 독립 감지: 활주로 2 NM&middot;1,000 ft 미만에서 상승률 +500 fpm 전환</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">③ PSU &rarr; UAM 조종사&middot;버티포트</td><td>&le; 10초</td></tr><tr><td class="nw">④ 조종사 반응</td><td>&le; 10초</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 인지~반응 30초 이내 &rarr; 기동 여유 약 62초 (174 kt면 3.0 NM)</div>
+<div class="cx-cap">UAM 행동</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">15계열</td><td>충돌구간 북쪽 &rarr; 진입 중지, <b>홀딩 지정구역 2.00&ndash;6.06 NM으로 대피</b> (충돌구간 1 NM 앞까지)</td></tr></tbody></table></div>
+<div class="cx-p">HDY 최종강하 중 500 ft AGL 이하 &rarr; 착륙 계속 · 그 외 구간 내 기체 &rarr; 북쪽 홀딩구역으로 복귀</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">33계열</td><td>GATE-N <b>이양 보류</b>(게이트 밖 대기) · 회랑 안 홀딩픽스는 GATE-N에서 <b>4.55 NM 이상</b>(가용 2.91 NM) · 남쪽 회랑 계속</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">재가동</td><td>타이머가 아니라 위치 조건 &mdash; 복행기가 충돌구간+1 NM 밖이거나 2,950 ft(NB+500) 이상에서 상승 중임을 ADS-B로 확인 + 관제 승인</td></tr></tbody></table></div>
+<div class="cx-p">예상 MAPt 후 약 3&ndash;4분 (15L/R 구간 이탈 153&ndash;205초, 33L/R 175&ndash;229초 + 여유) · 33R 복행은 3,000 ft 수평비행이라 수평 이탈만 인정</div>
+</div>
 
-  EB-105의 8:1은 <b>장애물이 없어야 하는 표면</b>의 경사(2.5.1)이며 경로는 &ldquo;8:1을 보장&rdquo;(2.5.2 5항)하면 되므로, 더 가파른 경로는 표면 위를 날아 기준에 부합한다. 조명표(Table 3-1)도 접근각 16&ndash;90&deg;를 따로 다룬다.
-  <span class="dim">조건: Joby S4의 14&deg; 접근&middot;출발 가능 여부는 공개 자료 없음 &mdash; 제작사 확인 필요</span>
-        </div>
-
-        <div class="calc">
-⑤ 속도&middot;고도 프로파일 <span class="dim">(Joby S4 174 kt &harr; 91 kt, 0.15 g = 1.07 NM&middot;29초 · 모든 고도 ft AMSL QNH)</span>
-
-  북쪽 회랑 (8:1)
-    착륙 SB 1,950   감속 시작 HDY 전 <b>3.63 NM</b> (WP5 지나 0.73) &rarr; 강하 시작 <b>2.57 NM</b> (WP5 지나 1.79) &middot; 게이트까지 여유 4.48
-    이륙 NB 2,450   상승 완료 HDY 후 3.23 NM &rarr; 순항 도달 <b>4.29 NM</b> (WP5 직전 0.07) &middot; 여유 3.82
-  남쪽 회랑 (4:1)
-    착륙 NB 2,450   감속 시작 HDY 전 <b>2.68 NM</b> (WP3 지나 1.39) &rarr; 강하 시작 <b>1.61 NM</b> (WP3 지나 0.32) &middot; 여유 3.56
-    이륙 SB 1,950   상승 완료 HDY 후 1.28 NM (WP3) &rarr; 순항 도달 <b>2.35 NM</b> (WP3 지나 1.06) &middot; 여유 3.89
-
-  모든 경우 게이트 안에서 급감속 없이 수용. 발착기는 HDY(33.0&deg;)&middot;WP3(21.0&deg;)를 91 kt로 지나 코너컷 21 m &mdash; 75 m(3.3%)는 HDY에 서지 않는 통과기에만 해당
-        </div>
-
-        <div class="calc">
-⑥ 복행 시 회랑 폐쇄 절차 <span class="pill prov">초안</span>
-
-  충돌구간 (GATE-N 기점 거리)
-    15계열  15L/R 복행 &times; <b>7.06&ndash;11.48 NM</b> &rarr; 활성인 북쪽 회랑의 WP4&ndash;HDY 끝 1.05 NM과 <b>HDY</b> 포함 · 16L/R 복행은 충돌 없음
-    33계열  33L/R 복행 &times; <b>0.00&ndash;1.55 NM</b> (GATE-N 부근) &middot; 남쪽 회랑 무관 · 34L/R 충돌 없음
-    복행기 실제형 상승(7%)으로 충돌구간 통과고도 2,500&ndash;4,350 ft &rarr; 우리 층과 겹침
-
-  시간 예산     복행기 충돌구간 진입: MAPt 후 <b>92초</b>(15L, 180 kt) ~ 124초(15R, 140 kt) / 33R 144 ~ 33L 200초
-    ① 조종사 &ldquo;Going around&rdquo; &rarr; RKSI 관제탑                       0초
-    ② 관제탑&middot;접근관제 &rarr; PSU 자동 통보                          &le; 10초
-       + PSU(Tideway) 독립 감지: 활주로 2 NM&middot;1,000 ft 미만에서 상승률 +500 fpm 전환
-    ③ PSU &rarr; UAM 조종사&middot;버티포트                                &le; 10초
-    ④ 조종사 반응                                             &le; 10초
-    &rArr; 인지~반응 30초 이내 &rarr; 기동 여유 약 62초 (174 kt면 3.0 NM)
-
-  UAM 행동
-    15계열  충돌구간 북쪽 &rarr; 진입 중지, <b>홀딩 지정구역 2.00&ndash;6.06 NM으로 대피</b> (충돌구간 1 NM 앞까지)
-            HDY 최종강하 중 500 ft AGL 이하 &rarr; 착륙 계속 · 그 외 구간 내 기체 &rarr; 북쪽 홀딩구역으로 복귀
-    33계열  GATE-N <b>이양 보류</b>(게이트 밖 대기) · 회랑 안 홀딩픽스는 GATE-N에서 <b>4.55 NM 이상</b>(가용 2.91 NM) · 남쪽 회랑 계속
-
-  재가동        타이머가 아니라 위치 조건 &mdash; 복행기가 충돌구간+1 NM 밖이거나 2,950 ft(NB+500) 이상에서 상승 중임을 ADS-B로 확인 + 관제 승인
-                예상 MAPt 후 약 3&ndash;4분 (15L/R 구간 이탈 153&ndash;205초, 33L/R 175&ndash;229초 + 여유) · 33R 복행은 3,000 ft 수평비행이라 수평 이탈만 인정
-        </div>
-
-        <div class="calc">
-⑦ 활주로 전환 절차 <span class="pill prov">초안</span>
-
-  실측 전환 간격 <span class="dim">(녹화 56일 · 전환 56회 · 한 방향 지속 중앙 10&ndash;12 h)</span>
-    33&rarr;15  이전 방향 마지막 운항 &rarr; 첫 15 출발   중앙 9분 · 10% 3분 · <span class="c">최소 1분</span>
-    15&rarr;33  이전 방향 마지막 운항 &rarr; 첫 33 운항   중앙 4분
-
-  남쪽 회랑을 비우는 최대 소요  <b>3.3분</b> (4:1 · GATE-S 직후 진입기 착륙 / HDY 이륙 직후 기체 GATE-S 통과)
-
-  33&rarr;15 전환
-    1. 관제 &rarr; PSU: 활주로 전환 <b>5분 전</b>까지 예고 (접근관제소 협정 항목)
-    2. 예고 수신 즉시: GATE-S 이양 중지 &middot; HDY 남행 출발 중지
-    3. 회랑 안 기체는 계속 진행해 착륙/이탈 · 게이트 밖 대기기는 GATE-N으로 경로 변경
-    4. 예고가 늦으면 남쪽 회랑이 빌 때까지 첫 15 출발 대기 (협정 항목)
-  15&rarr;33 전환
-    첫 33 운항 확인 후 PSU가 남쪽 회랑 재개방
-
-  <span class="dim">5분은 요구값이지 실측 예고시간이 아니다 &mdash; 관제의 실제 결정 시점은 데이터로 알 수 없음</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">⑦ 활주로 전환 절차 <span class="pill prov">초안</span></div>
+<div class="cx-cap">실측 전환 간격 <span class="dim">(녹화 56일 · 전환 56회 · 한 방향 지속 중앙 10&ndash;12 h)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">33&rarr;15</td><td>이전 방향 마지막 운항 &rarr; 첫 15 출발</td><td>중앙 9분 · 10% 3분 · <span class="c">최소 1분</span></td></tr><tr><td class="nw">15&rarr;33</td><td>이전 방향 마지막 운항 &rarr; 첫 33 운항</td><td>중앙 4분</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">남쪽 회랑을 비우는 최대 소요</td><td><b>3.3분</b> (4:1 · GATE-S 직후 진입기 착륙 / HDY 이륙 직후 기체 GATE-S 통과)</td></tr></tbody></table></div>
+<div class="cx-cap">33&rarr;15 전환</div>
+<div class="cx-p">1. 관제 &rarr; PSU: 활주로 전환 <b>5분 전</b>까지 예고 (접근관제소 협정 항목)</div>
+<div class="cx-p">2. 예고 수신 즉시: GATE-S 이양 중지 &middot; HDY 남행 출발 중지</div>
+<div class="cx-p">3. 회랑 안 기체는 계속 진행해 착륙/이탈 · 게이트 밖 대기기는 GATE-N으로 경로 변경</div>
+<div class="cx-p">4. 예고가 늦으면 남쪽 회랑이 빌 때까지 첫 15 출발 대기 (협정 항목)</div>
+<div class="cx-cap">15&rarr;33 전환</div>
+<div class="cx-p">첫 33 운항 확인 후 PSU가 남쪽 회랑 재개방</div>
+<div class="cx-p"><span class="dim">5분은 요구값이지 실측 예고시간이 아니다 &mdash; 관제의 실제 결정 시점은 데이터로 알 수 없음</span></div>
+</div>
 
         <div class="was" style="margin-top:12px"><b>이전:</b> 반폭 근거 &ldquo;RWY33R 1.848 &minus; 2&times;RNP 0.3&rdquo; · SB 2,150 / NB 2,450 ft(기압고도 기준 분석, 층간격 300 ft, &sigma; 16 m) · UAM&ndash;상용기 수직분리 1,000 ft(REV 05) · 헬기 상한 1,550 ft · 활주로 운영방향과 무관한 상시 전 구간 운영 · 발착 경사 미정의 · 복행 대응은 &ldquo;즉시 CLOSED&rdquo; 한 줄.</div>
         <div class="ev" style="margin-top:10px">
@@ -804,50 +778,24 @@ h2{scroll-margin-top:60px}
           <b>4-3-1</b> 일반적으로는 회랑 이탈금지 같은 법적 의무를 지양하나 <q>관제공역 &hellip; 등 안전 우려가 있는 경우는 법적 의무 부여 등 탄력적으로 제도 적용 가능</q> &mdash; 게이트를 경계로 <b>의무가 달라지는 지점</b>이 생긴다.<br><br>
           &rArr; 발표 표현: <b>&ldquo;관제허가 불요 공역(G&middot;E)에서 자유 비행 &rarr; RKSI Class B 진입 시 회랑으로 이양&rdquo;</b>. &ldquo;도심 = 비관제&rdquo;라고 하면 E등급을 틀리게 말하는 것이 된다.
         </div>
-        <div class="calc">
-① 이양게이트 위치 &mdash; <span class="g">안 B: 회랑 전폭이 Class B에 들어오는 지점</span>
-
-  RKSI Class B 2단(5&ndash;10 NM)  하한 1,000 ft AGL &rarr; SB 2,150 / NB 2,450 ft 모두 내부
-  전폭 수용 조건   중심선 ARP 거리 &le; 10 &minus; 반폭 1.248 = <b>8.752 NM</b>   (REV 16 원칙)
-
-  <span class="c">GATE-N  37.60188N 126.49299E</span>   구 WP6&ndash;WP5의 34.6% 지점 (WP6에서 1.98 NM 남쪽)
-  <span class="c">GATE-S  37.41037N 126.61061E</span>   구 WP3&ndash;WP1의 93.3% 지점 (WP1 전 0.35 NM)
-
-  검증  중심선 최대 ARP 거리 8.752 NM &rarr; 가장자리 최대 <b>10.000 NM</b> (원 안)
-  <span class="dim">안 A(중심선이 10 NM에 닿는 곳)는 가장자리 1.248 NM이 Class E로 나가 REV 16 원칙과 어긋나 기각</span>
-        </div>
-        <div class="calc">
-② 기체 기준 &mdash; <span class="g">Joby S4</span> <span class="dim">(제작사 공개 제원)</span>
-
-  최대속도   200 mph = <b>322 km/h</b> = 174 kt   <span class="dim">(설계 기준치 &mdash; 선회반경&middot;감속거리에 보수적)</span>
-  항속거리   100 mi = 161 km (예비 포함)
-  탑승       조종사 1 + 승객 4 &middot; 틸트 프로펠러 6기 &middot; MTOW 2,404 kg
-
-  &rarr; 회랑에 주는 영향
-  선회반경 (bank 25&deg;)          1,749 m        <span class="dim">(290 km/h 때 1,419 m)</span>
-  최대 코너컷 (HDY 33.0&deg;)       <b>75 m</b> = 반폭 예산의 3.3%  <span class="dim">(61 m, 2.6%)</span>
-  회랑 편도 26.57 km               항속의 16.5% &middot; 통과 <b>5.0분</b>
-  WP4&ndash;HDY 0.66 NM 안에서 91 kt까지 감속   <span class="c">0.24 g</span>  <span class="dim">(290 km/h 때 0.18 g)</span>
-  승객 안락 0.15 g로 감속하려면    <b>1.07 NM</b> 필요 &rarr; 천이개시점(TP) 필요성이 더 커짐
-        </div>
-        <div class="calc">
-③ 게이트 절단 전후 비교
-
-                         REV 19 회랑            REV 23 회랑
-  경로                   WP6&hellip;WP1&rarr;SIHWA (6구간)  <b>GATE-N&hellip;GATE-S (5구간)</b>
-  총연장                 33.94 km (법정 68%)    <b>26.57 km (53%)</b>
-  공역                   양 끝단 Class E 이탈    <span class="g">전폭 Class B 내부</span>
-  P-518 / S1 가장자리     2.13 / 2.14 NM         <b>4.10 / 4.11 NM</b>
-  선회                   WP5 0.7&middot;WP4 3.5&middot;HDY 33.0&middot;WP3 21.0&middot;WP1 23.2&deg;   WP1 선회 소멸
-  15L 복행 교차           2곳 (1,322 / 2,710 ft)  <b>1곳 (1,322 ft)</b>
-  33L/R 복행 이격         1.120 NM (밴드 안)     1.140 NM (밴드 안)
-  홀딩 선회방향           L 5구간 + R 1구간      <span class="g">전 구간 L</span>
-  홀딩 실질 길이          7.44 NM                <b>5.46 NM</b>
-  공시절차 관통           29개 &sup1;               <b>26개</b>
-  반폭 / RNP<sub>u</sub>           1.248 / 0.624          변경 없음 (제약점 HDY)
-
-  <span class="dim">&sup1; 교차 판정을 보정한 값 &mdash; 아래 정정 ① 참조</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">① 이양게이트 위치 &mdash; <span class="g">안 B: 회랑 전폭이 Class B에 들어오는 지점</span></div>
+<div class="cx-tw"><table><tbody><tr><td>RKSI Class B 2단(5&ndash;10 NM)</td><td>하한 1,000 ft AGL &rarr; SB 2,150 / NB 2,450 ft 모두 내부</td><td></td></tr><tr><td class="nw">전폭 수용 조건</td><td>중심선 ARP 거리 &le; 10 &minus; 반폭 1.248 = <b>8.752 NM</b></td><td>(REV 16 원칙)</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">GATE-N</span></td><td><span class="c">37.60188N 126.49299E</span></td><td>구 WP6&ndash;WP5의 34.6% 지점 (WP6에서 1.98 NM 남쪽)</td></tr><tr><td class="nw"><span class="c">GATE-S</span></td><td><span class="c">37.41037N 126.61061E</span></td><td>구 WP3&ndash;WP1의 93.3% 지점 (WP1 전 0.35 NM)</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">검증</td><td>중심선 최대 ARP 거리 8.752 NM &rarr; 가장자리 최대 <b>10.000 NM</b> (원 안)</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">안 A(중심선이 10 NM에 닿는 곳)는 가장자리 1.248 NM이 Class E로 나가 REV 16 원칙과 어긋나 기각</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 기체 기준 &mdash; <span class="g">Joby S4</span> <span class="dim">(제작사 공개 제원)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">최대속도</td><td>200 mph = <b>322 km/h</b> = 174 kt</td><td><span class="dim">(설계 기준치 &mdash; 선회반경&middot;감속거리에 보수적)</span></td></tr><tr><td class="nw">항속거리</td><td>100 mi = 161 km (예비 포함)</td><td></td></tr><tr><td class="nw">탑승</td><td>조종사 1 + 승객 4 &middot; 틸트 프로펠러 6기 &middot; MTOW 2,404 kg</td><td></td></tr></tbody></table></div>
+<div class="cx-p">&rarr; 회랑에 주는 영향</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">선회반경 (bank 25&deg;)</td><td>1,749 m</td><td><span class="dim">(290 km/h 때 1,419 m)</span></td></tr><tr><td class="nw">최대 코너컷 (HDY 33.0&deg;)</td><td><b>75 m</b> = 반폭 예산의 3.3%</td><td><span class="dim">(61 m, 2.6%)</span></td></tr><tr><td class="nw">회랑 편도 26.57 km</td><td>항속의 16.5% &middot; 통과 <b>5.0분</b></td><td></td></tr><tr><td>WP4&ndash;HDY 0.66 NM 안에서 91 kt까지 감속</td><td><span class="c">0.24 g</span></td><td><span class="dim">(290 km/h 때 0.18 g)</span></td></tr><tr><td class="nw">승객 안락 0.15 g로 감속하려면</td><td><b>1.07 NM</b> 필요 &rarr; 천이개시점(TP) 필요성이 더 커짐</td><td></td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 게이트 절단 전후 비교</div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>REV 19 회랑</td><td>REV 23 회랑</td></tr><tr><td class="nw">경로</td><td>WP6&hellip;WP1&rarr;SIHWA (6구간)</td><td><b>GATE-N&hellip;GATE-S (5구간)</b></td></tr><tr><td class="nw">총연장</td><td>33.94 km (법정 68%)</td><td><b>26.57 km (53%)</b></td></tr><tr><td class="nw">공역</td><td>양 끝단 Class E 이탈</td><td><span class="g">전폭 Class B 내부</span></td></tr><tr><td class="nw">P-518 / S1 가장자리</td><td>2.13 / 2.14 NM</td><td><b>4.10 / 4.11 NM</b></td></tr><tr><td class="nw">선회</td><td>WP5 0.7&middot;WP4 3.5&middot;HDY 33.0&middot;WP3 21.0&middot;WP1 23.2&deg;</td><td>WP1 선회 소멸</td></tr><tr><td class="nw">15L 복행 교차</td><td>2곳 (1,322 / 2,710 ft)</td><td><b>1곳 (1,322 ft)</b></td></tr><tr><td class="nw">33L/R 복행 이격</td><td>1.120 NM (밴드 안)</td><td>1.140 NM (밴드 안)</td></tr><tr><td class="nw">홀딩 선회방향</td><td>L 5구간 + R 1구간</td><td><span class="g">전 구간 L</span></td></tr><tr><td class="nw">홀딩 실질 길이</td><td>7.44 NM</td><td><b>5.46 NM</b></td></tr><tr><td class="nw">공시절차 관통</td><td>29개 &sup1;</td><td><b>26개</b></td></tr><tr><td class="nw">반폭 / RNP<sub>u</sub></td><td>1.248 / 0.624</td><td>변경 없음 (제약점 HDY)</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">&sup1; 교차 판정을 보정한 값 &mdash; 아래 정정 ① 참조</span></div>
+</div>
         <div class="ev">
           <span class="lbl">따라 바뀌는 결정 3가지</span>
           <b>① 15L 복행 남측 교차가 사라진다.</b> REV 22에서 새로 찾은 WP1&ndash;SIHWA 교차(2,710 ft, NB +260 ft)는 게이트 바깥이 됐다. HDY&ndash;WP3 교차(1,322 ft)는 남아 있으므로 <b>15L/15R 복행 시 CLOSED는 유지</b>한다.<br><br>
@@ -856,27 +804,20 @@ h2{scroll-margin-top:60px}
         </div>
         <div class="was" style="margin-top:12px"><b>정정 ① &mdash; 공시절차 관통 수가 적게 세어졌다:</b> REV 18&middot;19는 leg와 회랑 선분의 <b>끝점&ndash;선분 거리만</b> 비교했다. 그래서 끝점은 멀리 있지만 <b>중간에서 회랑을 가로지르는 leg(실제 거리 0)</b>를 놓쳤다. 교차 판정을 넣어 다시 세면 REV 19 회랑은 &ldquo;24개&rdquo;가 아니라 <b>29개(RKSI 13 / RKSS 16)</b>였고, 이번 회랑은 <b>26개(RKSI 11 / RKSS 15)</b>다. 새로 잡힌 leg는 RKSS NOPIK 2T/2Q(TP080&middot;QP080&rarr;, WP5&ndash;WP4), BULTI&middot;OSPOT 2Q(QD080&rarr;QD090), REBIT 2U(PU025&rarr;DOKDO)&middot;2Z(PZ030&rarr;PZ026), LEGAK 1U(PU029&rarr;DOKDO), RKSI SID SEL2A(SEL R279/D28&rarr;SEL)다. 게이트 절단으로 빠진 것은 RKSI STAR GUKDO1A&middot;KARBU1A(하한 10,000 ft)와 RKSS SID EGOBA2Q(하한 6,000 ft) 3개다.</div>
         <div class="was" style="margin-top:10px"><b>정정 ② &mdash; REV 18 &ldquo;관통 leg 최저 4,000 ft&rdquo;는 공시 하한 기준에서만 맞다:</b> 새로 잡힌 NOPIK 2T/2Q의 TP080&middot;QP080&rarr; 구간은 <b>하한이 공시되지 않았다</b>(QP080의 <code>-8 000</code>은 상한). 그래서 PANS-OPS 표준 최소 상승구배 <b>PDG 3.3%</b>로 교차점 고도를 산출했다.</div>
-        <div class="calc">
-하한 미공시 SID 구간 &mdash; 교차점 최저고도 (PDG 3.3%, DER+35 ft 기점)
-  RKSS NOPIK 2T/2Q   &times; WP5&ndash;WP4    DER 17.7 NM  &rarr;  <span class="c">3,634 ft</span>  (NB +1,184)  ← 최협착
-  RKSS BULTI/OSPOT/EGOBA 2T &times; WP3&ndash;GATE-S  20.2 NM  &rarr;  4,137 ft  (NB +1,687)
-  RKSS BULTI/OSPOT 2Q &times; WP3&ndash;GATE-S  20.4 NM  &rarr;  4,193 ft  (NB +1,743)
-  RKSI SEL2A         &times; WP3&ndash;GATE-S  28.3 NM  &rarr;  5,733 ft  (NB +3,283)
-  공시&middot;보간 하한이 있는 관통 leg        최저 <b>4,000 ft</b> (DU018&rarr;DOKDO 등, NB +1,550)
-
-  &rArr; 전부 NB 2,450 ft와 <span class="g">1,000 ft 분리 충족</span> &mdash; 결론은 유지, 최저값만 4,000 &rarr; 3,634 ft로 보정
-        </div>
+        <div class="cx">
+<div class="cx-title">하한 미공시 SID 구간 &mdash; 교차점 최저고도 (PDG 3.3%, DER+35 ft 기점)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">RKSS NOPIK 2T/2Q</td><td>&times; WP5&ndash;WP4</td><td>DER 17.7 NM</td><td>&rarr;</td><td><span class="c">3,634 ft</span></td><td>(NB +1,184)</td><td>← 최협착</td></tr><tr><td>RKSS BULTI/OSPOT/EGOBA 2T &times; WP3&ndash;GATE-S</td><td>20.2 NM</td><td>&rarr;</td><td>4,137 ft</td><td>(NB +1,687)</td><td></td><td></td></tr><tr><td>RKSS BULTI/OSPOT 2Q &times; WP3&ndash;GATE-S</td><td>20.4 NM</td><td>&rarr;</td><td>4,193 ft</td><td>(NB +1,743)</td><td></td><td></td></tr><tr><td class="nw">RKSI SEL2A</td><td>&times; WP3&ndash;GATE-S</td><td>28.3 NM</td><td>&rarr;</td><td>5,733 ft</td><td>(NB +3,283)</td><td></td></tr><tr><td class="nw">공시&middot;보간 하한이 있는 관통 leg</td><td>최저 <b>4,000 ft</b> (DU018&rarr;DOKDO 등, NB +1,550)</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 전부 NB 2,450 ft와 <span class="g">1,000 ft 분리 충족</span> &mdash; 결론은 유지, 최저값만 4,000 &rarr; 3,634 ft로 보정</div>
+</div>
         <div class="ev" style="margin-top:10px">
           <span class="lbl">남는 주의점 &mdash; 실측이 이론보다 낮은 사례</span>
           REV 12의 TD050&rarr;TD100 교차점 실측(6일, 793대)에서 상승 중인 김포 SID의 <b>최저는 3,250 ft</b>였다. PDG 이론값 4,137 ft보다 낮고 <b>NB 대비 +800 ft로 1,000 ft에 못 미친다</b>. TD050의 <code>-5 000</code> 제한 때문에 관제사가 낮게 잡아둔 경우로 보인다. 다만 5%tile이 9,325 ft라 극히 드문 사례다. <b>서울접근관제소 LOA(회랑 상공 최저 4,000 ft)의 대상에 SID 교차점도 포함</b>해야 한다.
         </div>
-        <div class="calc">
-변경 없음
-  회랑 반폭 1.248 NM / RNP<sub>u</sub> &le; 0.624   제약점이 HDY라 불변 (REV 22)
-  운용고도 SB 2,150 / NB 2,450 ft             게이트 안쪽 전 구간 Class B 2단 하한 1,000 ft 위
-  버티포트 진입&middot;이탈 분리각 147.0&deg;           WP4&middot;HDY&middot;WP3 불변
-  <span class="dim">침범 빈도 1.44회/일(REV 19)은 절단 전 전체 회랑 기준 &mdash; 줄어드는 방향이며 재집계는 하지 않았다</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">변경 없음</div>
+<div class="cx-tw"><table><tbody><tr><td>회랑 반폭 1.248 NM / RNP<sub>u</sub> &le; 0.624</td><td>제약점이 HDY라 불변 (REV 22)</td></tr><tr><td>운용고도 SB 2,150 / NB 2,450 ft</td><td>게이트 안쪽 전 구간 Class B 2단 하한 1,000 ft 위</td></tr><tr><td class="nw">버티포트 진입&middot;이탈 분리각 147.0&deg;</td><td>WP4&middot;HDY&middot;WP3 불변</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">침범 빈도 1.44회/일(REV 19)은 절단 전 전체 회랑 기준 &mdash; 줄어드는 방향이며 재집계는 하지 않았다</span></div>
+</div>
         </div>
         </details>
       </div>
@@ -889,28 +830,17 @@ h2{scroll-margin-top:60px}
         <summary><span class="rvt">현 회랑 기준 반폭&middot;RNP 재산출 + 구 좌표 수치 전수 감사 &mdash; 정정 4건</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 11의 반폭&middot;RNP 역산은 <b>구 회랑 좌표</b>로 계산한 값이었다. REV 17&middot;19에서 WP6&middot;WP5&middot;WP4&middot;WP3가 모두 이동했으므로 전면 재계산하고, 다른 REV에 남아 있는 구 좌표 기준 수치도 함께 감사했다.</p>
-        <div class="calc">
-① 반폭&middot;RNP 재산출 &mdash; <span class="g">결론: 변경 없음</span>
-
-  최종접근(상시 사용 절차) &rarr; 현 회랑 중심선 최소거리
-     <span class="c">33R  ENBUK&rarr;RW33R    1.848 NM</span>  [WP4-HDY]   ← 최협착
-     33L  KIDAB&rarr;RW33L    2.071 NM  [WP4-HDY]
-     34R  PIPAN&rarr;RW34R    3.189 NM
-     34L  BODEK&rarr;RW34L    3.413 NM
-     16L  PH002&rarr;RW16L    4.083 NM
-     16R  DH002&rarr;RW16R    4.211 NM
-     RKSS 32L/32R/14L/14R   11.1 &ndash; 11.7 NM
-
-  가용 반폭 = 1.848 &minus; 0.600(상용기 2&times;RNP 0.3) = <b>1.248 NM</b>  (총폭 4,624 m)
-  RNP<sub>u</sub> &le; <b>0.624</b> (1,156 m)   &mdash; REV 11 값과 동일
-
-  <span class="c">왜 안 바뀌었나 &mdash; 최근접점이 HDY 그 자체이기 때문</span>
-     최근접 : WP4-HDY 구간의 <b>100.0% 지점 = HDY(37.46700N 126.50269E)</b>
-     HDY는 버티포트라 한 번도 이동하지 않았다. 재정렬로 WP6&middot;WP5&middot;WP4&middot;WP3를
-     모두 옮겼지만 <b>제약을 만드는 점이 HDY</b>여서 1.8476 NM이 그대로 유지됐다.
-     (구 회랑 1.8476 / 현 회랑 1.8476 &mdash; 소수 4자리까지 동일)
-     &rArr; 재정렬로 더 가까워진 최종접근은 <b>없다</b>.
-        </div>
+        <div class="cx">
+<div class="cx-title">① 반폭&middot;RNP 재산출 &mdash; <span class="g">결론: 변경 없음</span></div>
+<div class="cx-cap">최종접근(상시 사용 절차) &rarr; 현 회랑 중심선 최소거리</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">33R</span></td><td><span class="c">ENBUK&rarr;RW33R</span></td><td><span class="c">1.848 NM</span></td><td>[WP4-HDY]</td><td>← 최협착</td></tr><tr><td class="nw">33L</td><td>KIDAB&rarr;RW33L</td><td>2.071 NM</td><td>[WP4-HDY]</td><td></td></tr><tr><td class="nw">34R</td><td>PIPAN&rarr;RW34R</td><td>3.189 NM</td><td></td><td></td></tr><tr><td class="nw">34L</td><td>BODEK&rarr;RW34L</td><td>3.413 NM</td><td></td><td></td></tr><tr><td class="nw">16L</td><td>PH002&rarr;RW16L</td><td>4.083 NM</td><td></td><td></td></tr><tr><td class="nw">16R</td><td>DH002&rarr;RW16R</td><td>4.211 NM</td><td></td><td></td></tr><tr><td class="nw">RKSS 32L/32R/14L/14R</td><td>11.1 &ndash; 11.7 NM</td><td></td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td>가용 반폭 = 1.848 &minus; 0.600(상용기 2&times;RNP 0.3) = <b>1.248 NM</b></td><td>(총폭 4,624 m)</td></tr><tr><td class="nw">RNP<sub>u</sub> &le; <b>0.624</b> (1,156 m)</td><td>&mdash; REV 11 값과 동일</td></tr></tbody></table></div>
+<div class="cx-cap"><span class="c">왜 안 바뀌었나 &mdash; 최근접점이 HDY 그 자체이기 때문</span></div>
+<div class="cx-p">최근접 : WP4-HDY 구간의 <b>100.0% 지점 = HDY(37.46700N 126.50269E)</b></div>
+<div class="cx-p">HDY는 버티포트라 한 번도 이동하지 않았다. 재정렬로 WP6&middot;WP5&middot;WP4&middot;WP3를 모두 옮겼지만 <b>제약을 만드는 점이 HDY</b>여서 1.8476 NM이 그대로 유지됐다.</div>
+<div class="cx-p">(구 회랑 1.8476 / 현 회랑 1.8476 &mdash; 소수 4자리까지 동일)</div>
+<div class="cx-concl">&rArr; 재정렬로 더 가까워진 최종접근은 <b>없다</b>.</div>
+</div>
         <div class="was"><b>정정 ① &mdash; REV 11 코너컷 이탈량:</b> &ldquo;최대 27 m(WP1 22.6&deg;), 예산의 2.3%&rdquo; &rarr; REV 19 직선화로 최대 선회가 <b>HDY 33.0&deg;</b>로 옮겨가 <b>61 m, 예산의 2.6%</b>가 됐다. 구간별로는 WP5 0.7&deg;(0 m) &middot; WP4 3.5&deg;(1 m) &middot; <b>HDY 33.0&deg;(61 m)</b> &middot; WP3 21.0&deg;(24 m) &middot; WP1 23.2&deg;(30 m). 2.3배 늘었으나 여전히 무시할 수준.</div>
         <div class="was" style="margin-top:10px"><b>정정 ② &mdash; REV 08 복행기 통과고도:</b> HDY&ndash;WP3 교차점 통과고도 &ldquo;약 1,332 ft&rdquo; &rarr; 현 회랑에서 <b>1,322 ft</b>(MAPt에서 5.15 NM). 10 ft 차이로 <b>결론은 그대로</b> &mdash; SB 2,150과 828 ft, NB 2,450과 1,128 ft 아래라 어느 층과도 수직분리 기준(1,000 ft)을 만족하지 못하는 상황은 동일하다.</div>
         <div class="ev">
@@ -927,15 +857,10 @@ h2{scroll-margin-top:60px}
           <b>33L/33R 복행도 15L/15R과 동일하게 &ldquo;복행 시 회랑 CLOSED&rdquo; 트리거에 포함한다.</b> GE991(복행 선회점)이 회랑 밴드 안 1.12 NM에 있고(REV 21), 그 지점 고도는 560 ft에서 상승 중이다. 회랑 재설계로는 해결되지 않으며 &mdash; REV 11의 논리대로 <b>복행경로는 상시 점유 공역이 아니므로 시간분리(CLOSED)로 대응</b>한다. 이미 만들어둔 메커니즘이라 추가 비용이 없다.<br><br>
           단 실측 뒷받침 &mdash; 50일 관측에서 <b>33 복행기가 GE991을 저고도로 통과한 사례는 0건</b>이다(REV 21). RKSI가 주로 15 방향을 쓰고 복행 자체가 드물기 때문이며, <b>기하학적 필요성은 있으나 발생 빈도는 매우 낮다</b>는 두 사실을 함께 제시할 것.
         </div>
-        <div class="calc">
-② 검증 결과 &mdash; 값이 유지된 항목
-  회랑 반폭 1.248 NM             변경 없음 (제약점 HDY 불변)
-  RNP<sub>u</sub> &le; 0.624              변경 없음
-  33L 최종접근 2.071 NM          변경 없음
-  33R 최종접근 1.848 NM          변경 없음
-  15L 복행 HDY-WP3 교차 존재      유지 (위치만 0.06 NM 이동)
-  총폭 4,624 m / 특별법 600 m의 7.7배   변경 없음
-        </div>
+        <div class="cx">
+<div class="cx-title">② 검증 결과 &mdash; 값이 유지된 항목</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">회랑 반폭 1.248 NM</td><td>변경 없음 (제약점 HDY 불변)</td></tr><tr><td class="nw">RNP<sub>u</sub> &le; 0.624</td><td>변경 없음</td></tr><tr><td class="nw">33L 최종접근 2.071 NM</td><td>변경 없음</td></tr><tr><td class="nw">33R 최종접근 1.848 NM</td><td>변경 없음</td></tr><tr><td class="nw">15L 복행 HDY-WP3 교차 존재</td><td>유지 (위치만 0.06 NM 이동)</td></tr><tr><td>총폭 4,624 m / 특별법 600 m의 7.7배</td><td>변경 없음</td></tr></tbody></table></div>
+</div>
         </div>
         </details>
       </div>
@@ -948,46 +873,28 @@ h2{scroll-margin-top:60px}
         <summary><span class="rvt">홀딩 선회방향&middot;금지구역 확정, 그리고 TCAS를 최후 방어층으로 편입</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>간격분리 홀딩은 회랑 어디서나 발생할 수 있게 두되 <b>선회는 항상 공항 반대쪽</b>으로 고정하고, <b>3,000 ft 이하로 항행 가능성이 있는 절차와 겹치는 구간은 홀딩을 금지</b>한다. 그리고 지금까지 위계에 빠져 있던 <b>TCAS</b>를 최후 방어층으로 넣는다.</p>
-        <div class="calc">
-홀딩 패턴 제원 <span class="dim">(91 kt 표준선회, REV 02)</span>
-  선회반경 R = 91/188.5 = <b>0.483 NM</b>   직선구간 1분 = <b>1.517 NM</b>
-  패턴 횡폭 2R = <b>0.966 NM</b>  &lt;  회랑 반폭 1.248 NM
-  &rArr; <b>한쪽으로만 돌면 패턴이 회랑 안에 들어간다</b> — 방향 고정이 기하학적으로 성립
-  패턴 종방향 점유 : 홀딩픽스 상류로 LEG+R = <b>2.00 NM</b>, 하류로 R = 0.48 NM
-        </div>
-        <div class="calc">
-① 선회방향 — RKSI ARP 기준 <span class="dim">(공항이 회랑 서쪽에 있음)</span>
-  WP6&ndash;WP5    공항 우측 (7.9 NM)  &rarr;  <b>좌선회 (L)</b>
-  WP5&ndash;WP4    공항 우측 (4.0 NM)  &rarr;  <b>좌선회 (L)</b>
-  WP4&ndash;HDY    공항 우측 (3.0 NM)  &rarr;  <b>좌선회 (L)</b>
-  HDY&ndash;WP3    공항 우측 (3.4 NM)  &rarr;  <b>좌선회 (L)</b>
-  WP3&ndash;WP1    공항 우측 (6.5 NM)  &rarr;  <b>좌선회 (L)</b>
-  <span class="c">WP1&ndash;SIHWA  공항 좌측 (9.9 NM)  &rarr;  우선회 (R)  ← 유일한 반대</span>
-
-  남행&middot;북행 관계없이 결과는 &ldquo;동쪽으로 돈다&rdquo;로 같다.
-  WP1&ndash;SIHWA만 회랑이 동쪽으로 꺾여 공항이 좌측으로 넘어간다 &rarr; <b>조종사 혼동 위험</b>,
-  구간별 선회방향을 회랑도에 명시할 것.
-        </div>
-        <div class="calc">
-② 홀딩 금지구역 <span class="dim">(패턴이 저고도 절차와 0.3 NM 이내 접근 시 금지)</span>
-
-  판정기준 — 고도표기 부호를 반영해 &lsquo;보장되는 하한&rsquo;을 산출
-     +X = at or above &rarr; 하한 X      -X = at or below &rarr; <b>하한 없음</b>
-     @X = at &rarr; 하한 X               미공시 &rarr; 앞뒤 하한으로 보간
-     &rArr; 3,000 ft 미만 가능 leg <b>366개</b> (하한 완전 미상 134개)
-
-  구간            홀딩 가능      비고
-  <span class="g">WP6&ndash;WP5        100%</span>       패턴 최대 횡이탈 2.07 NM <span class="c">(반폭 초과 — 북단 제한 필요)</span>
-  <span class="g">WP5&ndash;WP4        100%</span>       패턴 횡이탈 0.97 NM  이상 없음
-  WP4&ndash;HDY         36%       0~31% 구간만 가능
-  <span class="c">HDY&ndash;WP3          0%       전면 금지</span>
-  WP3&ndash;WP1          8%       68~75% 구간만 가능
-  <span class="c">WP1&ndash;SIHWA        0%       전면 금지</span> (패턴 횡이탈 1.52 NM, 반폭 초과)
-
-  <span class="c">금지 원인이 거의 하나 — RKSI 15L/15R 복행경로</span>
-     IAP_2_53_1_44 / IAP_2_57_1_46  GC999&rarr;GC989, GC989&rarr;GC980   <b>하한 540 ft</b>
-     회랑 남쪽 절반이 이 경로 위에 얹혀 있다.
-        </div>
+        <div class="cx">
+<div class="cx-title">홀딩 패턴 제원 <span class="dim">(91 kt 표준선회, REV 02)</span></div>
+<div class="cx-tw"><table><tbody><tr><td>선회반경 R = 91/188.5 = <b>0.483 NM</b></td><td>직선구간 1분 = <b>1.517 NM</b></td><td></td></tr><tr><td class="nw">패턴 횡폭 2R = <b>0.966 NM</b></td><td>&lt;</td><td>회랑 반폭 1.248 NM</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; <b>한쪽으로만 돌면 패턴이 회랑 안에 들어간다</b> — 방향 고정이 기하학적으로 성립</div>
+<div class="cx-p">패턴 종방향 점유 : 홀딩픽스 상류로 LEG+R = <b>2.00 NM</b>, 하류로 R = 0.48 NM</div>
+</div>
+        <div class="cx">
+<div class="cx-title">① 선회방향 — RKSI ARP 기준 <span class="dim">(공항이 회랑 서쪽에 있음)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">WP6&ndash;WP5</td><td>공항 우측 (7.9 NM)</td><td>&rarr;</td><td><b>좌선회 (L)</b></td><td></td></tr><tr><td class="nw">WP5&ndash;WP4</td><td>공항 우측 (4.0 NM)</td><td>&rarr;</td><td><b>좌선회 (L)</b></td><td></td></tr><tr><td class="nw">WP4&ndash;HDY</td><td>공항 우측 (3.0 NM)</td><td>&rarr;</td><td><b>좌선회 (L)</b></td><td></td></tr><tr><td class="nw">HDY&ndash;WP3</td><td>공항 우측 (3.4 NM)</td><td>&rarr;</td><td><b>좌선회 (L)</b></td><td></td></tr><tr><td class="nw">WP3&ndash;WP1</td><td>공항 우측 (6.5 NM)</td><td>&rarr;</td><td><b>좌선회 (L)</b></td><td></td></tr><tr><td class="nw"><span class="c">WP1&ndash;SIHWA</span></td><td><span class="c">공항 좌측 (9.9 NM)</span></td><td><span class="c">&rarr;</span></td><td><span class="c">우선회 (R)</span></td><td><span class="c">← 유일한 반대</span></td></tr></tbody></table></div>
+<div class="cx-p">남행&middot;북행 관계없이 결과는 &ldquo;동쪽으로 돈다&rdquo;로 같다.</div>
+<div class="cx-p">WP1&ndash;SIHWA만 회랑이 동쪽으로 꺾여 공항이 좌측으로 넘어간다 &rarr; <b>조종사 혼동 위험</b>, 구간별 선회방향을 회랑도에 명시할 것.</div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 홀딩 금지구역 <span class="dim">(패턴이 저고도 절차와 0.3 NM 이내 접근 시 금지)</span></div>
+<div class="cx-cap">판정기준 — 고도표기 부호를 반영해 &lsquo;보장되는 하한&rsquo;을 산출</div>
+<div class="cx-tw"><table><tbody><tr><td>+X = at or above &rarr; 하한 X</td><td>-X = at or below &rarr; <b>하한 없음</b></td></tr><tr><td class="nw">@X = at &rarr; 하한 X</td><td>미공시 &rarr; 앞뒤 하한으로 보간</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 3,000 ft 미만 가능 leg <b>366개</b> (하한 완전 미상 134개)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">구간</td><td>홀딩 가능</td><td>비고</td><td></td></tr><tr><td class="nw"><span class="g">WP6&ndash;WP5</span></td><td><span class="g">100%</span></td><td>패턴 최대 횡이탈 2.07 NM <span class="c">(반폭 초과 — 북단 제한 필요)</span></td><td></td></tr><tr><td class="nw"><span class="g">WP5&ndash;WP4</span></td><td><span class="g">100%</span></td><td>패턴 횡이탈 0.97 NM</td><td>이상 없음</td></tr><tr><td class="nw">WP4&ndash;HDY</td><td>36%</td><td>0~31% 구간만 가능</td><td></td></tr><tr><td class="nw"><span class="c">HDY&ndash;WP3</span></td><td><span class="c">0%</span></td><td><span class="c">전면 금지</span></td><td></td></tr><tr><td class="nw">WP3&ndash;WP1</td><td>8%</td><td>68~75% 구간만 가능</td><td></td></tr><tr><td class="nw"><span class="c">WP1&ndash;SIHWA</span></td><td><span class="c">0%</span></td><td><span class="c">전면 금지</span> (패턴 횡이탈 1.52 NM, 반폭 초과)</td><td></td></tr></tbody></table></div>
+<div class="cx-cap"><span class="c">금지 원인이 거의 하나 — RKSI 15L/15R 복행경로</span></div>
+<div class="cx-tw"><table><tbody><tr><td>IAP_2_53_1_44 / IAP_2_57_1_46</td><td>GC999&rarr;GC989, GC989&rarr;GC980</td><td><b>하한 540 ft</b></td></tr></tbody></table></div>
+<div class="cx-p">회랑 남쪽 절반이 이 경로 위에 얹혀 있다.</div>
+</div>
         <div class="ev">
           <span class="lbl">확정 규칙</span>
           <b>홀딩 지정구역 = WP6&ndash;WP5 및 WP5&ndash;WP4 구간에 한정</b>(합 9.44 NM). 단 홀딩픽스는 <b>WP6에서 남쪽으로 2.00 NM 이상</b> 떨어져야 한다(패턴이 상류로 LEG+R만큼 뻗어 회랑 북단을 벗어나므로) &rarr; <b>실질 홀딩 가능 길이 7.44 NM</b>.<br><br>
@@ -998,23 +905,18 @@ h2{scroll-margin-top:60px}
           REV 20의 수직위계는 L4(ATC) &rarr; L2(PSU) &rarr; L1(기장)까지였고, <b>그 전부가 실패했을 때의 층이 없었다</b>. 항공 안전의 대원칙상 <b>TCAS RA는 관제사 지시와 충돌해도 RA를 따른다</b> — 협상 대상이 아닌 절대 규칙이다.<br><br>
           <code>L&minus;1  TCAS RA / DAA &mdash; 어떤 지시보다 우선, 즉시 반응</code>
         </div>
-        <div class="calc">
-TCAS를 UAM에 연결할 때의 쟁점 3가지
-
-<span class="c">1) ConOps 1.5는 ADS-B <b>OUT</b>만 요구한다</span> <span class="dim">(4-5-3, 표 4)</span>
-   OUT은 <b>송신 전용</b> — 상대를 보지 못한다. TCAS는 트랜스폰더 질문/응답이 필요하므로
-   UAM 기체에 <b>ADS-B IN 또는 TCAS II</b>가 없으면 RA를 받을 수 없다.
-   &rArr; <b>ConOps 최소요건만 갖추면 TCAS 협조가 원천 불가능</b>
-
-2) 상용기 TCAS가 UAM을 어떻게 볼 것인가
-   TCAS II는 상승/강하로 회피하는데 <b>eVTOL의 상승률&middot;강하율은 제트와 전혀 다르다</b>.
-   RA 협조(coordination)가 성립하려면 UAM도 TCAS II 호환 로직이 필요하고,
-   없으면 상용기는 UAM을 <b>비협조 침입기</b>로 처리한다.
-
-3) 홀딩 중 RA가 뜨면
-   홀딩은 저속 선회 중이라 <b>수직 회피 여유가 가장 적은 상태</b>다.
-   위에서 정한 홀딩 금지구역이 곧 <b>&ldquo;RA 발생 시 가장 위험한 곳&rdquo;</b>과 겹친다.
-        </div>
+        <div class="cx">
+<div class="cx-title">TCAS를 UAM에 연결할 때의 쟁점 3가지</div>
+<div class="cx-cap"><span class="c">1) ConOps 1.5는 ADS-B <b>OUT</b>만 요구한다</span> <span class="dim">(4-5-3, 표 4)</span></div>
+<div class="cx-p">OUT은 <b>송신 전용</b> — 상대를 보지 못한다. TCAS는 트랜스폰더 질문/응답이 필요하므로 UAM 기체에 <b>ADS-B IN 또는 TCAS II</b>가 없으면 RA를 받을 수 없다.</div>
+<div class="cx-concl">&rArr; <b>ConOps 최소요건만 갖추면 TCAS 협조가 원천 불가능</b></div>
+<div class="cx-cap">2) 상용기 TCAS가 UAM을 어떻게 볼 것인가</div>
+<div class="cx-p">TCAS II는 상승/강하로 회피하는데 <b>eVTOL의 상승률&middot;강하율은 제트와 전혀 다르다</b>.</div>
+<div class="cx-p">RA 협조(coordination)가 성립하려면 UAM도 TCAS II 호환 로직이 필요하고, 없으면 상용기는 UAM을 <b>비협조 침입기</b>로 처리한다.</div>
+<div class="cx-cap">3) 홀딩 중 RA가 뜨면</div>
+<div class="cx-p">홀딩은 저속 선회 중이라 <b>수직 회피 여유가 가장 적은 상태</b>다.</div>
+<div class="cx-p">위에서 정한 홀딩 금지구역이 곧 <b>&ldquo;RA 발생 시 가장 위험한 곳&rdquo;</b>과 겹친다.</div>
+</div>
         <div class="was"><b>ConOps를 초과하는 요구를 스스로 부과한다:</b> 우리는 <b>ADS-B IN을 필수</b>로 놓는다. ConOps 1.5가 요구하는 최소요건(OUT)을 넘어서는 사양이며, 운용고도처럼 &ldquo;각주가 허용한 협의 변경&rdquo;이 아니라 <b>우리가 안전을 위해 상향한 것</b>이다. 성격이 다르므로 발표에서 구분해 말할 것.</div>
         <div class="ev" style="margin-top:10px">
           <span class="lbl">Tideway 반영사항</span>
@@ -1032,31 +934,22 @@ TCAS를 UAM에 연결할 때의 쟁점 3가지
         <summary><span class="rvt">K-UAM ConOps 1.5를 1차 근거로 채택 &mdash; 우리 설계는 &ldquo;독자 개념&rdquo;이 아니라 &ldquo;ConOps 구체화&rdquo;다</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>지금까지 각 수치를 자체 계산과 실측으로만 정당화해 왔다. <b>「한국형 도심항공교통(K-UAM) 운용개념서 1.5」</b>(UAM Team Korea 발간, 국토교통부 도심항공교통정책과 기획, <b>2025년 8월</b>) 원문을 대조해, 조항별로 우리 값이 어디에 걸리는지 전수 확인했다. ConOps 1.0(&rsquo;21.9)의 개정판이며, 2.0이 아닌 1.5인 이유는 &ldquo;초기 시장 개방에 초점, 성장&middot;성숙기는 방향성만 제시&rdquo;이기 때문이다.</p>
-        <div class="calc">
-조항별 대조 <span class="dim">(절 번호는 ConOps 1.5 기준)</span>
-
-<span class="c">4-3-2-1</span>  회랑 순항구간 <b>지상고도 450 &plusmn;150 m</b> = 984 &ndash; 1,969 ft
-      우리 SB 2,150 ft (655 m) &rarr; 상한 <span class="c">+181 ft</span> 초과
-      우리 NB 2,450 ft (747 m) &rarr; 상한 <span class="c">+481 ft</span> 초과
-
-<span class="g">4-3-4</span>    기존 헬기 회랑과 고도분리 <b>&plusmn;150 m(492 ft) 기준 검토</b>
-      실측 헬기 상한 1,550 ft &rarr; SB와 <span class="g">600 ft</span> 확보 = 요구치의 <span class="g">1.22배</span>  충족
-
-<span class="g">4-3-4</span>    회랑 크기는 &ldquo;K-UAM 실증사업(GC) 결과 등을 고려해 설계&rdquo;
-      &rarr; ConOps는 <b>폭 수치를 정하지 않음</b>. 우리 반폭 1.248 NM 자체 산출이 정당
-
-<span class="g">4-3-3</span>    고밀도 교통량은 <b>고도분리 회랑 추가</b>&middot;수평분리 회랑 추가로 관리
-      &rarr; 우리 SB/NB 고도분리가 ConOps가 명시한 용량관리 수단 그 자체
-
-<span class="g">4-3-4-3</span>  회랑 이탈 모니터링은 <b>&ldquo;운항 성능 기준(예: RNP)을 검토하여 관리&rdquo;</b>
-      각주 30: &ldquo;기존 RNP 개념을 참고하되 VFR에서도 안정적으로 운용되도록 설정 가능,
-              EASA U-space RUNP도 필수 아니며 <b>운항환경에 맞게 조정 가능</b>&rdquo;
-      &rarr; 반폭에서 역산한 <b>RNP<sub>u</sub> &le; 0.624</b>가 이 문구에 정확히 부합
-
-<span class="g">6-2-2</span>    <b>운용모델 2 「준도심 공항 연계형」이 우리 모델</b>
-      공역 B&middot;C&middot;D&middot;E + 비관제 포함 / VFR(자동조종 보조) / 지정 경로 /
-      순항 SBAS &middot; 입출항 DGNSS(RTK) / ADS-B OUT 필수 / ATC 관제 또는 협력 운용
-        </div>
+        <div class="cx">
+<div class="cx-title">조항별 대조 <span class="dim">(절 번호는 ConOps 1.5 기준)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">4-3-2-1</span></td><td>회랑 순항구간 <b>지상고도 450 &plusmn;150 m</b> = 984 &ndash; 1,969 ft</td></tr></tbody></table></div>
+<div class="cx-p">우리 SB 2,150 ft (655 m) &rarr; 상한 <span class="c">+181 ft</span> 초과 우리 NB 2,450 ft (747 m) &rarr; 상한 <span class="c">+481 ft</span> 초과</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">4-3-4</span></td><td>기존 헬기 회랑과 고도분리 <b>&plusmn;150 m(492 ft) 기준 검토</b></td></tr><tr><td style="padding-left:2.7em">실측 헬기 상한 1,550 ft &rarr; SB와 <span class="g">600 ft</span> 확보 = 요구치의 <span class="g">1.22배</span></td><td>충족</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">4-3-4</span></td><td>회랑 크기는 &ldquo;K-UAM 실증사업(GC) 결과 등을 고려해 설계&rdquo;</td></tr></tbody></table></div>
+<div class="cx-p">&rarr; ConOps는 <b>폭 수치를 정하지 않음</b>. 우리 반폭 1.248 NM 자체 산출이 정당</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">4-3-3</span></td><td>고밀도 교통량은 <b>고도분리 회랑 추가</b>&middot;수평분리 회랑 추가로 관리</td></tr></tbody></table></div>
+<div class="cx-p">&rarr; 우리 SB/NB 고도분리가 ConOps가 명시한 용량관리 수단 그 자체</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">4-3-4-3</span></td><td>회랑 이탈 모니터링은 <b>&ldquo;운항 성능 기준(예: RNP)을 검토하여 관리&rdquo;</b></td></tr></tbody></table></div>
+<div class="cx-cap">각주 30: &ldquo;기존 RNP 개념을 참고하되 VFR에서도 안정적으로 운용되도록 설정 가능,</div>
+<div class="cx-p">EASA U-space RUNP도 필수 아니며 <b>운항환경에 맞게 조정 가능</b>&rdquo;</div>
+<div class="cx-p">&rarr; 반폭에서 역산한 <b>RNP<sub>u</sub> &le; 0.624</b>가 이 문구에 정확히 부합</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">6-2-2</span></td><td><b>운용모델 2 「준도심 공항 연계형」이 우리 모델</b></td></tr></tbody></table></div>
+<div class="cx-p">공역 B&middot;C&middot;D&middot;E + 비관제 포함 / VFR(자동조종 보조) / 지정 경로 / 순항 SBAS &middot; 입출항 DGNSS(RTK) / ADS-B OUT 필수 / ATC 관제 또는 협력 운용</div>
+</div>
         <div class="ev">
           <span class="lbl">★ 가장 중요한 발견 &mdash; 4-3-4-3이 우리 회랑을 특정한다</span>
           <q>&ldquo;<b>관제공역 내 회랑 등 공간적 범위가 엄격히 제한되는 회랑</b>의 경우 <b>교통당국의 역할이 보다 강화될 수 있다</b>&rdquo;</q><br><br>
@@ -1066,33 +959,24 @@ TCAS를 UAM에 연결할 때의 쟁점 3가지
         </div>
         <div class="was"><b>논리를 교체한다 &mdash; REV 13의 방어 논리:</b> 그동안 &ldquo;ConOps 밴드를 초과하지만 수치가 아니라 취지를 따랐다&rdquo;고 방어해 왔다. 이제 근거를 <b>ConOps 4-3-2-1 각주 29</b>로 옮긴다 &mdash; <q>UAM 운용 고도는 운용지역에 따라 항공교통 관제기관, 군 등 관계기관과 <b>사전 협의를 통해 변경될 수 있다</b></q>. 즉 <b>&ldquo;기준을 지켰다&rdquo;가 아니라 &ldquo;기준이 예정해둔 협의 변경 절차를 따랐고, 그 협의의 근거를 실측으로 갖췄다&rdquo;</b>가 우리 주장이다. 헬기 실측 상한 1,550 ft가 그 근거다.</div>
         <div class="was" style="margin-top:10px"><b>주의 &mdash; 기술로드맵을 단독 인용하지 말 것:</b> 「K-UAM 기술개발 로드맵」(&rsquo;21.3)은 &ldquo;도심지역에서 고도 1,500 ft 이상(최대 4,000 ft)&rdquo;이라 우리 고도가 범위 안이지만, <b>ConOps 1.5가 더 최신(2025.8)이면서 더 낮은 범위</b>를 제시한다. 로드맵만 인용하면 &ldquo;더 최신 문서가 있는데 왜&rdquo;로 반박당한다. 두 문서를 함께 제시하고 각주 29를 근거로 삼을 것.</div>
-        <div class="calc">
-회랑 관리 <span class="c">수직위계</span> &mdash; ConOps 그림 2(초기 K-UAM 교통체계의 구조) 준용
-
-  L4  <b>교통당국 / ATC</b> (인천접근관제소&middot;타워)
-        회랑 개폐 지시 &middot; 구역 이탈 관리 &middot; 비상시 직접 통제
-        <span class="c">4-3-4-3에 따라 우리 회랑은 이 층의 권한이 강화됨</span>
-        &updownarrow; 정보교환 프로토콜 (NOTAM&middot;지시/규제 &harr; UAM 교통상황&middot;비상상황)
-  L3  <b>도심항공교통정보시스템</b>
-        회랑&middot;버티포트 위치/형상 정보 관리 &middot; 운항안전정보 공유
-  L2  <b>PSU</b> (UAM 교통관리서비스 제공자)  <span class="c">&larr; Tideway 회랑관리자</span>
-        전략적 분리 : 비행계획 승인 (사전 충돌 방지)
-        전술적 분리 : 실시간 감시 &rarr; 속도&middot;고도&middot;방향 변경, 홀딩
-        회랑 이탈 모니터링 (RNP<sub>u</sub> 0.624 기준)
-  L1  <b>UAM 운항자 / 기장</b>
-        비행계획 수립&middot;제출 &middot; 항공기 상태 공유 &middot; 최종 안전 책임
-  L0  <b>기체</b>
-        ADS-B OUT (필수) &middot; V2V
-        </div>
-        <div class="calc">
-Tideway 기능 &rarr; ConOps 근거 매핑
-  ATC 요청 버튼 &rarr; 즉시 CLOSED      L4&rarr;L2   4-3-4-3 교통당국 역할 강화
-  레이더 2 NM 자동감지 &rarr; 자동 CLOSED  L2      4-2-4-1 전술적 분리 지원
-  선택적 홀딩(진행방향 차단 시만)         L2      4-3-4-2 전술적 분리
-  60초 간격분리                       L2      4-3-4-2
-  2 NM 이탈 시 자동 홀드 해제            L2      4-2-4-2 항로이탈 모니터링
-  3구간 독립 개폐                      L2      4-3-3 회랑 용량 관리
-        </div>
+        <div class="cx">
+<div class="cx-title">회랑 관리 <span class="c">수직위계</span> &mdash; ConOps 그림 2(초기 K-UAM 교통체계의 구조) 준용</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">L4</td><td><b>교통당국 / ATC</b> (인천접근관제소&middot;타워)</td></tr></tbody></table></div>
+<div class="cx-p">회랑 개폐 지시 &middot; 구역 이탈 관리 &middot; 비상시 직접 통제 <span class="c">4-3-4-3에 따라 우리 회랑은 이 층의 권한이 강화됨</span> &updownarrow; 정보교환 프로토콜 (NOTAM&middot;지시/규제 &harr; UAM 교통상황&middot;비상상황)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">L3</td><td><b>도심항공교통정보시스템</b></td></tr></tbody></table></div>
+<div class="cx-p">회랑&middot;버티포트 위치/형상 정보 관리 &middot; 운항안전정보 공유</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">L2</td><td><b>PSU</b> (UAM 교통관리서비스 제공자)</td><td><span class="c">&larr; Tideway 회랑관리자</span></td></tr></tbody></table></div>
+<div class="cx-p">전략적 분리 : 비행계획 승인 (사전 충돌 방지)</div>
+<div class="cx-p">전술적 분리 : 실시간 감시 &rarr; 속도&middot;고도&middot;방향 변경, 홀딩 회랑 이탈 모니터링 (RNP<sub>u</sub> 0.624 기준)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">L1</td><td><b>UAM 운항자 / 기장</b></td></tr></tbody></table></div>
+<div class="cx-p">비행계획 수립&middot;제출 &middot; 항공기 상태 공유 &middot; 최종 안전 책임</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">L0</td><td><b>기체</b></td></tr></tbody></table></div>
+<div class="cx-p">ADS-B OUT (필수) &middot; V2V</div>
+</div>
+        <div class="cx">
+<div class="cx-title">Tideway 기능 &rarr; ConOps 근거 매핑</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">ATC 요청 버튼 &rarr; 즉시 CLOSED</td><td>L4&rarr;L2</td><td>4-3-4-3 교통당국 역할 강화</td></tr><tr><td>레이더 2 NM 자동감지 &rarr; 자동 CLOSED</td><td>L2</td><td>4-2-4-1 전술적 분리 지원</td></tr><tr><td class="nw">선택적 홀딩(진행방향 차단 시만)</td><td>L2</td><td>4-3-4-2 전술적 분리</td></tr><tr><td class="nw">60초 간격분리</td><td>L2</td><td>4-3-4-2</td></tr><tr><td class="nw">2 NM 이탈 시 자동 홀드 해제</td><td>L2</td><td>4-2-4-2 항로이탈 모니터링</td></tr><tr><td class="nw">3구간 독립 개폐</td><td>L2</td><td>4-3-3 회랑 용량 관리</td></tr></tbody></table></div>
+</div>
         <div class="ev" style="margin-top:10px">
           <span class="lbl">발표에서 쓸 프레이밍</span>
           Tideway의 관제 기능은 <b>새로 만든 개념이 아니라 ConOps 그림 2의 정보흐름 프로토콜을 준용해 구현한 것</b>이다. &ldquo;전략적 분리&rdquo;&middot;&ldquo;전술적 분리&rdquo;라는 ConOps 용어를 그대로 쓰고, 각 기능에 절 번호를 붙여 제시한다.
@@ -1110,51 +994,25 @@ Tideway 기능 &rarr; ConOps 근거 매핑
         <summary><span class="rvt">북측 추가 직선화 &mdash; 침로차 0.7&deg;, 절차 관통 28 &rarr; 24개</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 17의 정북 재정렬에서 WP6&ndash;WP5&ndash;WP4가 아직 침로차 2.7&deg;/36.0&deg;로 꺾여 있었다. WP6를 서쪽으로, WP4를 남동쪽으로 옮겨 <b>세 점을 사실상 하나의 직선</b>으로 만들었다.</p>
-        <div class="calc">
-좌표 변경 <span class="dim">(WP5&middot;HDY&middot;WP3&middot;WP1&middot;SIHWA는 불변)</span>
-  WP6  37.63382,126.50688 &rarr; <span class="c">37.63490,126.49109</span>   0.75 NM 서진
-  WP4  37.48855,126.48802 &rarr; <span class="c">37.47786,126.50105</span>   0.89 NM 남동진
-
-기하 비교                        REV 17          REV 19
-  침로 WP6&rarr;WP5                184.9&deg;          <span class="c">177.4&deg;</span>
-  침로 WP5&rarr;WP4                187.6&deg;          <span class="c">176.7&deg;</span>
-  침로 WP4&rarr;HDY                151.6&deg;          <span class="c">173.2&deg;</span>
-  <span class="c">북측 3구간 침로차            2.7&deg;/36.0&deg;     0.7&deg;/3.5&deg;</span>
-  최대 선회각                 36.0&deg;(WP4)     <span class="c">33.0&deg;(HDY)</span>
-  최대 코너컷 외측편차          0.025 NM        0.021 NM
-  총 연장                    34.20 km        33.94 km
-        </div>
-        <div class="calc">
-공시 절차 관통 수 <span class="dim">(중심선 &le; 반폭 1.248 NM)</span>
-                      REV 17      REV 19
-  RKSI (92개 중)         15          <span class="c">13</span>
-  RKSS (52개 중)         13          <span class="c">11</span>
-  합계                   28          <span class="c">24</span>
-        </div>
-        <div class="calc">
-트래픽 재스캔 <span class="dim">(ADS-B 638,543라인 &middot; span 47.37일 &middot; 실효 36.84일)</span>
-                          REV 17      REV 19
-  회랑 밴드 총샘플         13,151      <span class="c">8,409</span>   &minus;36%
-  SB 2,150 &plusmn;500 조우        32          27
-  NB 2,450 &plusmn;500 조우        55          53
-  <span class="c">NB 침범 빈도          1.58 회/일   1.44 회/일</span>
-  SB 침범 빈도           0.92 회/일   <span class="c">0.73 회/일</span>
-  <span class="c">회전익 침범               0건         0건</span>
-
-  침범 기종 구성 : 제트 47건 &middot; 경항공기 6건 &middot; 회전익 0건
-  그중 FC78&middot;FC79(계기점검) 26건 = <span class="c">49%</span> &rarr; 사전조율 가능
-  &rArr; 실질 잔여 27건 = <b>0.73 회/일</b> (1.4일에 1회)
-        </div>
-        <div class="calc">
-고도 구조 <span class="dim">(100 ft 히스토그램, o=회전익 #=고정익)</span>
-  1,000&ndash;1,300   693샘플   <span class="dim">헬기 213o + 480#</span>
-  1,300&ndash;1,500    20
-  1,500&ndash;1,700   303       <span class="dim">고정익 벽</span>
-  <span class="g">1,700&ndash;2,000     8       ←←← 사실상 공백</span>
-  <span class="g">2,000&ndash;2,500    55       ← SB 2,150 / NB 2,450 이 위치</span>
-  2,500&ndash;2,900   152
-  2,900&ndash;3,300   851       <span class="dim">상단 벽</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">좌표 변경 <span class="dim">(WP5&middot;HDY&middot;WP3&middot;WP1&middot;SIHWA는 불변)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">WP6</td><td>37.63382,126.50688 &rarr; <span class="c">37.63490,126.49109</span></td><td>0.75 NM 서진</td></tr><tr><td class="nw">WP4</td><td>37.48855,126.48802 &rarr; <span class="c">37.47786,126.50105</span></td><td>0.89 NM 남동진</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">기하 비교</td><td>REV 17</td><td>REV 19</td></tr><tr><td class="nw" style="padding-left:0.9em">침로 WP6&rarr;WP5</td><td>184.9&deg;</td><td><span class="c">177.4&deg;</span></td></tr><tr><td class="nw" style="padding-left:0.9em">침로 WP5&rarr;WP4</td><td>187.6&deg;</td><td><span class="c">176.7&deg;</span></td></tr><tr><td class="nw" style="padding-left:0.9em">침로 WP4&rarr;HDY</td><td>151.6&deg;</td><td><span class="c">173.2&deg;</span></td></tr><tr><td class="nw" style="padding-left:0.9em"><span class="c">북측 3구간 침로차</span></td><td><span class="c">2.7&deg;/36.0&deg;</span></td><td><span class="c">0.7&deg;/3.5&deg;</span></td></tr><tr><td class="nw" style="padding-left:0.9em">최대 선회각</td><td>36.0&deg;(WP4)</td><td><span class="c">33.0&deg;(HDY)</span></td></tr><tr><td class="nw" style="padding-left:0.9em">최대 코너컷 외측편차</td><td>0.025 NM</td><td>0.021 NM</td></tr><tr><td class="nw" style="padding-left:0.9em">총 연장</td><td>34.20 km</td><td>33.94 km</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">공시 절차 관통 수 <span class="dim">(중심선 &le; 반폭 1.248 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>REV 17</td><td>REV 19</td></tr><tr><td class="nw">RKSI (92개 중)</td><td>15</td><td><span class="c">13</span></td></tr><tr><td class="nw">RKSS (52개 중)</td><td>13</td><td><span class="c">11</span></td></tr><tr><td class="nw">합계</td><td>28</td><td><span class="c">24</span></td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">트래픽 재스캔 <span class="dim">(ADS-B 638,543라인 &middot; span 47.37일 &middot; 실효 36.84일)</span></div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>REV 17</td><td>REV 19</td><td></td></tr><tr><td class="nw">회랑 밴드 총샘플</td><td>13,151</td><td><span class="c">8,409</span></td><td>&minus;36%</td></tr><tr><td class="nw">SB 2,150 &plusmn;500 조우</td><td>32</td><td>27</td><td></td></tr><tr><td class="nw">NB 2,450 &plusmn;500 조우</td><td>55</td><td>53</td><td></td></tr><tr><td class="nw"><span class="c">NB 침범 빈도</span></td><td><span class="c">1.58 회/일</span></td><td><span class="c">1.44 회/일</span></td><td></td></tr><tr><td class="nw">SB 침범 빈도</td><td>0.92 회/일</td><td><span class="c">0.73 회/일</span></td><td></td></tr><tr><td class="nw"><span class="c">회전익 침범</span></td><td><span class="c">0건</span></td><td><span class="c">0건</span></td><td></td></tr></tbody></table></div>
+<div class="cx-p">침범 기종 구성 : 제트 47건 &middot; 경항공기 6건 &middot; 회전익 0건 그중 FC78&middot;FC79(계기점검) 26건 = <span class="c">49%</span> &rarr; 사전조율 가능</div>
+<div class="cx-concl">&rArr; 실질 잔여 27건 = <b>0.73 회/일</b> (1.4일에 1회)</div>
+</div>
+        <div class="cx">
+<div class="cx-title">고도 구조 <span class="dim">(100 ft 히스토그램, o=회전익 #=고정익)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1,000&ndash;1,300</td><td>693샘플</td><td><span class="dim">헬기 213o + 480#</span></td></tr><tr><td class="nw">1,300&ndash;1,500</td><td>20</td><td></td></tr><tr><td class="nw">1,500&ndash;1,700</td><td>303</td><td><span class="dim">고정익 벽</span></td></tr><tr><td class="nw"><span class="g">1,700&ndash;2,000</span></td><td><span class="g">8</span></td><td><span class="g">←←← 사실상 공백</span></td></tr><tr><td class="nw"><span class="g">2,000&ndash;2,500</span></td><td><span class="g">55</span></td><td><span class="g">← SB 2,150 / NB 2,450 이 위치</span></td></tr><tr><td class="nw">2,500&ndash;2,900</td><td>152</td><td></td></tr><tr><td class="nw">2,900&ndash;3,300</td><td>851</td><td><span class="dim">상단 벽</span></td></tr></tbody></table></div>
+</div>
         <div class="was"><b>지불한 대가 2가지:</b> ① <b>버티포트(HDY) 진입&middot;이탈 분리각이 168.5&deg; &rarr; 147.0&deg;</b>로 21.5&deg; 줄었다. FAA EB-105 / EASA PTS-VPT-DSN의 <b>135&deg; 기준은 충족</b>하나 이상치 180&deg;에서는 멀어졌다. WP4가 HDY 쪽으로 붙으면서 WP4&ndash;HDY 구간이 1.47 &rarr; <b>0.66 NM</b>(290 km/h로 약 4.5초)로 짧아진 결과다. ② P-518&middot;S1까지 회랑 가장자리 여유가 2.31 &rarr; <b>2.13 NM</b>으로 줄었다(여전히 충분).</div>
         <div class="ev">
           <span class="lbl">이 변경이 만든 것</span>
@@ -1173,63 +1031,42 @@ Tideway 기능 &rarr; ConOps 근거 매핑
         <div class="rvb">
         <p>REV 17은 김포를 <b>실교통(ADS-B)</b>으로만 검증했다. 공시 절차와의 기하 대조가 빠져 있었는데, 두 가지가 해결됐다 &mdash; AIP 차트 원문(AMDT 9/20&middot;12/20)을 확보했고, <b>v17에 이미 RKSS 절차 52개가 들어 있었다</b>.</p>
         <div class="was"><b>정정 &mdash; REV 17의 미결사항이 사실과 달랐다:</b> &ldquo;v17의 절차 데이터에는 RKSI 92개만 있고 RKSS 공시 SID/STAR/IAP가 없다&rdquo;고 적었으나 <b>틀렸다</b>. <code>D.routes</code>(RKSI 92개)만 확인하고 <code>GMP_ROUTES</code>(RKSS <b>52개</b> = SID 19 / STAR 14 / IAP 19, 파일 360행)를 놓쳤다. v17은 제목부터 &ldquo;RKSI &middot; RKSS 통합 항로도&rdquo;였다.</div>
-        <div class="calc">
-RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)</span>
-  <span class="c">회랑 관통 13개</span> / 반폭+1 NM 이내 16개
-
-  관통 leg와 그 고도제약
-    RKSS_SID_NOPIK2U      0.14 NM  WP3-WP1    UP060&rarr;UP059    @6 000
-    RKSS_STAR_GUKDO2U     0.36 NM  WP6-WP5    DU022&rarr;DU018    <span class="c">공시 없음</span>
-    RKSS_STAR_KARBU2U     0.36 NM  WP6-WP5    DU022&rarr;DU018    <span class="c">공시 없음</span>
-    RKSS_STAR_OLMEN2U     0.36 NM  WP6-WP5    DU022&rarr;DU018    <span class="c">공시 없음</span>
-    RKSS_STAR_REBIT2Z     0.36 NM  WP6-WP5    DU022&rarr;DU018    <span class="c">공시 없음</span>
-    RKSS_SID_NOPIK2T      0.68 NM  WP5-WP4    TP080&rarr;TP120    +12 000
-    RKSS_SID_NOPIK2Q      0.68 NM  WP5-WP4    QP080&rarr;QP079     -8 000
-    RKSS_SID_EGOBA2Q      0.83 NM  WP1-SIHWA  QD080&rarr;QK080     +6 000
-    RKSS_SID_BULTI2T      1.15 NM  WP3-WP1    TD050&rarr;TD100     -5 000
-    RKSS_SID_EGOBA2T      1.15 NM  WP3-WP1    TD050&rarr;TD100     -5 000
-    RKSS_SID_OSPOT2T      1.15 NM  WP3-WP1    TD050&rarr;TD100     -5 000
-    RKSS_STAR_LEGAK1U     1.18 NM  WP6-WP5    PU029&rarr;DOKDO    <span class="c">+4 000</span>
-    RKSS_STAR_GONAV_LEGAK1U 1.18 NM WP6-WP5   PU029&rarr;DOKDO    <span class="c">+4 000</span>
-
-  <span class="c">관통 leg 공시 최저고도 = 4,000 ft</span>
-     SB 2,150 대비 +1,850 ft &middot; NB 2,450 대비 <span class="c">+1,550 ft</span>
-        </div>
-        <div class="calc">
-홀딩패턴 실제 점유구역 <span class="dim">(200 kt &middot; 1분 leg &middot; 표준선회 R=1.06 NM)</span>
-  <span class="c">CHAMP</span> (RWY32 복행 대기, 300&deg; 아웃바운드)  회랑 중심선 <span class="c">0.03 NM</span> &mdash; 정중앙 관통
-      패턴 서쪽 끝 37.5617N 126.4996E = WP5 바로 위 &middot; 고도 <b>4,000&ndash;6,000 ft</b>
-  <span class="c">DOKDO</span> (RWY14 IAF 대기, 323&deg; 아웃바운드)  회랑 중심선 0.67 NM
-      고도 <b>4,000&ndash;5,000 ft</b>
-  &rArr; 평면상으론 회랑을 덮지만 <b>수직으로 1,550 ft 이상 분리</b>
-        </div>
-        <div class="calc">
-차트 원문 대조 <span class="dim">(제가 AIP PDF에서 직접 전사한 좌표 vs v17 기존 데이터)</span>
-  19개 대조 &rarr; <span class="c">16개 완전일치 (0.0&ndash;0.1 m)</span>
-  3개 차이: DU018 929 m &middot; DU022 1,542 m &middot; QP080 9,245 m
-  원인 &mdash; <b>개정판 차이</b>. v17=2U/2T/2Q(chart 2-19), PDF=1U/1T/1Q(chart 2-18, 2020년)
-        </div>
+        <div class="cx">
+<div class="cx-title">RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)</span></div>
+<div class="cx-p"><span class="c">회랑 관통 13개</span> / 반폭+1 NM 이내 16개</div>
+<div class="cx-cap">관통 leg와 그 고도제약</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">RKSS_SID_NOPIK2U</td><td>0.14 NM</td><td>WP3-WP1</td><td>UP060&rarr;UP059</td><td>@6 000</td></tr><tr><td class="nw">RKSS_STAR_GUKDO2U</td><td>0.36 NM</td><td>WP6-WP5</td><td>DU022&rarr;DU018</td><td><span class="c">공시 없음</span></td></tr><tr><td class="nw">RKSS_STAR_KARBU2U</td><td>0.36 NM</td><td>WP6-WP5</td><td>DU022&rarr;DU018</td><td><span class="c">공시 없음</span></td></tr><tr><td class="nw">RKSS_STAR_OLMEN2U</td><td>0.36 NM</td><td>WP6-WP5</td><td>DU022&rarr;DU018</td><td><span class="c">공시 없음</span></td></tr><tr><td class="nw">RKSS_STAR_REBIT2Z</td><td>0.36 NM</td><td>WP6-WP5</td><td>DU022&rarr;DU018</td><td><span class="c">공시 없음</span></td></tr><tr><td class="nw">RKSS_SID_NOPIK2T</td><td>0.68 NM</td><td>WP5-WP4</td><td>TP080&rarr;TP120</td><td>+12 000</td></tr><tr><td class="nw">RKSS_SID_NOPIK2Q</td><td>0.68 NM</td><td>WP5-WP4</td><td>QP080&rarr;QP079</td><td>-8 000</td></tr><tr><td class="nw">RKSS_SID_EGOBA2Q</td><td>0.83 NM</td><td>WP1-SIHWA</td><td>QD080&rarr;QK080</td><td>+6 000</td></tr><tr><td class="nw">RKSS_SID_BULTI2T</td><td>1.15 NM</td><td>WP3-WP1</td><td>TD050&rarr;TD100</td><td>-5 000</td></tr><tr><td class="nw">RKSS_SID_EGOBA2T</td><td>1.15 NM</td><td>WP3-WP1</td><td>TD050&rarr;TD100</td><td>-5 000</td></tr><tr><td class="nw">RKSS_SID_OSPOT2T</td><td>1.15 NM</td><td>WP3-WP1</td><td>TD050&rarr;TD100</td><td>-5 000</td></tr><tr><td class="nw">RKSS_STAR_LEGAK1U</td><td>1.18 NM</td><td>WP6-WP5</td><td>PU029&rarr;DOKDO</td><td><span class="c">+4 000</span></td></tr><tr><td>RKSS_STAR_GONAV_LEGAK1U 1.18 NM WP6-WP5</td><td>PU029&rarr;DOKDO</td><td><span class="c">+4 000</span></td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-cap"><span class="c">관통 leg 공시 최저고도 = 4,000 ft</span></div>
+<div class="cx-p">SB 2,150 대비 +1,850 ft &middot; NB 2,450 대비 <span class="c">+1,550 ft</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">홀딩패턴 실제 점유구역 <span class="dim">(200 kt &middot; 1분 leg &middot; 표준선회 R=1.06 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr><td><span class="c">CHAMP</span> (RWY32 복행 대기, 300&deg; 아웃바운드)</td><td>회랑 중심선 <span class="c">0.03 NM</span> &mdash; 정중앙 관통</td></tr></tbody></table></div>
+<div class="cx-p">패턴 서쪽 끝 37.5617N 126.4996E = WP5 바로 위 &middot; 고도 <b>4,000&ndash;6,000 ft</b></div>
+<div class="cx-tw"><table><tbody><tr><td><span class="c">DOKDO</span> (RWY14 IAF 대기, 323&deg; 아웃바운드)</td><td>회랑 중심선 0.67 NM</td></tr></tbody></table></div>
+<div class="cx-p">고도 <b>4,000&ndash;5,000 ft</b></div>
+<div class="cx-concl">&rArr; 평면상으론 회랑을 덮지만 <b>수직으로 1,550 ft 이상 분리</b></div>
+</div>
+        <div class="cx">
+<div class="cx-title">차트 원문 대조 <span class="dim">(제가 AIP PDF에서 직접 전사한 좌표 vs v17 기존 데이터)</span></div>
+<div class="cx-p">19개 대조 &rarr; <span class="c">16개 완전일치 (0.0&ndash;0.1 m)</span></div>
+<div class="cx-p">3개 차이: DU018 929 m &middot; DU022 1,542 m &middot; QP080 9,245 m 원인 &mdash; <b>개정판 차이</b>. v17=2U/2T/2Q(chart 2-19), PDF=1U/1T/1Q(chart 2-18, 2020년)</div>
+</div>
         <div class="was"><b>철회한 의심:</b> QP080이 QD080과 좌표가 같아 &ldquo;v17 중복 입력 오류&rdquo;로 의심했으나 <b>아니다</b>. 중복 검사 결과 <code>QD040=TD040 &middot; QD050=TD050 &middot; QP080=TP080 &middot; QP120=TP120</code>으로, Q계열과 T계열이 같은 물리적 지점을 공유하는 <b>정상적인 AIP 구조</b>였다. 명칭이 개정판 사이에 한 칸 밀렸을 뿐 좌표는 정확하다.</div>
-        <div class="calc">
-공시 고도가 없는 구간의 실측 <span class="dim">(DU022&rarr;DU018, 회랑에서 0.36 NM)</span>
-  DU025 <b>+7,000</b> &rarr; [공시 없음] &rarr; DOKDO <b>+4,000</b> 사이 강하구간 = 관제 재량
-
-  실제 통과고도 분포 <span class="dim">(38,425샘플)</span>
-    4,000&ndash;6,000 ft : <span class="c">74.9%</span>      6,000&ndash;12,000 ft : 21.1%
-    2,950&ndash;4,000 ft :   1.1%      NB 2,450 &plusmn;500 :  0.7%
-                                  SB 2,150 &plusmn;500 :  0.2%
-  &rArr; 관제 재량 구간이지만 <b>실제로는 4,000 ft 이상을 지킨다</b>
-        </div>
-        <div class="calc">
-★ 회랑 침범 <span class="c">빈도</span> &mdash; 샘플이 아니라 통과 이벤트로 <span class="dim">(실효 관측 34.9일)</span>
-  회랑 밴드 통과(고도 무관)   1,905건  &rarr; 54.6 회/일
-  SB 2,150 &plusmn;500              32건  &rarr;  0.92 회/일
-  <span class="c">NB 2,450 &plusmn;500              55건  &rarr;  1.58 회/일</span>  ← 실질 침범
-
-  기종 구분 &mdash; 제트 22대(51건) &middot; 고정익 2대(4건) &middot; <span class="c">회전익 0대(0건)</span>
-     헬기는 운용고도 상향(REV 13&middot;14)으로 <b>완전히 해소</b>됐다.
-     회랑 밴드 안 3,000 ft 미만은 전부 헬기(425&ndash;1,175 ft)로, 우리 층 아래를 지난다.
-        </div>
+        <div class="cx">
+<div class="cx-title">공시 고도가 없는 구간의 실측 <span class="dim">(DU022&rarr;DU018, 회랑에서 0.36 NM)</span></div>
+<div class="cx-p">DU025 <b>+7,000</b> &rarr; [공시 없음] &rarr; DOKDO <b>+4,000</b> 사이 강하구간 = 관제 재량</div>
+<div class="cx-cap">실제 통과고도 분포 <span class="dim">(38,425샘플)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">4,000&ndash;6,000 ft : <span class="c">74.9%</span></td><td>6,000&ndash;12,000 ft : 21.1%</td><td></td><td></td></tr><tr><td class="nw">2,950&ndash;4,000 ft :</td><td>1.1%</td><td>NB 2,450 &plusmn;500 :</td><td>0.7%</td></tr><tr class="hd"><td class="nw"></td><td>SB 2,150 &plusmn;500 :</td><td>0.2%</td><td></td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 관제 재량 구간이지만 <b>실제로는 4,000 ft 이상을 지킨다</b></div>
+</div>
+        <div class="cx">
+<div class="cx-title">★ 회랑 침범 <span class="c">빈도</span> &mdash; 샘플이 아니라 통과 이벤트로 <span class="dim">(실효 관측 34.9일)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">회랑 밴드 통과(고도 무관)</td><td>1,905건</td><td>&rarr; 54.6 회/일</td><td></td><td></td></tr><tr><td class="nw">SB 2,150 &plusmn;500</td><td>32건</td><td>&rarr;</td><td>0.92 회/일</td><td></td></tr><tr><td class="nw"><span class="c">NB 2,450 &plusmn;500</span></td><td><span class="c">55건</span></td><td><span class="c">&rarr;</span></td><td><span class="c">1.58 회/일</span></td><td>← 실질 침범</td></tr></tbody></table></div>
+<div class="cx-cap">기종 구분 &mdash; 제트 22대(51건) &middot; 고정익 2대(4건) &middot; <span class="c">회전익 0대(0건)</span></div>
+<div class="cx-p">헬기는 운용고도 상향(REV 13&middot;14)으로 <b>완전히 해소</b>됐다.</div>
+<div class="cx-p">회랑 밴드 안 3,000 ft 미만은 전부 헬기(425&ndash;1,175 ft)로, 우리 층 아래를 지난다.</div>
+</div>
         <div class="ev">
           <span class="lbl">FC78 &middot; FC79 정체 규명 &mdash; 계기점검(Flight Inspection) 항공기</span>
           침범 55건 중 <b>28건(51%)</b>이 이 두 대다. 계기점검기 판정 근거 4가지가 모두 성립:<br><br>
@@ -1262,56 +1099,33 @@ RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)
         <summary><span class="rvt">북측 정북 재정렬 &mdash; 김포 접근류를 비껴서 VFR 조우를 0으로</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 16에서 경항공기(VFR) 조우가 <b>북측 WP6&ndash;WP5 한 구간에 집중</b>된다는 것이 드러났다. 그 구간이 김포 접근류가 흐르는 동북동을 향하고 있었기 때문이다. 북측 3개 점을 옮겨 <b>거의 정북</b>으로 세웠다.</p>
-        <div class="calc">
-좌표 변경 <span class="dim">(WP4&middot;HDY&middot;WP1&middot;SIHWA는 불변)</span>
-  WP6  37.57793,126.60336 &rarr; <span class="c">37.63382,126.50688</span>   5.69 NM 이동 (방위 306&deg;)
-  WP5  37.51968,126.53966 &rarr; <span class="c">37.53942,126.49658</span>   2.37 NM 이동 (방위 300&deg;)
-  WP3  37.44391,126.53280 &rarr; <span class="c">37.45060,126.51993</span>   0.73 NM 이동 (방위 303&deg;)
-
-기하 <span class="dim">(신안)</span>
-  침로  WP6&rarr;WP5 184.9&deg; &middot; WP5&rarr;WP4 187.6&deg;   <span class="c">침로차 2.7&deg; &mdash; 사실상 직선</span>
-  최대 선회 36.0&deg;(WP4) &middot; 나머지 &le;23.2&deg;
-  코너컷 외측편차 &le;0.025 NM <span class="dim">(91 kt 표준선회 R=0.483 NM)</span>
-  총 연장 18.47 NM = 34.20 km   <span class="dim">특별법 상한 50 km의 68%</span>
-        </div>
-        <div class="calc">
-실측 효과 <span class="dim">(주간 ADS-B 597,978라인 전수 &middot; 회랑 반폭 1.248 NM)</span>
-                          구안        신안
-  회랑 밴드 총샘플       42,391  &rarr;  <span class="c">13,151</span>   &minus;69%
-  WP6&ndash;WP5 샘플           38,640  &rarr;  <span class="c"> 9,424</span>   &minus;76%
-  SB 2,150 조우             183  &rarr;     140
-  NB 2,450 조우             492  &rarr;     309
-  <span class="c">경항공기(VFR) 조우    SB 78 / NB 184  &rarr;  0 / 0</span>
-  김포 ARP 이격(WP6)      8.99 &rarr;  <span class="c">14.24 NM</span>
-  SID EGOBA/OSPOT 2E     0.564 &rarr;   1.082 NM
-  STAR OLMEN 2C          0.197 &rarr;   0.379 NM
-  RKSI 절차 관통          15개  &rarr;    15개  <span class="dim">(공항 인접부는 불가피)</span>
-        </div>
-        <div class="calc">
-김포(RKSS) 재검증 &mdash; <span class="dim">차트 대신 실교통으로. 김포에 실제 이착륙한 기체 247대 추적</span>
-  회랑 밴드 진입 기체    189대 &rarr; <span class="c">127대</span>
-  밴드 진입 샘플       15,721 &rarr; <span class="c"> 3,498</span>   &minus;78%
-  최근접거리 중앙값      0.08 &rarr;   <span class="c">1.24 NM</span>
-
-  밴드 내 고도 분포 <span class="dim">(고도 무제한, 14,536샘플)</span>
-    4,000 ft 이상   14,372  <span class="c">98.87%</span>
-    2,950&ndash;4,000         87   0.60%
-    NB 2,450 &plusmn;500       31   0.21%
-    SB 2,150 &plusmn;500       14   0.10%
-    1,000 ft 미만       37   0.25%
-  3,000 ft 미만 진입 기체는 <b>6대뿐</b> &middot; 최저 525 ft(WP6&ndash;WP5, 헬기 추정)
-        </div>
+        <div class="cx">
+<div class="cx-title">좌표 변경 <span class="dim">(WP4&middot;HDY&middot;WP1&middot;SIHWA는 불변)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">WP6</td><td>37.57793,126.60336 &rarr; <span class="c">37.63382,126.50688</span></td><td>5.69 NM 이동 (방위 306&deg;)</td></tr><tr><td class="nw">WP5</td><td>37.51968,126.53966 &rarr; <span class="c">37.53942,126.49658</span></td><td>2.37 NM 이동 (방위 300&deg;)</td></tr><tr><td class="nw">WP3</td><td>37.44391,126.53280 &rarr; <span class="c">37.45060,126.51993</span></td><td>0.73 NM 이동 (방위 303&deg;)</td></tr></tbody></table></div>
+<div class="cx-cap">기하 <span class="dim">(신안)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">침로</td><td>WP6&rarr;WP5 184.9&deg; &middot; WP5&rarr;WP4 187.6&deg;</td><td><span class="c">침로차 2.7&deg; &mdash; 사실상 직선</span></td></tr></tbody></table></div>
+<div class="cx-p">최대 선회 36.0&deg;(WP4) &middot; 나머지 &le;23.2&deg; 코너컷 외측편차 &le;0.025 NM <span class="dim">(91 kt 표준선회 R=0.483 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr><td>총 연장 18.47 NM = 34.20 km</td><td><span class="dim">특별법 상한 50 km의 68%</span></td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">실측 효과 <span class="dim">(주간 ADS-B 597,978라인 전수 &middot; 회랑 반폭 1.248 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>구안</td><td>신안</td><td></td><td></td></tr><tr><td class="nw">회랑 밴드 총샘플</td><td>42,391</td><td>&rarr;</td><td><span class="c">13,151</span></td><td>&minus;69%</td></tr><tr><td class="nw">WP6&ndash;WP5 샘플</td><td>38,640</td><td>&rarr;</td><td><span class="c"> 9,424</span></td><td>&minus;76%</td></tr><tr><td class="nw">SB 2,150 조우</td><td>183</td><td>&rarr;</td><td>140</td><td></td></tr><tr><td class="nw">NB 2,450 조우</td><td>492</td><td>&rarr;</td><td>309</td><td></td></tr><tr><td class="nw"><span class="c">경항공기(VFR) 조우</span></td><td><span class="c">SB 78 / NB 184</span></td><td><span class="c">&rarr;</span></td><td><span class="c">0 / 0</span></td><td></td></tr><tr><td class="nw">김포 ARP 이격(WP6)</td><td>8.99 &rarr;</td><td><span class="c">14.24 NM</span></td><td></td><td></td></tr><tr><td class="nw">SID EGOBA/OSPOT 2E</td><td>0.564 &rarr;</td><td>1.082 NM</td><td></td><td></td></tr><tr><td class="nw">STAR OLMEN 2C</td><td>0.197 &rarr;</td><td>0.379 NM</td><td></td><td></td></tr><tr><td class="nw">RKSI 절차 관통</td><td>15개</td><td>&rarr;</td><td>15개</td><td><span class="dim">(공항 인접부는 불가피)</span></td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">김포(RKSS) 재검증 &mdash; <span class="dim">차트 대신 실교통으로. 김포에 실제 이착륙한 기체 247대 추적</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">회랑 밴드 진입 기체</td><td>189대 &rarr; <span class="c">127대</span></td><td></td></tr><tr><td class="nw">밴드 진입 샘플</td><td>15,721 &rarr; <span class="c"> 3,498</span></td><td>&minus;78%</td></tr><tr><td class="nw">최근접거리 중앙값</td><td>0.08 &rarr;</td><td><span class="c">1.24 NM</span></td></tr></tbody></table></div>
+<div class="cx-cap">밴드 내 고도 분포 <span class="dim">(고도 무제한, 14,536샘플)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">4,000 ft 이상</td><td>14,372</td><td><span class="c">98.87%</span></td></tr><tr><td class="nw">2,950&ndash;4,000</td><td>87</td><td>0.60%</td></tr><tr><td class="nw">NB 2,450 &plusmn;500</td><td>31</td><td>0.21%</td></tr><tr><td class="nw">SB 2,150 &plusmn;500</td><td>14</td><td>0.10%</td></tr><tr><td class="nw">1,000 ft 미만</td><td>37</td><td>0.25%</td></tr></tbody></table></div>
+<div class="cx-p">3,000 ft 미만 진입 기체는 <b>6대뿐</b> &middot; 최저 525 ft(WP6&ndash;WP5, 헬기 추정)</div>
+</div>
         <div class="was"><b>정정된 것:</b> 중간 보고에서 &ldquo;김포 기체는 회랑을 최저 3,175 ft로 넘어간다&rdquo;고 했으나 이는 <b>근접 상위 20대만 본 오류</b>였다. 전수로는 최저 525 ft이며, 우리 운용고도 &plusmn;500 ft 안에 <b>45샘플</b>이 들어온다. 98.87%는 고도로 갈라지지만 나머지 0.3%는 갈라지지 않는다.</div>
         <p style="margin-top:12px"><b>운용고도는 유지한다.</b> 신안 기준으로 재최적화해도 SB 2 150 / NB 2 450이 최적(조우 319)이며, 후보 1 700/2 000(425)&middot;1 750/2 050(420)보다 낫다. 1 500&ndash;1 700 ft에 고정익 288샘플의 벽이 있어 저층으로 내려갈 수 없다. 다만 <b>구간별로는 갈린다</b> &mdash; WP6&ndash;WP5만 SB 1 700/NB 2 000이 최적(조우 32 vs 현행 138)이고, 공항 쪽 HDY&ndash;WP3&middot;WP3&ndash;WP1은 현행안이 최적이다. 전 구간 단일고도를 쓰는 한 현행안이 맞으며, <b>구간별 고도 차등은 향후 검토 여지</b>로 남긴다.</p>
-        <div class="calc">
-샘플링 공백 재검증 <span class="dim">(신안 좌표, 샘플쌍 1,184,374)</span>
-  간격 중앙 5초 &middot; 90%tile 10초 &middot; 99%tile 17초 &middot; 최대 300초
-  놓친 통과 <span class="c">37건</span> <span class="dim">(구안 19건 &mdash; 회랑이 길어져 통과 이벤트가 237&rarr;1,876건으로 증가)</span>
-    SB 2,150 &plusmn;500 : 5건 &rarr; 1775 &middot; 1838 &middot; 1888 &middot; 1945 &middot; 2598 ft
-    NB 2,450 &plusmn;500 : 1건 &rarr; 2598 ft
-    전부 139&ndash;327 kt 고정익 &middot; 최근접 0.00&ndash;0.04 NM <span class="c">= 회랑 정중앙 관통</span>
-  샘플 1개짜리 통과 142건(7.6%) &mdash; 한 틱만 늦었어도 놓쳤을 케이스
-        </div>
+        <div class="cx">
+<div class="cx-title">샘플링 공백 재검증 <span class="dim">(신안 좌표, 샘플쌍 1,184,374)</span></div>
+<div class="cx-p">간격 중앙 5초 &middot; 90%tile 10초 &middot; 99%tile 17초 &middot; 최대 300초 놓친 통과 <span class="c">37건</span> <span class="dim">(구안 19건 &mdash; 회랑이 길어져 통과 이벤트가 237&rarr;1,876건으로 증가)</span></div>
+<div class="cx-p">SB 2,150 &plusmn;500 : 5건 &rarr; 1775 &middot; 1838 &middot; 1888 &middot; 1945 &middot; 2598 ft NB 2,450 &plusmn;500 : 1건 &rarr; 2598 ft 전부 139&ndash;327 kt 고정익 &middot; 최근접 0.00&ndash;0.04 NM <span class="c">= 회랑 정중앙 관통</span></div>
+<div class="cx-p">샘플 1개짜리 통과 142건(7.6%) &mdash; 한 틱만 늦었어도 놓쳤을 케이스</div>
+</div>
         <div class="ev">
           <span class="lbl">이 REV가 만든 발표 논리 &mdash; 3중 방어선</span>
           <q>고도분리가 김포 트래픽의 <b>98.87%</b>를 갈라놓고, Class B 편입이 <b>관제 분리</b>를 보장하며, 실시간 감시가 <b>나머지 0.3%와 5초 폴링이 놓치는 통과</b>를 담당한다. 어느 하나도 단독으로는 충분하지 않다.</q><br><br>
@@ -1333,59 +1147,41 @@ RKSS 52개 절차 &rarr; 회랑 최소거리 <span class="dim">(반폭 1.248 NM)
         <summary><span class="rvt">공역 등급으로 근거를 세우다 &mdash; Class B 편입 &middot; P-518 &middot; S1 선례 &middot; VFR 전수조사</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>&ldquo;왜 이 회랑이 적절한가&rdquo;를 절차 이격거리만으로 설명하고 있었다. <b>공역 등급</b>이라는 상위 틀을 AIP 원문으로 확인해 근거를 다시 세웠다.</p>
-        <div class="calc">
-RKSI Class B 수직구조 <span class="dim">(AIP RKSI AD 2-73, AMDT 10/25 &middot; ARP 37&deg;27&prime;45&Prime;N 126&deg;26&prime;21&Prime;E)</span>
-   0&ndash; 5 NM : SFC          ~ 10,000 ft AMSL
-   5&ndash;10 NM : 1,000 ft AGL ~ 10,000 ft AMSL
-  10&ndash;20 NM : <span class="c">5,000 ft AGL</span> ~ 10,000 ft AMSL   &larr; 바닥이 5,000 ft
-
-회랑 각 점 판정 <span class="dim">(운용고도 2,150/2,450 ft &middot; 반폭 1.248 NM 가장자리 포함)</span>
-  WP5    5.37 NM  가장자리  6.62   전폭 수용
-  WP4    2.80 NM  가장자리  4.05   전폭 수용
-  HDY    3.04 NM  가장자리  4.29   전폭 수용
-  WP3    3.92 NM  가장자리  5.16   전폭 수용 <span class="dim">(남측 5NM 연장구역 내부 &rarr; 바닥 SFC)</span>
-  WP1    9.10 NM  가장자리 10.35   중심선만 내부
-  <span class="c">WP6   10.78 NM  가장자리 12.03   Class B 하부(Class E)</span>
-  <span class="c">SIHWA 10.69 NM  가장자리 11.94   Class B 하부(Class E)</span>
-  &rArr; 회랑 중심선이 <b>ARP 8.752 NM 이내</b>여야 전폭이 Class B에 들어간다
-        </div>
+        <div class="cx">
+<div class="cx-title">RKSI Class B 수직구조 <span class="dim">(AIP RKSI AD 2-73, AMDT 10/25 &middot; ARP 37&deg;27&prime;45&Prime;N 126&deg;26&prime;21&Prime;E)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">0&ndash; 5 NM : SFC</td><td>~ 10,000 ft AMSL</td></tr></tbody></table></div>
+<div class="cx-p">5&ndash;10 NM : 1,000 ft AGL ~ 10,000 ft AMSL</div>
+<div class="cx-tw"><table><tbody><tr><td>10&ndash;20 NM : <span class="c">5,000 ft AGL</span> ~ 10,000 ft AMSL</td><td>&larr; 바닥이 5,000 ft</td></tr></tbody></table></div>
+<div class="cx-cap">회랑 각 점 판정 <span class="dim">(운용고도 2,150/2,450 ft &middot; 반폭 1.248 NM 가장자리 포함)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">WP5</td><td>5.37 NM</td><td>가장자리</td><td>6.62</td><td>전폭 수용</td></tr><tr><td class="nw">WP4</td><td>2.80 NM</td><td>가장자리</td><td>4.05</td><td>전폭 수용</td></tr><tr><td class="nw">HDY</td><td>3.04 NM</td><td>가장자리</td><td>4.29</td><td>전폭 수용</td></tr><tr><td class="nw">WP3</td><td>3.92 NM</td><td>가장자리</td><td>5.16</td><td>전폭 수용 <span class="dim">(남측 5NM 연장구역 내부 &rarr; 바닥 SFC)</span></td></tr><tr><td class="nw">WP1</td><td>9.10 NM</td><td>가장자리 10.35</td><td>중심선만 내부</td><td></td></tr><tr><td class="nw"><span class="c">WP6</span></td><td><span class="c">10.78 NM</span></td><td><span class="c">가장자리 12.03</span></td><td><span class="c">Class B 하부(Class E)</span></td><td></td></tr><tr><td class="nw"><span class="c">SIHWA 10.69 NM</span></td><td><span class="c">가장자리 11.94</span></td><td><span class="c">Class B 하부(Class E)</span></td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 회랑 중심선이 <b>ARP 8.752 NM 이내</b>여야 전폭이 Class B에 들어간다</div>
+</div>
         <p><b>Class B 편입이 왜 근거가 되는가</b> &mdash; Class B에서는 IFR&middot;VFR을 가리지 않고 <b>전 항공기가 관제허가를 받고 ATC가 상호 분리를 제공</b>한다. UAM이 별도 공역에서 따로 노는 것이 아니라 <b>기존 항공기와 같은 관제 우산 아래</b> 들어간다는 뜻이며, 이것이 &ldquo;운항 조화&rdquo;의 제도적 실체다.</p>
         <div class="was"><b>과했던 표현:</b> &ldquo;Class B 안에 있으면 안전하다&rdquo;에 가깝게 말했으나 사실이 아니다. WP6&ndash;WP5의 조우 87건(SB)&middot;245건(NB)은 <b>Class B 안에서</b> 일어난다. <b>Class B는 관제 우산이지 트래픽 청정구역이 아니다.</b> 따라서 근거는 두 축으로 분리해야 한다 &mdash; <b>Class B 한정 = 제도적 조화</b>, <b>구간 선정 = 트래픽 실측</b>.</div>
-        <div class="calc">
-AIP ENR 5.1 대조 <span class="dim">(2025-09-18 패키지 원문)</span> &mdash; 신안 WP6 기준
-  P-518 KOREAN TACTICAL ZONE <span class="dim">(GND&ndash;UNL 비행금지)</span>
-    남측 경계 373900N 1261000E &ndash; 374300N 1264100E &ndash; 373800N 1265300E &hellip;
-    중심선 3.56 NM / <span class="c">회랑 가장자리 2.31 NM</span> &mdash; 침범 없음
-  R-75  13.90 NM &mdash; 무관
-
-  <span class="c">Incheon Airport IFP Protected Area (S1)</span>
-    374153N 1261628E &ndash; 374336N 1262933E &ndash; 374208N 1263410E &ndash;
-    373936N 1261436E &ndash; 374028N 1261446E
-    <b>ALT : 1 600 ft &ndash; 6 000 ft AMSL</b>
-    <b>&ldquo;Controlled IFR aircraft by Seoul Approach can only use this area.
-      VFR aircraft do not use this area.&rdquo;</b>
-    중심선 3.57 NM / 회랑 가장자리 2.33 NM &mdash; 침범 없음
-        </div>
+        <div class="cx">
+<div class="cx-title">AIP ENR 5.1 대조 <span class="dim">(2025-09-18 패키지 원문)</span> &mdash; 신안 WP6 기준</div>
+<div class="cx-cap">P-518 KOREAN TACTICAL ZONE <span class="dim">(GND&ndash;UNL 비행금지)</span></div>
+<div class="cx-p">남측 경계 373900N 1261000E &ndash; 374300N 1264100E &ndash; 373800N 1265300E &hellip; 중심선 3.56 NM / <span class="c">회랑 가장자리 2.31 NM</span> &mdash; 침범 없음</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">R-75</td><td>13.90 NM &mdash; 무관</td></tr></tbody></table></div>
+<div class="cx-cap"><span class="c">Incheon Airport IFP Protected Area (S1)</span></div>
+<div class="cx-p">374153N 1261628E &ndash; 374336N 1262933E &ndash; 374208N 1263410E &ndash; 373936N 1261436E &ndash; 374028N 1261446E <b>ALT : 1 600 ft &ndash; 6 000 ft AMSL</b> <b>&ldquo;Controlled IFR aircraft by Seoul Approach can only use this area.</div>
+<div class="cx-p">VFR aircraft do not use this area.&rdquo;</b></div>
+<div class="cx-p">중심선 3.57 NM / 회랑 가장자리 2.33 NM &mdash; 침범 없음</div>
+</div>
         <div class="ev">
           <span class="lbl">S1이 갖는 선례적 가치 &mdash; 발표에서 쓸 것</span>
           <q>한국 AIP에는 이미 <b>특정 고도대(1,600&ndash;6,000 ft)를 관제 IFR 전용으로 지정하고 VFR을 명시적으로 배제</b>하는 공역이 존재한다 &mdash; 인천공항 계기비행절차 보호구역(S1). UAM 회랑도 <b>새로운 법제를 만들 필요 없이 동일한 제도적 틀</b>로 설정할 수 있다.</q>
         </div>
-        <div class="calc">
-VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 최고고도&lt;12,000 ft, 최고속도&lt;220 kt, 최저속도&ge;40 kt, 30샘플 이상)</span>
-  경항공기 후보 315대 중 회랑 밴드 진입 기체 <span class="dim">(상위)</span>
-    KCGB521 해경     201샘플    450&ndash; 775 ft
-    HL5242           138샘플  1000&ndash;2950 ft
-    <span class="c">HL1297 세스나     42샘플  2525&ndash;2575 ft</span>  &larr; NB 2,450에서 75&ndash;125 ft
-    CARD67/16/10&middot;KEEP22 미군   675&ndash;1400 ft
-    <span class="c">HL1287 세스나     13샘플  2400&ndash;2675 ft</span>
-  조우  SB 2,150 &plusmn;500 : 78 / NB 2,450 &plusmn;500 : <span class="c">184</span>
-  전량이 <b>WP6&ndash;WP5</b>와 WP1&ndash;SIHWA에 집중 &middot; 공항 쪽 4개 구간은 <span class="c">조우 0건</span>
-
-인천 공시 VFR 리포팅 포인트 <span class="dim">(RKSI Visual Approach Chart AD 2-73)</span>
-  SEGBO &middot; IGPER &middot; NUTBO &middot; HANEE &middot; MUMUT &middot; PIKAR
-    &mdash; 전부 lon 126.30&ndash;126.42 (공항 서&middot;북서)
-  &rArr; 실측 경항공기(lon 126.51&ndash;126.67)는 <b>공시 VFR 절차가 아닌 별개 통행로</b>
-        </div>
+        <div class="cx">
+<div class="cx-title">VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 최고고도&lt;12,000 ft, 최고속도&lt;220 kt, 최저속도&ge;40 kt, 30샘플 이상)</span></div>
+<div class="cx-cap">경항공기 후보 315대 중 회랑 밴드 진입 기체 <span class="dim">(상위)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw" style="padding-left:0.9em">KCGB521 해경</td><td>201샘플</td><td>450&ndash; 775 ft</td><td></td></tr><tr><td class="nw" style="padding-left:0.9em">HL5242</td><td>138샘플</td><td>1000&ndash;2950 ft</td><td></td></tr><tr><td class="nw" style="padding-left:0.9em"><span class="c">HL1297 세스나</span></td><td><span class="c">42샘플</span></td><td><span class="c">2525&ndash;2575 ft</span></td><td>&larr; NB 2,450에서 75&ndash;125 ft</td></tr><tr><td class="nw" style="padding-left:0.9em">CARD67/16/10&middot;KEEP22 미군</td><td>675&ndash;1400 ft</td><td></td><td></td></tr><tr><td class="nw" style="padding-left:0.9em"><span class="c">HL1287 세스나</span></td><td><span class="c">13샘플</span></td><td><span class="c">2400&ndash;2675 ft</span></td><td></td></tr><tr><td class="nw">조우</td><td>SB 2,150 &plusmn;500 : 78 / NB 2,450 &plusmn;500 : <span class="c">184</span></td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-p">전량이 <b>WP6&ndash;WP5</b>와 WP1&ndash;SIHWA에 집중 &middot; 공항 쪽 4개 구간은 <span class="c">조우 0건</span></div>
+<div class="cx-cap">인천 공시 VFR 리포팅 포인트 <span class="dim">(RKSI Visual Approach Chart AD 2-73)</span></div>
+<div class="cx-cap">SEGBO &middot; IGPER &middot; NUTBO &middot; HANEE &middot; MUMUT &middot; PIKAR</div>
+<div class="cx-p">&mdash; 전부 lon 126.30&ndash;126.42 (공항 서&middot;북서)</div>
+<div class="cx-concl">&rArr; 실측 경항공기(lon 126.51&ndash;126.67)는 <b>공시 VFR 절차가 아닌 별개 통행로</b></div>
+</div>
         <div class="was"><b>정정된 것:</b> 회전익 판정을 <b>속도 기준(중앙속도 &lt; 130 kt)</b>으로 했는데 오분류가 있었다. <b>HL1287&middot;HL1297은 헬기가 아니라 세스나(고정익)</b>이며 HL9698이 헬기다. 저속 고정익과 헬기는 속도만으로 갈리지 않는다. OpenSky category 필드(index 17)는 이 데이터셋에서 대부분 비어 있어 쓸 수 없었다. 이 오분류 때문에 &ldquo;헬기와 600 ft 이격&rdquo;이라는 REV 14의 안심이 <b>실제로는 세스나와 75&ndash;125 ft</b>였다는 사실이 가려져 있었다 &mdash; VFR 조사를 촉발한 계기다.</div>
         <div class="ev" style="margin-top:10px">
           <span class="lbl">참조 지위 명확화 &mdash; FAA GENOT N JO 7110.801</span>
@@ -1403,35 +1199,28 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">샘플링 공백 검증 — &ldquo;빈 층&rdquo;이 아니라 &ldquo;빠르게 통과하는 층&rdquo;이었다</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 13·14의 고도 결정은 전부 5초 폴링 ADS-B 관측에 기댄 것이다. <b>회랑을 빠르게 가로지르는 항공기가 폴링 사이에 통째로 씹혀 관측에서 빠질 수 있다</b>는 점을 검증하지 않고 &ldquo;빈 층&rdquo;이라 결론냈다. 이를 직접 검출해 보정했다.</p>
-        <div class="calc">
-검출 방법 — 연속한 두 샘플이 회랑 <span class="dim">양쪽 바깥</span>에 있고 그 사이 선분이
-밴드를 가로지르면 = 안에서 못 잡은 통과. 보간으로 통과 시점 고도를 복원.
-
-실제 샘플 간격 분포 <span class="dim">(같은 기체 연속 샘플 1,242,946쌍)</span>
-   0– 5초  746,119 (60.0%)
-   6–10초  406,467 (32.7%)
-  11–20초   88,628 ( 7.1%)
-  21–30초    1,203 ( 0.1%)
-  31초 초과    529 ( 0.04%)  최대 300초   <span class="c">← 꼬리가 존재</span>
-  중앙 5초 · 90%tile 10초 · 99%tile 17초
-        </div>
-        <div class="calc">
-놓친 통과 <span class="c">19건</span> 검출 <span class="dim">(밴드 안에서 잡힌 샘플쌍 2,704건 대비)</span>
-  보간 고도  최저 1,191 / 중앙 2,560 / 최고 5,668 ft
-  <span class="c">그중 1,700–2,900 ft(우리가 "빈 층"이라 부른 구간)에 8건</span>
-     1,731 · 2,043 · 2,056 · 2,175 · 2,218 · 2,259 · 2,560 · 2,650 ft
-     → SB 2,150 ft 기준 ±500 ft 안에 5건, <span class="c">±100 ft 안에 2건</span>
-
-놓친 통과의 속도 : 159–339 kt — <span class="c">전부 고속 고정익, 헬기는 0건</span>
-  회랑 폭 2.496 NM 통과 소요시간
-    헬기 120 kt → 75초 (15샘플, 절대 안 씹힘)
-    여객기 250 kt → 36초 (7샘플)
-    고속 400 kt → 22초 (4샘플)
-  ⇒ <span class="c">헬기는 과대표집, 고속 고정익은 과소표집되는 구조적 편향</span>
-
-통과 이벤트 237건 · 이벤트당 샘플 중앙 9개
-  샘플 1개짜리 통과 13건(5.5%) — 조금만 늦었어도 놓쳤을 케이스
-        </div>
+        <div class="cx">
+<div class="cx-title">검출 방법 — 연속한 두 샘플이 회랑 <span class="dim">양쪽 바깥</span>에 있고 그 사이 선분이</div>
+<div class="cx-p">밴드를 가로지르면 = 안에서 못 잡은 통과. 보간으로 통과 시점 고도를 복원.</div>
+<div class="cx-cap">실제 샘플 간격 분포 <span class="dim">(같은 기체 연속 샘플 1,242,946쌍)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw" style="padding-left:0.5em">0– 5초</td><td>746,119 (60.0%)</td><td></td><td></td></tr><tr><td class="nw" style="padding-left:0.5em">6–10초</td><td>406,467 (32.7%)</td><td></td><td></td></tr><tr><td class="nw">11–20초</td><td>88,628 ( 7.1%)</td><td></td><td></td></tr><tr><td class="nw">21–30초</td><td>1,203 ( 0.1%)</td><td></td><td></td></tr><tr><td class="nw">31초 초과</td><td>529 ( 0.04%)</td><td>최대 300초</td><td><span class="c">← 꼬리가 존재</span></td></tr></tbody></table></div>
+<div class="cx-p">중앙 5초 · 90%tile 10초 · 99%tile 17초</div>
+</div>
+        <div class="cx">
+<div class="cx-title">놓친 통과 <span class="c">19건</span> 검출 <span class="dim">(밴드 안에서 잡힌 샘플쌍 2,704건 대비)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">보간 고도</td><td>최저 1,191 / 중앙 2,560 / 최고 5,668 ft</td></tr></tbody></table></div>
+<div class="cx-cap"><span class="c">그중 1,700–2,900 ft(우리가 "빈 층"이라 부른 구간)에 8건</span></div>
+<div class="cx-p">1,731 · 2,043 · 2,056 · 2,175 · 2,218 · 2,259 · 2,560 · 2,650 ft</div>
+<div class="cx-p">→ SB 2,150 ft 기준 ±500 ft 안에 5건, <span class="c">±100 ft 안에 2건</span></div>
+<div class="cx-cap">놓친 통과의 속도 : 159–339 kt — <span class="c">전부 고속 고정익, 헬기는 0건</span></div>
+<div class="cx-cap">회랑 폭 2.496 NM 통과 소요시간</div>
+<div class="cx-p">헬기 120 kt → 75초 (15샘플, 절대 안 씹힘)</div>
+<div class="cx-p">여객기 250 kt → 36초 (7샘플)</div>
+<div class="cx-p">고속 400 kt → 22초 (4샘플)</div>
+<div class="cx-concl">⇒ <span class="c">헬기는 과대표집, 고속 고정익은 과소표집되는 구조적 편향</span></div>
+<div class="cx-cap">통과 이벤트 237건 · 이벤트당 샘플 중앙 9개</div>
+<div class="cx-p">샘플 1개짜리 통과 13건(5.5%) — 조금만 늦었어도 놓쳤을 케이스</div>
+</div>
         <div class="was"><b>정정된 것:</b> &ldquo;1,700–2,900 ft는 비어 있다&rdquo;(REV 14) → <b>&ldquo;관측상 가장 조용하나, 고속 항공기가 빠르게 통과하는 층&rdquo;</b>. 1,500–1,700 ft(접근 최종단계, 감속)나 2,900–3,200 ft(수평 순항)와 달리 중간 고도는 강하·상승 중이라 체류 시간 자체가 짧다. 조우 빈도가 낮은 것이지 트래픽이 없는 것이 아니다.</div>
         <p style="margin-top:12px"><b>고도 결론은 유지한다.</b> 놓친 8건은 23일간 3일에 1건꼴(전체 통과의 3.4%)이고, 보간 고도가 1,191–5,668 ft 전 범위에 흩어져 있어 <b>어느 고도로 옮겨도 비슷하게 만난다</b> — 고도 변경으로 회피할 수 있는 성격이 아니다.</p>
         <div class="ev">
@@ -1451,54 +1240,40 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">100 ft 해상도 재분석 — SB 2 150 / NB 2 450 ft로 재조정</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 13의 고도는 <b>500 ft 단위 집계</b>로 판단한 값이었다. 100 ft 단위로 다시 뽑으니 그 집계가 실제 구조를 가리고 있었다.</p>
-        <div class="calc">
-500 ft 집계로 본 그림 <span class="dim">(REV 13 근거)</span>
-  1,500–2,000 ft   299샘플 (14.7%)  ← "혼잡" 으로 판단
-  2,000–2,500 ft    39샘플 ( 1.9%)  ← "여기가 유일한 빈 층"
-
-100 ft 로 다시 뽑은 실제 구조
-  1,500–1,600      148       ████████████████████
-  1,600–1,700      139       ███████████████████
-  1,700–1,800        2       <span class="g">← 사실상 공백 시작</span>
-  1,800–2,000       10
-  2,000–2,500       39
-  2,500–2,900       64
-  2,900–3,200      321       ████████████████████████████████████████
-  → 실제 빈 층은 500 ft 가 아니라 <span class="g">1,700–2,900 ft (1,200 ft 폭)</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">500 ft 집계로 본 그림 <span class="dim">(REV 13 근거)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1,500–2,000 ft</td><td>299샘플 (14.7%)</td><td>← "혼잡" 으로 판단</td></tr><tr><td class="nw">2,000–2,500 ft</td><td>39샘플 ( 1.9%)</td><td>← "여기가 유일한 빈 층"</td></tr></tbody></table></div>
+<div class="cx-cap">100 ft 로 다시 뽑은 실제 구조</div>
+<div class="cx-pre">1,500–1,600      148       ████████████████████
+1,600–1,700      139       ███████████████████</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1,700–1,800</td><td>2</td><td><span class="g">← 사실상 공백 시작</span></td></tr><tr><td class="nw">1,800–2,000</td><td>10</td><td></td></tr><tr><td class="nw">2,000–2,500</td><td>39</td><td></td></tr><tr><td class="nw">2,500–2,900</td><td>64</td><td></td></tr></tbody></table></div>
+<div class="cx-pre">2,900–3,200      321       ████████████████████████████████████████</div>
+<div class="cx-p">→ 실제 빈 층은 500 ft 가 아니라 <span class="g">1,700–2,900 ft (1,200 ft 폭)</span></div>
+</div>
         <p style="margin-top:12px">구간별로 쪼개면 더 뚜렷하다. 특히 <b>헬기가 가장 많은 WP1-SIHWA 구간이 오히려 가장 깨끗하다</b> — 헬기는 1,550 ft 아래, 고정익은 1,600 ft부터 시작해 그 사이 <b>1,700–2,600 ft가 900 ft 폭으로 완전 공백</b>이다.</p>
-        <div class="calc">
-구간별 100 ft 히스토그램 요약 <span class="dim">(o=회전익, #=고정익)</span>
-
-[WP1-SIHWA] 753샘플 · 헬기 675–1,550 / 고정익 1,600 ft부터
-  1000-1300   188o        oooooooooooooooooooooooo
-  1500-1600    16o        ooo          <span class="dim">← KNP973(경찰)</span>
-  1600-1700         5#    #
-  <span class="g">1700-2600     0o  0#      ←←← 900 ft 완전 공백</span>
-  2900-3200        44#    ██████
-
-[WP3-WP1] 1,123샘플 · 헬기 450–1,200
-  1500-1700       169#    ████████████████████
-  <span class="g">1700-2900        13#      ←←← 거의 비어 있음</span>
-  3000-3200        95#    ███████████
-
-[HDY-WP3] 527샘플 · 헬기 0
-  1500-1700        94#    ███████████
-  <span class="g">1700-2500        22#      ←←←</span>
-  3000-3200        93#    ███████████
-
-[WP4-HDY] 479샘플 <span class="dim">— 인천공항 인접, 전 고도 고르게 분포(예외 구간)</span>
-  2900-3300       119#    ██████████████
-        </div>
-        <div class="calc">
-2층 조합 비교 <span class="dim">(500 ft 이내 조우 샘플, 23일 전수)</span>
-  <span class="g">SB 2,150 / NB 2,450  (분리 300 ft)   조우 150   회전익 0   헬기간격 600 ft</span>  ← 채택
-  SB 2,200 / NB 2,500  (분리 300 ft)   조우 177   회전익 0   헬기간격 650 ft
-  SB 2,000 / NB 2,400  (분리 400 ft)   조우 303   회전익 11  헬기간격 500 ft   <span class="dim">← REV 13</span>
-
-단일층(시간분리) 최적은 2,150 ft(조우 77)이나, 2층(150)과 차이가 작아
-처리량을 절반으로 줄일 이유가 없다 → 2층 유지.
-        </div>
+        <div class="cx">
+<div class="cx-title">구간별 100 ft 히스토그램 요약 <span class="dim">(o=회전익, #=고정익)</span></div>
+<div class="cx-cap">[WP1-SIHWA] 753샘플 · 헬기 675–1,550 / 고정익 1,600 ft부터</div>
+<div class="cx-pre">1000-1300   188o        oooooooooooooooooooooooo
+1500-1600    16o        ooo          <span class="dim">← KNP973(경찰)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1600-1700</td><td>5#</td><td>#</td><td></td></tr><tr><td class="nw"><span class="g">1700-2600</span></td><td><span class="g">0o</span></td><td><span class="g">0#</span></td><td><span class="g">←←← 900 ft 완전 공백</span></td></tr></tbody></table></div>
+<div class="cx-pre">2900-3200        44#    ██████</div>
+<div class="cx-cap">[WP3-WP1] 1,123샘플 · 헬기 450–1,200</div>
+<div class="cx-pre">1500-1700       169#    ████████████████████</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">1700-2900</span></td><td><span class="g">13#</span></td><td><span class="g">←←← 거의 비어 있음</span></td></tr></tbody></table></div>
+<div class="cx-pre">3000-3200        95#    ███████████</div>
+<div class="cx-cap">[HDY-WP3] 527샘플 · 헬기 0</div>
+<div class="cx-pre">1500-1700        94#    ███████████</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">1700-2500</span></td><td><span class="g">22#</span></td><td><span class="g">←←←</span></td></tr></tbody></table></div>
+<div class="cx-pre">3000-3200        93#    ███████████</div>
+<div class="cx-cap">[WP4-HDY] 479샘플 <span class="dim">— 인천공항 인접, 전 고도 고르게 분포(예외 구간)</span></div>
+<div class="cx-pre">2900-3300       119#    ██████████████</div>
+</div>
+        <div class="cx">
+<div class="cx-title">2층 조합 비교 <span class="dim">(500 ft 이내 조우 샘플, 23일 전수)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="g">SB 2,150 / NB 2,450</span></td><td><span class="g">(분리 300 ft)</span></td><td><span class="g">조우 150</span></td><td><span class="g">회전익 0</span></td><td><span class="g">헬기간격 600 ft</span></td><td>← 채택</td></tr><tr><td class="nw">SB 2,200 / NB 2,500</td><td>(분리 300 ft)</td><td>조우 177</td><td>회전익 0</td><td>헬기간격 650 ft</td><td></td></tr><tr><td class="nw">SB 2,000 / NB 2,400</td><td>(분리 400 ft)</td><td>조우 303</td><td>회전익 11</td><td>헬기간격 500 ft</td><td><span class="dim">← REV 13</span></td></tr></tbody></table></div>
+<div class="cx-p">단일층(시간분리) 최적은 2,150 ft(조우 77)이나, 2층(150)과 차이가 작아 처리량을 절반으로 줄일 이유가 없다 → 2층 유지.</div>
+</div>
         <div class="was"><b>이전:</b> SB 2 000 / NB 2 400 ft (층분리 400 ft). 조우 303샘플, 그중 회전익 11샘플.</div>
         <p style="margin-top:12px"><b>층분리 400 → 300 ft 축소 검증</b>: σ<sub>z,rel</sub> ≈ 16 m 기준 <b>5.7σ</b>, 겹침확률 1.1e-08. 400 ft(7.6σ)보다 얇지만 여전히 충분하며, 이 축소 덕분에 두 층 모두 빈 층 안에 들어간다.</p>
         <div class="ev">
@@ -1517,33 +1292,20 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">헬기 실측을 근거로 운용고도 상향 — SB 2 000 / NB 2 400 ft</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 12에서 드러난 헬기 문제를 해결하기 위해 <b>VM 23일 연속녹화 전수 스캔</b>(543,703 라인)으로 표본을 넓혔다. 6일치 로컬 CSV로는 표본이 얇아, 관측된 1 500 ft가 실제 상한인지 표본 한계인지 판별할 수 없었기 때문이다.</p>
-        <div class="calc">
-회랑 밴드(1.248 NM) 내 헬기 실측 <span class="dim">— 23일 전수, 속도 119–126 kt로 일관된 기체만</span>
-  <span class="c">KNP973</span>  경찰       16샘플   1,500–1,550 ft   WP1-SIHWA
-  CARD67  미군       15샘플   1,075–1,200 ft   WP1-SIHWA
-  <span class="c">HL9628</span>  도서연결  358샘플     500–1,225 ft   WP1-SIHWA
-  IC003             108샘플     325–1,050 ft   WP3-WP1
-  CARD16  미군       16샘플     900–1,025 ft   WP1-SIHWA
-  KEEP22  미군       15샘플     900–  925 ft   WP1-SIHWA
-  CARD10  미군       17샘플     675–  800 ft   WP1-SIHWA
-  KCGB521 해경       21샘플          450 ft    WP3-WP1
-
-  → 23일 전수 상한 <span class="c">1,550 ft</span> <span class="dim">(6일치 1,500 ft와 거의 동일 — 표본 한계가 아니라 실제 수준)</span>
-  → 경찰(KNP973) 제외 시 상한 1,225 ft
-        </div>
+        <div class="cx">
+<div class="cx-title">회랑 밴드(1.248 NM) 내 헬기 실측 <span class="dim">— 23일 전수, 속도 119–126 kt로 일관된 기체만</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">KNP973</span></td><td>경찰</td><td>16샘플</td><td>1,500–1,550 ft</td><td>WP1-SIHWA</td><td></td></tr><tr><td class="nw">CARD67</td><td>미군</td><td>15샘플</td><td>1,075–1,200 ft</td><td>WP1-SIHWA</td><td></td></tr><tr><td class="nw"><span class="c">HL9628</span></td><td>도서연결</td><td>358샘플</td><td>500–1,225 ft</td><td>WP1-SIHWA</td><td></td></tr><tr><td class="nw">IC003</td><td>108샘플</td><td>325–1,050 ft</td><td>WP3-WP1</td><td></td><td></td></tr><tr><td class="nw">CARD16</td><td>미군</td><td>16샘플</td><td>900–1,025 ft</td><td>WP1-SIHWA</td><td></td></tr><tr><td class="nw">KEEP22</td><td>미군</td><td>15샘플</td><td>900–</td><td>925 ft</td><td>WP1-SIHWA</td></tr><tr><td class="nw">CARD10</td><td>미군</td><td>17샘플</td><td>675–</td><td>800 ft</td><td>WP1-SIHWA</td></tr><tr><td class="nw">KCGB521 해경</td><td>21샘플</td><td>450 ft</td><td>WP3-WP1</td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-p">→ 23일 전수 상한 <span class="c">1,550 ft</span> <span class="dim">(6일치 1,500 ft와 거의 동일 — 표본 한계가 아니라 실제 수준)</span></div>
+<div class="cx-p">→ 경찰(KNP973) 제외 시 상한 1,225 ft</div>
+</div>
         <div class="was"><b>이전:</b> SB 1 500 / NB 1 900 ft. SB가 헬기 운용고도와 정확히 겹쳐, 밴드 내 헬기 샘플의 <b>44.6%가 500 ft 이내</b>로 접근했다. 유지 불가.</div>
         <p style="margin-top:12px"><b>중간에 한 번 잘못 짚었다.</b> 이 헬기들이 다른 공역에서는 2 200–5 175 ft까지 올라가는 것을 보고 &ldquo;고도 상향으로는 헬기를 피할 수 없다&rdquo;고 판단했으나, 23일 전수로 확인하니 <b>회랑 통과 시점에는 23일 내내 1 550 ft 이하</b>였다. 회랑이 걸친 구간이 도서 연결 항로의 저고도 순항 구간이기 때문이다. 고도 상향은 유효한 해법이 맞다.</p>
-        <div class="calc">
-분리기준별 필요고도 <span class="dim">(층분리 400 ft 유지 시)</span>
-  우리 KPI 1,000 ft   → SB 2,550 / NB 2,950   ConOps +981 ft
-  <span class="g">덱 원안 ±150 m(492 ft) → SB 2,000 / NB 2,400   ConOps +431 ft</span>  ← 채택
-  현상 유지 1,500 ft  → SB 1,500 / NB 1,900   헬기와 간격 <span class="c">0 ft</span>
-
-채택안 SB 2,000 / NB 2,400 ft
-  헬기 상한(1,550) 대비        <span class="g">450 ft</span>
-  경찰 제외 상한(1,225) 대비    <span class="g">775 ft</span>
-  UAM 층분리 400 ft = 7.6σ     겹침확률 2.5e-14
-        </div>
+        <div class="cx">
+<div class="cx-title">분리기준별 필요고도 <span class="dim">(층분리 400 ft 유지 시)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">우리 KPI 1,000 ft</td><td>→ SB 2,550 / NB 2,950</td><td>ConOps +981 ft</td></tr><tr><td><span class="g">덱 원안 ±150 m(492 ft) → SB 2,000 / NB 2,400</span></td><td><span class="g">ConOps +431 ft</span></td><td>← 채택</td></tr><tr><td class="nw">현상 유지 1,500 ft</td><td>→ SB 1,500 / NB 1,900</td><td>헬기와 간격 <span class="c">0 ft</span></td></tr></tbody></table></div>
+<div class="cx-cap">채택안 SB 2,000 / NB 2,400 ft</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">헬기 상한(1,550) 대비</td><td><span class="g">450 ft</span></td></tr><tr><td class="nw">경찰 제외 상한(1,225) 대비</td><td><span class="g">775 ft</span></td></tr><tr><td class="nw">UAM 층분리 400 ft = 7.6σ</td><td>겹침확률 2.5e-14</td></tr></tbody></table></div>
+</div>
         <div class="ev">
           <span class="lbl">ConOps 초과에 대한 방어 논리</span>
           K-UAM ConOps는 <q>헬기는 300 m(984 ft) 이하</q>를 전제하고 회랑 밴드를 300–600 m로 설정했다. 그러나 본 구간 실측은 헬기가 최고 1 550 ft(472 m)까지 운용함을 보여준다 — <b>ConOps 밴드의 하단 절반이 이 구간에서는 실질적으로 사용 불가</b>하며, 밴드를 그대로 적용하면 오히려 ConOps가 의도한 &ldquo;헬기와의 수직분리&rdquo;라는 목적 자체가 달성되지 않는다. 본 설계는 ConOps의 <b>수치가 아니라 취지</b>를 따라 밴드를 상향했다. 규정을 무시한 것이 아니라, 규정의 전제를 실측으로 검증해 목적에 맞게 조정한 것이다.
@@ -1561,39 +1323,30 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">김포(RKSS) 절차 검증 — 수평은 겹치나 수직으로 분리, 진짜 위협은 헬기</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>김포 SID가 회랑 WP3–WP1 구간을 <b>거의 정확히 관통</b>한다(0.001 NM). 그런데 차트로는 판정이 불가능했다 — 교차점이 걸린 <code>TD050→TD100</code> 구간에 고도 제약이 아예 공표돼 있지 않고, 직전 TD050의 <code>-5 000</code>은 상한이라 하한을 보장하지 않는다. 그래서 VM 연속 녹화 ADS-B로 실측했다.</p>
-        <div class="calc">
-교차점 <span class="dim">(37.4256N 126.5753E, 김포 이륙 후 37.4 km)</span> 반경 2 km · 6일 · 793대 · 8,620샘플
-                        최저      5%tile      중앙값
-  상승중(김포 SID)     <span class="g">3,250 ft</span>    9,325 ft   11,300 ft
-  전체 항적              925 ft    9,125 ft   11,500 ft
-  → 김포 SID가 3,000 ft 아래로 내려온 사례 <span class="g">0.00%</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">교차점 <span class="dim">(37.4256N 126.5753E, 김포 이륙 후 37.4 km)</span> 반경 2 km · 6일 · 793대 · 8,620샘플</div>
+<div class="cx-tw"><table><tbody><tr class="hd"><td class="nw"></td><td>최저</td><td>5%tile</td><td>중앙값</td></tr><tr><td class="nw">상승중(김포 SID)</td><td><span class="g">3,250 ft</span></td><td>9,325 ft</td><td>11,300 ft</td></tr><tr><td class="nw">전체 항적</td><td>925 ft</td><td>9,125 ft</td><td>11,500 ft</td></tr></tbody></table></div>
+<div class="cx-p">→ 김포 SID가 3,000 ft 아래로 내려온 사례 <span class="g">0.00%</span></div>
+</div>
         <p style="margin-top:12px">공시 IAP도 최근접 4.39 NM(RWY 14L/R은 4.75 NM)로 여유가 있다. 다만 도착의 60–70%가 레이더 벡터링이라 공시 절차만으로는 부족해, <b>실제 김포 착륙 항적</b>을 따로 추출해 재검증했다.</p>
-        <div class="calc">
-김포 착륙 항공기 358대 중 회랑 5 NM 이내 진입 314대
-  회랑 밴드(1.248 NM) 안까지 들어온 도착기        <span class="c">77대</span>  ← 수평으로는 바로 머리 위(0.00 NM)
-  그 지점 통과 고도                         중앙값 <span class="g">10,625 ft</span>
-  3,000 ft 미만 0.5% · 2,000 ft 미만 0.1%
-  <span class="dim">(회랑 상공 통과 시점에 김포까지 아직 21–28 km 남아 강하 중)</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">김포 착륙 항공기 358대 중 회랑 5 NM 이내 진입 314대</div>
+<div class="cx-tw"><table><tbody><tr><td>회랑 밴드(1.248 NM) 안까지 들어온 도착기</td><td><span class="c">77대</span></td><td>← 수평으로는 바로 머리 위(0.00 NM)</td></tr><tr><td class="nw">그 지점 통과 고도</td><td>중앙값 <span class="g">10,625 ft</span></td><td></td></tr></tbody></table></div>
+<div class="cx-p">3,000 ft 미만 0.5% · 2,000 ft 미만 0.1%</div>
+<div class="cx-p"><span class="dim">(회랑 상공 통과 시점에 김포까지 아직 21–28 km 남아 강하 중)</span></div>
+</div>
         <div class="was"><b>확인된 직관:</b> &ldquo;RWY 14 접근이 회랑에 엄청 근접한다&rdquo;는 관측은 <b>수평으로는 정확</b>했다. 실제로 회랑 바로 위를 지난다. 다만 그 지점에서 1만 피트대에 있어 UAM 1 500/1 900 ft와는 수직으로 충분히 분리된다.</div>
         <div class="ev">
           <span class="lbl">결정적 발견</span>
           회랑 밴드 안 3,000 ft 이하 항적 <b>20대를 전수 조사한 결과 전부 인천(RKSI) 쪽</b>이었다(김포 19–29 km vs 인천 3–19 km). 김포 트래픽은 저고도로 회랑에 진입하지 않는다. <b>회랑의 저고도 위협은 김포가 아니라 ⑴ 인천 접근·출발기 ⑵ 헬기다.</b>
         </div>
         <p style="margin-top:12px">그 20대 중 <b>6대가 UAM 운용고도대(1 400–2 000 ft)에 실제로 있었다</b>. 특히 <b>KNP973</b>(경찰 헬기 추정)은 1 400–1 500 ft로 <b>SOUTHBOUND 고도와 정확히 일치</b>한다.</p>
-        <div class="calc">
-회랑 밴드 안 · UAM 고도대(1,400–2,000 ft) 실측 <span class="dim">(6일치)</span>
-  <span class="c">KNP973</span>   1,400–1,500 ft  122 kt   회랑중심 0.97 NM  ← SB 1,500 ft와 동일 고도
-  HL5240    1,850 ft        124 kt   회랑중심 0.58 NM
-  TWB288    1,900–1,925 ft  193 kt   회랑중심 1.11 NM
-  JNA234    1,975–2,000 ft  146 kt   회랑중심 1.09 NM
-
-회랑 중심선을 사실상 따라 나는 저고도 상시 트래픽
-  <span class="c">HL9628</span>   308샘플  625–1,325 ft  119 kt  최근접 <span class="c">0.0016 NM</span>
-  <span class="c">IC003</span>     94샘플  400–1,175 ft  126 kt  최근접 <span class="c">0.0011 NM</span>
-  CARD10/16/67 <span class="dim">(hex AE62xx = 미군)</span>  675–1,075 ft  ~120 kt
-        </div>
+        <div class="cx">
+<div class="cx-title">회랑 밴드 안 · UAM 고도대(1,400–2,000 ft) 실측 <span class="dim">(6일치)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">KNP973</span></td><td>1,400–1,500 ft</td><td>122 kt</td><td>회랑중심 0.97 NM</td><td>← SB 1,500 ft와 동일 고도</td></tr><tr><td class="nw">HL5240</td><td>1,850 ft</td><td>124 kt</td><td>회랑중심 0.58 NM</td><td></td></tr><tr><td class="nw">TWB288</td><td>1,900–1,925 ft</td><td>193 kt</td><td>회랑중심 1.11 NM</td><td></td></tr><tr><td class="nw">JNA234</td><td>1,975–2,000 ft</td><td>146 kt</td><td>회랑중심 1.09 NM</td><td></td></tr></tbody></table></div>
+<div class="cx-cap">회랑 중심선을 사실상 따라 나는 저고도 상시 트래픽</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">HL9628</span></td><td>308샘플</td><td>625–1,325 ft</td><td>119 kt</td><td>최근접 <span class="c">0.0016 NM</span></td></tr><tr><td class="nw"><span class="c">IC003</span></td><td>94샘플</td><td>400–1,175 ft</td><td>126 kt</td><td>최근접 <span class="c">0.0011 NM</span></td></tr><tr><td>CARD10/16/67 <span class="dim">(hex AE62xx = 미군)</span></td><td>675–1,075 ft</td><td>~120 kt</td><td></td><td></td></tr></tbody></table></div>
+</div>
         <p style="margin-top:12px">덱 13쪽의 <q>헬기회랑 수직분리 ±150 m</q> 항목이 막연한 우려가 아니라 <b>실측으로 확인된 실제 문제</b>였다. K-UAM ConOps는 헬기가 300 m(984 ft) 이하로 다닌다고 전제하지만, 실측 헬기들은 최고 1 700 ft(518 m)까지 올라와 <b>UAM 밴드 안으로 들어온다</b>. 별도 리스크 항목으로 다뤄야 한다.</p>
         </div>
         </details>
@@ -1607,22 +1360,17 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">WP2 제거로 직선화 · 회랑 반폭을 상시 절차 기준으로 재산출(1.248 NM)</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p><b>직선화 —</b> 290 km/h 순항에서 선회반경이 <code>R = V²/(g·tanθ)</code>로 속도 제곱에 비례해, 큰 꺾임각이 TSE 예산을 크게 잠식한다. 회랑의 유일한 큰 꺾임이던 <b>WP2(38.9°)를 제거</b>하고 WP3→WP1을 직결했다.</p>
-        <div class="calc">
-290 km/h · bank 25° · R = 1,419 m 기준 코너컷 이탈량
-  직선화 전  WP2 38.9° → <span class="c">81 m</span>   HDY 17.6° → 17 m
-  직선화 후  WP1 22.6° → <span class="g">27 m</span>   WP3 15.5° → 13 m · HDY 17.6° → 17 m
-  → 최대 이탈 <span class="g">81 m → 27 m (3배 개선)</span>, 복행경로 이격은 0.912 NM 그대로 유지
-        </div>
+        <div class="cx">
+<div class="cx-title">290 km/h · bank 25° · R = 1,419 m 기준 코너컷 이탈량</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">직선화 전</td><td>WP2 38.9° → <span class="c">81 m</span></td><td>HDY 17.6° → 17 m</td></tr><tr><td class="nw">직선화 후</td><td>WP1 22.6° → <span class="g">27 m</span></td><td>WP3 15.5° → 13 m · HDY 17.6° → 17 m</td></tr></tbody></table></div>
+<div class="cx-p">→ 최대 이탈 <span class="g">81 m → 27 m (3배 개선)</span>, 복행경로 이격은 0.912 NM 그대로 유지</div>
+</div>
         <p style="margin-top:12px"><b>반폭 재산출 —</b> REV 10에서 낸 0.312 NM은 <b>잘못된 기준에서 나온 값</b>이었다. 첫째, 당시 검사 범위가 HDY~WP1로 한정돼 <code>WP4–HDY(0.211 NM)</code>와 <code>WP1–SIHWA(교차)</code>를 빠뜨렸다. 둘째, 더 근본적으로 <b>복행경로는 상시 점유 공역이 아니다</b> — 복행 발생 시에만 쓰이고, 그때는 이미 회랑 CLOSED로 전환하기로 했다. 상시 미사용 경로를 기준으로 폭을 정하는 것 자체가 틀린 접근이었다.</p>
-        <div class="calc">
-기준 교체: 복행경로 → <span class="g">상시 사용되는 절차</span>
-  RWY15L 최종접근   3.288 NM
-  RWY33L 최종접근   2.072 NM
-  <span class="g">RWY33R 최종접근   1.848 NM</span>  ← 최협착 (회랑 WP4–HDY)
-
-  가용 반폭 = 1.848 − 0.6 = <span class="g">1.248 NM</span>  (총폭 4,624 m)
-  역산 RNP_u ≤ <span class="g">0.624</span>  <span class="dim">(상용기 RNP0.3보다도 느슨)</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">기준 교체: 복행경로 → <span class="g">상시 사용되는 절차</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">RWY15L 최종접근</td><td>3.288 NM</td><td></td></tr><tr><td class="nw">RWY33L 최종접근</td><td>2.072 NM</td><td></td></tr><tr><td class="nw"><span class="g">RWY33R 최종접근</span></td><td><span class="g">1.848 NM</span></td><td>← 최협착 (회랑 WP4–HDY)</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td>가용 반폭 = 1.848 − 0.6 = <span class="g">1.248 NM</span></td><td>(총폭 4,624 m)</td></tr><tr><td class="nw">역산 RNP_u ≤ <span class="g">0.624</span></td><td><span class="dim">(상용기 RNP0.3보다도 느슨)</span></td></tr></tbody></table></div>
+</div>
         <div class="was"><b>이전:</b> 반폭 0.312 NM · RNP<sub>u</sub> ≤ 0.156. 290 km/h에서 선회이탈이 예산의 28%를 먹어 달성 가능성이 의심스러웠다.</div>
         <p style="margin-top:12px">이 재산출로 <b>속도 문제가 함께 해소된다</b>. 290 km/h의 최대 선회이탈 27 m는 새 예산(1,156 m)의 <b>2.3%</b>에 불과해, 감속하거나 꺾임각을 더 펼 필요가 없다.</p>
         <div class="ev">
@@ -1643,31 +1391,23 @@ VFR 경항공기 전수조사 <span class="dim">(구안 기준 &middot; 필터: 
         <summary><span class="rvt">회랑 반폭 0.5 → 0.312 NM · UAM 항법성능 요구치 역산</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>근거 없이 박혀 있던 회랑 반폭을 기하학으로 역산해 교체했다. 전제는 하나 — <b>회랑 가장자리가 상용기 보호구역과 닿지 않아야 한다.</b> 상용기 보호반폭은 ICAO 표준 containment(2×RNP)로 <code>0.6 NM</code>이며, RNP 0.3은 RKSI 차트 원문에서 확인된 값이라 가정이 아니다.</p>
-        <div class="calc">
-가용 반폭 = 중심선 실측거리 − 상용기 보호반폭(0.6 NM)
-  WP3–WP2  0.912 − 0.6 = <span class="g">0.312 NM</span>  <span class="dim">(총폭 1 156 m)</span> ← 최협착
-  WP2–WP1  1.137 − 0.6 = 0.537 NM  <span class="dim">(총폭 1 989 m)</span>
-
-기존 설정 0.5 NM 대조
-  WP3–WP2 가용 0.312 vs 설정 0.500 → <span class="c">348 m 초과</span> — 보호구역 침범 중이었음
-  WP2–WP1 가용 0.537 vs 설정 0.500 → <span class="g">여유</span>
-
-법정 최소 대조 <span class="dim">(도심항공교통 특별법 회랑 최소폭 600 m)</span>
-  1 156 m / 600 m = <span class="g">1.93배 충족</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">가용 반폭 = 중심선 실측거리 − 상용기 보호반폭(0.6 NM)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">WP3–WP2</td><td>0.912 − 0.6 = <span class="g">0.312 NM</span></td><td><span class="dim">(총폭 1 156 m)</span> ← 최협착</td></tr><tr><td class="nw">WP2–WP1</td><td>1.137 − 0.6 = 0.537 NM</td><td><span class="dim">(총폭 1 989 m)</span></td></tr></tbody></table></div>
+<div class="cx-cap">기존 설정 0.5 NM 대조</div>
+<div class="cx-p">WP3–WP2 가용 0.312 vs 설정 0.500 → <span class="c">348 m 초과</span> — 보호구역 침범 중이었음</div>
+<div class="cx-p">WP2–WP1 가용 0.537 vs 설정 0.500 → <span class="g">여유</span></div>
+<div class="cx-cap">법정 최소 대조 <span class="dim">(도심항공교통 특별법 회랑 최소폭 600 m)</span></div>
+<div class="cx-p">1 156 m / 600 m = <span class="g">1.93배 충족</span></div>
+</div>
         <div class="was"><b>이전:</b> <code>halfWidthNM: 0.5</code> — 근거 표기 없이 설정돼 있던 값. RNP 0.3과 같은 성격의 미검증 숫자였다.</div>
         <p style="margin-top:12px">이 폭에서 <b>UAM 항법성능 요구치가 역산</b>된다. 회랑 반폭 = 2×RNP<sub>u</sub>로 놓으면 <b>RNP<sub>u</sub> ≤ 0.156</b>(289 m)이다. 가정이 아니라 회랑 기하학이 강제하는 요구치다.</p>
-        <div class="calc">
-요구치의 위치
-  RNP 0.3  <span class="dim">(RKSI 상용기 실제)</span>   556 m
-  <span class="g">RNP 0.156 (우리 요구치)</span>          289 m
-  RNP 0.1  <span class="dim">(현행 최소 등급)</span>      185 m
-
-TSE 예산 분해 <span class="dim">(TSE = √(NSE² + FTE²))</span>
-  TSE 예산            289 m
-  NSE (KASS SBAS)       3 m  <span class="dim">← 예산의 1%</span>
-  FTE 가용            289 m  <span class="dim">← 사실상 전부가 조종·제어 몫</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">요구치의 위치</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">RNP 0.3</td><td><span class="dim">(RKSI 상용기 실제)</span></td><td>556 m</td></tr><tr><td class="nw"><span class="g">RNP 0.156 (우리 요구치)</span></td><td>289 m</td><td></td></tr><tr><td class="nw">RNP 0.1</td><td><span class="dim">(현행 최소 등급)</span></td><td>185 m</td></tr></tbody></table></div>
+<div class="cx-cap">TSE 예산 분해 <span class="dim">(TSE = √(NSE² + FTE²))</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">TSE 예산</td><td>289 m</td><td></td></tr><tr><td class="nw">NSE (KASS SBAS)</td><td>3 m</td><td><span class="dim">← 예산의 1%</span></td></tr><tr><td class="nw">FTE 가용</td><td>289 m</td><td><span class="dim">← 사실상 전부가 조종·제어 몫</span></td></tr></tbody></table></div>
+</div>
         <p style="margin-top:12px">실현 가능성 판단 근거 세 가지: ⑴ 요구치가 <b>기존 RNP 0.1 등급보다 느슨</b>해 새 성능을 창출할 필요가 없다. ⑵ 한국은 2024년 KASS(SBAS)를 항공용 인증받은 <b>세계 5번째 국가</b>이며 잔차 오차 2.6 m 이내 — 항법 정확도는 병목이 아니다. ⑶ 문헌이 지적하는 UAM 항법 최대 위협은 도심 빌딩 멀티패스인데, <b>회랑1은 인천대교–시화호 위주의 해상·연안 구간</b>이라 이 위협에서 상대적으로 자유롭다(NSE가 100 m로 악화돼도 FTE 예산 94% 잔존).</p>
         <div class="ev">
           <span class="lbl">고도분리 결정의 파급효과</span>
@@ -1686,14 +1426,12 @@ TSE 예산 분해 <span class="dim">(TSE = √(NSE² + FTE²))</span>
         <div class="rvb">
         <p>평면경로는 하나로 두고 <b>SOUTHBOUND 1 500 ft · NORTHBOUND 1 900 ft</b>로 층을 나눈다. 400 ft 층분리는 수직 TSE 기반 <code>~350 ft</code> 요구치를 넘고, 두 층 모두 K-UAM ConOps 회랑 밴드(984–1 969 ft) 안에 들어간다.</p>
         <div class="was"><b>이전:</b> 회랑 안에 SOUTHBOUND·NORTHBOUND 2개 항로선을 수평으로 나란히 두는 안. 처음엔 당연한 구성으로 봤으나 계산 결과 성립하지 않음이 드러났다.</div>
-        <div class="calc">
-Reich CRM · UAM–UAM 왕복선 소요간격 <span class="dim">(σ_u=480 m 가정)</span>
-  TLS ≤ 1e-7  →  항로선 간격 1.841 NM  <span class="dim">(중심선에서 ±0.920 NM)</span>
-
-WP3–WP2 구간 적용 <span class="dim">(중심선–복행경로 실측 0.912 NM)</span>
-  SOUTHBOUND(바깥쪽)  0.912 + 0.920 = 1.832 NM  <span class="g">여유</span>
-  NORTHBOUND(안쪽)   0.912 − 0.920 = <span class="c">−0.008 NM</span>  ← 상용기 보호구역 침범
-        </div>
+        <div class="cx">
+<div class="cx-title">Reich CRM · UAM–UAM 왕복선 소요간격 <span class="dim">(σ_u=480 m 가정)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">TLS ≤ 1e-7</td><td>→</td><td>항로선 간격 1.841 NM</td><td><span class="dim">(중심선에서 ±0.920 NM)</span></td></tr></tbody></table></div>
+<div class="cx-cap">WP3–WP2 구간 적용 <span class="dim">(중심선–복행경로 실측 0.912 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">SOUTHBOUND(바깥쪽)</td><td>0.912 + 0.920 = 1.832 NM</td><td><span class="g">여유</span></td></tr><tr><td class="nw">NORTHBOUND(안쪽)</td><td>0.912 − 0.920 = <span class="c">−0.008 NM</span></td><td>← 상용기 보호구역 침범</td></tr></tbody></table></div>
+</div>
         <p style="margin-top:12px">즉 수평 왕복 2선은 <b>넓힐수록 안쪽 항로선이 상용기 경로로 밀려나</b> 이 회랑에서는 기하학적으로 성립하지 않는다. 회랑 폭을 넓히는 것으로는 해결되지 않으며, 중심선 자체를 서쪽으로 약 1.5 NM 옮기거나 고도분리로 가는 두 갈래뿐이었다.</p>
         <div class="ev">
           <span class="lbl">검증 도구</span>
@@ -1711,13 +1449,11 @@ WP3–WP2 구간 적용 <span class="dim">(중심선–복행경로 실측 0.912
         <summary><span class="rvt">복행기가 UAM 회랑 고도대를 관통한다 — 고도분리로도 해결 불가</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>15L 복행기는 교차점을 <b>약 1 332 ft</b>로 통과한다. SOUTHBOUND 1 500 ft와는 <b>168 ft</b>, NORTHBOUND 1 900 ft와도 668 ft 차이로, 어느 층과도 수직분리 기준(1 000 ft)을 만족하지 못한다.</p>
-        <div class="calc">
-GC001(MAPt, 540 ft) → GC999 → 교차점 : 누적 9.651 km
-차트 명시 상승률 2.5% 적용
-  540 ft + 9 651 m × 0.025 × 3.281 = <span class="c">1 332 ft</span>
-  vs SB 1 500 ft → 수직간격 <span class="c">168 ft</span>
-  vs NB 1 900 ft → 수직간격 <span class="c">668 ft</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">GC001(MAPt, 540 ft) → GC999 → 교차점 : 누적 9.651 km</div>
+<div class="cx-cap">차트 명시 상승률 2.5% 적용</div>
+<div class="cx-p">540 ft + 9 651 m × 0.025 × 3.281 = <span class="c">1 332 ft</span> vs SB 1 500 ft → 수직간격 <span class="c">168 ft</span> vs NB 1 900 ft → 수직간격 <span class="c">668 ft</span></div>
+</div>
         <p style="margin-top:12px">수평으로는 교차(이격 0), 수직으로는 168 ft — <b>공간분리가 양방향 모두 불가능</b>하다. 따라서 복행 시 회랑 CLOSED(시간분리)는 보수적 선택이 아니라 <b>유일하게 성립하는 대응</b>이다.</p>
         </div>
         </details>
@@ -1731,12 +1467,10 @@ GC001(MAPt, 540 ft) → GC999 → 교차점 : 누적 9.651 km
         <summary><span class="rvt">33L/33R은 별도 조치 불필요</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>회랑과 RWY 33L/33R 최종접근·복행 경로의 최근접거리를 실좌표로 계산한 결과, 논의된 어떤 버퍼 기준(0.6·1.2·1.5 NM)에도 여유 있게 통과한다.</p>
-        <div class="calc">
-RWY 33L 최종접근 (KIDAB→RW33L)      <span class="g">2.07 NM</span>
-RWY 33R 최종접근 (INRR→THR33R)      <span class="g">1.85 NM</span>
-33L/33R 공용 복행 (MAPt→GE991)      <span class="g">1.96 NM</span>
-  <span class="dim">셋 다 최근접 구간은 회랑 HDY–WP3</span>
-        </div>
+        <div class="cx">
+<div class="cx-tw"><table><tbody><tr><td>RWY 33L 최종접근 (KIDAB→RW33L)</td><td><span class="g">2.07 NM</span></td></tr><tr><td>RWY 33R 최종접근 (INRR→THR33R)</td><td><span class="g">1.85 NM</span></td></tr><tr><td>33L/33R 공용 복행 (MAPt→GE991)</td><td><span class="g">1.96 NM</span></td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">셋 다 최근접 구간은 회랑 HDY–WP3</span></div>
+</div>
         <p style="margin-top:12px">공교롭게 세 경우 모두 최근접 지점이 HDY–WP3 구간이다. 이 구간은 15L 복행과는 교차하면서 33L/33R과는 안전거리를 유지하는, <b>방향별로 위험도가 완전히 갈리는 핫스팟</b>이다. 결과적으로 회랑1의 리스크는 <b>15L/15R 복행 하나로 수렴</b>한다.</p>
         </div>
         </details>
@@ -1750,10 +1484,10 @@ RWY 33R 최종접근 (INRR→THR33R)      <span class="g">1.85 NM</span>
         <summary><span class="rvt">회랑과 15L 복행경로가 실제로 교차한다</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>HDY–WP3 구간과 복행경로 GC999–GC989 구간이 <code>37.4627 N 126.5083 E</code>(HDY 남쪽 약 0.9 km)에서 <b>기하학적으로 교차</b>한다. 최근접이 아니라 교차이므로, 그 지점의 수평 이격은 정의상 0이다.</p>
-        <div class="calc">
-교차점 통과 타이밍 <span class="dim">(290 km/h 기준)</span>
-  HDY 출발 후 <span class="c">8.6초</span> 지점 <span class="dim">(HDY–WP3 레그 45.9초 중 18.7%)</span>
-        </div>
+        <div class="cx">
+<div class="cx-title">교차점 통과 타이밍 <span class="dim">(290 km/h 기준)</span></div>
+<div class="cx-p">HDY 출발 후 <span class="c">8.6초</span> 지점 <span class="dim">(HDY–WP3 레그 45.9초 중 18.7%)</span></div>
+</div>
         <p style="margin-top:12px">이 발견은 덱 6쪽의 <q>평면 분리의 한계 — 3차원 검토 필요</q>가 신중론이 아니라 <b>수학적으로 강제되는 결론</b>임을 보여준다. 어떤 TSE 버퍼값을 적용해도 교차점의 리스크는 해소되지 않는다.</p>
         </div>
         </details>
@@ -1804,13 +1538,10 @@ RWY 33R 최종접근 (INRR→THR33R)      <span class="g">1.85 NM</span>
         <summary><span class="rvt">절차 좌표 전수 검증 — 실제 오류 2건 발견·수정</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>공식 AIP ENR 4.4(1 105개 지점)를 파싱해 v17의 고유 지점 389개와 자동 대조하고, 불일치 항목은 실제 차트 PDF 코딩표로 개별 확인했다.</p>
-        <div class="calc">
-ENR 4.4 대조 가능        284개 → 오차 10 m 이내 일치 <span class="dim">(ATKON 제외)</span>
-대조 불가                105개 <span class="dim">(DER·THR·DME arc 등 절차 상대좌표 — 정상)</span>
-
-<span class="c">오류 ①</span> ATKON  37.666556 → <span class="g">37.566667</span>  <span class="dim">(위도 0.1° 오타, 약 11 km · IAP 5개 절차 공통 IAF)</span>
-<span class="c">오류 ②</span> STAR OLMEN·GUKDO·KARBU  <span class="dim">3C → 2C 전면 개정</span>
-        </div>
+        <div class="cx">
+<div class="cx-tw"><table><tbody><tr><td class="nw">ENR 4.4 대조 가능</td><td>284개 → 오차 10 m 이내 일치 <span class="dim">(ATKON 제외)</span></td></tr><tr><td class="nw">대조 불가</td><td>105개 <span class="dim">(DER·THR·DME arc 등 절차 상대좌표 — 정상)</span></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">오류 ①</span> ATKON</td><td>37.666556 → <span class="g">37.566667</span></td><td><span class="dim">(위도 0.1° 오타, 약 11 km · IAP 5개 절차 공통 IAF)</span></td></tr><tr><td><span class="c">오류 ②</span> STAR OLMEN·GUKDO·KARBU</td><td><span class="dim">3C → 2C 전면 개정</span></td><td></td></tr></tbody></table></div>
+</div>
         <p style="margin-top:12px">두 번째가 더 중대했다. 세 STAR 전체가 <b>구 버전 AIP 데이터</b>였다 — 절차명부터 3C가 아닌 <b>2C</b>였고, 후반부 구간(LASIG·ANPEM·GC022·GC021)은 현행 차트에 존재하지 않는 좌표였다. 현재 공시 절차(GC036·GC026·GC020)로 교체하고, UDIDA→DH050 / MABLO→DC039 개칭도 반영했다.</p>
         <div class="ev">
           <span class="lbl">독립 확인</span>
