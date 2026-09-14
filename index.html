@@ -160,8 +160,7 @@ input[type=checkbox]{accent-color:#5aa9ff;width:13px;height:13px;flex:0 0 13px;m
 
 <div id="side">
   <h1>RKSI · RKSS 통합 항로도</h1>
-  <p class="sub">SID · STAR · IAP · AIP HOLD &nbsp;|&nbsp; UAM 회랑 SB 2 150 ft / NB 2 450 ft</p>
-  <p class="sub" style="margin-top:6px"><a href="decision-log.html" style="color:#7fe3ff;font-weight:600;text-decoration:none;border-bottom:1px solid #7fe3ff5c">📐 회랑 설계결정 로그 (REV 01–19) →</a></p>
+  <p class="sub">SID · STAR · IAP · AIP HOLD &nbsp;|&nbsp; UAM 회랑 SB 1 950 ft / NB 2 450 ft (QNH) · 15계열 북쪽 회랑만 / 33계열 남북 회랑</p>
 
   <div class="sect">배경 지도</div>
   <div class="btns" id="base">
@@ -831,7 +830,7 @@ map.on('zoomend',()=>{
    ================================================================= */
 const UAM = {
   note:'인천 UAM 회랑 — 북측 이양게이트 ↔ 영종 ↔ 홍대염전VP ↔ 인천대교 ↔ 남측 이양게이트 (RKSI Class B 전폭 내부, 2026-09-14)',
-  alt :'고도분리 운용(2026-09-04): SOUTHBOUND 2 150 ft · NORTHBOUND 2 450 ft (300 ft 층분리) — 실측 빈 층(1 700–2 900 ft) 정중앙. 아래 1 700 ft 벽·위 2 900 ft 벽에서 각 450 ft 여유',
+  alt :'고도분리 운용(2026-09-14, REV 24): SOUTHBOUND 1 950 ft · NORTHBOUND 2 450 ft AMSL(QNH), 층간격 500 ft — 헬기 실측 상한 1 218 ft(QNH)와 732 ft · 관제 지정고도 3 000 ft와 550 ft. 발착 경사 북쪽 8:1 / 남쪽 4:1. 활주로 15계열 운영 시 북쪽 회랑(GATE-N~HDY)만, 33계열 운영 시 남북 모두',
   /* 북측(WP6) → 영종 → 남측 → 월미도 → 시화 순서.
      2026-08-24: 북쪽 회랑은 WP6까지만 표시 — "서울로 복귀" 스텁(SEOUL-N)과 그 구간의 회랑선은
      삭제. 시화 구간은 공시 노선도에 없는 신규 연장 — WP1(월미도)에서 시화호 위를 대략 가로지르는
@@ -902,7 +901,15 @@ const UAM = {
        WP6   (37.63490,126.49109) 삭제 → GATE-N (37.60188,126.49299)  WP6-WP5 34.6% 지점
        WP1   (37.40750,126.61709) 삭제 → GATE-S (37.41037,126.61061)  WP3-WP1 93.3% 지점
        SIHWA (37.40466,126.65125) 삭제
-     WP6·SIHWA가 Class B 밖(E등급)에 있던 '인지·수용 조건'(REV 17)이 해소된다. */
+     WP6·SIHWA가 Class B 밖(E등급)에 있던 '인지·수용 조건'(REV 17)이 해소된다.
+     2026-09-14: ★분리기준·고도기준·운영규칙 재정립★ (REV 24)
+     ① 반폭 근거: 2×RNP(RNP AR 전용, Doc 9905) 철회 → VFR Class B 분리(FAA 7110.65 7-9-4:
+        1.5 NM 또는 500 ft). 활성 회랑 안에서 공시절차 제약 없음 → halfWidthNM 1.248 유지.
+     ② 고도: ADS-B 기압고도는 1013.25 기준(검증 r=0.954) → METAR QNH로 보정해 재분석.
+        SB 2 150 → 1 950 ft, NB 2 450 ft 유지 (층간격 300 → 500 ft). 모든 고도는 ft AMSL(QNH).
+     ③ 활주로 15계열: 북쪽 회랑만(남쪽은 15L/R 출발기 283통과/24h) · 33계열: 남북 모두.
+        15계열 동안 남쪽 도시 수요는 GATE-N으로 진입.
+     ④ 발착 경사: 북쪽 8:1(7.1°) / 남쪽 4:1(14.0°) — 33L/R 도착기와 겹침 337 → 2.3통과/24h. */
   pts:[
     [37.60188,126.49299,'GATE-N','북측 이양게이트 (Class B 전폭 진입, ARP 8.752 NM)','wp'],
     [37.53942,126.49658,'WP5','Report Point','wp'],
