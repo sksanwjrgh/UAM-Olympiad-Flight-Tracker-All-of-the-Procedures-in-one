@@ -615,7 +615,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">33</td><td class="item">활주로 전환</td><td class="concl">관제 예고 <b>6분 전</b> (초안)</td><td class="src">실측 33→15 전환 간격 중앙 9분·최소 1분 · 남쪽 회랑 비우는 데 최대 4.6분(이륙기, 상승 1,000 fpm) + 전파 30초 = 5.1분 → 예고 6분 유지 · 예고 늦으면 첫 15 출발 대기</td><td class="revc">24·25·26</td></tr>
         <tr><td class="no">34</td><td class="item">홀딩속도</td><td class="concl"><b>100 kt</b></td><td class="src">천이속도 90 kt의 약 1.1배. 2R 1.061 NM &lt; 반폭 1.248 · 홀딩픽스 GATE-N에서 2.20 NM 이상. 1.3배(117 kt)는 반폭 여유 0.007 NM라 기각. 패턴 점유는 픽스 전방 0.53 / 후방 2.20 NM이며 간격은 이 가장자리 기준(REV 26)</td><td class="revc">02·25·26</td></tr>
         <tr><td class="no">35</td><td class="item">버티포트 발착권</td><td class="concl">한 번에 <b>한 대</b><br>이론 한계 시간당 19.3편</td><td class="src">착륙장 1개. 노선별 점유 NA 123 · ND 239 · SA 137 · SD 209초(도착은 HDY 2.5 NM 확보~착륙, 출발은 허가~1.6 NM 이탈). 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26</td></tr>
-        <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>권장 배차 13분</td><td class="src">출발 전 버티포트 슬롯 배정(ConOps 1.5 4-3-3). 같은 수요에서 공중 홀딩 1,007분 → 2분, 결항 0. 13분(시간당 18.5편)부터 결항 0·계획지연 5분 이내</td><td class="revc">27</td></tr>
+        <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>게이트 진입 허가 배정</td><td class="src">각지에서 GATE-N·S로 오는 기체의 ETA를 받아 버티포트 슬롯을 역산해 진입 시각을 통보(ConOps 1.5 4-3-3). 같은 유입(시간당 16편)에서 회랑 안 공중 홀딩 583분 → 0분. 권장 수용 유입률 시간당 12편(거부 0·게이트 밖 대기 5분 이내)</td><td class="revc">27</td></tr>
       </tbody>
     </table>
   </div>
@@ -631,7 +631,7 @@ h2{scroll-margin-top:60px}
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
-        <tr><td class="v"><a href="#rev27">REV 27</a></td><td class="k2">교통관리</td><td class="src">AI 전략적 사전 분리 &mdash; 출발 전 버티포트 슬롯 배정으로 공중 홀딩 제거 &middot; 권장 배차 13분</td></tr>
+        <tr><td class="v"><a href="#rev27">REV 27</a></td><td class="k2">교통관리</td><td class="src">AI 전략적 사전 분리 &mdash; 게이트 진입 허가를 미리 배정해 회랑 안 공중 홀딩 제거 &middot; 권장 수용 유입률 시간당 12편</td></tr>
         <tr><td class="v"><a href="#rev26">REV 26</a></td><td class="k2">발착프로파일</td><td class="src">발착은 경로 경사가 아니라 버티포트 수직 &mdash; 상승 1,000 / 강하 2,400 fpm &middot; 표준 대기패턴 점유 구간 정의</td></tr>
         <tr><td class="v"><a href="#rev25">REV 25</a></td><td class="k2">기체속도</td><td class="src">Joby S4 속도 기준 확정 &mdash; 천이 90 kt &middot; 홀딩 100 kt &middot; 남쪽은 40 kt 저속 강하 &middot; 전환 예고 6분</td></tr>
         <tr><td class="v"><a href="#rev24">REV 24</a></td><td class="k2">분리·운영규칙</td><td class="src">분리기준을 VFR Class B로 &middot; 고도를 QNH로 재분석(층 1,950/2,450) &middot; 활주로 운영방향별 회랑 &middot; 복행&middot;전환 절차 초안</td></tr>
@@ -668,37 +668,45 @@ h2{scroll-margin-top:60px}
   <div class="log">
 
     <article class="entry" id="rev27">
-      <div class="meta"><span class="rev">REV 27</span><span class="tag">교통관리</span><span class="dt">2026-09-26 00:10</span></div>
+      <div class="meta"><span class="rev">REV 27</span><span class="tag">교통관리</span><span class="dt">2026-09-26 00:18</span></div>
       <div class="body">
         <details class="revd" open>
-        <summary><span class="rvt">AI 전략적 사전 분리 &mdash; 출발 전 버티포트 슬롯 배정으로 공중 홀딩 제거 &middot; 권장 배차 13분</span><span class="rvx">펼치기</span></summary>
+        <summary><span class="rvt">AI 전략적 사전 분리 &mdash; 게이트 진입 허가를 미리 배정해 회랑 안 공중 홀딩을 없앤다</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
-        <p>고정 시각표로 띄우고 간격이 좁아지면 공중에서 홀딩시키는 방식(전술적 분리)은 하루 1,000분이 넘는 공중 대기를 만든다. ConOps 1.5 4-3-3이 요구하는 <b>전략적 사전 분리</b>대로, 운항계획 단계에서 버티포트 슬롯을 배정해 간격을 미리 만드는 스케줄러를 설계하고 같은 실측 교통 위에서 비교했다. 배정한 시각표를 그대로 시뮬레이터에 넣어 <b>전술 규칙이 개입하는지</b>로 계획의 타당성을 검증했다.</p>
+        <p>수요는 우리가 만드는 것이 아니다. 전국 각지에서 출발한 기체가 <b>GATE-N &middot; GATE-S에 도착</b>하고, 우리가 정하는 것은 <b>그 기체를 언제 회랑에 들여보낼 것인가</b>다. 현행처럼 게이트에서 즉석 판단해 들여보내면, 버티포트 발착권이 비지 않았을 때 그 대기를 <b>회랑 안 공중 홀딩</b>으로 치르게 된다. ConOps 1.5 4-3-3의 <b>전략적 사전 분리</b>대로 도착 예정시각(ETA)을 미리 받아 버티포트 슬롯까지 계산한 뒤 진입 시각을 통보하면, 같은 대기를 <b>게이트 밖(항로 구간 속도조절)</b>에서 흡수할 수 있다.</p>
         <div class="cx">
-<div class="cx-title">① 스케줄러가 지키는 제약 <span class="dim">(단일 자원 스케줄링 + 시간창)</span></div>
-<div class="cx-tw"><table><tbody><tr><td class="nw">1. 버티포트 발착권 1개</td><td>노선별 점유 123&ndash;239초(REV 26 ⑤), 슬롯 사이 여유 10초</td></tr><tr><td class="nw">2. 회랑 종적 간격 2 NM</td><td>같은 노선 앞뒤 기체 · 홀딩 중이면 패턴 점유 구간 기준</td></tr><tr><td class="nw">3. 활주로 운영방향별 개폐</td><td>15 방향 입&middot;출항 시 남쪽 수요는 GATE-N으로 재배정</td></tr><tr><td class="nw">4. 전환 예고 6분</td><td>예고 수신 즉시 남쪽으로 갈 편을 재계획</td></tr><tr><td class="nw">5. 복행 폐쇄</td><td>폐쇄구간 통과 시간대가 걸리는 <b>미출발편만</b> 늦추고, 이미 떠 있는 기체의 지연은 뒤 슬롯에 반영</td></tr></tbody></table></div>
-<div class="cx-tw"><table><tbody><tr><td class="nw">배정</td><td>수요 시각 순 탐욕 배정(30초 격자) &rarr; 인접 슬롯 교환으로 총 지연 감소 &rarr; 교란 시 롤링 재계획</td></tr></tbody></table></div>
+<div class="cx-title">① 결정 구조 &mdash; 우리가 정하는 것은 <span class="g">진입 허가 시각</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">수요(주어짐)</td><td>각지에서 GATE-N &middot; GATE-S로 도착하는 기체의 ETA, HDY에서의 출발 요청</td></tr><tr><td class="nw">결정(우리 몫)</td><td>각 기체의 <b>회랑 진입 허가 시각</b> &mdash; 지금 허가 / 게이트 밖에서 대기 / 진입 거부(대체 버티포트)</td></tr><tr><td class="nw">결과</td><td>진입 이후의 간격은 이미 확보되어 있으므로 회랑 안에서 홀딩할 이유가 없다</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">현행(전술)</td><td>게이트에서 &ldquo;지금 들어와도 되나&rdquo;만 판단 &rarr; 들어온 뒤 발착권이 막히면 회랑 안에서 홀딩</td></tr><tr><td class="nw">AI(전략)</td><td>ETA &rarr; 버티포트 슬롯 역산 &rarr; 진입 시각 통보 &rarr; 게이트 밖에서 대기 흡수</td></tr></tbody></table></div>
 </div>
         <div class="cx">
-<div class="cx-title">② 검증 &mdash; 같은 날&middot;같은 실측 교통&middot;같은 수요 <span class="dim">(7/21 · 배차 13분 · 하루)</span></div>
-<div class="cx-tw"><table><tbody><tr><td class="nw">구분</td><td>완료</td><td>결항</td><td>공중 홀딩</td><td>계획 지연</td></tr><tr><td class="nw">현행(전술적 분리)</td><td>279</td><td>0</td><td>221회 <b>1,007분</b></td><td>&mdash;</td></tr><tr><td class="nw">AI(전략적 사전 분리)</td><td>277</td><td>0</td><td><b>1회 2분</b></td><td>평균 <b>309초</b></td></tr></tbody></table></div>
-<div class="cx-p">배정 시각표를 넣었을 때 전술 규칙(간격 유지&middot;발착 분리)이 사실상 개입하지 않는다 &rArr; 계획 자체가 충돌 없음</div>
-<div class="cx-p">남는 홀딩 1회는 복행(AAR115)에 따른 것으로, 사전에 알 수 없는 교란은 전술 분리가 받는 것이 맞다</div>
+<div class="cx-title">② 배정이 지키는 제약</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1. 버티포트 발착권 1개</td><td>노선별 점유 123&ndash;239초(REV 26 ⑤), 슬롯 사이 여유 10초</td></tr><tr><td class="nw">2. 회랑 종적 간격 2 NM</td><td>홀딩 중이면 패턴 점유 구간(전방 0.53 / 후방 2.20 NM) 기준</td></tr><tr><td class="nw">3. 활주로 운영방향별 개폐</td><td>15 방향 입&middot;출항 시 GATE-S 수요는 GATE-N으로 전환</td></tr><tr><td class="nw">4. 전환 예고 6분</td><td>예고 수신 즉시 남쪽으로 갈 편을 재배정</td></tr><tr><td class="nw">5. 복행 폐쇄</td><td>폐쇄구간 통과 시간대가 걸리는 <b>미진입편만</b> 늦추고, 이미 들어온 기체의 지연은 뒤 슬롯에 반영</td></tr><tr><td class="nw">6. 30분 안에 슬롯 없음</td><td><b>진입 거부</b> &rarr; 대체 버티포트. 거부율이 곧 수요 초과 지표</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">배정</td><td>ETA 순 탐욕 배정(30초 격자) &rarr; 인접 슬롯 교환으로 총 지연 감소 &rarr; 교란 시 롤링 재계획</td></tr></tbody></table></div>
 </div>
         <div class="cx">
-<div class="cx-title">③ 적정 배차 간격 <span class="dim">(7/21 · 현행 vs AI)</span></div>
-<div class="cx-tw"><table><tbody><tr><td class="nw">배차</td><td>현행 완료 / 결항 / 홀딩</td><td>AI 완료 / 결항 / 홀딩</td><td>AI 계획지연</td></tr><tr><td class="nw">10분</td><td>284 / 75 / 1,636분</td><td>283 / 0 / 3분</td><td>24분</td></tr><tr><td class="nw">12분</td><td>283 / 17 / 1,545분</td><td>270 / 0 / 3분</td><td>24분</td></tr><tr><td class="nw"><b>13분</b></td><td><b>279 / 0 / 1,007분</b></td><td><b>277 / 0 / 2분</b></td><td><b>5분</b></td></tr><tr><td class="nw">15분</td><td>240 / 0 / 322분</td><td>240 / 0 / 3분</td><td>0.4분</td></tr></tbody></table></div>
-<div class="cx-concl">&rArr; 권장 운영점 <b>배차 13분 (시간당 18.5편)</b> &mdash; 결항 0 · 계획지연 5분 이내 · 공중 홀딩 사실상 0</div>
-<div class="cx-p">수요가 용량을 넘으면 AI는 <b>지상 대기</b>로 흡수하고, 현행은 <b>공중 홀딩과 결항</b>으로 배출한다</div>
+<div class="cx-title">③ 검증 &mdash; 같은 날&middot;같은 실측 교통&middot;같은 유입 수요 <span class="dim">(7/21 · 포아송 유입 시간당 16편)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">구분</td><td>처리</td><td>거부</td><td><b>회랑 안 공중 홀딩</b></td><td>게이트 밖 대기(평균)</td></tr><tr><td class="nw">현행</td><td>228</td><td>3</td><td>179회 <b>583분</b></td><td>325초</td></tr><tr><td class="nw">AI</td><td>224</td><td>7</td><td><b>0회 0분</b></td><td>575초</td></tr></tbody></table></div>
+<div class="cx-p">처리량은 사실상 같고, 대기의 <b>총량</b>도 크게 다르지 않다. 다른 것은 <b>대기의 위치</b>다</div>
+<div class="cx-p">회랑 안 공중 대기는 배터리&middot;분리 여유를 함께 쓰고 뒤따르는 기체의 진입까지 막는다</div>
 </div>
+        <div class="cx">
+<div class="cx-title">④ 유입 수요율별 &mdash; 어디까지 받을 수 있는가 <span class="dim">(7/21 · 현행 vs AI)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">유입</td><td>현행 처리 / 거부 / 회랑 홀딩</td><td>AI 처리 / 거부 / 회랑 홀딩 / 게이트 밖</td></tr><tr><td class="nw" style="padding-left:0.5em">8편/h</td><td>117 / 0 / 78분</td><td>117 / 0 / 5분 / 88초</td></tr><tr><td class="nw"><b>12편/h</b></td><td><b>179 / 0 / 244분</b></td><td><b>179 / 0 / 0분 / 241초</b></td></tr><tr><td class="nw">16편/h</td><td>228 / 3 / 583분</td><td>224 / 7 / 0분 / 575초</td></tr><tr><td class="nw">20편/h</td><td>267 / 28 / 1,104분</td><td>262 / 34 / 0분 / 1,050초</td></tr><tr><td class="nw">24편/h</td><td>283 / 83 / 1,380분</td><td>281 / 86 / 2분 / 1,284초</td></tr></tbody></table></div>
+<div class="cx-p">버티포트 물리 한계는 시간당 19.3편(REV 26 ⑤)이지만, 유입이 고르지 않아(포아송) 실제 수용 구간은 그보다 낮다</div>
+<div class="cx-concl">&rArr; <b>시간당 12편</b>까지가 거부 0 &middot; 게이트 밖 대기 5분 이내 &mdash; 권장 수용 유입률</div>
+<div class="cx-p">그 이상을 받으면 두 방식 모두 대기가 쌓이지만, 현행은 <b>회랑 안</b>에, AI는 <b>게이트 밖</b>에 쌓는다</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전 초안(같은 날 폐기):</b> 이 결정을 &ldquo;정기 셔틀의 배차 간격 13분&rdquo;으로 적었다. 수요 시각표를 우리가 정한다는 전제였는데, 실제 운용은 <b>외부에서 유입되는 기체의 진입을 허가</b>하는 구조이므로 결정 변수를 진입 허가 시각으로 바로잡았다. 배차 간격 대신 <b>수용 가능 유입률</b>로 표현한다.</div>
         <div class="ev" style="margin-top:10px">
           <span class="lbl">근거</span>
           K-UAM ConOps 1.5 4-3-3 &mdash; 전략적 사전 분리는 운항계획 단계에서 분리를 확보하는 것으로, 회랑 안에서의 간격 유지(전술적 분리)와 구분된다.
-          본 설계에서는 PSU가 버티포트 슬롯을 배정하고, 관제기관이 통보하는 활주로 운영방향&middot;복행을 입력으로 받는다.
+          본 설계에서는 PSU가 버티포트 슬롯과 게이트 진입 시각을 배정하고, 관제기관이 통보하는 활주로 운영방향&middot;복행을 입력으로 받는다.
         </div>
         <div class="ev" style="margin-top:8px">
           <span class="lbl">남은 확인</span>
-          ① 슬롯 배정 주체(PSU)의 법적 지위와 관제기관과의 협정 항목 ② 지상 대기 시간의 승객 수용성 ③ 수요 시각표를 정기 셔틀로 가정했으며 실수요 곡선은 미반영.
+          ① 진입 허가 배정 주체(PSU)의 법적 지위와 관제기관 협정 항목 ② 게이트 밖 대기를 항로 구간 속도조절로 흡수할 때의 출발지 협조 절차
+          ③ 유입 분포를 포아송으로 가정했으며 실제 노선별 수요 곡선은 미반영 ④ 진입 거부 시 대체 버티포트의 존재(ConOps 운용모델 2 미충족과 연결).
         </div>
         </div>
         </details>

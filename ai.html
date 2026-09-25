@@ -85,8 +85,9 @@ footer b{color:var(--ink)}
 <header>
   <div>
     <h1>회랑 사전 분리 비교</h1>
-    <p class="sub">인천공항 UAM 회랑 1 — 같은 날짜·같은 실측 ADS-B 교통 위에서 <b>전술적 분리(현행)</b>와
-      <b>AI 사전 분리(PSU 슬롯 배정)</b>를 나란히 돌린다. 수요 시각표는 양쪽이 같고, 다른 것은 간격을 언제 만드는가뿐이다.</p>
+    <p class="sub">전국 각지에서 <b>GATE-N · GATE-S</b>로 들어오는 UAM을 <b>언제 회랑에 들여보낼 것인가</b>.
+      같은 날짜·같은 실측 ADS-B 교통·같은 유입 수요 위에서, 게이트에서 즉석 판단하는 <b>현행</b>과
+      도착 예정시각을 미리 받아 버티포트 슬롯까지 배정하는 <b>AI 사전 분리</b>를 나란히 돌린다.</p>
   </div>
   <div class="right">
     <select id="sel" aria-label="시나리오"></select>
@@ -98,13 +99,13 @@ footer b{color:var(--ink)}
   <div class="pane">
     <div class="map" id="mapA"></div>
     <div class="cap"><div class="t"><span class="badge b-base">현행</span> 전술적 분리</div>
-      <div class="d">고정 시각표대로 띄우고, 간격이 좁아지면 <b>공중에서 홀딩</b>시켜 해결한다.</div></div>
+      <div class="d">게이트에 온 기체를 그 자리에서 판단해 들여보내고, 회랑 안에서 간격이 좁아지면 <b>공중 홀딩</b>으로 푼다.</div></div>
     <div class="st" id="stA"></div>
   </div>
   <div class="pane">
     <div class="map" id="mapB"></div>
     <div class="cap"><div class="t"><span class="badge b-ai">AI</span> 전략적 사전 분리</div>
-      <div class="d">출발 전에 버티포트 슬롯을 배정해 <b>간격을 미리</b> 만든다. 복행·활주로 전환 때는 미출발편을 재계획한다.</div></div>
+      <div class="d">도착 예정시각을 미리 받아 버티포트 슬롯까지 계산해 <b>진입 시각</b>을 통보한다. 지연은 <b>게이트 밖</b>에서 흡수한다.</div></div>
     <div class="st" id="stB"></div>
   </div>
 </div>
@@ -129,19 +130,19 @@ footer b{color:var(--ink)}
   <section>
     <h2>버티포트 점유와 공중 대기</h2>
     <canvas id="chart" width="900" height="230"></canvas>
-    <p class="note">위 두 줄은 <b>버티포트 발착권 점유</b>(한 번에 한 대), 아래 면적은 <b>그 시각 공중에서 대기 중인 대수</b>다.
-      현행은 슬롯을 기다리는 시간을 공중에서 쓰고, AI는 그 시간을 지상에서 쓴다.</p>
+    <p class="note">위 두 줄은 <b>버티포트 발착권 점유</b>(한 번에 한 대), 아래 면적은 <b>그 시각 회랑 안에서 공중 대기 중인 대수</b>다.
+      현행은 슬롯을 기다리는 시간을 <b>회랑 안</b>에서 쓰고, AI는 같은 시간을 <b>게이트 밖(항로 구간 속도조절)</b>에서 쓴다.</p>
   </section>
   <section>
     <h2>스케줄러가 지키는 제약</h2>
     <ul class="cons" id="cons"></ul>
-    <h2 style="margin-top:14px">배정 기록</h2>
+    <h2 style="margin-top:14px">진입 허가 기록</h2>
     <div id="log"></div>
   </section>
 </div>
 
 <section id="sweepSec" style="border-top:1px solid var(--rule)">
-  <h2>배차 간격별 비교 — 적정 간격 찾기</h2>
+  <h2>유입 수요율별 비교 — 어디까지 받아줄 수 있는가</h2>
   <div id="sweepWrap" style="overflow-x:auto"></div>
   <p class="note" id="sweepNote"></p>
 </section>
@@ -203,7 +204,7 @@ Object.keys(AID.scenarios).forEach(k=>{ const o=document.createElement('option')
 document.getElementById('gen').innerHTML=' 기체 프로파일은 버티포트 상공 수직 이착륙(상승 <b>'
   +AID.params.CLIMB_FPM+' fpm</b> · 강하 <b>'+AID.params.DESC_FPM+' fpm</b>), 회랑은 층 고도('
   +AID.params.SB+' / '+AID.params.NB+' ft QNH) 수평비행으로 잡았다.'
-  +' · 생성 '+AID.generated+' · 비교 배차 '+AID.headway+'분';
+  +' · 생성 '+AID.generated+' · 유입 수요 시간당 '+AID.rate+'편';
 
 function stateAt(fl,tt){ const tr=fl.tr; if(tt<tr[0][0]||tt>tr[tr.length-1][0]) return null;
   let lo=0,hi=tr.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(tr[m][0]<=tt) lo=m; else hi=m; } return tr[lo]; }
@@ -267,14 +268,16 @@ function render(){
 function kpiTable(){
   const b=sc.runs.BASE.kpi, a=sc.runs.AI.kpi, P=sc.plan;
   const rows=[
-    ['완료 편수','completed',1],['결항','cancelled',-1],['회항','diverted',-1],
-    ['공중 홀딩 (회)','holds',-1],['공중 홀딩 (분)','hold_min',-1],
-    ['상용기 분리 미달','sep_loss',-1],['UAM끼리 근접','uu',-1],
-    ['게이트 대기 평균 (초)','avg_wait_s',-1]];
-  const get=(k,o)=>k==='hold_min'?Math.round(o.hold_total_s/60):o[k];
+    ['처리 편수','completed',1],['진입 거부','rejected',-1],['회항','diverted',-1],
+    ['회랑 내 공중 홀딩 (회)','holds',-1],['회랑 내 공중 홀딩 (분)','hold_min',-1],
+    ['게이트 밖 대기 평균 (초)','gate',-1],
+    ['상용기 분리 미달','sep_loss',-1],['UAM끼리 근접','uu',-1]];
+  const get=(k,o,ai)=>k==='hold_min'?Math.round(o.hold_total_s/60)
+    :k==='gate'?Math.round(ai?P.delay_avg:o.avg_wait_s)
+    :k==='rejected'?(ai?(P.cancelled+o.cancelled):o.cancelled):o[k];
   let h='<thead><tr><th>지표</th><th>현행</th><th>AI</th></tr></thead><tbody>';
   rows.forEach(([lab,k,dir])=>{
-    const bv=get(k,b), av=get(k,a);
+    const bv=get(k,b,false), av=get(k,a,true);
     const win=dir>0? av>bv : av<bv;
     h+='<tr><td>'+lab+'</td><td class="base">'+bv+'</td><td class="'+(win?'win':'ai')+'">'+av+'</td></tr>';
   });
@@ -282,8 +285,10 @@ function kpiTable(){
   document.getElementById('kpi').innerHTML=h;
   const saved=Math.round((b.hold_total_s-a.hold_total_s)/60);
   document.getElementById('kpinote').innerHTML=
-    '수요 '+P.demand+'편을 같은 조건에서 처리했다. AI는 계획 단계에서 평균 '+Math.round(P.delay_avg)+'초(최대 '+Math.round(P.delay_max)+'초) 늦춰 배정하는 대신, '+
-    '공중 대기를 <b>'+saved+'분</b> 줄였다. 지상에서 기다리는 시간은 승객 탑승·충전에 쓸 수 있고, 공중 대기는 배터리와 분리 여유를 함께 소모한다.';
+    '같은 유입 수요 '+P.demand+'편을 두 방식이 처리했다. 총 대기 시간은 크게 다르지 않지만 <b>어디에서 기다리는지</b>가 다르다 — '+
+    'AI는 게이트 밖에서 평균 '+Math.round(P.delay_avg)+'초(최대 '+Math.round(P.delay_max)+'초)를 흡수해 '+
+    '회랑 안 공중 대기를 <b>'+saved+'분</b> 줄였다. 게이트 밖 대기는 항로 구간 속도조절로 흡수할 수 있지만, '+
+    '회랑 안 공중 대기는 배터리와 분리 여유를 함께 쓰고 다른 기체의 진입까지 막는다.';
 }
 
 /* ── 타임라인 차트 ── */
@@ -343,11 +348,12 @@ function consList(){
   const p=AID.params, pr=AID.prof;
   const occ=Object.keys(pr).map(r=>r+' '+Math.round(pr[r].res_out-pr[r].res_in)+'초').join(' · ');
   document.getElementById('cons').innerHTML=[
-    ['버티포트 발착권은 한 번에 한 대','착륙장이 하나이므로 도착·출발이 같은 시간대를 쓸 수 없다. 노선별 점유: '+occ],
+    ['버티포트 발착권은 한 번에 한 대','착륙장이 하나이므로 도착·출발이 같은 시간대를 쓸 수 없다. 진입 허가는 이 슬롯이 비는 시각에서 거꾸로 계산한다. 노선별 점유: '+occ],
     ['회랑 종적 간격 '+p.SPACING_NM+' NM','같은 노선에서 앞뒤 기체가 이보다 가까워지지 않게 진입 시각을 벌린다.'],
     ['활주로 운영방향에 따른 회랑 개폐','15 방향(남동향) 입·출항 시 남쪽 회랑은 닫히고, 해당 수요는 GATE-N으로 재배정된다.'],
-    ['활주로 전환 예고 '+Math.round(p.NOTICE_S/60)+'분','예고를 받는 즉시 남쪽 회랑으로 갈 편을 재계획해 전환 시각에 회랑이 비도록 한다.'],
-    ['복행 발생 시 미출발편 재계획','폐쇄구간을 통과할 시간대에 걸리는 편만 늦추고, 이미 떠 있는 기체의 지연은 뒤 슬롯에 반영한다.']
+    ['활주로 전환 예고 '+Math.round(p.NOTICE_S/60)+'분','예고를 받는 즉시 GATE-S로 오던 편을 GATE-N으로 돌려 전환 시각에 남쪽 회랑이 비도록 한다.'],
+    ['복행 발생 시 미진입편 재계획','폐쇄구간을 통과할 시간대에 걸리는 편만 늦추고, 이미 회랑에 들어온 기체의 지연은 뒤 슬롯에 반영한다.'],
+    ['30분 안에 슬롯이 없으면 진입 거부','무한정 게이트 밖에 세우지 않고 대체 버티포트로 보낸다. 거부율이 곧 수요 초과 지표다.']
   ].map(([t,d])=>'<li>'+t+'<i>'+d+'</i></li>').join('');
 }
 function logList(){
@@ -357,25 +363,25 @@ function logList(){
     + (sc.plan.replans||[]).map(r=>'<div><b>'+kst(r.t)+'</b>복행 '+r.cs+' → 미출발 '+r.n+'편 재계획'+(r.cancelled?' · 결항 '+r.cancelled:'')+'</div>').join('');
 }
 
-/* ── 배차 간격별 비교 ── */
+/* ── 유입 수요율별 비교 ── */
 function sweepTable(){
   const S=AID.sweep; if(!S){ document.getElementById('sweepSec').style.display='none'; return; }
-  const names={d0721:'7/21 · 15 방향 종일', d0904:'9/4 · 33→15 전환'};
+  const names={d0721:'7/21 · 15 방향 종일(남쪽 회랑 폐쇄)', d0904:'9/4 · 33→15 전환'};
   let h='', best=null;
   Object.keys(S.days).forEach(dk=>{
     const rows=S.days[dk].rows;
     h+='<table style="margin-bottom:14px"><thead><tr><th>'+(names[dk]||dk)+'</th>'
-      +'<th colspan="3" style="color:var(--base)">현행 (전술적 홀딩)</th>'
-      +'<th colspan="4" style="color:var(--ai)">AI (사전 분리)</th></tr>'
-      +'<tr><th>배차</th><th>완료</th><th>결항</th><th>홀딩(분)</th><th>완료</th><th>결항</th><th>홀딩(분)</th><th>계획지연(초)</th></tr></thead><tbody>';
-    Object.keys(rows).map(Number).sort((a,b)=>a-b).forEach(hw=>{
-      const b=rows[hw].base, a=rows[hw].ai;
-      const ok=a.cancelled===0 && a.plan_delay_avg<=300;
-      if(ok && (!best||hw<best.hw)) best={hw:hw,dk:dk,a:a};
-      h+='<tr'+(ok?' style="background:rgba(74,222,128,.07)"':'')+'><td>'+hw+'분</td>'
-        +'<td class="base">'+b.completed+'</td><td class="base">'+b.cancelled+'</td><td class="base">'+Math.round(b.hold_s/60)+'</td>'
-        +'<td class="ai">'+a.completed+'</td><td class="ai">'+a.cancelled+'</td><td class="ai">'+Math.round(a.hold_s/60)+'</td>'
-        +'<td class="ai">'+Math.round(a.plan_delay_avg)+'</td></tr>';
+      +'<th colspan="3" style="color:var(--base)">현행 (게이트에서 즉석 판단)</th>'
+      +'<th colspan="3" style="color:var(--ai)">AI (사전 슬롯 배정)</th></tr>'
+      +'<tr><th>유입 수요</th><th>처리</th><th>거부</th><th>회랑 홀딩(분)</th>'
+      +'<th>처리</th><th>거부</th><th>게이트 밖(초)</th></tr></thead><tbody>';
+    Object.keys(rows).map(Number).sort((a,b)=>a-b).forEach(rt=>{
+      const b=rows[rt].base, a=rows[rt].ai;
+      const ok=a.rejected===0 && a.gate_wait<=300;
+      if(ok && (!best||rt>best.rt)) best={rt:rt,dk:dk,a:a};
+      h+='<tr'+(ok?' style="background:rgba(74,222,128,.07)"':'')+'><td>시간당 '+rt+'편</td>'
+        +'<td class="base">'+b.completed+'</td><td class="base">'+b.rejected+'</td><td class="base">'+Math.round(b.hold_s/60)+'</td>'
+        +'<td class="ai">'+a.completed+'</td><td class="ai">'+a.rejected+'</td><td class="ai">'+Math.round(a.gate_wait)+'</td></tr>';
     });
     h+='</tbody></table>';
   });
@@ -383,10 +389,10 @@ function sweepTable(){
   const pr=AID.prof, occ=Object.keys(pr).reduce((s,r)=>s+(pr[r].res_out-pr[r].res_in),0)/4;
   const cap=3600/(occ+10);
   document.getElementById('sweepNote').innerHTML=
-    '버티포트 발착권 평균 점유 <b>'+Math.round(occ)+'초</b> → 이론 한계 <b>시간당 '+cap.toFixed(1)+'편</b>. '
-    +(best? '네 노선 기준 <b>배차 '+best.hw+'분</b>(시간당 '+(4*60/best.hw).toFixed(1)+'편)부터 결항 없이 수요를 모두 처리하고 계획지연도 5분 안에 들어온다 — 권장 운영점.'
+    '버티포트 발착권 평균 점유 <b>'+Math.round(occ)+'초</b> → 물리적 한계 <b>시간당 '+cap.toFixed(1)+'편</b>. '
+    +(best? '실제로는 유입이 고르지 않아(포아송 도착) <b>시간당 '+best.rt+'편</b>까지가 거부 없이 게이트 밖 대기 5분 이내로 받아지는 구간이다.'
           : '')
-    +' 이보다 촘촘하게 넣으면 AI는 초과 수요를 <b>지상 대기</b>로 흡수하고(계획지연 증가), 현행은 <b>공중 홀딩과 결항</b>으로 배출한다.';
+    +' 그 이상을 받으면 두 방식 모두 대기가 쌓이지만, 현행은 그 대기를 <b>회랑 안 공중 홀딩</b>으로 치르고 AI는 <b>게이트 밖</b>으로 돌린다.';
 }
 
 /* ── 재생 ── */
