@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>회랑 운영 사례집</title>
+<meta name="description" content="인천공항 상공 59일 녹화에서 추린 특별 이벤트와, 그때 UAM 회랑이 어떻게 대응했는지를 재생한다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{
+  --bg:#070b12; --panel:#0d1421; --panel2:#111a2b; --rule:#1f2b3f;
+  --ink:#e8eef8; --dim:#93a4c0; --dim2:#61738f;
+  --hot:#ff7a59; --cool:#2ad4ee; --good:#4ade80; --warn:#f0a02c; --bad:#ff6b6b;
+  --mono:"IBM Plex Mono",ui-monospace,monospace; --sans:"IBM Plex Sans KR",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55}
+a{color:var(--cool)}
+header{padding:15px 20px 13px;border-bottom:1px solid var(--rule);background:var(--panel);
+  display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+h1{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em}
+header .sub{margin:3px 0 0;color:var(--dim);font-size:12.5px;max-width:78ch}
+header .right{margin-left:auto;font-size:12.5px}
+#top{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:1px;background:var(--rule)}
+section{background:var(--panel);padding:14px 16px 16px;min-width:0}
+h2{margin:0 0 10px;font-size:12px;font-weight:700;color:var(--dim);letter-spacing:.08em}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+th,td{padding:5px 6px;border-bottom:1px solid var(--rule);text-align:right}
+th:first-child,td:first-child{text-align:left;font-family:var(--sans);color:var(--ink);font-size:12.5px}
+thead th{color:var(--dim2);font-weight:600;font-size:11px}
+td.n{color:var(--hot);font-weight:700}
+.kdesc{color:var(--dim);font-size:11px;font-family:var(--sans);line-height:1.4}
+#caselist{display:flex;flex-wrap:wrap;gap:8px}
+.cbtn{background:var(--panel2);border:1px solid var(--rule);border-radius:3px;padding:8px 11px;
+  cursor:pointer;text-align:left;color:var(--ink);font-family:var(--sans);font-size:12.5px;line-height:1.35;
+  max-width:260px}
+.cbtn:hover{border-color:#3a5070}
+.cbtn.on{border-color:var(--cool);background:#10293a}
+.cbtn .k{display:block;font:600 10.5px var(--mono);color:var(--cool);letter-spacing:.04em}
+.cbtn .d{display:block;color:var(--dim);font-size:11px;margin-top:2px}
+#stage{display:grid;grid-template-columns:1fr minmax(320px,430px);gap:1px;background:var(--rule)}
+#mapWrap{position:relative;background:var(--bg);height:min(62vh,620px)}
+#map{position:absolute;inset:0}
+#hud{position:absolute;left:12px;top:12px;z-index:500;background:rgba(7,11,18,.88);border:1px solid var(--rule);
+  border-radius:3px;padding:8px 12px;font-family:var(--mono);font-size:12px;min-width:210px}
+#hud .clk{font-size:20px;font-weight:700;letter-spacing:.02em}
+#hud .clk small{font-size:11px;color:var(--dim);margin-left:6px;font-weight:500}
+#hud .row{margin-top:4px;color:var(--dim)}
+#hud b{color:var(--ink)}
+#bar{display:flex;gap:10px;align-items:center;padding:9px 16px;background:var(--panel);border-top:1px solid var(--rule);flex-wrap:wrap}
+button,select{font-family:var(--sans);font-size:12.5px;color:var(--ink);background:var(--panel2);
+  border:1px solid var(--rule);border-radius:3px;padding:6px 10px;cursor:pointer}
+button:hover,select:hover{border-color:#3a5070}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cool);outline-offset:1px}
+#slider{flex:1;min-width:200px;accent-color:#2ad4ee}
+.story{font-size:13px;line-height:1.7}
+.story .lab{display:inline-block;font:600 10.5px var(--mono);letter-spacing:.06em;padding:2px 7px;border-radius:2px;
+  border:1px solid currentColor;margin-bottom:6px}
+.lab.sit{color:var(--hot)} .lab.act{color:var(--good)}
+.story p{margin:4px 0 14px}
+#log{max-height:260px;overflow:auto;border:1px solid var(--rule);border-radius:3px;
+  font-family:var(--mono);font-size:11px;line-height:1.45;margin-top:4px}
+#log div{padding:4px 7px;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer}
+#log div:hover{background:rgba(255,255,255,.06)}
+#log div.cur{background:rgba(42,212,238,.13)}
+#log b{color:var(--cool);font-weight:600;margin-right:6px}
+#log .ga,#log .close{color:#ff9d85} #log .reopen{color:var(--good)} #log .hold{color:var(--warn)}
+#log .flow,#log .notice{color:#7dd3fc} #log .reroute{color:#c4b5fd}
+#log .conf{color:#ff6b6b;font-weight:600}
+footer{padding:14px 20px 28px;color:var(--dim);font-size:11.5px;border-top:1px solid var(--rule);background:var(--panel)}
+.uk{position:relative}
+.uk .d{position:absolute;left:-6px;top:-6px;width:12px;height:12px;transform:rotate(45deg);
+  border:2px solid #0b1220;box-shadow:0 0 0 1.5px #fff}
+.uk .l{position:absolute;left:11px;top:-8px;white-space:nowrap;font:600 10.5px var(--mono);
+  color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
+.uk .l i{font-style:normal;color:#cbd5e1;font-weight:500}
+.tk{position:relative}
+.tk .p{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#ff5a5a;opacity:.9}
+.tk.star .p{width:12px;height:12px;left:-6px;top:-6px;background:#ffd166;box-shadow:0 0 0 2px #7a5b00}
+.tk .l{position:absolute;left:9px;top:-7px;white-space:nowrap;font:500 10px var(--mono);color:#ffd9d9;
+  text-shadow:0 0 3px #000,0 0 3px #000}
+.tk.star .l{color:#ffe9a8;font-weight:700}
+@media (max-width:1000px){#top,#stage{grid-template-columns:1fr}#mapWrap{height:48vh}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>회랑 운영 사례집</h1>
+    <p class="sub">인천공항 상공을 <b id="hdays">59일</b> 녹화한 실측 ADS-B에서 특별한 이벤트를 전수로 추려내고,
+      그중 대표 사례에서 <b>무슨 일이 있었고 우리 회랑이 어떻게 대응했는지</b>를 그 시각 교통 위에 그대로 재생한다.</p>
+  </div>
+  <div class="right"><a href="./">← 통합 항로도</a> · <a href="ai.html">사전 분리 비교 →</a></div>
+</header>
+
+<div id="top">
+  <section>
+    <h2>59일 전수 집계</h2>
+    <table id="stats"></table>
+    <p class="kdesc" style="margin-top:8px" id="statnote"></p>
+  </section>
+  <section>
+    <h2>대표 사례 — 클릭하면 그 시각으로</h2>
+    <div id="caselist"></div>
+  </section>
+</div>
+
+<div id="stage">
+  <div id="mapWrap">
+    <div id="map"></div>
+    <div id="hud"></div>
+    <div id="bar" style="position:absolute;left:0;right:0;bottom:0;z-index:500;background:rgba(7,11,18,.92)">
+      <button id="play">▶ 재생</button>
+      <button id="pause">⏸ 정지</button>
+      <button id="reset">⏮ 처음</button>
+      <select id="speed"><option value="10">10x</option><option value="20" selected>20x</option>
+        <option value="40">40x</option><option value="80">80x</option></select>
+      <input id="slider" type="range" min="0" max="1000" value="0" aria-label="시각">
+    </div>
+  </div>
+  <section>
+    <h2 id="ctitle">사례</h2>
+    <div class="story">
+      <span class="lab sit">무슨 일이</span>
+      <p id="story"></p>
+      <span class="lab act">회랑은 어떻게</span>
+      <p id="rule"></p>
+    </div>
+    <h2 style="margin-top:6px">대응 기록</h2>
+    <div id="log"></div>
+  </section>
+</div>
+
+<footer>
+  교통은 OpenSky 수신 실측 ADS-B(기압고도 → RKSI METAR QNH 보정), 회랑·분리기준·운영규칙은 설계결정 로그 REV 23–27을 따른다.
+  UAM 운항은 권장 수용 유입률 <b id="frate">시간당 12편</b>으로 AI가 진입 시각을 배정한 결과다.
+  <span id="gen"></span>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="cases_data.js"></script>
+<script>
+(function(){
+if(typeof CASES==='undefined'){ document.body.insertAdjacentHTML('beforeend','<p style="padding:20px;color:#ff6b6b">cases_data.js를 찾을 수 없습니다.</p>'); return; }
+const C=CASES.corridor, RE=3440.065, CL=Math.cos(C.lat0*Math.PI/180);
+const toXY=(la,lo)=>[lo*Math.PI/180*RE*CL, la*Math.PI/180*RE];
+const toLL=(x,y)=>[y/RE*180/Math.PI, x/(RE*CL)*180/Math.PI];
+const CXY=C.pts.map(p=>toXY(p[0],p[1])), SL=[], CUM=[0];
+for(let i=0;i<CXY.length-1;i++){ SL.push(Math.hypot(CXY[i+1][0]-CXY[i][0],CXY[i+1][1]-CXY[i][1])); CUM.push(CUM[i]+SL[i]); }
+function posAt(s,lat){ s=Math.max(0,Math.min(CUM[CUM.length-1],s)); let k=0; while(k<SL.length-1&&s>CUM[k+1]) k++;
+  const t=(s-CUM[k])/SL[k], ux=(CXY[k+1][0]-CXY[k][0])/SL[k], uy=(CXY[k+1][1]-CXY[k][1])/SL[k];
+  return toLL(CXY[k][0]+t*(CXY[k+1][0]-CXY[k][0])-uy*(lat||0), CXY[k][1]+t*(CXY[k+1][1]-CXY[k][1])+ux*(lat||0)); }
+function span(a,b,lat,n){ const o=[]; n=n||36; for(let i=0;i<=n;i++) o.push(posAt(a+(b-a)*i/n,lat)); return o; }
+function band(a,b){ return span(a,b,C.hw).concat(span(a,b,-C.hw).reverse()); }
+const kst=t=>new Date((t+9*3600)*1000).toISOString().substr(11,8);
+const kstD=t=>new Date((t+9*3600)*1000).toISOString().substr(5,5).replace('-','/');
+
+/* 지도 */
+const map=L.map('map',{zoomControl:false,attributionControl:false,preferCanvas:true}).setView([37.505,126.52],11);
+L.control.zoom({position:'topright'}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,opacity:.5}).addTo(map);
+map.createPane('cor').style.zIndex=405; map.createPane('ln').style.zIndex=415;
+map.createPane('ac').style.zIndex=620; map.createPane('uam').style.zIndex=650;
+map.getPane('cor').style.pointerEvents='none';
+const corN={b:L.polygon(band(0,C.s_hdy),{pane:'cor',stroke:false,fillOpacity:.15}).addTo(map),
+            l:L.polyline(span(0,C.s_hdy,0),{pane:'ln',weight:5,opacity:.9}).addTo(map)};
+const corS={b:L.polygon(band(C.s_hdy,C.s_end),{pane:'cor',stroke:false,fillOpacity:.15}).addTo(map),
+            l:L.polyline(span(C.s_hdy,C.s_end,0),{pane:'ln',weight:5,opacity:.9}).addTo(map)};
+C.pts.forEach(p=>L.marker([p[0],p[1]],{pane:'ln',interactive:false,icon:L.divIcon({className:'uk',
+  html:'<div class="d" style="background:#e5e7eb;width:8px;height:8px;left:-4px;top:-4px"></div><div class="l"><i>'+p[2]+'</i></div>',iconSize:[0,0]})}).addTo(map));
+const gaBand=L.polygon([[0,0]],{pane:'cor',color:'#ff6b3d',weight:2,dashArray:'6 5',fillColor:'#ff6b3d',fillOpacity:.3});
+const uamL=L.layerGroup().addTo(map), trL=L.layerGroup().addTo(map);
+const UM=new Map(), TM=new Map();
+
+/* 상태 */
+let cs=null, t=0, playing=false, raf=null, last=0, star=null;
+const S=CASES.stats;
+document.getElementById('hdays').textContent=S.days+'일';
+document.getElementById('frate').textContent='시간당 '+CASES.rate+'편';
+document.getElementById('gen').textContent=' · '+S.range[0]+' ~ '+S.range[1]+' · 생성 '+CASES.generated;
+
+/* 집계표 */
+(function(){
+  const ex={'활주로 전환':[56,0.9,'15 ↔ 33 운영방향 전환'],
+            '무선두절(7600)':[1,0.02,'AMX090 · 7/23 04:53 · 회랑 동쪽 33 NM']};
+  const rows=Object.entries(S.classes).map(([k,v])=>[k,v.n,v.per_day,v.desc])
+    .concat(Object.entries(ex).map(([k,v])=>[k,v[0],v[1],v[2]]))
+    .sort((a,b)=>b[1]-a[1]);
+  let h='<thead><tr><th>분류</th><th>건수</th><th>하루</th></tr></thead><tbody>';
+  rows.forEach(([k,n,pd,desc])=>{
+    h+='<tr><td>'+k+'<span class="kdesc">'+(desc||'')+'</span></td><td class="n">'+n.toLocaleString()+'</td><td>'+pd+'</td></tr>';
+  });
+  document.getElementById('stats').innerHTML=h+'</tbody>';
+  const tot=rows.reduce((s,r)=>s+r[1],0);
+  document.getElementById('statnote').innerHTML='합계 <b style="color:#e8eef8">'+tot.toLocaleString()+'건</b>. '
+    +'&lsquo;층 고도 근접&rsquo;은 회랑 가장자리에서 1.5 NM 안을 우리 층 고도(±500 ft)로 지나간 기체로, 규칙이 실제로 다뤄야 하는 유형이다. '
+    +'지상 이동체·계류 항적은 고도 300 ft 이하 &amp; 40 kt 미만으로 걸러냈다.';
+})();
+
+/* 사례 버튼 */
+const list=document.getElementById('caselist');
+CASES.cases.forEach((c,i)=>{
+  const b=document.createElement('button'); b.className='cbtn'; b.dataset.i=i;
+  b.innerHTML='<span class="k">'+c.key+' · '+c.kind+'</span>'+c.title+'<span class="d">'+c.day+' '+kst(c.t0)+'</span>';
+  b.onclick=()=>load(i); list.appendChild(b);
+});
+
+function stateAt(fl,tt){ const tr=fl.tr; if(tt<tr[0][0]||tt>tr[tr.length-1][0]) return null;
+  let lo=0,hi=tr.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(tr[m][0]<=tt) lo=m; else hi=m; } return tr[lo]; }
+function trail(fl,tt,win){ win=win||300; const tr=fl.tr,o=[];
+  for(let i=0;i<tr.length;i++){ const p=tr[i]; if(p[0]>tt) break; if(p[0]>=tt-win) o.push([p[1],p[2]]); } return o; }
+function frameAt(tt){ const F=cs.traffic.frames; if(tt<F[0][0]) return [];
+  let lo=0,hi=F.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(F[m][0]<=tt) lo=m; else hi=m; } return F[lo][1]; }
+function southOpen(tt){ let cur='33'; cs.flows.forEach(f=>{ if(f[0]<=tt) cur=f[1]; });
+  if(cur==='15') return false;
+  for(const f of cs.flows){ if(f[1]==='15'&&f[0]-360<=tt&&tt<f[0]) return false; } return true; }
+
+function render(){
+  const R=cs.runs.ON, live=new Set(); let nh=0;
+  R.flights.forEach(f=>{
+    const st=stateAt(f,t); if(!st||st[4]==='d') return; live.add(f.id);
+    if(st[4]==='h') nh++;
+    let u=UM.get(f.id);
+    if(!u){ u={mk:L.marker([st[1],st[2]],{pane:'uam',interactive:false,icon:L.divIcon({className:'uk',html:'',iconSize:[0,0]})}),
+             tl:L.polyline([],{pane:'ln',color:'#2ad4ee',weight:2,opacity:.8,dashArray:'2 4'})};
+      uamL.addLayer(u.mk); uamL.addLayer(u.tl); UM.set(f.id,u); }
+    u.mk.setLatLng([st[1],st[2]]); u.tl.setLatLngs(trail(f,t));
+    const c=st[4]==='h'?'#f0a02c':'#2ad4ee'; u.tl.setStyle({color:c});
+    if(u.mk._icon) u.mk._icon.innerHTML='<div class="d" style="background:'+c+'"></div><div class="l">'+f.id+(f.rr?'↺':'')+' <i>'+st[3]+' ft'+(st[4]==='h'?' · 홀딩':'')+'</i></div>';
+  });
+  UM.forEach((u,id)=>{ if(!live.has(id)){ uamL.removeLayer(u.mk); uamL.removeLayer(u.tl); UM.delete(id); } });
+  const seen=new Set();
+  frameAt(t).forEach(r=>{ const i=r[0]; seen.add(i);
+    let m=TM.get(i);
+    const isStar=star && cs.traffic.ac[i][1].trim()===star;
+    if(!m){ m={mk:L.marker([r[1],r[2]],{pane:'ac',interactive:false,icon:L.divIcon({className:'tk'+(isStar?' star':''),html:'',iconSize:[0,0]})})};
+      trL.addLayer(m.mk); TM.set(i,m); }
+    m.mk.setLatLng([r[1],r[2]]);
+    if(m.mk._icon){ m.mk._icon.className='tk'+(isStar?' star':'')+' leaflet-marker-icon leaflet-zoom-animated leaflet-interactive';
+      m.mk._icon.innerHTML='<div class="p"></div><div class="l">'+cs.traffic.ac[i][1].trim()+' '+r[3]+'</div>'; }
+  });
+  TM.forEach((m,i)=>{ if(!seen.has(i)){ trL.removeLayer(m.mk); TM.delete(i); } });
+  const open=southOpen(t);
+  corN.l.setStyle({color:'#4ade80'}); corN.b.setStyle({fillColor:'#4ade80'});
+  corS.l.setStyle({color:open?'#4ade80':'#ff5a5a',dashArray:open?null:'9 7'});
+  corS.b.setStyle({fillColor:open?'#4ade80':'#ff5a5a'});
+  /* 복행 폐쇄 구간 */
+  let zone=null;
+  cs.runs.ON.events.forEach(e=>{ if(e[1]==='close'&&e[0]<=t) zone=e; if(e[1]==='reopen'&&e[0]<=t) zone=null; });
+  if(zone){ const m=zone[2].match(/(\d+\.\d+)–(\d+\.\d+)|(\d+\.\d+)-(\d+\.\d+)/);
+    const z=cs.runs.ON.events.find(x=>x[1]==='ga'&&x[0]<=zone[0]);
+    const zm=z? z[2].match(/([\d.]+)–([\d.]+)/):null;
+    if(zm){ gaBand.setLatLngs(band(+zm[1],+zm[2])); if(!map.hasLayer(gaBand)) gaBand.addTo(map); }
+  } else if(map.hasLayer(gaBand)) map.removeLayer(gaBand);
+  document.getElementById('hud').innerHTML='<div class="clk">'+kst(t)+'<small>'+kstD(t)+' KST</small></div>'
+    +'<div class="row">UAM <b>'+live.size+'</b>대'+(nh?' · 홀딩 <b style="color:#f0a02c">'+nh+'</b>':'')+' · 주변 교통 <b>'+TM.size+'</b>대</div>'
+    +'<div class="row">남쪽 회랑 '+(open?'<b style="color:#4ade80">운영</b>':'<b style="color:#ff6b6b">폐쇄</b>')+'</div>';
+  document.getElementById('slider').value=String(Math.round((t-cs.t0)/(cs.t1-cs.t0)*1000));
+  const L2=document.getElementById('log').children;
+  for(let i=0;i<L2.length;i++){ const tt=+L2[i].dataset.t; L2[i].classList.toggle('cur', tt<=t && t-tt<45); }
+}
+
+function logList(){
+  const el=document.getElementById('log');
+  const ev=cs.runs.ON.events.filter(e=>['ga','close','reopen','hold','unhold','flow','notice','reroute','residual','firstdep','cancel','divert'].includes(e[1]))
+    .map(e=>({t:e[0],k:e[1],m:e[2]}));
+  /* 분리 미달·근접도 같은 줄에 */
+  cs.runs.ON.conflicts.filter(c=>c.fast&&!c.aero).forEach(c=>ev.push({t:c.a,k:'conf',
+    m:'분리 미달 — '+c.f+' × '+c.cs+' (회랑 가장자리 '+c.dhc.toFixed(2)+' NM · 수직 '+c.dv+' ft)'}));
+  const off=cs.runs.OFF.conflicts.filter(c=>c.fast&&!c.aero).length;
+  ev.sort((a,b)=>a.t-b.t);
+  const rows=ev.length?ev:cs.runs.ON.events.map(e=>({t:e[0],k:e[1],m:e[2]}));
+  el.innerHTML=rows.map(e=>'<div data-t="'+e.t+'" class="'+e.k+'"><b>'+kst(e.t)+'</b>'+e.m+'</div>').join('')
+    +'<div style="color:#93a4c0;padding:6px 7px">이 구간 결과 — 규칙 적용 시 분리 미달 '
+    +cs.runs.ON.conflicts.filter(c=>c.fast&&!c.aero).length+'건 · 규칙을 끄면 '+off+'건</div>';
+  [...el.children].forEach(d=>{ if(d.dataset.t) d.onclick=()=>{ t=+d.dataset.t-20; render(); }; });
+}
+
+function load(i){
+  cs=CASES.cases[i]; t=cs.t0;
+  [...list.children].forEach((b,j)=>b.classList.toggle('on', j===i));
+  uamL.clearLayers(); trL.clearLayers(); UM.clear(); TM.clear();
+  if(map.hasLayer(gaBand)) map.removeLayer(gaBand);
+  document.getElementById('ctitle').textContent=cs.key+' · '+cs.title;
+  document.getElementById('story').textContent=cs.story;
+  document.getElementById('rule').textContent=cs.rule;
+  const m=cs.story.match(/^([A-Z]{2,3}\d+|[A-Z]{2}\d{3,})/); star=m?m[1]:null;
+  logList();
+  map.fitBounds(L.latLngBounds(span(0,C.s_end,0)).pad(0.15),{animate:false});
+  render();
+}
+function step(ts){ if(!playing) return;
+  const sp=+document.getElementById('speed').value;
+  if(last){ t+=(ts-last)/1000*sp; if(t>cs.t1){ t=cs.t1; playing=false; } }
+  last=ts; render(); raf=requestAnimationFrame(step); }
+document.getElementById('play').onclick=()=>{ if(playing) return; playing=true; last=0; raf=requestAnimationFrame(step); };
+document.getElementById('pause').onclick=()=>{ playing=false; if(raf) cancelAnimationFrame(raf); };
+document.getElementById('reset').onclick=()=>{ t=cs.t0; render(); };
+document.getElementById('slider').oninput=e=>{ t=cs.t0+(cs.t1-cs.t0)*e.target.value/1000; render(); };
+const Q=new URLSearchParams(location.search);
+const i0=Math.max(0, CASES.cases.findIndex(c=>c.key===Q.get('c')));
+load(i0);
+if(Q.get('at')){ const p=Q.get('at').split(':').map(Number), d=new Date((cs.t0+9*3600)*1000);
+  d.setUTCHours(p[0],p[1]||0,p[2]||0,0); const tt=d.getTime()/1000-9*3600;
+  if(tt>=cs.t0&&tt<=cs.t1){ t=tt; render(); } }
+})();
+</script>
+</body>
+</html>
