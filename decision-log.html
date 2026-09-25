@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 27">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 28">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 27 · 2026-09-26 00:10</b><br>
+    <b>REV 28 · 2026-09-26 01:19</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-09-26 00:10</span>
+    <span style="color:var(--rule)">최종 갱신 2026-09-26 01:19</span>
   </div>
 </header>
 
@@ -573,7 +573,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–27에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–28에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -615,6 +615,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">33</td><td class="item">활주로 전환</td><td class="concl">관제 예고 <b>6분 전</b> (초안)</td><td class="src">실측 33→15 전환 간격 중앙 9분·최소 1분 · 남쪽 회랑 비우는 데 최대 4.6분(이륙기, 상승 1,000 fpm) + 전파 30초 = 5.1분 → 예고 6분 유지 · 예고 늦으면 첫 15 출발 대기</td><td class="revc">24·25·26</td></tr>
         <tr><td class="no">34</td><td class="item">홀딩속도</td><td class="concl"><b>100 kt</b></td><td class="src">천이속도 90 kt의 약 1.1배. 2R 1.061 NM &lt; 반폭 1.248 · 홀딩픽스 GATE-N에서 2.20 NM 이상. 1.3배(117 kt)는 반폭 여유 0.007 NM라 기각. 패턴 점유는 픽스 전방 0.53 / 후방 2.20 NM이며 간격은 이 가장자리 기준(REV 26)</td><td class="revc">02·25·26</td></tr>
         <tr><td class="no">35</td><td class="item">버티포트 발착권</td><td class="concl">한 번에 <b>한 대</b><br>이론 한계 시간당 19.3편</td><td class="src">착륙장 1개. 노선별 점유 NA 123 · ND 239 · SA 137 · SD 209초(도착은 HDY 2.5 NM 확보~착륙, 출발은 허가~1.6 NM 이탈). 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26</td></tr>
+        <tr><td class="no">37</td><td class="item">복행 대응 구간</td><td class="concl"><b>감시 추종 보호구간</b><br>기체 전후 ±2 NM</td><td class="src">복행 101건 중 25건이 회랑 폭 안, 17건은 공시 경로 고정 구간 밖(최소 층차 25 ft). 인지 30초 뒤 예측 구간으로 닫고, 감시로 복행기를 따라가며 보호구간을 이동. 이탈 후 15분간 감시해 재접근 시 재폐쇄</td><td class="revc">24·<b>28</b></td></tr>
         <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>게이트 진입 허가 배정</td><td class="src">각지에서 GATE-N·S로 오는 기체의 ETA를 받아 버티포트 슬롯을 역산해 진입 시각을 통보(ConOps 1.5 4-3-3). 같은 유입(시간당 16편)에서 회랑 안 공중 홀딩 583분 → 0분. 권장 수용 유입률 시간당 12편(거부 0·게이트 밖 대기 5분 이내)</td><td class="revc">27</td></tr>
       </tbody>
     </table>
@@ -626,11 +627,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 27건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 28건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev28">REV 28</a></td><td class="k2">복행대응</td><td class="src">복행 폐쇄를 고정 구간에서 감시 추종 보호구간으로 &mdash; 복행 25%가 회랑 폭 안으로 들어온다</td></tr>
         <tr><td class="v"><a href="#rev27">REV 27</a></td><td class="k2">교통관리</td><td class="src">AI 전략적 사전 분리 &mdash; 게이트 진입 허가를 미리 배정해 회랑 안 공중 홀딩 제거 &middot; 권장 수용 유입률 시간당 12편</td></tr>
         <tr><td class="v"><a href="#rev26">REV 26</a></td><td class="k2">발착프로파일</td><td class="src">발착은 경로 경사가 아니라 버티포트 수직 &mdash; 상승 1,000 / 강하 2,400 fpm &middot; 표준 대기패턴 점유 구간 정의</td></tr>
         <tr><td class="v"><a href="#rev25">REV 25</a></td><td class="k2">기체속도</td><td class="src">Joby S4 속도 기준 확정 &mdash; 천이 90 kt &middot; 홀딩 100 kt &middot; 남쪽은 40 kt 저속 강하 &middot; 전환 예고 6분</td></tr>
@@ -666,6 +668,50 @@ h2{scroll-margin-top:60px}
 
 
   <div class="log">
+
+    <article class="entry" id="rev28">
+      <div class="meta"><span class="rev">REV 28</span><span class="tag">복행대응</span><span class="dt">2026-09-26 01:19</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">복행 폐쇄를 고정 구간에서 <b>감시 추종 보호구간</b>으로 &mdash; 복행 4건 중 1건은 회랑 안으로 들어온다</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>REV 24는 복행 시 닫을 구간을 <b>공시 복행경로</b>로 계산해 고정했다(15 방향 7.06&ndash;11.48 NM · 33 방향 0.00&ndash;1.55 NM). 녹화 59일의 복행 101건 항적을 전수로 회랑에 투영해 보니, 실제 복행은 관제 유도로 공시 경로를 벗어나 <b>회랑의 전혀 다른 구간</b>으로 들어온다. 고정 구간으로는 덮이지 않는다.</p>
+        <div class="cx">
+<div class="cx-title">① 전수 확인 &mdash; 복행 101건(항적 확인 100건)</div>
+<div class="cx-tw"><table><tbody><tr><td>회랑 폭(&plusmn;1.248 NM) 안으로 들어온 복행</td><td><b>25건 (25%)</b></td><td>33 방향 17 · 15 방향 8</td></tr><tr><td>그중 공시 경로 고정 구간 <b>밖</b>까지 들어온 것</td><td><b>17건</b></td><td></td></tr><tr><td>회랑 안에서 우리 층과 500 ft 이내였던 복행</td><td><b>10건</b></td><td></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">최소 층차</td><td>VJC834 <b>25 ft</b> (9/01) · ICV4093 67 ft · AAR115 70 ft · KAL1408 90 ft · KAL706 <b>142 ft</b></td></tr><tr><td class="nw">최장 침범</td><td>KAL706 (9/05, 33 방향) 구간 밖 <b>4.82&ndash;14.34 NM</b> &mdash; 회랑 9.5 NM를 2,592&ndash;2,869 ft로 훑고 지나감</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 대표 사례 &mdash; KAL1408 <span class="dim">(2026-08-22 11:26:55 · 15 방향)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">11:27:53</td><td>s 8.11 NM (HDY 상공) · 중심선 1.16 NM · <b>2,540 ft</b></td><td>&rarr; NB 층과 <b>90 ft</b> 차이</td></tr><tr><td class="nw">11:28:46</td><td>s 10.08 NM · 회랑 폭 안 · 3,041 ft</td><td></td></tr><tr><td class="nw">11:30:45</td><td>고정 구간 방식은 여기서 <span class="c">이미 재가동</span> (구간에서 멀어졌다고 판정)</td><td></td></tr><tr><td class="nw">11:33:01</td><td>관제 유도로 크게 선회해 <b>s 0.00 NM(GATE-N) 상공</b>을 3,042 ft로 다시 통과</td><td></td></tr></tbody></table></div>
+<div class="cx-p">고정 구간은 &ldquo;복행기가 지정 구간에서 멀어졌는가&rdquo;만 보므로, 회랑의 <b>다른 쪽</b>으로 돌아오는 것을 놓친다</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 결정 &mdash; <span class="g">감시 추종 보호구간</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1. 폐쇄 시작</td><td>복행 인지 + 전파 30초 후, 공시 경로 기반 <b>예측 구간</b>으로 먼저 닫는다</td></tr><tr><td class="nw">2. 추종</td><td>감시로 복행기를 계속 보고, 회랑 중심선 <b>2.748 NM</b>(반폭+1.5) 안 &amp; 층 고도 <b>&plusmn;700 ft</b>면</td></tr></tbody></table></div>
+<div class="cx-p">보호구간을 기체 전후 <b>&plusmn;2 NM</b>로 옮긴다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">3. 회피</td><td>UAM은 방향·노선과 무관하게 <b>보호구간 앞에서 정지</b>(구간 안이면 최단으로 빠져나감,</td></tr></tbody></table></div>
+<div class="cx-p">최종강하 500 ft 이하는 착륙 계속)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">4. 재가동</td><td>회랑에서 벗어나고 <b>60초</b> 유지된 뒤 (최소 폐쇄 60초 충족 시)</td></tr><tr><td class="nw">5. 감시 지속</td><td>복행 후 <b>15분</b>간 계속 본다 &mdash; 다시 접근하면 <b>재폐쇄</b></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">KAL1408</td><td>11:27:25 폐쇄 &rarr; 11:27:29 보호구간 6.11&ndash;10.11 NM로 이동 &rarr; 11:30:45 재가동</td></tr></tbody></table></div>
+<div class="cx-p">&rarr; <b>11:31:53 재접근 → 보호구간 0.00&ndash;3.64 NM로 재폐쇄</b> &rarr; 11:34:42 재가동</div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 효과와 비용 <span class="dim">(회랑 안 침범 25건 전수 · 유입 12편/h)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">폐쇄시간 합계</td><td>고정 구간 2,257초</td><td>&rarr;</td><td>감시 추종 <b>8,402초</b> (3.7배) &middot; <b>25/25</b> 모두 폐쇄 확대</td></tr><tr><td>8/22 11:20&ndash;11:50 (복행 4건 연속)</td><td>분리 미달 <b>1 → 0</b> · 폐쇄 309 → 759초 · 홀딩 3 → 4회</td><td></td><td></td></tr><tr><td class="nw">하루 단위</td><td>7/21 폐쇄 181 → 571초 · 8/22(복행 4건) 폐쇄 397 → 970초 · 홀딩 3 → 4회 · 완료는 179편으로 동일 · 거부 0 유지</td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-p">복행 대응은 &ldquo;어디를 닫을지 미리 정하는 문제&rdquo;가 아니라 <b>복행기를 계속 보고 따라가는 문제</b>다</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전:</b> 복행 시 공시 복행경로로 계산한 고정 구간(15 방향 7.06&ndash;11.48 NM · 33 방향 0.00&ndash;1.55 NM)을 닫고, 복행기가 <b>그 구간</b>에서 멀어지면 재가동. 회랑의 다른 구간으로 돌아오는 경우는 열린 상태였다.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① 복행기 위치를 PSU가 실시간으로 받는 경로(관제 레이더 연계 또는 ADS-B 수신)와 갱신 주기
+          ② 트랜스폰더 결측&middot;수신 공백 시의 대체 규칙 &mdash; 현재는 감시가 끊기면 예측 구간을 유지하고 최소 폐쇄시간까지 기다린다
+          ③ 보호구간 반길이 2 NM은 UAM 순항 174 kt에서 41초에 해당한다. 복행기 속도(140&ndash;250 kt)를 반영한 가변 길이는 미검토.
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
 
     <article class="entry" id="rev27">
       <div class="meta"><span class="rev">REV 27</span><span class="tag">교통관리</span><span class="dt">2026-09-26 00:18</span></div>
@@ -716,7 +762,7 @@ h2{scroll-margin-top:60px}
     <article class="entry" id="rev26">
       <div class="meta"><span class="rev">REV 26</span><span class="tag">발착프로파일</span><span class="dt">2026-09-26 00:10</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">발착은 경로 경사가 아니라 버티포트 수직 &mdash; 상승 1,000 / 강하 2,400 fpm &middot; 표준 대기패턴 점유 구간 정의</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 24&middot;25는 UAM이 <b>회랑을 따라가며</b> 8:1(북) &middot; 4:1(남) 경사로 오르내린다고 보고 감속&middot;강하 시작점을 잡았다. 실제 셔틀 운용은 <b>버티포트 상공에서 고도를 만들고 회랑은 층 고도로 수평비행</b>하는 형태다. 프로파일을 그렇게 바꾸면 회랑 구간에서 고도 변화가 사라지고, 33L/R 최종접근 고도대(600&ndash;1,230 ft)를 회랑에서 지나갈 일 자체가 없어진다. 대기패턴도 도식이 아니라 표준 홀딩 기동으로 정의하고, 그 패턴이 회랑을 얼마나 차지하는지를 간격 기준에 반영했다.</p>
@@ -1817,7 +1863,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 27 · 2026-09-26 00:10</span>
+  <span>회랑1 설계결정 로그 · REV 28 · 2026-09-26 01:19</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 

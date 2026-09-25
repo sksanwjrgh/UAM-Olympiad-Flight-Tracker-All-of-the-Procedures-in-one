@@ -249,14 +249,13 @@ function render(){
   corN.l.setStyle({color:'#4ade80'}); corN.b.setStyle({fillColor:'#4ade80'});
   corS.l.setStyle({color:open?'#4ade80':'#ff5a5a',dashArray:open?null:'9 7'});
   corS.b.setStyle({fillColor:open?'#4ade80':'#ff5a5a'});
-  /* 복행 폐쇄 구간 */
+  /* 복행 보호구간 — 폐쇄·추종 이벤트가 싣고 온 실제 구간을 그린다 */
   let zone=null;
-  cs.runs.ON.events.forEach(e=>{ if(e[1]==='close'&&e[0]<=t) zone=e; if(e[1]==='reopen'&&e[0]<=t) zone=null; });
-  if(zone){ const m=zone[2].match(/(\d+\.\d+)–(\d+\.\d+)|(\d+\.\d+)-(\d+\.\d+)/);
-    const z=cs.runs.ON.events.find(x=>x[1]==='ga'&&x[0]<=zone[0]);
-    const zm=z? z[2].match(/([\d.]+)–([\d.]+)/):null;
-    if(zm){ gaBand.setLatLngs(band(+zm[1],+zm[2])); if(!map.hasLayer(gaBand)) gaBand.addTo(map); }
-  } else if(map.hasLayer(gaBand)) map.removeLayer(gaBand);
+  cs.runs.ON.events.forEach(e=>{ if(e[0]>t) return;
+    if((e[1]==='close'||e[1]==='track')&&e.length>=5) zone=[e[3],e[4]];
+    if(e[1]==='reopen') zone=null; });
+  if(zone){ gaBand.setLatLngs(band(zone[0],zone[1])); if(!map.hasLayer(gaBand)) gaBand.addTo(map); }
+  else if(map.hasLayer(gaBand)) map.removeLayer(gaBand);
   document.getElementById('hud').innerHTML='<div class="clk">'+kst(t)+'<small>'+kstD(t)+' KST</small></div>'
     +'<div class="row">UAM <b>'+live.size+'</b>대'+(nh?' · 홀딩 <b style="color:#f0a02c">'+nh+'</b>':'')+' · 주변 교통 <b>'+TM.size+'</b>대</div>'
     +'<div class="row">남쪽 회랑 '+(open?'<b style="color:#4ade80">운영</b>':'<b style="color:#ff6b6b">폐쇄</b>')+'</div>';
