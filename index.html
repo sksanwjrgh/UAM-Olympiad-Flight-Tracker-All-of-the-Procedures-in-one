@@ -1942,8 +1942,9 @@ function kpiTable(){
   let h='<table><tr><th>시나리오</th><th>ON</th><th>OFF</th>'+(d?'<th>하루ON</th><th>하루OFF</th>':'')+'</tr>';
   const r2=(lab,k,good)=>'<tr><td>'+lab+'</td><td class="'+(good&&on[k]<off[k]?'good':'')+'">'+on[k]+'</td><td class="'+(good&&off[k]>on[k]?'bad':'')+'">'+off[k]+'</td>'
      +(d?'<td class="'+(good&&d.ON[k]<d.OFF[k]?'good':'')+'">'+d.ON[k]+'</td><td class="'+(good&&d.OFF[k]>d.ON[k]?'bad':'')+'">'+d.OFF[k]+'</td>':'')+'</tr>';
-  h+=r2('분리 미달 (설계기준)','sep_loss',1)+r2('분리 미달 (명목)','sep_loss_nominal',1)+r2('HDY 1 NM 안','sep_loss_aerodrome',1)
-    +r2('운항편','flights')+r2('GATE-N 우회','rerouted')+r2('홀딩 (회)','holds')+r2('복행 폐쇄 (초)','ga_closed_s')+r2('전환 잔류 (대)','residual',1);
+  h+=r2('상용기 분리 미달','sep_loss',1)+r2('UAM끼리 (회랑)','uu_corr',1)+r2('UAM끼리 (발착)','uu_term',1)
+    +r2('HDY 1 NM 안','sep_loss_aerodrome',1)+r2('운항편','flights')+r2('결항','cancelled',1)+r2('GATE-N 우회','rerouted')
+    +r2('홀딩 (회)','holds')+r2('복행 폐쇄 (초)','ga_closed_s')+r2('전환 잔류 (대)','residual',1);
   h+='</table>'; document.getElementById('smKpi').innerHTML=h;
 }
 function logList(){
@@ -1985,7 +1986,10 @@ function render(jump){
     m.mk._icon && (m.mk._icon.className='leaflet-marker-icon stk'+(isGa?' ga':''));
     m.mk._icon && (m.mk._icon.innerHTML='<div class="p">'+planeSVG(trk||0,col)+'</div><div class="l">'+esc(cs)+' '+Math.round(alt/100)*100+(isGa?' 복행':'')+'</div>');
   });
-  TRM.forEach((m,ai)=>{ if(!seen.has(ai)){ L_TR.removeLayer(m.mk); L_TR.removeLayer(m.tr); TRM.delete(ai); } });
+  TRM.forEach((m,ai)=>{ if(!seen.has(ai)){ m.miss=(m.miss||0)+1;
+    if(m.miss>3){ L_TR.removeLayer(m.mk); L_TR.removeLayer(m.tr); TRM.delete(ai); }
+    else if(m.mk._icon) m.mk._icon.style.opacity=0.45; }      /* 수신 공백 — 15초까지 마지막 위치 유지 */
+    else { m.miss=0; if(m.mk._icon) m.mk._icon.style.opacity=1; } });
   /* UAM */
   const live=new Set();
   R.flights.forEach(f=>{ const st=stateAt(f,t); if(!st||(st[4]==='d')) return; live.add(f.id);
