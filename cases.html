@@ -187,6 +187,7 @@ document.getElementById('gen').textContent=' · '+S.range[0]+' ~ '+S.range[1]+' 
 /* 집계표 */
 (function(){
   const ex={'활주로 전환':[56,0.9,'15 ↔ 33 운영방향 전환'],
+            '김포 14 도착기 × GATE-N':[725,12.3,'김포 RWY 14 STAR가 북쪽 회랑 입구를 가로지름 · 층 ±700 ft 이내 10편'],
             '무선두절(7600)':[1,0.02,'AMX090 · 7/23 04:53 · 회랑 동쪽 33 NM']};
   const rows=Object.entries(S.classes).map(([k,v])=>[k,v.n,v.per_day,v.desc])
     .concat(Object.entries(ex).map(([k,v])=>[k,v[0],v[1],v[2]]))

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 28">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 29">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 28 · 2026-09-26 01:19</b><br>
+    <b>REV 29 · 2026-09-30 21:15</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-09-26 01:19</span>
+    <span style="color:var(--rule)">최종 갱신 2026-09-30 21:15</span>
   </div>
 </header>
 
@@ -573,7 +573,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–28에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–29에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -615,7 +615,8 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">33</td><td class="item">활주로 전환</td><td class="concl">관제 예고 <b>6분 전</b> (초안)</td><td class="src">실측 33→15 전환 간격 중앙 9분·최소 1분 · 남쪽 회랑 비우는 데 최대 4.6분(이륙기, 상승 1,000 fpm) + 전파 30초 = 5.1분 → 예고 6분 유지 · 예고 늦으면 첫 15 출발 대기</td><td class="revc">24·25·26</td></tr>
         <tr><td class="no">34</td><td class="item">홀딩속도</td><td class="concl"><b>100 kt</b></td><td class="src">천이속도 90 kt의 약 1.1배. 2R 1.061 NM &lt; 반폭 1.248 · 홀딩픽스 GATE-N에서 2.20 NM 이상. 1.3배(117 kt)는 반폭 여유 0.007 NM라 기각. 패턴 점유는 픽스 전방 0.53 / 후방 2.20 NM이며 간격은 이 가장자리 기준(REV 26)</td><td class="revc">02·25·26</td></tr>
         <tr><td class="no">35</td><td class="item">버티포트 발착권</td><td class="concl">한 번에 <b>한 대</b><br>이론 한계 시간당 19.3편</td><td class="src">착륙장 1개. 노선별 점유 NA 123 · ND 239 · SA 137 · SD 209초(도착은 HDY 2.5 NM 확보~착륙, 출발은 허가~1.6 NM 이탈). 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26</td></tr>
-        <tr><td class="no">37</td><td class="item">복행 대응 구간</td><td class="concl"><b>감시 추종 보호구간</b><br>기체 전후 ±2 NM</td><td class="src">복행 101건 중 25건이 회랑 폭 안, 17건은 공시 경로 고정 구간 밖(최소 층차 25 ft). 인지 30초 뒤 예측 구간으로 닫고, 감시로 복행기를 따라가며 보호구간을 이동. 이탈 후 15분간 감시해 재접근 시 재폐쇄</td><td class="revc">24·<b>28</b></td></tr>
+        <tr><td class="no">37</td><td class="item">복행 대응</td><td class="concl"><b>활주로별 공시 복행경로</b><br>+ 감시 추종</td><td class="src">공시 복행경로가 회랑을 지나는 활주로(15L·15R·33L·33R)만 그 구간을 닫고, 16·34는 감시만(실측 38건 중 회랑 진입 0). 활주로 미상이면 방향별 합산 구간. 복행기가 회랑으로 다가오면 기체 전후 ±2 NM를 따라가며 닫고, 재진입 선회를 고려해 30분간 감시</td><td class="revc">24·28·<b>29</b></td></tr>
+        <tr><td class="no">38</td><td class="item">김포 도착기</td><td class="concl"><b>감시 폐쇄</b><br>층 ±700 ft 접근 시</td><td class="src">김포 RWY 14 STAR가 GATE-N 위를 가로지름(59일 725편, 94%가 인천 15 방향 중). 중앙 4,065 ft라 대부분 분리되지만 3,150 ft 미만 10편 → 그 기체 주변만 닫음(59일 10회·997초). 전면 폐쇄는 30일 운휴라 기각</td><td class="revc">29</td></tr>
         <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>게이트 진입 허가 배정</td><td class="src">각지에서 GATE-N·S로 오는 기체의 ETA를 받아 버티포트 슬롯을 역산해 진입 시각을 통보(ConOps 1.5 4-3-3). 같은 유입(시간당 16편)에서 회랑 안 공중 홀딩 583분 → 0분. 권장 수용 유입률 시간당 12편(거부 0·게이트 밖 대기 5분 이내)</td><td class="revc">27</td></tr>
       </tbody>
     </table>
@@ -627,11 +628,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 28건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 29건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev29">REV 29</a></td><td class="k2">복행·김포</td><td class="src">복행은 활주로별 공시 복행경로로 판단 &middot; 김포 RWY 14 도착기 감시 폐쇄</td></tr>
         <tr><td class="v"><a href="#rev28">REV 28</a></td><td class="k2">복행대응</td><td class="src">복행 폐쇄를 고정 구간에서 감시 추종 보호구간으로 &mdash; 복행 25%가 회랑 폭 안으로 들어온다</td></tr>
         <tr><td class="v"><a href="#rev27">REV 27</a></td><td class="k2">교통관리</td><td class="src">AI 전략적 사전 분리 &mdash; 게이트 진입 허가를 미리 배정해 회랑 안 공중 홀딩 제거 &middot; 권장 수용 유입률 시간당 12편</td></tr>
         <tr><td class="v"><a href="#rev26">REV 26</a></td><td class="k2">발착프로파일</td><td class="src">발착은 경로 경사가 아니라 버티포트 수직 &mdash; 상승 1,000 / 강하 2,400 fpm &middot; 표준 대기패턴 점유 구간 정의</td></tr>
@@ -668,6 +670,65 @@ h2{scroll-margin-top:60px}
 
 
   <div class="log">
+
+    <article class="entry" id="rev29">
+      <div class="meta"><span class="rev">REV 29</span><span class="tag">복행·김포</span><span class="dt">2026-09-30 21:15</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">복행은 활주로별 공시 복행경로로 판단 &middot; 재진입 선회 감시 30분 &middot; 김포 RWY 14 도착기 감시 폐쇄</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>두 가지를 고쳤다. 첫째, REV 24&ndash;28은 복행이 나면 운영방향(15/33)만 보고 회랑을 닫았다. 그런데 인천의 네 쌍 활주로 가운데 <b>16·34 활주로의 공시 복행경로는 회랑을 지나지 않는다</b>. 둘째, 김포 RWY 14 방향 STAR가 <b>북쪽 회랑 입구(GATE-N) 위를 가로지른다</b>는 것을 확인했다. 인천 15 방향(남쪽 회랑 폐쇄)과 김포 14 방향은 둘 다 남동풍에서 쓰여 대부분 겹친다 &mdash; 유일하게 열린 북쪽 회랑이다.</p>
+        <div class="cx">
+<div class="cx-title">① 활주로별 공시 복행경로 &times; 회랑 <span class="dim">(AIP IAP 복행 구간 · 회랑 반폭 1.248 NM 기준)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">활주로</td><td>공시 복행경로</td><td>실측 복행(59일)</td><td>그중 회랑 진입</td></tr><tr><td class="nw">15L</td><td>통과 7.06&ndash;11.28 NM</td><td>7건</td><td>7건</td></tr><tr><td class="nw">15R</td><td>통과 7.18&ndash;11.48 NM</td><td>0건</td><td>&mdash;</td></tr><tr><td class="nw">16L</td><td><b>안 지남</b> (최소 4.08 NM)</td><td>0건</td><td>&mdash;</td></tr><tr><td class="nw">16R</td><td><b>안 지남</b> (최소 4.21 NM)</td><td>14건</td><td><b>0건</b></td></tr><tr><td class="nw">33L</td><td>통과 0.00&ndash;1.16 NM</td><td>0건</td><td>&mdash;</td></tr><tr><td class="nw">33R</td><td>통과 0.00&ndash;1.55 NM</td><td>43건</td><td>17건</td></tr><tr><td class="nw">34L</td><td><b>안 지남</b> (최소 3.45 NM)</td><td>23건</td><td><b>0건</b></td></tr><tr><td class="nw">34R</td><td><b>안 지남</b> (최소 3.23 NM)</td><td>1건</td><td><b>0건</b></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">활주로 판별</td><td>복행 직전 3분 항적을 각 활주로 최종접근 코스(FAF&rarr;MAPt)에 투영해 횡오차가 가장 작은 활주로 (88/101건)</td></tr></tbody></table></div>
+<div class="cx-p">판별 결과가 인천 도착 활주로 배정(15L&middot;16R / 33R&middot;34L)과 일치</div>
+<div class="cx-p"><span class="g">16&middot;34 활주로 복행 38건(43%)은 한 건도 회랑에 들어오지 않았다</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 결정 &mdash; 복행 폐쇄 판단 순서</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1. 활주로를 안다</td><td>그 활주로의 공시 복행경로가 회랑을 지나면 <b>그 구간</b>을 닫는다</td></tr><tr><td class="nw">2. 지나지 않는다</td><td><b>닫지 않고 감시만</b> 한다 &mdash; 관제 유도로 회랑에 다가오면 그때 닫는다(REV 28 감시 추종)</td></tr><tr><td class="nw">3. 활주로를 모른다</td><td>운영방향별 합산 구간(15: 7.06&ndash;11.48 / 33: 0.00&ndash;1.55)을 닫는다 &mdash; 보수적 기본값</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">8/22 11:23&ndash;11:44</td><td>16R 복행 4건(JNA862&middot;KAL438&middot;CES579&middot;DLH718) &rarr; 폐쇄 없이 감시</td></tr></tbody></table></div>
+<div class="cx-p">같은 시간대 15L 복행 KAL1408 &rarr; 폐쇄 후 되돌아올 때마다 재폐쇄(11:31, 11:39)</div>
+<div class="cx-p">이 구간 폐쇄 759 &rarr; 519초 &middot; 홀딩 4 &rarr; 3회 &middot; 분리 미달 0 유지</div>
+<div class="cx-p">복행 발생 33일 전체 · 폐쇄 9,592 → <b>7,763초</b> · 홀딩 65 → 50회 · 분리 미달 13 → 13 · 처리 5,906 → 5,906편</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 복행 후 재진입 선회 &mdash; 관제 벡터 유도 <span class="dim">(공항 4 NM 밖으로 나간 뒤 재착륙까지 · 59일 실측)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">분석</td><td>복행 77건 &middot; 재착륙 확인 68건 &middot; 선회 시간 중앙 13분</td></tr><tr><td class="nw">선회 중</td><td>회랑 폭 안 <b>19건(25%)</b> &middot; 설계기준 상자 35건(45%) &middot; 층 &plusmn;1,000 ft 23건 &middot; 층 &plusmn;500 ft <b>6건</b></td></tr><tr><td class="nw">활주로별</td><td>15L <b>7/7</b> &middot; 33R <b>27/30</b> &middot; 16R 0/13 &middot; 34L 0/21 &mdash; 16&middot;34는 선회도 회랑 쪽으로 오지 않는다</td></tr><tr><td class="nw">고도</td><td>33R 선회는 대부분 <b>3,000 ft 안팎</b>(관제 벡터 고도) &rarr; NB 층과 약 540 ft, 분리기준 500 ft를 겨우 넘는다</td></tr><tr><td class="nw">근접 사례</td><td>KAL1408(15L) 복행 13.5분 뒤 층차 92 ft &middot; KAL706(33R) 2.3분 뒤 143 ft</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><span class="c">감시창이 짧았다</span></td><td>선회는 복행 후 최대 <b>23.7분</b>까지 이어진다 &mdash; 15분 감시창으로는 7건을 놓친다</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 감시창 15분 &rarr; <b>30분</b> &middot; 해당 7건 폐쇄 2,297 &rarr; 2,707초(+410초) &middot; KAL1408은 11:50 세 번째 접근까지 잡는다</div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 김포 RWY 14 도착기 &times; 북쪽 회랑 <span class="dim">(공시 절차 + 59일 실측)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">공시</td><td>REBIT 2U &middot; LEGAK 1U STAR가 GATE-N 직후(s 0.30&ndash;2.25)에서 중심선과 <b>0.01 NM</b> &middot; DOKDO +4,000 ft</td></tr></tbody></table></div>
+<div class="cx-p">GUKDO&middot;KARBU&middot;OLMEN&middot;REBIT 2Z는 DU022&rarr;DU018 구간(0.60 NM)에 <span class="c">고도 제약 없음</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">실측</td><td>김포 착륙 5,765편 판별(14 방향 2,765 &middot; 32 방향 3,000) &middot; 김포 14 운영 30일</td></tr></tbody></table></div>
+<div class="cx-p">북쪽 회랑 설계기준 상자 통과 <b>732편(하루 12.4)</b> &mdash; 725편이 GATE-N 구역</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">그때 인천 운영방향</td><td>15 방향 <b>682편(94%)</b> &middot; 33 방향 43편</td></tr><tr><td class="nw">GATE-N 통과 최저고도</td><td>5% 3,959 &middot; 중앙 4,065 &middot; 95% 4,439 ft</td></tr></tbody></table></div>
+<div class="cx-p">3,150 ft 미만(층+700) <b>10편(1.4%)</b> &middot; 2,950 ft 미만(층+500) 8편 &middot; 최저 KNP975 2,528 ft(층차 78 ft)</div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 결정 &mdash; 전면 폐쇄 대신 감시 폐쇄</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">기각</td><td>김포 14 운영 중 북쪽 회랑 전면 폐쇄 &mdash; 30일, 그중 94%는 남쪽도 닫힌 때 &rArr; 회랑 전체 운휴</td></tr><tr><td class="nw">채택</td><td>김포 14 도착기를 GATE-N 도달 <b>5분 전</b>부터 감시, 회랑 중심선 2.748 NM &amp; 층 <b>&plusmn;700 ft</b> 안으로 오면</td></tr></tbody></table></div>
+<div class="cx-p">그 기체 전후 &plusmn;2 NM만 닫는다 &mdash; 복행 감시 추종과 같은 규칙</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">효과</td><td>59일 <b>10회 &middot; 997초</b> 폐쇄(건당 80&ndash;136초) &middot; 홀딩 +2회</td></tr></tbody></table></div>
+<div class="cx-p">현 수요에서는 그 순간 GATE-N에 UAM이 없어 분리 미달로 이어지지 않았지만, 8건은 설계기준상 분리 미달 조건이다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">병행</td><td>김포 접근관제와의 협정 &mdash; GATE-N 구역 통과 고도 하한(예: 3,500 ft) &middot; 제약 없는 DU022&rarr;DU018 구간 포함</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">별건</td><td>인천 이륙 &rarr; 김포 착륙(재배치&middot;회항) 71편 중 25편이 HDY 인근에서 층 고도를 지남 &mdash; 김포 STAR가 아니라 인천 출발기이므로</td></tr></tbody></table></div>
+<div class="cx-p">HDY 1 NM 비행장 관제 협조(미결)로 넘긴다</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전:</b> 복행이 나면 운영방향(15/33)만 보고 합산 구간(15: 7.06&ndash;11.48 · 33: 0.00&ndash;1.55 NM)을 닫았다. 김포 도착기는 회랑 규칙에 없었다.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① 활주로 판별을 실시간으로 할 근거 &mdash; 관제가 착륙 활주로를 PSU에 통보하는 항목(LOA)으로 두는 것이 정석이다 ② 김포 접근관제와 GATE-N 통과 고도 하한 협정
+          ③ 복행기 재진입 벡터 고도 &mdash; 3,000 ft로 북쪽 회랑 위를 지나면 NB 층과 540 ft뿐이다. 북쪽 회랑 상공 선회는 3,500 ft 이상으로 유도하도록 협정할지 검토
+          ④ 판별하지 못한 복행 13건은 보수적 기본값(방향별 합산 구간)으로 닫는다.
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
 
     <article class="entry" id="rev28">
       <div class="meta"><span class="rev">REV 28</span><span class="tag">복행대응</span><span class="dt">2026-09-26 01:19</span></div>
@@ -716,7 +777,7 @@ h2{scroll-margin-top:60px}
     <article class="entry" id="rev27">
       <div class="meta"><span class="rev">REV 27</span><span class="tag">교통관리</span><span class="dt">2026-09-26 00:18</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">AI 전략적 사전 분리 &mdash; 게이트 진입 허가를 미리 배정해 회랑 안 공중 홀딩을 없앤다</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>수요는 우리가 만드는 것이 아니다. 전국 각지에서 출발한 기체가 <b>GATE-N &middot; GATE-S에 도착</b>하고, 우리가 정하는 것은 <b>그 기체를 언제 회랑에 들여보낼 것인가</b>다. 현행처럼 게이트에서 즉석 판단해 들여보내면, 버티포트 발착권이 비지 않았을 때 그 대기를 <b>회랑 안 공중 홀딩</b>으로 치르게 된다. ConOps 1.5 4-3-3의 <b>전략적 사전 분리</b>대로 도착 예정시각(ETA)을 미리 받아 버티포트 슬롯까지 계산한 뒤 진입 시각을 통보하면, 같은 대기를 <b>게이트 밖(항로 구간 속도조절)</b>에서 흡수할 수 있다.</p>
@@ -1836,6 +1897,10 @@ h2{scroll-margin-top:60px}
       <p>REV 27의 슬롯 배정은 PSU가 출발 전에 수행한다고 두었다. 국내에서 PSU가 버티포트 슬롯을 구속력 있게 배정할 수 있는지, 관제기관이 통보하는 활주로 운영방향&middot;복행을 어떤 형식&middot;시한으로 받는지는 접근관제소 협정(LOA) 항목으로 정해야 한다. 또한 지상 대기(배차 13분에서 평균 5분)의 승객 수용성과, 정기 셔틀로 가정한 수요 시각표를 실수요 곡선으로 바꿀 때의 영향은 미검토다.</p>
     </div>
     <div class="openItem">
+      <h4>김포 접근관제 협정 &mdash; GATE-N 통과 고도 하한과 착륙 활주로 통보</h4>
+      <p>REV 29에서 김포 RWY 14 STAR가 GATE-N 위를 지나는 것을 확인하고, 층 고도로 내려오는 경우만 감시 폐쇄하기로 했다. 근본적으로는 김포 접근관제와 협정해 GATE-N 구역 통과 고도 하한(예: 3,500 ft)을 두는 것이 맞다. 공시상 DU022&rarr;DU018 구간은 고도 제약이 없다. 또 복행 폐쇄를 활주로별로 판단하려면 인천 관제가 착륙 활주로를 PSU에 실시간으로 알려줘야 한다 &mdash; 지금은 항적으로 사후 판별했다.</p>
+    </div>
+    <div class="openItem">
       <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
       <p>ConOps 1.5 표 4의 「준도심 공항 연계형」은 버티포트 운영방식을 <b>복수 버티포트</b>로 규정한다(6-2-2: &ldquo;복수 버티포트 간 지정된 경로 운항&rdquo;). 현재 우리 회랑에는 <b>HDY(홍대염전) 단일 버티포트</b>뿐이다. REV 23으로 양 끝단이 이양게이트가 돼, 게이트 바깥(설계 범위 밖) 도심 버티포트들과 연결되는 구조로 설명하거나, 회랑 성격을 &ldquo;단일 버티포트 + 지정 구역&rdquo;(운용모델 1)으로 재규정하는 두 갈래가 있다. 발표에서 운용모델 2를 표방하려면 이 항목을 정리해야 한다.</p>
     </div>
@@ -1863,7 +1928,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 28 · 2026-09-26 01:19</span>
+  <span>회랑1 설계결정 로그 · REV 29 · 2026-09-30 21:15</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
