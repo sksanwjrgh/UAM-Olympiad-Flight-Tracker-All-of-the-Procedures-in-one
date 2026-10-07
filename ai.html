@@ -242,12 +242,7 @@ function drawTraffic(g){
   });
   g.tm.forEach((m,i)=>{ if(!seen.has(i)){ g.tr.removeLayer(m.mk); g.tm.delete(i); } });
 }
-function southOpen(tt){
-  let cur='33'; sc.flows.forEach(f=>{ if(f[0]<=tt) cur=f[1]; });
-  if(cur==='15') return false;
-  for(const f of sc.flows){ if(f[1]==='15'&&f[0]-AID.params.NOTICE_S<=tt&&tt<f[0]) return false; }
-  return true;
-}
+function southOpen(tt){ return !(sc.southClosed||[]).some(iv=>tt>=iv[0]&&tt<iv[1]); }   /* 엔진이 내보낸 폐쇄 구간 */
 function styleCor(g,open){
   g.corN.l.setStyle({color:'#4ade80'}); g.corN.b.setStyle({fillColor:'#4ade80'});
   g.corS.l.setStyle({color:open?'#4ade80':'#ff5a5a',dashArray:open?null:'9 7'});

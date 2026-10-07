@@ -217,9 +217,7 @@ function trail(fl,tt,win){ win=win||300; const tr=fl.tr,o=[];
   for(let i=0;i<tr.length;i++){ const p=tr[i]; if(p[0]>tt) break; if(p[0]>=tt-win) o.push([p[1],p[2]]); } return o; }
 function frameAt(tt){ const F=cs.traffic.frames; if(tt<F[0][0]) return [];
   let lo=0,hi=F.length-1; while(hi-lo>1){ const m=(lo+hi)>>1; if(F[m][0]<=tt) lo=m; else hi=m; } return F[lo][1]; }
-function southOpen(tt){ let cur='33'; cs.flows.forEach(f=>{ if(f[0]<=tt) cur=f[1]; });
-  if(cur==='15') return false;
-  for(const f of cs.flows){ if(f[1]==='15'&&f[0]-360<=tt&&tt<f[0]) return false; } return true; }
+function southOpen(tt){ return !(cs.southClosed||[]).some(iv=>tt>=iv[0]&&tt<iv[1]); }   /* 엔진이 내보낸 폐쇄 구간 */
 
 function render(){
   const R=cs.runs.ON, live=new Set(); let nh=0;
