@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 30">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 31">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 30 · 2026-10-07 16:33</b><br>
+    <b>REV 31 · 2026-10-08 16:52</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-07 16:33</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-08 16:52</span>
   </div>
 </header>
 
@@ -396,7 +396,7 @@ h2{scroll-margin-top:60px}
           <td class="k">버티포트 진입·이탈 분리각</td>
           <td class="v">≥ 135° (이상 180°)</td>
           <td><span class="pill ok">검증</span></td>
-          <td class="src">FAA EB-105 · EASA PTS-VPT-DSN 원문 일치(REV 04) · 현 형상 북쪽 출구 353° / 남쪽 출구 130° = <b>136.8°</b>(REV 30)</td>
+          <td class="src"><b>국토부 버티포트 설계기준(제정안) 제19조 2호</b>: 진출입경로 둘 이상이면 반대방향 또는 최소 135° · FAA EB-105·EASA PTS-VPT-DSN과 일치 · 현 형상 북쪽 출구 353° / 남쪽 출구 130° = <b>136.8°</b>(REV 30·31). HX는 제18조⑤ 곡선 진출입(S+R ≥ 575 m, R ≥ 270 m) 충족</td>
         </tr>
         <tr>
           <td class="k">회랑 반폭</td>
@@ -495,6 +495,12 @@ h2{scroll-margin-top:60px}
           <td class="src">팀원 기체 분석값(REV 30). HDY 발착구간 반폭 0.3 NM의 근거 — Joby S4 공개값 없음(미결)</td>
         </tr>
         <tr>
+          <td class="k">착륙장(FATO)</td>
+          <td class="v">2개 · 중심 간격 80 m</td>
+          <td><span class="pill ok">확정</span></td>
+          <td class="src">버티포트 설계기준 제6조①5 동시 운용 61 m 이상 · 2번 착륙장은 HDY 남서 242°(두 출구 아래 회피) · 같은 방향만 동시, 60초 엇갈림. 시간당 12편에서 게이트 밖 대기 4.2 → 1.6분(REV 31)</td>
+        </tr>
+        <tr>
           <td class="k">고도 기준</td>
           <td class="v">ft AMSL (QNH)</td>
           <td><span class="pill ok">확정</span></td>
@@ -532,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-07 16:33 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-08 16:52 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -592,7 +598,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–30에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–31에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -615,7 +621,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">14</td><td class="item">제도적 선례</td><td class="concl"><b>S1 방식 원용</b></td><td class="src">S1은 1,600–6,000 ft를 관제 IFR 전용 지정 + VFR 명시 배제 → 새 법제 없이 동일 틀 적용 가능</td><td class="revc">16</td></tr>
         <tr><td class="cat" rowspan="4">RKSI<br>리스크</td><td class="no">15</td><td class="item">15L/15R 복행</td><td class="concl"><b>복행 시 CLOSED</b> (시간분리)</td><td class="src">회랑 7.06–11.48 NM과 겹침(HDY 포함). MAPt 후 92초 진입 · 인지~반응 30초 · 북쪽 홀딩구역 대피 · 재가동 3–4분(절차 초안)</td><td class="revc">06·08·24</td></tr>
         <tr><td class="no">16</td><td class="item">33L/33R</td><td class="concl"><b>복행 시 CLOSED</b></td><td class="src">복행경로가 회랑 0.00–1.55 NM(GATE-N)과 겹침 → GATE-N 이양 보류 · 남쪽 회랑은 계속 운영</td><td class="revc">07·22·24</td></tr>
-        <tr><td class="no">17</td><td class="item">버티포트 분리각</td><td class="concl">≥ <b>135°</b> (이상 180°)</td><td class="src">FAA EB-105 · EASA PTS-VPT-DSN 원문 일치 확인. 직선화로 168.5°→147.0°(REV 19). 남쪽 재설계 78° 출구는 85°로 위반 → HX 130° 출구로 <b>136.8°</b>(REV 30)</td><td class="revc">04·19·<b>30</b></td></tr>
+        <tr><td class="no">17</td><td class="item">버티포트 분리각</td><td class="concl">≥ <b>135°</b> (이상 180°)</td><td class="src"><b>국토부 버티포트 설계기준 제19조</b>(FAA EB-105 · EASA와 일치). 직선화로 168.5°→147.0°(REV 19). 남쪽 재설계 78° 출구는 85°로 위반 → HX 130° 출구로 <b>136.8°</b>(REV 30). HX는 제18조⑤ 곡선 진출입 충족(REV 31)</td><td class="revc">04·19·30·<b>31</b></td></tr>
         <tr><td class="no">18</td><td class="item">절차 좌표 정확성</td><td class="concl">오류 2건 발견·수정</td><td class="src">ATKON 위도 0.1° 오타(11 km) · STAR OLMEN/GUKDO/KARBU 3C→2C 전면 개정</td><td class="revc">03</td></tr>
         <tr><td class="cat" rowspan="3">RKSS<br>리스크</td><td class="no">19</td><td class="item">공시 절차 관통</td><td class="concl"><b>고도분리로 해소</b></td><td class="src">52개 중 <b>15개</b> 관통(교차 판정 보정). 공시 하한 최저 4,000 ft(+1,550) · 하한 미공시 SID(NOPIK 2T/2Q)는 PDG 3.3% 기준 <b>최저 3,634 ft(+1,184)</b></td><td class="revc">18·23</td></tr>
         <tr><td class="no">20</td><td class="item">실교통 검증</td><td class="concl">밴드 진입 <b>−78%</b></td><td class="src">김포 이착륙 247대 전수: 15,721→3,498샘플 · <b>98.87%가 4,000 ft 이상</b> 통과</td><td class="revc">17·18</td></tr>
@@ -633,12 +639,13 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">32</td><td class="item">발착 프로파일</td><td class="concl">버티포트 <b>수직 이착륙</b><br>상승 1,000 / 강하 2,400 fpm</td><td class="src">경로 경사(북 8:1 · 남 4:1)를 폐기. 고도는 버티포트 상공에서만 만들고 회랑은 층 고도 수평비행 → 33L/R 최종접근 고도대를 회랑에서 지나가지 않는다. 수평 가감속 0.15 g = 1.47 NM. 수직 2,400 fpm의 VRS 회피는 미결</td><td class="revc">24·25·<b>26</b></td></tr>
         <tr><td class="no">33</td><td class="item">활주로 전환</td><td class="concl"><b>예고 불필요</b></td><td class="src">방향 전환으로 남쪽 회랑을 닫지 않으므로 6분 전 예고(REV 24–26 초안)가 필요 없어졌다</td><td class="revc">24·25·26·<b>30</b></td></tr>
         <tr><td class="no">34</td><td class="item">홀딩속도</td><td class="concl"><b>100 kt</b></td><td class="src">천이속도 90 kt의 약 1.1배. 2R 1.061 NM &lt; 반폭 1.248 · 홀딩픽스 GATE-N에서 2.20 NM 이상. 1.3배(117 kt)는 반폭 여유 0.007 NM라 기각. 패턴 점유는 픽스 전방 0.53 / 후방 2.20 NM이며 간격은 이 가장자리 기준(REV 26)</td><td class="revc">02·25·26</td></tr>
-        <tr><td class="no">35</td><td class="item">버티포트 발착권</td><td class="concl">한 번에 <b>한 대</b><br>이론 한계 시간당 19.3편</td><td class="src">착륙장 1개. 노선별 점유 NA 123 · ND 239 · SA 137 · SD 209초(도착은 HDY 2.5 NM 확보~착륙, 출발은 허가~1.6 NM 이탈). 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26</td></tr>
+        <tr><td class="no">35</td><td class="item">버티포트 착륙장</td><td class="concl"><b>2개</b> · 80 m 간격<br>같은 방향만 60초 엇갈림</td><td class="src">설계기준 제6조 61 m 이상. 이전 착륙장 1개(이론 한계 시간당 19.3편). 4일·시간당 12편: 게이트 밖 대기 253 → 97초, UAM끼리 근접 0. 16편 이상은 회랑 안 대기 간격이 한계. 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26·<b>31</b></td></tr>
         <tr><td class="no">37</td><td class="item">복행 대응</td><td class="concl"><b>활주로별 공시 복행경로</b><br>+ 감시 추종</td><td class="src">공시 복행경로가 회랑을 지나는 활주로(15L 7.04–14.58·15R 7.17–14.58·33L·33R NM, 명목 반폭 기준)만 그 구간을 닫고, 16·34는 감시만(실측 38건 중 회랑 진입 0). 활주로 미상이면 방향별 합산 구간. 복행기가 회랑으로 다가오면 기체 전후 ±2 NM를 따라가며 닫고, 재진입 선회를 고려해 30분간 감시</td><td class="revc">24·28·29·<b>30</b></td></tr>
         <tr><td class="no">38</td><td class="item">김포 도착기</td><td class="concl"><b>감시 폐쇄</b><br>층 ±700 ft 접근 시</td><td class="src">김포 RWY 14 STAR가 GATE-N 위를 가로지름(59일 725편, 94%가 인천 15 방향 중). 중앙 4,065 ft라 대부분 분리되지만 3,150 ft 미만 10편 → 그 기체 주변만 닫음(59일 10회·997초). 전면 폐쇄는 30일 운휴라 기각</td><td class="revc">29</td></tr>
         <tr><td class="no">39</td><td class="item">남쪽 회랑 형상</td><td class="concl"><b>HDY→HX→WP3→GATE-S</b><br>HX 130° 0.5 NM</td><td class="src">옛 출구 140°는 15 방향 출발 흐름과 평행(13.44회/h, 운영시간 39.9% 폐쇄). 폭·경유점·고도층 단독 처방 모두 실패. HX 출구 + 발착구간 반폭 0.3으로 1.30회/h · 분리각 136.8°. 팀원 제안안(124° 출구)은 13.44회/h·33 절차 이격 0.21 NM로 기각</td><td class="revc">30</td></tr>
         <tr><td class="no">40</td><td class="item">가로지르는 교통</td><td class="concl"><b>예측 감시 폐쇄</b><br>30·60초 앞</td><td class="src">상승기 + 남쪽 구간 고속 교통이 층 고도로 설계기준 상자에 들 것으로 예측되면 ±2 NM + 진행 90초분 폐쇄 · 진입 3 NM 안 폐쇄 시 대기 · 구간 안 기체는 위협 반대쪽으로 · 남쪽 홀딩 HDY 3.0 NM. 4일 분리 미달 2 → 2, 부하 시험 5 → 4, 홀딩 4 → 89회, 사례집 11건 ON 분리 미달 0</td><td class="revc">30</td></tr>
         <tr><td class="no">41</td><td class="item">기체 제원 보강</td><td class="concl">뱅크 25° · 반경 600 m<br>측풍 15 · 배풍 5 kt</td><td class="src">팀원 기체 분석값 채택. 순항 174 kt·가감속 0.15 g·수직 이착륙(1,000/2,400 fpm)은 유지 — 제안 100 kt·−0.10 g·4° 상승강하는 기각 또는 보류</td><td class="revc">30</td></tr>
+        <tr><td class="no">42</td><td class="item">회랑 위치 근거</td><td class="concl"><b>TSE 실측</b><br>고정 회랑 + 구간별 시간 분리</td><td class="src">분리 1.5 NM/500 ft를 회랑 가장자리부터, 상용기 오차는 59일 실측 이탈 분포로. 최종접근 도착 3.3만 편·33 방향 출발 1.3만 편 여유 초과 0 → 고정 회랑. 15 방향 출발 2.8%(HDY 1.4 NM 안)·복행 25% → 시간 분리. 확정 회랑 10일 1,790편, UAM 실제 위치 기준 안전거리 미달 0</td><td class="revc">31</td></tr>
         <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>게이트 진입 허가 배정</td><td class="src">각지에서 GATE-N·S로 오는 기체의 ETA를 받아 버티포트 슬롯을 역산해 진입 시각을 통보(ConOps 1.5 4-3-3). 같은 유입(시간당 16편)에서 회랑 안 공중 홀딩 583분 → 0분. 권장 수용 유입률 시간당 12편(거부 0·게이트 밖 대기 5분 이내)</td><td class="revc">27</td></tr>
       </tbody>
     </table>
@@ -650,11 +657,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 30건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 31건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev31">REV 31</a></td><td class="k2">근거·버티포트</td><td class="src">회랑 위치의 TSE 실측 근거 &middot; 국토부 버티포트 설계기준 반영 &middot; 착륙장 2개 엇갈림 운용</td></tr>
         <tr><td class="v"><a href="#rev30">REV 30</a></td><td class="k2">남쪽 회랑</td><td class="src">남쪽 회랑 재설계(HX 출구) &middot; 발착구간 반폭 0.3 NM &middot; 가로지르는 교통 감시 폐쇄 &middot; 15 방향에도 남북 운영</td></tr>
         <tr><td class="v"><a href="#rev29">REV 29</a></td><td class="k2">복행·김포</td><td class="src">복행은 활주로별 공시 복행경로로 판단 &middot; 김포 RWY 14 도착기 감시 폐쇄</td></tr>
         <tr><td class="v"><a href="#rev28">REV 28</a></td><td class="k2">복행대응</td><td class="src">복행 폐쇄를 고정 구간에서 감시 추종 보호구간으로 &mdash; 복행 25%가 회랑 폭 안으로 들어온다</td></tr>
@@ -694,10 +702,76 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev31">
+      <div class="meta"><span class="rev">REV 31</span><span class="tag">근거·버티포트</span><span class="dt">2026-10-08 16:52</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">회랑 위치의 TSE 실측 근거 &middot; 국토부 버티포트 설계기준 반영 &middot; 착륙장 2개 엇갈림 운용</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>회랑 좌표는 바꾸지 않았다. 대신 &ldquo;왜 회랑이 여기 있는가&rdquo;를 항공기 경로이탈(Total System Error) 실측으로 다시 세웠고(인국공 컨설팅 4번 &mdash; 방법론보다 근거 있는 논리 흐름), 2026년 국토부 <b>버티포트 설계기준(제정안)</b>을 대조해 버티포트 근거를 국내 기준으로 바꿨다. 기준이 착륙장 여러 개를 허용하므로(61 m 간격) 착륙장을 2개로 늘렸다.</p>
+        <div class="cx">
+<div class="cx-title">① TSE 논리 흐름 &mdash; 고정 회랑이 되는 곳, 시간 분리가 필요한 곳</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">1</td><td>분리기준</td><td>상용기와 횡 1.5 NM / 수직 500 ft (FAA JO 7110.65 7-9-4 &middot; 인국공 내부 기준과 같음)</td></tr><tr><td class="nw">2</td><td>UAM 쪽 오차</td><td>기체 RNP 0.1(보호 0.2 NM)은 회랑 반폭 안 &rArr; 분리는 회랑 <b>가장자리</b>부터 잰다</td></tr><tr><td class="nw">3</td><td>상용기 쪽 오차</td><td>공시 RNP가 아니라 <b>59일 실측 이탈 분포</b> &mdash; 레이더 유도(벡터링 60&ndash;70%)가 꼬리를 만든다</td></tr><tr><td class="nw">4</td><td>판정</td><td>층 고도 &plusmn;500 ft 구간에서 상용기가 &lsquo;가장자리 + 1.5 NM&rsquo; 안으로 들어오는 비율</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 최종접근 &mdash; 공시 최종접근 코스에서 회랑 쪽으로 벗어난 실측 폭 <span class="dim">(59일 · 층 고도에 걸리는 진입거리 4.5&ndash;8.5 NM)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">활주로</td><td>도착</td><td>여유(최소)</td><td>이탈 p99.9</td><td>이탈 최대</td><td>여유 초과</td></tr><tr><td class="nw">33R</td><td>11,185편</td><td>2.05 NM</td><td>0.49 NM</td><td>2.46 NM</td><td>0</td></tr><tr><td class="nw">34L</td><td>9,875편</td><td>3.18 NM</td><td>0.14 NM</td><td>1.73 NM</td><td>0</td></tr><tr><td class="nw">16R</td><td>6,382편</td><td>3.83 NM</td><td>0.19 NM</td><td>1.57 NM</td><td>0</td></tr><tr><td class="nw">15L</td><td>5,729편</td><td>3.32 NM</td><td>0.67 NM</td><td>2.28 NM</td><td>0</td></tr><tr><td class="nw">기타 4</td><td>279편</td><td>2.33 NM 이상</td><td>1.49 NM 이하</td><td>0</td><td></td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">여유 = 그 지점에서 회랑 가장자리 + 1.5 NM까지 남는 거리</span> <span class="g">도착 약 3.3만 편 중 여유 초과 0 &mdash; 최종접근과는 고정 회랑으로 분리된다</span></div>
+<div class="cx-p"><span class="c">가장 빠듯한 곳: 33R 진입 6.5 NM &mdash; 최대 이탈 2.38 NM, 여유 2.47 NM (0.09 NM 차)</span></div>
+<div class="cx-p">실측 p95는 0.02 NM 이하로 공시 RNP 0.3보다 훨씬 정확하지만, 최대 이탈은 2.46 NM &mdash; 이론값만 쓰면 이 꼬리를 못 본다</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 출발기 &mdash; 이륙 후 층 고도(1,450&ndash;2,950 ft)를 지나는 동안 &lsquo;가장자리 + 1.5 NM&rsquo; 안으로 들어온 비율</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">33 방향 출발</td><td>12,587편</td><td>0편 (0.0%)</td><td>최소 여유 0.64 NM 이상</td></tr><tr><td class="nw">15 방향 출발</td><td>10,152편</td><td>280편 (2.8%) &mdash; 전부 HDY~HDY+1.4 NM (발착구간)</td><td></td></tr></tbody></table></div>
+<div class="cx-p"><span class="g">33 방향 출발은 고정 회랑으로 분리된다</span></div>
+<div class="cx-p"><span class="c">15 방향 출발 2.8%와 복행의 25%(REV 28)는 횡분리로 안 된다</span> &rArr; 그 구간만 <b>시간 분리</b>(감시 폐쇄 &middot; 복행 폐쇄 &middot; 발착권)</div>
+<div class="cx-p">고도는 ADS-B 기압고도(1013.25 hPa 기준, QNH 대비 중앙 약 90 ft 차) &mdash; 판정 띠 &plusmn;500 ft라 결론 불변</div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 국토부 버티포트 설계기준(제정안) 대조 <span class="dim">(도심항공교통법 제9조 &middot; 시행규칙 제11조)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">제19조 2호</td><td>진출입경로가 둘 이상이면 반대방향이거나 최소 135&deg; 분리</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 현 HDY 북쪽 353&deg; / 남쪽 130&deg; = <b>136.8&deg;</b> 충족 &middot; 근거를 FAA EB-105&middot;EASA에서 <b>국내 기준</b>으로 교체</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">제18조 &#9316;</td><td>곡선 진출입: 직선 S + 회전반경 R &ge; 575 m, R &ge; 270 m, 중심선 합 &ge; 1,219 m</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; HX 직선 926 m(0.5 NM) &middot; 선회반경 약 590 m(약 100 kt &middot; 뱅크 25&deg;) &rArr; 충족</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">제18조 &#9312;</td><td>진출입표면 8:1 이상, 최고 152 m &middot; 길이 1,219 m &mdash; 제3유보지(평지)라 장애물 제약 작음</td></tr><tr><td class="nw">제6조 &#9312;5</td><td>FATO 동시 운용 시 중심점 간 <b>최소 61 m</b> &mdash; 착륙장 개수 제한은 없다</td></tr><tr><td class="nw">제4조</td><td>TLOF 1 PD &middot; FATO 2 PD &middot; 안전지대 2.5 CD 또는 FATO+3 m</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 착륙장 2개 &mdash; 엇갈림 운용 <span class="dim">(4일 실측 항적 &middot; AI 진입 허가 배정)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">배치</td><td>2번 착륙장을 HDY에서 남서 242&deg;로 80 m (제6조 61 m 이상) &mdash; 북&middot;남 출구 어느 쪽 아래에도 오지 않게</td></tr><tr><td class="nw">규칙</td><td>같은 방향(출발끼리&middot;도착끼리)만 동시 &middot; 두 번째 기체는 첫 기체 허가 <b>60초 뒤</b>부터</td></tr></tbody></table></div>
+<div class="cx-p">이유: 동시 출발 두 대는 층이 달라(북행 2,450 ft &middot; 남행 1,950 ft) 상승 중 교차한다 &mdash; 첫 기체가 층 고도에서 0.5 NM 멀어지는 데 약 50초</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시간당 수요</td><td>착륙장</td><td>처리/수요</td><td>거부</td><td>게이트 밖 대기</td><td>UAM끼리 0.5 NM 안</td><td>상용기 안전거리 미달(엄한 기준)</td></tr><tr><td class="nw">12편</td><td>1개</td><td>716 / 716</td><td>0</td><td>253초</td><td>0</td><td>2</td></tr><tr><td class="nw">12편</td><td><b>2개</b></td><td>716 / 716</td><td>0</td><td><b>97초</b></td><td><b>0</b></td><td>1</td></tr><tr><td class="nw">16편</td><td>1개</td><td>889 / 924</td><td>35</td><td>571초</td><td>0</td><td>0</td></tr><tr><td class="nw">16편</td><td>2개</td><td>924 / 924</td><td>0</td><td>148초</td><td>8</td><td>0</td></tr><tr><td class="nw">20편</td><td>2개</td><td>1,180 / 1,188</td><td>7</td><td>343초</td><td>21</td><td>1</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">간격 시험(7/21, 12편)</td><td>45초 &rarr; UAM끼리 근접 3 &middot; 60초 &rarr; 0 &middot; 90&middot;120초 &rarr; 0이지만 대기만 늘어남</td></tr></tbody></table></div>
+<div class="cx-p"><span class="g">권장 수요 시간당 12편에서 게이트 밖 대기 4.2 &rarr; 1.6분, 안전 지표는 그대로</span> <span class="c">16편 이상은 한계가 착륙장이 아니라 회랑 안 대기 공간 &mdash; 대기 기체끼리 가까워진다(미결)</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑥ 시뮬레이션 엔진 수정 2건</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">발착권 기억</td><td>착륙장이 여럿이어도 마지막 허가 기체 하나만 기억 &rarr; 먼저 허가받은 기체가 매 초 대기&middot;해제 반복</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 허가받은 기체들을 모두 기억하도록 수정</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">출발기 대기</td><td>이륙 허가 직후 앞 구간이 닫히면 패드에서 비스듬히 날아가 홀딩, 해제 뒤 패드로 되돌아가 다시 수직 상승</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 이륙 전이면 패드 대기, 수직 상승 중이면 제자리 정지비행(호버)</div>
+<div class="cx-p">착륙장 1개 결과는 수정 전후 같다(7/21 확인) &mdash; 기존 검증 수치에는 영향 없음</div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑦ 확정 회랑 10일 검증 <span class="dim">(15 방향 16시간 운영일 10일 · 시간당 12편 · 착륙장 1개)</span></div>
+<div class="cx-cap">UAM 1,790편 &mdash; 상용기와 안전거리(1.5 NM / 500 ft) 미달</div>
+<div class="cx-tw"><table><tbody><tr><td>가장 엄한 기준 (UAM이 회랑 폭 어디든 있다고 봄)</td><td>3건</td></tr><tr><td class="nw">UAM 실제 위치 기준</td><td><b>0건</b></td></tr><tr><td>버티포트 반경 1 NM 안 (따로 셈, 엄한 기준)</td><td>10건 &mdash; 수직 이착륙 중 15 방향 이륙기가 근처 통과</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 버티포트 1 NM 안은 비행장 관제(관제탑) 협조로 이착륙 순서를 조정할 구간 &mdash; 기존 미결 &lsquo;HDY 1 NM 이내&rsquo;와 연결</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전:</b> 착륙장 1개 &middot; 한 번에 한 대(이론 한계 시간당 19.3편). 버티포트 분리각 근거는 FAA EB-105&middot;EASA PTS-VPT-DSN. 회랑 위치의 근거는 &lsquo;설계기준 상자 통과 횟수&rsquo;(정적 지표)뿐이었다.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① UAM끼리 분리기준이 국내에 없다 &mdash; 0.5 NM&middot;300 ft는 우리가 정한 경고선 ② 시간당 16편 이상에서 회랑 안 대기 간격 규칙
+          ③ 버티포트 1 NM 안 15 방향 이륙기 근접 10건(10일) &mdash; 관제탑 협조 절차 ④ 설계기준은 제정안 &mdash; 고시 확정본과 대조
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev30">
       <div class="meta"><span class="rev">REV 30</span><span class="tag">남쪽 회랑</span><span class="dt">2026-10-07 16:33</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">남쪽 회랑 재설계 &mdash; HX 출구 &middot; HDY 발착구간 반폭 0.3 NM &middot; 가로지르는 교통 감시 폐쇄 &middot; 15 방향에도 남북 운영</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>REV 24부터 15 방향 입&middot;출항 시 남쪽 회랑을 통째로 닫았다. 59일 운영시간의 <b>39.9%</b>다. 원인은 15 방향 출발기가 옛 남쪽 회랑(HDY 출구 140&deg;)과 1.6 NM 간격으로 나란히 상승한다는 것 &mdash; 설계기준 상자 통과 <b>13.44회/h</b>. 폭만 줄이거나 경유점만 옮기거나 별도 고도층을 두는 안은 모두 실패했고, 출구 방향과 발착구간 폭을 함께 바꿔야 풀렸다.</p>
@@ -1994,6 +2068,10 @@ h2{scroll-margin-top:60px}
       <p>REV 30의 감시 폐쇄는 PSU가 접근관제의 감시자료(레이더&middot;ADS-B)를 실시간으로 받아 30&middot;60초 앞을 예측한다는 전제다. 그래도 이미 회랑 안에 있는 기체 옆을 도착 유도기&middot;출발기가 층 고도로 지나가는 경우(7/21 JJA108·JJA1403, 9/4 HL5242)는 막지 못한다. 접근관제가 UAM 회랑을 알고 15 방향 다운윈드&middot;HDY 상공을 층 고도 밖으로 유도하도록 협정(LOA)에 넣어야 한다. 또 발착구간 반폭 0.3 NM은 기체 RNP 0.1 달성이 전제이고, WP3&ndash;GATE-S 하부 지상 위험(송도&middot;인천 해안)은 아직 보지 않았다.</p>
     </div>
     <div class="openItem">
+      <h4>UAM끼리 분리기준 부재 &mdash; 시간당 16편 이상의 회랑 안 대기</h4>
+      <p>REV 31에서 착륙장을 2개로 늘리자 시간당 16편 이상에서 회랑 안 대기 기체끼리 0.5 NM 안으로 가까워지는 경우가 생겼다(4일 8&ndash;21건). 0.5 NM&middot;300 ft는 우리가 정한 경고선이고, 국내에는 UAM끼리 분리기준이 아직 없다. 권장 수요를 시간당 12편으로 두는 근거이며, 더 받으려면 회랑 안 대기 위치&middot;간격 규칙이 필요하다. 버티포트 설계기준은 제정안이라 고시 확정본과 대조해야 한다.</p>
+    </div>
+    <div class="openItem">
       <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
       <p>ConOps 1.5 표 4의 「준도심 공항 연계형」은 버티포트 운영방식을 <b>복수 버티포트</b>로 규정한다(6-2-2: &ldquo;복수 버티포트 간 지정된 경로 운항&rdquo;). 현재 우리 회랑에는 <b>HDY(홍대염전) 단일 버티포트</b>뿐이다. REV 23으로 양 끝단이 이양게이트가 돼, 게이트 바깥(설계 범위 밖) 도심 버티포트들과 연결되는 구조로 설명하거나, 회랑 성격을 &ldquo;단일 버티포트 + 지정 구역&rdquo;(운용모델 1)으로 재규정하는 두 갈래가 있다. 발표에서 운용모델 2를 표방하려면 이 항목을 정리해야 한다.</p>
     </div>
@@ -2021,7 +2099,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 30 · 2026-10-07 16:33</span>
+  <span>회랑1 설계결정 로그 · REV 31 · 2026-10-08 16:52</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
