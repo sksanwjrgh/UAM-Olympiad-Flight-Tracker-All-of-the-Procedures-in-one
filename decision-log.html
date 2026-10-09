@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 31">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 32">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 31 · 2026-10-08 16:52</b><br>
+    <b>REV 32 · 2026-10-09 13:18</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-08 16:52</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-09 13:18</span>
   </div>
 </header>
 
@@ -376,15 +376,15 @@ h2{scroll-margin-top:60px}
         </tr>
         <tr>
           <td class="k">SOUTHBOUND 고도</td>
-          <td class="v">1 950 ft AMSL(QNH)</td>
+          <td class="v">1 468 ft AMSL(QNH) = 447 m</td>
           <td><span class="pill ok">확정</span></td>
-          <td class="src">QNH 보정 실측 재분석 · 헬기 상한 1,218 ft와 <b>732 ft</b>(ConOps 4-3-4 요구 492 ft 충족) · <b>ConOps 4-3-2-1 상한 1,969 ft 이내</b> · 이전 2,150 ft(REV 24)</td>
+          <td class="src"><b>국토부 시범운용구역 회랑 고도 300–600 m 안</b>(REV 32) · 헬기 실측 상한 1,218 ft와 250 ft → 회랑 구역 헬기 300 m 이하 협정으로 150 m(ConOps 4-3-4) 확보 · 이전 1,950 ft(REV 24)</td>
         </tr>
         <tr>
           <td class="k">NORTHBOUND 고도</td>
-          <td class="v">2 450 ft AMSL(QNH)</td>
+          <td class="v">1 968 ft AMSL(QNH) = 600 m</td>
           <td><span class="pill ok">확정</span></td>
-          <td class="src">SB와 <b>500 ft</b> 층분리(FAA ACS 고도유지 ±100 ft를 2σ로 보면 겹칠 확률 1.5e-12) · 관제 지정고도 3,000 ft 교통과 550 ft · ConOps 상한 +481 ft는 각주 29 협의 변경. 기존 &ldquo;300 ft = 5.7σ&rdquo;(σ 16 m 출처 없음)는 철회(REV 24)</td>
+          <td class="src">남행과 <b>500 ft</b> 층분리(FAA ACS 고도유지 ±100 ft를 2σ로 보면 겹칠 확률 1.5e-12) · 시범운용구역 상한 600 m · 관제 유도고도 3,000 ft와 <b>1,032 ft</b>(이전 550 ft) · 이전 2,450 ft(747 m, 상한 초과 — REV 32에서 해소)</td>
         </tr>
         <tr>
           <td class="k">UAM–상용기 분리기준</td>
@@ -498,7 +498,7 @@ h2{scroll-margin-top:60px}
           <td class="k">착륙장(FATO)</td>
           <td class="v">2개 · 중심 간격 80 m</td>
           <td><span class="pill ok">확정</span></td>
-          <td class="src">버티포트 설계기준 제6조①5 동시 운용 61 m 이상 · 2번 착륙장은 HDY 남서 242°(두 출구 아래 회피) · 같은 방향만 동시, 60초 엇갈림. 시간당 12편에서 게이트 밖 대기 4.2 → 1.6분(REV 31)</td>
+          <td class="src">버티포트 설계기준 제6조①5 동시 운용 61 m 이상 · 2번 착륙장은 HDY 남서 242°(두 출구 아래 회피) · 같은 방향만 동시, <b>150초 엇갈림</b>(REV 32 — 60초는 고도 교차로 UAM끼리 근접). 시간당 12편에서 게이트 밖 대기 −22%</td>
         </tr>
         <tr>
           <td class="k">고도 기준</td>
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-08 16:52 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-09 13:18 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -591,14 +591,14 @@ h2{scroll-margin-top:60px}
   </div>
 
   <div class="cx" style="margin-top:14px">
-<div class="cx-tw"><table><tbody><tr><td>총 연장 14.58 NM = <b>27.00 km</b></td><td><span class="dim">(도심항공교통 특별법 상한 50 km의 54%)</span></td><td></td></tr><tr><td class="nw">회랑 반폭 1.248 NM</td><td>총폭 4623 m</td><td><span class="dim">(특별법 최소폭 600 m의 7.7배)</span></td></tr><tr><td class="nw">HDY 발착구간</td><td>±1.6 NM 반폭 0.3 NM</td><td><span class="dim">(수직 이착륙·중심선 가감속 1.47 NM + 여유 · REV 30)</span></td></tr><tr><td class="nw">선회각</td><td>WP5 0.7° · WP4 3.5° · HDY 43.2° · HX 68.9° · WP3 59.4°</td><td></td></tr><tr><td class="nw">버티포트 분리각</td><td>북쪽 출구와 남쪽 출구 사이 <b>136.8°</b></td><td><span class="dim">(기준 ≥ 135° · FAA EB-105 · EASA PTS-VPT-DSN)</span></td></tr><tr><td class="nw">운용고도</td><td>SOUTHBOUND 1 950 ft · NORTHBOUND 2 450 ft AMSL(QNH), 층간격 500 ft</td><td></td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td>총 연장 14.58 NM = <b>27.00 km</b></td><td><span class="dim">(도심항공교통 특별법 상한 50 km의 54%)</span></td><td></td></tr><tr><td class="nw">회랑 반폭 1.248 NM</td><td>총폭 4623 m</td><td><span class="dim">(특별법 최소폭 600 m의 7.7배)</span></td></tr><tr><td class="nw">HDY 발착구간</td><td>±1.6 NM 반폭 0.3 NM</td><td><span class="dim">(수직 이착륙·중심선 가감속 1.47 NM + 여유 · REV 30)</span></td></tr><tr><td class="nw">선회각</td><td>WP5 0.7° · WP4 3.5° · HDY 43.2° · HX 68.9° · WP3 59.4°</td><td></td></tr><tr><td class="nw">버티포트 분리각</td><td>북쪽 출구와 남쪽 출구 사이 <b>136.8°</b></td><td><span class="dim">(기준 ≥ 135° · FAA EB-105 · EASA PTS-VPT-DSN)</span></td></tr><tr><td class="nw">운용고도</td><td>SOUTHBOUND 1 468 ft · NORTHBOUND 1 968 ft AMSL(QNH) = 447 / 600 m, 층간격 500 ft</td><td><span class="dim">(국토부 시범운용구역 회랑 고도 300–600 m · REV 32)</span></td></tr></tbody></table></div>
 </div>
 </section>
 <!--/CORRIDOR-SECTION-->
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–31에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–32에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -612,7 +612,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">05</td><td class="item">회랑 반폭</td><td class="concl"><b>1.248 NM</b> (총폭 4,624 m)<br>HDY ±1.6 NM <b>0.3 NM</b></td><td class="src">활성 회랑 안에서 VFR Class B 분리 1.5 NM 기준 공시절차 제약 없음 + 실측 충돌 ≤ 2.3통과/24h. 구 근거(1.848 − 2×RNP 0.6)는 RNP AR 기준이라 철회. HDY 발착구간은 수직 이착륙이라 0.3 NM(기체 RNP 0.1 전제)</td><td class="revc">11·24·<b>30</b></td></tr>
         <tr><td class="no">06</td><td class="item">UAM 항법성능</td><td class="concl">RNP<sub>u</sub> ≤ <b>0.624</b> <span style="font-size:10px;color:var(--good)">재검증</span></td><td class="src">반폭 = 2×RNP<sub>u</sub> containment. 상용기 RNP 0.3보다 느슨 · 발착기 선회이탈 21 m, 통과기 75 m(3.3%). ConOps <b>4-3-4-3 각주 30</b>이 &ldquo;RNP 개념 참고하되 운항환경에 맞게 조정 가능&rdquo;으로 이 방식을 허용(REV 20)</td><td class="revc">11</td></tr>
         <tr><td class="cat" rowspan="4">운용<br>고도</td><td class="no">07</td><td class="item">왕복 운용 방식</td><td class="concl">수평 2선 → <b>고도분리</b></td><td class="src">Reich CRM: 수평 2선은 안쪽 항로선이 −0.008 NM로 상용기 보호구역 침범 → 기하학적 불가</td><td class="revc">09</td></tr>
-        <tr><td class="no">08</td><td class="item">운용 고도</td><td class="concl">SB <b>1,950 ft</b> / NB <b>2,450 ft</b> (QNH)</td><td class="src">QNH 보정 재분석(ADS-B 기압고도는 1013.25 기준, 검증 r=0.954). 헬기 상한 1,218 ft + 500 ≤ SB, NB + 500 ≤ 3,000 ft 층. 운영방향별 충돌 15 활주로 방향 입·출항 시 북쪽 0.96 · 33 활주로 방향 입·출항 시 북쪽 0.34 · 33 활주로 방향 입·출항 시 남쪽 2.3. <b>SB는 ConOps 상한 이내</b>, NB 초과분만 각주 29</td><td class="revc">14·24</td></tr>
+        <tr><td class="no">08</td><td class="item">운용 고도</td><td class="concl">SB <b>1,468 ft</b> / NB <b>1,968 ft</b> (QNH)<br>447 / 600 m</td><td class="src"><b>국토부 시범운용구역 회랑 고도 300–600 m</b> 충족(REV 32). 이전 1,950 / 2,450 ft는 북행 747 m로 상한 초과. 헬기 분리 150 m는 회랑 구역 헬기 300 m 이하 협정으로 확보. 관제 유도고도 3,000 ft와 1,032 ft. 13일 시뮬: 안전 지표 동일, 회랑 안 대기 −14%, 복행 폐쇄 −26%</td><td class="revc">14·24·<b>32</b></td></tr>
         <tr><td class="no">09</td><td class="item">층분리</td><td class="concl"><b>500 ft</b></td><td class="src">σ<sub>z,rel</sub> 16 m는 출처 없음 → 철회. FAA ACS ±100 ft(2σ) 기준 겹칠 확률 1.5e-12 · ICAO Doc 9574(고고도 제트) 기준 2.7e-4</td><td class="revc">14·24</td></tr>
         <tr><td class="no">10</td><td class="item">재정렬 후 재검토</td><td class="concl"><b>변경 없음</b> — 현행 유지</td><td class="src">신안 기준 재최적화에서도 최적(조우 319 &lt; 후보 1,700/2,000의 425)</td><td class="revc">17</td></tr>
         <tr><td class="cat" rowspan="4">공역</td><td class="no">11</td><td class="item">공역 등급</td><td class="concl"><b>RKSI Class B</b> 편입</td><td class="src">Class B는 IFR·VFR 전 항공기가 관제허가를 받고 ATC가 상호분리 제공 → 기존 항공기와 같은 관제 우산</td><td class="revc">16</td></tr>
@@ -639,7 +639,7 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">32</td><td class="item">발착 프로파일</td><td class="concl">버티포트 <b>수직 이착륙</b><br>상승 1,000 / 강하 2,400 fpm</td><td class="src">경로 경사(북 8:1 · 남 4:1)를 폐기. 고도는 버티포트 상공에서만 만들고 회랑은 층 고도 수평비행 → 33L/R 최종접근 고도대를 회랑에서 지나가지 않는다. 수평 가감속 0.15 g = 1.47 NM. 수직 2,400 fpm의 VRS 회피는 미결</td><td class="revc">24·25·<b>26</b></td></tr>
         <tr><td class="no">33</td><td class="item">활주로 전환</td><td class="concl"><b>예고 불필요</b></td><td class="src">방향 전환으로 남쪽 회랑을 닫지 않으므로 6분 전 예고(REV 24–26 초안)가 필요 없어졌다</td><td class="revc">24·25·26·<b>30</b></td></tr>
         <tr><td class="no">34</td><td class="item">홀딩속도</td><td class="concl"><b>100 kt</b></td><td class="src">천이속도 90 kt의 약 1.1배. 2R 1.061 NM &lt; 반폭 1.248 · 홀딩픽스 GATE-N에서 2.20 NM 이상. 1.3배(117 kt)는 반폭 여유 0.007 NM라 기각. 패턴 점유는 픽스 전방 0.53 / 후방 2.20 NM이며 간격은 이 가장자리 기준(REV 26)</td><td class="revc">02·25·26</td></tr>
-        <tr><td class="no">35</td><td class="item">버티포트 착륙장</td><td class="concl"><b>2개</b> · 80 m 간격<br>같은 방향만 60초 엇갈림</td><td class="src">설계기준 제6조 61 m 이상. 이전 착륙장 1개(이론 한계 시간당 19.3편). 4일·시간당 12편: 게이트 밖 대기 253 → 97초, UAM끼리 근접 0. 16편 이상은 회랑 안 대기 간격이 한계. 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26·<b>31</b></td></tr>
+        <tr><td class="no">35</td><td class="item">버티포트 착륙장</td><td class="concl"><b>2개</b> · 80 m 간격<br>같은 방향만 150초 엇갈림</td><td class="src">설계기준 제6조 61 m 이상. 이전 착륙장 1개(이론 한계 시간당 19.3편). 60초 엇갈림은 15 방향 많은 날 고도 교차로 UAM끼리 근접(6일 10번) → 150초(1번, 착륙장 1개와 같은 수준), 게이트 밖 대기 −22%. 16편 이상은 회랑 안 대기 간격이 한계. 누적 공중 대기 30분 초과 시 회항</td><td class="revc">26·31·<b>32</b></td></tr>
         <tr><td class="no">37</td><td class="item">복행 대응</td><td class="concl"><b>활주로별 공시 복행경로</b><br>+ 감시 추종</td><td class="src">공시 복행경로가 회랑을 지나는 활주로(15L 7.04–14.58·15R 7.17–14.58·33L·33R NM, 명목 반폭 기준)만 그 구간을 닫고, 16·34는 감시만(실측 38건 중 회랑 진입 0). 활주로 미상이면 방향별 합산 구간. 복행기가 회랑으로 다가오면 기체 전후 ±2 NM를 따라가며 닫고, 재진입 선회를 고려해 30분간 감시</td><td class="revc">24·28·29·<b>30</b></td></tr>
         <tr><td class="no">38</td><td class="item">김포 도착기</td><td class="concl"><b>감시 폐쇄</b><br>층 ±700 ft 접근 시</td><td class="src">김포 RWY 14 STAR가 GATE-N 위를 가로지름(59일 725편, 94%가 인천 15 방향 중). 중앙 4,065 ft라 대부분 분리되지만 3,150 ft 미만 10편 → 그 기체 주변만 닫음(59일 10회·997초). 전면 폐쇄는 30일 운휴라 기각</td><td class="revc">29</td></tr>
         <tr><td class="no">39</td><td class="item">남쪽 회랑 형상</td><td class="concl"><b>HDY→HX→WP3→GATE-S</b><br>HX 130° 0.5 NM</td><td class="src">옛 출구 140°는 15 방향 출발 흐름과 평행(13.44회/h, 운영시간 39.9% 폐쇄). 폭·경유점·고도층 단독 처방 모두 실패. HX 출구 + 발착구간 반폭 0.3으로 1.30회/h · 분리각 136.8°. 팀원 제안안(124° 출구)은 13.44회/h·33 절차 이격 0.21 NM로 기각</td><td class="revc">30</td></tr>
@@ -657,11 +657,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 31건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 32건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev32">REV 32</a></td><td class="k2">운용 고도</td><td class="src">회랑 고도 300&ndash;600 m 기준 적용 &mdash; 남행 1,468 ft · 북행 1,968 ft &middot; 착륙장 엇갈림 150초</td></tr>
         <tr><td class="v"><a href="#rev31">REV 31</a></td><td class="k2">근거·버티포트</td><td class="src">회랑 위치의 TSE 실측 근거 &middot; 국토부 버티포트 설계기준 반영 &middot; 착륙장 2개 엇갈림 운용</td></tr>
         <tr><td class="v"><a href="#rev30">REV 30</a></td><td class="k2">남쪽 회랑</td><td class="src">남쪽 회랑 재설계(HX 출구) &middot; 발착구간 반폭 0.3 NM &middot; 가로지르는 교통 감시 폐쇄 &middot; 15 방향에도 남북 운영</td></tr>
         <tr><td class="v"><a href="#rev29">REV 29</a></td><td class="k2">복행·김포</td><td class="src">복행은 활주로별 공시 복행경로로 판단 &middot; 김포 RWY 14 도착기 감시 폐쇄</td></tr>
@@ -702,10 +703,73 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev32">
+      <div class="meta"><span class="rev">REV 32</span><span class="tag">운용 고도</span><span class="dt">2026-10-09 13:18</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">회랑 고도를 300&ndash;600 m 기준 안으로 &mdash; 남행 1,468 ft · 북행 1,968 ft (447 / 600 m)</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>국토부 UAM 시범운용구역 운항 기준은 회랑 고도를 <b>300&ndash;600 m</b>로 정한다. REV 24의 북행 층 2,450 ft(747 m)는 상한을 147 m 넘었다(지금까지는 ConOps 각주 29의 &lsquo;협의 변경&rsquo;으로 처리). 기준 안으로 내리면서 두 층 간격 500 ft는 지켰고, 59일 실측 비교와 13일 운항 시뮬레이션에서 안전 지표는 같고 운영 지표는 나아졌다.</p>
+        <div class="cx">
+<div class="cx-title">① 시범운용구역 운항 기준과 대조 <span class="dim">(국토부 UAM 시범운용구역 운항 기준 요약 자료 ③항)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">항목</td><td>기준</td><td>REV 31 회랑</td><td>판정</td></tr><tr><td class="nw">회랑 고도</td><td>300&ndash;600 m</td><td>남행 594 m · 북행 <b>747 m</b></td><td><span class="c">북행 초과</span></td></tr><tr><td class="nw">회랑 폭</td><td>600 m 이상</td><td>4,623 m (HDY 부근 1,111 m)</td><td>충족</td></tr><tr><td class="nw">회랑 길이</td><td>편도 50 km 이하</td><td>27 km</td><td>충족</td></tr><tr><td class="nw">운항 대수</td><td>1개 회랑 1대 · 하루 편도 10회 이하</td><td>시간당 12편 설계</td><td><span class="dim">시범 단계 이후(다수 기체) 설계임을 명시</span></td></tr><tr><td class="nw">운항 조건</td><td>조종사 탑승 · 일출~일몰 · 시정 5 km · 운고 450 m 이상</td><td></td><td></td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 세 조건이 한꺼번에 성립하지 않는다</div>
+<div class="cx-tw"><table><tbody><tr><td>헬기와 150 m(492 ft) 분리 (ConOps 4-3-4)</td><td>실측 헬기 최고 1,218 ft &rArr; 남행 층 1,710 ft 이상</td></tr></tbody></table></div>
+<div class="cx-p">두 층 간격 500 ft (요약 09)</div>
+<div class="cx-p">위 층 600 m(1,969 ft) 이하 (시범운용구역 기준)</div>
+<div class="cx-concl">&rArr; 1,710&ndash;1,969 ft 사이는 259 ft뿐 &mdash; 하나를 양보해야 한다</div>
+<div class="cx-p">59일 실측 · 회랑 전 구간(가장자리 + 1.5 NM) · 층 &plusmn;500 ft 안 통과 횟수</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">두 층 고도</td><td>여객기&middot;제트기(&ge;140 kt)</td><td>헬기&middot;경비행기(&lt;140 kt)</td><td>양보하는 것</td></tr><tr><td>150 / 300 m (492 / 984 ft)</td><td>0.03회/h</td><td>0.20회/h</td><td>150 m 층이 기준(300 m) 밖</td></tr><tr><td>300 / 450 m (984 / 1,476 ft)</td><td>0.25</td><td>0.18</td><td>헬기와 같은 고도대</td></tr><tr><td><b>450 / 600 m (1,476 / 1,969 ft)</b></td><td>0.51</td><td>0.06</td><td>헬기 분리 258 ft</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">(채택값은 두 층 간격을 500 ft로 맞춘 1,468 / 1,968 ft &mdash; 8 ft 차)</span></div>
+<div class="cx-tw"><table><tbody><tr><td>REV 31 (1,950 / 2,450 ft)</td><td>0.58</td><td>0.02</td><td>북행 600 m 초과</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 결정 &mdash; 남행 1,468 ft(447 m) · 북행 1,968 ft(600 m)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">기준</td><td>300&ndash;600 m 안 &middot; 두 층 간격 500 ft 유지</td></tr><tr><td class="nw">덤 1</td><td>관제 유도고도 3,000 ft와의 간격 550 &rarr; <b>1,032 ft</b> &mdash; REV 29 미결(33R 복행 재진입 선회가 3,000 ft로 북쪽 회랑 위, 북행 층과 540 ft) 해소</td></tr><tr><td class="nw">덤 2</td><td>수직 상승 117&ndash;147 &rarr; 88&ndash;118초 &middot; 강하 49&ndash;61 &rarr; 37&ndash;49초 &mdash; 착륙장 점유가 짧아진다</td></tr><tr><td class="nw">덤 3</td><td>김포 14 도착기 최저 KNP975(2,528 ft)와 북행 층 간격 78 &rarr; 560 ft</td></tr><tr><td class="nw">양보</td><td>헬기와 250 ft &mdash; 59일 회랑 근처 저속 교통 고도 중앙 855 ft &middot; 90%가 1,107 ft 아래 &middot; 984 ft 초과 31대</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 접근관제 협정(LOA)으로 <b>회랑 구역 헬기 300 m(984 ft) 이하</b> &mdash; 남행 층과 150 m 확보(Class B 안 헬기도 관제 허가 대상)</div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 13일 운항 시뮬레이션 <span class="dim">(15 방향 종일 10일 + 복행일 3일 · UAM 2,327편 · 착륙장 2개 · 시간당 12편)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">항목</td><td>REV 31 고도</td><td>REV 32 고도</td></tr><tr><td>상용기와 안전거리 미달 &mdash; 가장 엄한 기준</td><td>1번</td><td>1번</td></tr><tr><td>상용기와 안전거리 미달 &mdash; UAM 실제 위치 기준</td><td>0번</td><td>0번</td></tr><tr><td>상용기와 안전거리 미달 &mdash; 버티포트 1 NM 안</td><td>15번</td><td>16번</td></tr><tr><td class="nw">UAM끼리 0.5 NM 안</td><td>1번</td><td>2번</td></tr><tr><td class="nw">회랑 안 대기</td><td>498번</td><td><b>427번 (&minus;14%)</b></td></tr><tr><td class="nw">감시 폐쇄 시간</td><td>48,789초</td><td><b>45,460초 (&minus;7%)</b></td></tr><tr><td class="nw">복행 폐쇄 시간</td><td>2,547초</td><td><b>1,897초 (&minus;26%)</b></td></tr></tbody></table></div>
+<div class="cx-p"><span class="g">안전 지표는 같고 운영 지표는 모두 나아졌다 &mdash; 걱정했던 15L 복행경로(HDY 부근 약 1,332 ft)와의 근접도 폐쇄 시간이 오히려 줄었다</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ TSE 실측 재계산 <span class="dim">(층 &plusmn;500 ft = 968&ndash;2,468 ft)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">최종접근 도착 약 3.3만 편</td><td>여유 초과 0 &mdash; 층 고도대가 내려가 활주로 쪽 진입거리 3.5 NM까지 검토 대상</td></tr></tbody></table></div>
+<div class="cx-p"><span class="c">가장 빠듯한 곳: 33R 진입 3.5 NM &mdash; 관측 최대 이탈 1.39 NM, 여유 1.38 NM</span> (그 순간 고도가 층 고도대 밖이라 실제 겹침 없음)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">15 방향 출발</td><td>10,128편 중 259편(2.6%) &mdash; 전부 HDY~HDY+1.4 NM (REV 31 2.8%)</td></tr><tr><td class="nw">33 방향 출발</td><td>12,562편 중 0편</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑥ 착륙장 2개 운용 정정 &mdash; 엇갈림 60 &rarr; 150초 <span class="dim">(15 방향 많은 6일 · 시간당 12편 · REV 32 고도)</span></div>
+<div class="cx-p">REV 31은 4일만 보고 &lsquo;60초 엇갈림, UAM끼리 근접 0&rsquo;이라 적었다. 15 방향 운영이 많은 날에는 두 착륙장의 같은 방향 기체가 서로 다른 층으로 오르내리며 고도가 교차해 하루 1&ndash;4번 가까워졌다.</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">착륙장 / 간격</td><td>UAM끼리 0.5 NM 안</td><td>게이트 밖 평균 대기</td><td>회랑 안 대기</td></tr><tr><td class="nw">1개</td><td>1번</td><td>171초</td><td>175번</td></tr><tr><td class="nw">2개 / 60초</td><td>10번</td><td>73초</td><td>289번</td></tr><tr><td class="nw">2개 / 120초</td><td>2번</td><td>107초</td><td>227번</td></tr><tr><td class="nw"><b>2개 / 150초</b></td><td><b>1번</b></td><td><b>134초</b></td><td>214번</td></tr><tr><td class="nw">2개 / 180초</td><td>3번</td><td>156초</td><td>190번</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 150초: UAM끼리 근접은 착륙장 1개와 같은 수준, 게이트 밖 대기 &minus;22% (REV 31의 &lsquo;4.2 &rarr; 1.6분&rsquo;은 과대평가)</div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑦ 시뮬레이션 엔진 수정 2건</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">사용권 유지</td><td>착륙장 사용권을 받은 기체가 대기(홀딩)에 들어가면 사용권 목록에서 빠져, 그 틈에 반대 방향 기체가 허가받음</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 대기 중에도 사용권 유지</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">출발기 후퇴</td><td>남행 출발기가 앞이 닫히자 HDY를 지나 북쪽 회랑(같은 고도의 남행 도착 경로)까지 물러남</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 출발기는 HDY 뒤로 물러나지 않고 제자리 대기</div>
+<div class="cx-p">시험했다 되돌린 것: 수직 구간에서 다른 UAM을 기다리는 규칙 &mdash; 서로 기다리는 교착으로 하루 처리 2편까지 떨어져 기각</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전:</b> 남행 1,950 ft(594 m) · 북행 2,450 ft(747 m), 헬기 상한과 732 ft · 관제 유도고도 3,000 ft와 550 ft (REV 24). 착륙장 2개 엇갈림 60초 (REV 31).</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① 회랑 구역 헬기 300 m 이하 협정(LOA) ② 비행점검기(FC78 등, 1,480&ndash;1,515 ft)가 이제 남행 층과 같은 고도 &mdash; 사전 협조(NOTAM)로 그 시간 회랑 진입 차단
+          ③ 33R 진입 3.5 NM의 빠듯한 여유 ④ 시범 단계 &lsquo;1개 회랑 1대 · 하루 10회&rsquo;와 본 설계(다수 기체)의 단계 구분 ⑤ 시범운용구역 기준 원문(고시) 확인
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev31">
       <div class="meta"><span class="rev">REV 31</span><span class="tag">근거·버티포트</span><span class="dt">2026-10-08 16:52</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">회랑 위치의 TSE 실측 근거 &middot; 국토부 버티포트 설계기준 반영 &middot; 착륙장 2개 엇갈림 운용</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>회랑 좌표는 바꾸지 않았다. 대신 &ldquo;왜 회랑이 여기 있는가&rdquo;를 항공기 경로이탈(Total System Error) 실측으로 다시 세웠고(인국공 컨설팅 4번 &mdash; 방법론보다 근거 있는 논리 흐름), 2026년 국토부 <b>버티포트 설계기준(제정안)</b>을 대조해 버티포트 근거를 국내 기준으로 바꿨다. 기준이 착륙장 여러 개를 허용하므로(61 m 간격) 착륙장을 2개로 늘렸다.</p>
@@ -2072,6 +2136,10 @@ h2{scroll-margin-top:60px}
       <p>REV 31에서 착륙장을 2개로 늘리자 시간당 16편 이상에서 회랑 안 대기 기체끼리 0.5 NM 안으로 가까워지는 경우가 생겼다(4일 8&ndash;21건). 0.5 NM&middot;300 ft는 우리가 정한 경고선이고, 국내에는 UAM끼리 분리기준이 아직 없다. 권장 수요를 시간당 12편으로 두는 근거이며, 더 받으려면 회랑 안 대기 위치&middot;간격 규칙이 필요하다. 버티포트 설계기준은 제정안이라 고시 확정본과 대조해야 한다.</p>
     </div>
     <div class="openItem">
+      <h4>회랑 구역 헬기 고도 협정 &mdash; 남행 층 1,468 ft와 150 m 확보</h4>
+      <p>REV 32에서 회랑을 300&ndash;600 m 기준 안으로 내리면서 남행 층과 실측 헬기 최고 고도(1,218 ft) 사이가 250 ft가 됐다. ConOps의 헬기 분리 150 m를 지키려면 접근관제 협정으로 회랑 구역 헬기 운항을 300 m(984 ft) 이하로 정해야 한다. 59일 실측에서 회랑 근처 저속 교통의 90%는 이미 1,107 ft 아래였고, 984 ft를 넘은 기체는 31대였다. 비행점검기(1,480&ndash;1,515 ft)는 남행 층과 같은 고도이므로 사전 협조로 그 시간 회랑 진입을 막아야 한다. 또 시범운용구역 기준의 &lsquo;1개 회랑 1대 · 하루 편도 10회&rsquo;와 본 설계(다수 기체)는 단계를 나눠 설명해야 한다.</p>
+    </div>
+    <div class="openItem">
       <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
       <p>ConOps 1.5 표 4의 「준도심 공항 연계형」은 버티포트 운영방식을 <b>복수 버티포트</b>로 규정한다(6-2-2: &ldquo;복수 버티포트 간 지정된 경로 운항&rdquo;). 현재 우리 회랑에는 <b>HDY(홍대염전) 단일 버티포트</b>뿐이다. REV 23으로 양 끝단이 이양게이트가 돼, 게이트 바깥(설계 범위 밖) 도심 버티포트들과 연결되는 구조로 설명하거나, 회랑 성격을 &ldquo;단일 버티포트 + 지정 구역&rdquo;(운용모델 1)으로 재규정하는 두 갈래가 있다. 발표에서 운용모델 2를 표방하려면 이 항목을 정리해야 한다.</p>
     </div>
@@ -2099,7 +2167,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 31 · 2026-10-08 16:52</span>
+  <span>회랑1 설계결정 로그 · REV 32 · 2026-10-09 13:18</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
