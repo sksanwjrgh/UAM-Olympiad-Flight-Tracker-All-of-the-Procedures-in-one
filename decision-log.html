@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 35">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 36">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 35 · 2026-10-12 23:45</b><br>
+    <b>REV 36 · 2026-10-14 16:03</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-12 23:45</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-14 16:03</span>
   </div>
 </header>
 
@@ -424,15 +424,15 @@ h2{scroll-margin-top:60px}
         </tr>
         <tr>
           <td class="k">15L/15R 복행 대응</td>
-          <td class="v">공시 복행경로 구간 폐쇄<br>15L 7.04–14.58 · 15R 7.17–14.58 NM</td>
+          <td class="v">UM120 ~ UM220 폐쇄<br>(실측 기반 단일 구간)</td>
           <td><span class="pill crit">불가피</span></td>
-          <td class="src">새 남쪽 구간 전체를 지남(REV 30 재계산). 16·34 복행은 감시만(REV 29)</td>
+          <td class="src">REV 35: 실측 복행 진입 13건 중 12건 포함(공시 기반 7.04–14.58 NM은 실측의 68%를 놓쳐 교체). 16·34 복행은 감시만(REV 29). 복행기가 다가오면 기체 전후 ±2 NM 감시 추종 30분</td>
         </tr>
         <tr>
           <td class="k">33L/33R 대응</td>
-          <td class="v">복행 시 CLOSED</td>
+          <td class="v">UM120 ~ UM220 폐쇄<br>(15와 같은 구간)</td>
           <td><span class="pill crit">불가피</span></td>
-          <td class="src">복행경로가 회랑 0.00–1.55 NM(GATE-N 부근)과 겹침 → <b>GATE-N 이양 보류</b>, 회랑 안 홀딩픽스 GATE-N에서 4.55 NM 이상, 남쪽 회랑은 계속. MAPt 후 144초에 진입(REV 22·24)</td>
+          <td class="src">REV 35: 실측 33R 복행 진입은 4.69–8.11 NM — 공시 기반 0.00–1.55 NM(GATE-N 부근)과 다른 자리. 닫을지는 활주로별 공시 복행경로로 판단</td>
         </tr>
         <tr>
           <td class="k">공역 등급</td>
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-12 23:45 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-14 16:03 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -604,7 +604,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–35에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–36에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -649,10 +649,13 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">37</td><td class="item">복행 대응</td><td class="concl"><b>닫을지 = 활주로별 공시 경로</b><br>어디를 = 실측 구간 UM120~UM220</td><td class="src">공시 복행경로가 회랑을 지나는 활주로(15L·15R·33L·33R)만 닫고, 16·34는 감시만(실측 진입 0건). 닫는 구간은 실측 복행 항적 기반 단일 구간 4.20–9.95 NM — 공시 기반 구간은 실측 표본의 68%를 놓쳤다(15L은 북쪽 모자라고 남쪽 6 NM 남아돔, 33R은 자리 자체가 다름). 복행기가 다가오면 기체 전후 ±2 NM를 따라가며 닫고 30분간 감시</td><td class="revc">24·28·29·30·<b>35</b></td></tr>
         <tr><td class="no">38</td><td class="item">김포 도착기</td><td class="concl"><b>감시 폐쇄</b><br>층 ±700 ft 접근 시</td><td class="src">김포 RWY 14 STAR가 GATE-N 위를 가로지름(59일 725편, 94%가 인천 15 방향 중). 중앙 4,065 ft라 대부분 분리되지만 3,150 ft 미만 10편 → 그 기체 주변만 닫음(59일 10회·997초). 전면 폐쇄는 30일 운휴라 기각</td><td class="revc">29</td></tr>
         <tr><td class="no">39</td><td class="item">남쪽 회랑 형상</td><td class="concl"><b>HDY→HX→WP3→GATE-S</b><br>HX 130° 0.5 NM</td><td class="src">옛 출구 140°는 15 방향 출발 흐름과 평행(13.44회/h, 운영시간 39.9% 폐쇄). 폭·경유점·고도층 단독 처방 모두 실패. HX 출구 + 발착구간 반폭 0.3으로 1.30회/h · 분리각 136.8°. 팀원 제안안(124° 출구)은 13.44회/h·33 절차 이격 0.21 NM로 기각</td><td class="revc">30</td></tr>
-        <tr><td class="no">40</td><td class="item">가로지르는 교통</td><td class="concl"><b>예측 감시 폐쇄</b><br>30·60초 앞</td><td class="src">상승기 + 남쪽 구간 고속 교통이 층 고도로 설계기준 상자에 들 것으로 예측되면 ±2 NM + 진행 90초분 폐쇄 · 진입 3 NM 안 폐쇄 시 대기 · 구간 안 기체는 <b>닫힌 구간 시작점으로 복귀, HDY 1.6 NM 안 도착기는 착륙</b>(REV 34) · 남쪽 발착권 대기 HDY 3.0 NM</td><td class="revc">30·<b>34</b></td></tr>
+        <tr><td class="no">40</td><td class="item">가로지르는 교통</td><td class="concl"><b>혼합 AI 경보</b><br>규칙 + 59일 학습</td><td class="src">경보 = 학습 ≥ 0.995 또는 (현행 규칙 경보 이면서 학습 ≥ 0.5). 시험 13일 위협 279건: 놓침 5→0 · 괜한 경보 112→74 · 선행 12→13초. 시뮬 폐쇄 −18% · 공중 대기 −21% · 엄한 1→0(같은 거르기 조건). 닫힌 구간 안 기체는 시작점 복귀, 버티포트 1.6 NM 안 도착기는 착륙(REV 34)</td><td class="revc">30·34·<b>36</b></td></tr>
         <tr><td class="no">41</td><td class="item">기체 제원 보강</td><td class="concl">뱅크 25° · 반경 600 m<br>측풍 15 · 배풍 5 kt</td><td class="src">팀원 기체 분석값 채택. 순항 174 kt·가감속 0.15 g·수직 이착륙(1,000/2,400 fpm)은 유지 — 제안 100 kt·−0.10 g·4° 상승강하는 기각 또는 보류</td><td class="revc">30</td></tr>
         <tr><td class="no">42</td><td class="item">회랑 위치 근거</td><td class="concl"><b>TSE 실측</b><br>고정 회랑 + 구간별 시간 분리</td><td class="src">분리 1.5 NM/500 ft를 회랑 가장자리부터, 상용기 오차는 59일 실측 이탈 분포로. 최종접근 도착 3.3만 편·33 방향 출발 1.3만 편 여유 초과 0 → 고정 회랑. 15 방향 출발 2.8%(HDY 1.4 NM 안)·복행 25% → 시간 분리. 확정 회랑 10일 1,790편, UAM 실제 위치 기준 안전거리 미달 0</td><td class="revc">31</td></tr>
-        <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>게이트 진입 허가 배정</td><td class="src">각지에서 GATE-N·S로 오는 기체의 ETA를 받아 버티포트 슬롯을 역산해 진입 시각을 통보(ConOps 1.5 4-3-3). 같은 유입(시간당 16편)에서 회랑 안 공중 홀딩 583분 → 0분. 권장 수용 유입률 시간당 12편(거부 0·게이트 밖 대기 5분 이내)</td><td class="revc">27</td></tr>
+        <tr><td class="no">43</td><td class="item">자료 품질</td><td class="concl"><b>깨진 ADS-B 거르기</b></td><td class="src">앞뒤 점 모두와 불가능한 점(지상속도 &gt;800 kt 또는 수직 &gt;20,000 fpm) 제거 — 8/19 점 0.5%, 오탐 1건 소멸</td><td class="revc"><b>36</b></td></tr>
+        <tr><td class="no">44</td><td class="item">비행점검기</td><td class="concl"><b>NOTAM 운휴</b><br>그 시간 그 쪽 회랑 비움</td><td class="src">FC78·FC79가 남행 층과 같은 고도로 회랑을 따라 비행 — 59일 남은 미달 대부분. 운휴 규칙 후 59일 실제 위치 기준 미달 0. 대가: 105편(1%) 다른 시각 안내</td><td class="revc"><b>36</b></td></tr>
+        <tr><td class="no">45</td><td class="item">승객 안내</td><td class="concl"><b>실시간 갱신</b><br>게이트 진입 시 91%가 ±1분</td><td class="src">예약 → 재배정 → 게이트 진입마다 예상 시각 갱신(평균 오차 0.87 → 0.28분). 출발 권장 시각은 승객별 여유로 같은 여유에서 제때 도착 93.9 → 95.9%</td><td class="revc"><b>36</b></td></tr>
+        <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>진입 허가 배정 + 순서 최적화</td><td class="src">게이트 진입 허가 시각을 미리 배정해 대기를 회랑 밖으로(ConOps 1.5 4-3-3). REV 36: 6편 구간 전수 순서 최적화로 착륙장 방향 전환을 줄여 시간당 12편 총 지연 −4%. 권장 수요 시간당 12편</td><td class="revc">27·<b>36</b></td></tr>
       </tbody>
     </table>
   </div>
@@ -663,11 +666,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 35건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 36건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev36">REV 36</a></td><td class="k2">AI 검증</td><td class="src">59일 실측 학습 AI(혼합 경보 · 배정 최적화 · 승객 안내) · 깨진 ADS-B 거르기 · 비행점검 NOTAM 운휴</td></tr>
         <tr><td class="v"><a href="#rev35">REV 35</a></td><td class="k2">경유점</td><td class="src">경유점을 운영 지점에만 두고 AIP 관례로 이름 붙임 &middot; 복행 폐쇄 구간을 실측 기반으로</td></tr>
         <tr><td class="v"><a href="#rev34">REV 34</a></td><td class="k2">폐쇄 시 대기</td><td class="src">회랑이 닫히면 닫힌 구간의 시작점으로 바로 복귀 &middot; 버티포트 근처 도착기는 그대로 착륙</td></tr>
         <tr><td class="v"><a href="#rev33">REV 33</a></td><td class="k2">VFR 대조</td><td class="src">공시 VFR 절차 대조 &mdash; 헬기 고도 협정 불필요 · 최저비행고도 · 운고 조건</td></tr>
@@ -712,10 +716,77 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev36">
+      <div class="meta"><span class="rev">REV 36</span><span class="tag">AI 검증</span><span class="dt">2026-10-14 16:03</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">59일 실측으로 학습·검증한 AI &mdash; 규칙+학습 혼합 경보 · 배정 순서 최적화 · 승객 안내 &middot; 깨진 ADS-B 거르기 &middot; 비행점검 NOTAM 운휴</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>REV 35까지의 &lsquo;AI&rsquo;는 직선 외삽 규칙과 탐욕 배정이라 &ldquo;4차 산업 기술 융합&rdquo;으로 보기 약했다. 녹화해 둔 59일 실측 항적으로 실제로 학습시키고, 학습에 쓰지 않은 날로 검증했다. 효과가 있는 것만 엔진에 넣고, 효과가 없던 시도도 그 이유와 함께 남긴다.</p>
+        <div class="cx">
+<div class="cx-title">① 검증 규칙 &mdash; 학습에 쓴 날로 성능을 말하지 않는다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시험</td><td>13일 = 시뮬레이션 검증일(15 방향 운영이 많은 어려운 날들)</td></tr><tr><td class="nw">학습</td><td>나머지 46일 (분류 모델은 36일 학습 + 10일 검증, 최종은 46일 5묶음 교차검증)</td></tr><tr><td class="nw">채점</td><td>기체 통과 단위 &mdash; 실제 위협(140 kt 이상이 층 고도로 설계기준 상자 안)마다 제때 경보 · 늦음 · 놓침 · 괜한 경보 · 선행 시간</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 전술 AI &mdash; 60초 앞 위협 경보 <span class="dim">(시험 13일 · 위협 통과 279건)</span></div>
+<div class="cx-cap">시도 1 · 위치 예측(30·60초 뒤 위치 회귀)</div>
+<div class="cx-p">60초 위치 오차 중앙 0.50 &rarr; 0.12 NM · p95 2.62 &rarr; 0.85 NM (4배 정확)</div>
+<div class="cx-p"><span class="c">그러나 경보를 이걸로 바꾸면 괜한 경보 109 &rarr; 182 · 선행 12 &rarr; 4초 · 시뮬 폐쇄 400 &rarr; 472회 &mdash; 기각</span> 이유: 실제 위협 대부분은 수평으로 이미 상자 위·아래에 있던 출발기가 상승하며 층에 닿는 경우다.</div>
+<div class="cx-p">&lsquo;어디로 가나&rsquo;보다 &lsquo;언제 우리 층에 닿나&rsquo;의 문제 &mdash; 결정을 직접 배워야 한다</div>
+<div class="cx-p">시도 2 · 위협 분류(60초 안에 층 고도로 상자에 드는가를 직접 학습, 현행 규칙 판정도 입력)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw"><b>채택 · 혼합 경보</b></td><td>경보 = 학습 &ge; 0.995</td><td>또는</td><td>(현행 규칙 경보 이면서 학습 &ge; 0.5)</td></tr></tbody></table></div>
+<div class="cx-p">규칙이 1차로 판단하고, AI가 놓친 위협을 더하고 괜한 경보를 거른다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">방식</td><td>제때 경보</td><td>놓침</td><td>괜한 경보</td><td>선행 시간</td><td></td></tr><tr><td class="nw">현행 규칙</td><td>274/279</td><td>5</td><td>112</td><td>12초</td><td></td></tr><tr><td class="nw"><b>혼합 (채택)</b></td><td><b>279/279</b></td><td><b>0</b></td><td><b>74</b></td><td><b>13초</b></td><td></td></tr><tr><td class="nw">학습만 θ 0.995</td><td>278/279</td><td>1</td><td>24</td><td>0초</td><td><span class="dim">기각 &mdash; 7/21 06:54 실제 위협(140 kt, 버티포트 위 상승) 1건 놓침</span></td></tr><tr><td class="nw">궤적 특징 추가(2차)</td><td>273/279</td><td>6</td><td>22</td><td>0초</td><td><span class="dim">기각</span></td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">θ 0.995는 46일 5묶음 교차검증으로 고름(검증 10일만으론 위협 44건뿐이라 θ가 흔들림). 거부값 0.1&ndash;0.9 어디서도 놓침 0.</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 깨진 ADS-B 거르기 &mdash; REV 35 남은 확인 ④ 해결</div>
+<div class="cx-p">앞 점·뒤 점 모두와 물리적으로 불가능한 점(지상속도 800 kt 초과 또는 수직 20,000 fpm 초과, 간격 2&ndash;60초)을 뺀다</div>
+<div class="cx-p">8/19 점 0.5% 제거 &mdash; 71c255(고도 675 &harr; 9,926 ft 튐)의 19:41 구간이 빠져 엄한 기준 오탐 1건 소멸</div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 비행점검 NOTAM 운휴 &mdash; 미결 &lsquo;비행점검기와 시범 단계&rsquo;의 운영 규칙화</div>
+<div class="cx-p">59일 상용기 미달 중 남은 것을 열어 보니 <b>비행점검기 FC78 · FC79</b>가 남행 층(1,468 ft)과 같은 1,480&ndash;1,505 ft로 회랑을 따라 장시간 수평비행 AI는 확률 1.000으로 경보했지만 회랑을 따라 나는 기체라 닫은 구간을 벗어나도 다시 마주친다 &rArr; AI가 아니라 <b>절차</b>로 푼다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">규칙</td><td>비행점검기가 회랑 5 NM · 3,000 ft 아래에 있는 시간대(앞 10분 · 뒤 2분)는 그 쪽 회랑으로 진입·출발하지 않고, 배정도 그 시간을 피한다</td></tr><tr><td class="nw">효과</td><td>8/4 · 8/25 · 8/26 상용기 미달(엄한 4 · 실제 위치 2) &rarr; 0 &middot; 대가: 운휴 30&ndash;70분 동안 요청 6&ndash;21편 다른 시각 안내</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 진입 배정 2차 &mdash; 착륙장 방향 전환을 줄이는 순서 최적화</div>
+<div class="cx-p">착륙장은 같은 방향(도착끼리·출발끼리)만 동시에 쓴다 &rArr; 도착·출발이 섞이면 전환마다 기다린다(활주로 이착륙 순서 문제와 같은 구조)</div>
+<div class="cx-p">탐욕 배정 뒤 6편씩 겹치는 구간마다 모든 순서(720가지)를 시험해 총 대기가 최소인 순서로</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시간당 12편</td><td>승객 총 지연 6,454 &rarr; 6,167분(&minus;4%) · 공중 대기 501 &rarr; 481분 · 안전 지표 동일 &rArr; <b>채택</b></td></tr><tr><td class="nw">시간당 16편</td><td>총 지연 &minus;8% · 단 UAM끼리 근접 1건(대기 패턴 둘이 0.26 NM) &mdash; 16편 이상은 미결</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑥ 승객 안내 &mdash; &lsquo;탑승구 도착 예상 시각&rsquo;과 &lsquo;출발 권장 시각&rsquo; <span class="dim">(시험 13일 · 최종 설정)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">안내 시점</td><td>평균 오차</td><td>±1분 안</td><td>±2분 안</td></tr><tr><td class="nw">예약 시</td><td>0.87분</td><td>73%</td><td>85%</td></tr><tr><td class="nw">재배정 즉시 갱신</td><td>0.52분</td><td>82%</td><td>92%</td></tr><tr><td class="nw"><b>게이트 진입 시</b></td><td><b>0.28분</b></td><td><b>91%</b></td><td><b>95%</b></td></tr><tr><td class="nw">출발 권장 시각</td><td>승객별 여유(95% 분위 + 검증일 보정) &mdash; 같은 평균 여유에서 제때 도착 93.9 &rarr; <b>95.9%</b>, 비슷한 비율이면 여유 3.5 &rarr; 2.0분</td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">예약 시점 예측 모델은 오차 &minus;11%뿐 &mdash; 늦는 원인(복행·가로지르는 교통)이 예약 뒤에 생긴다. 정확도는 &lsquo;새 정보마다 갱신&rsquo; 구조에서 나온다.</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑦ 시도했지만 넣지 않은 것</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">30분 앞 폐쇄 위험 예측 → 배정 연동</td><td>발착구간만 유효(AUC 0.78 &rarr; 0.83) · 공중 대기 1분 줄이는 데 지상 대기 8&ndash;28분 &mdash; 선택 정책으로만</td></tr><tr><td class="nw">버티포트 근처 120초 진입 판단</td><td>효과 없음(1 NM 안 15 &rarr; 15) &mdash; 위협이 이륙 직후 출발기라 공중 항적으로는 미리 볼 수 없다 &rArr; <b>관제 출발 허가 정보 연동 과제</b></td></tr><tr><td class="nw">게이트 진입 시점 지연 예측</td><td>개선 0 &mdash; 진입 뒤 지연 원인이 진입 뒤에 생김</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑧ 최종 검증 &mdash; 거르기 · 혼합 AI 경보 · 배정 2차 · 비행점검 운휴 <span class="dim">(시간당 12편 · 착륙장 2개)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시험 13일 · 2,327편</td><td>REV 35 설정</td><td>REV 36</td></tr><tr><td class="nw">상용기 미달 &mdash; 엄한 / 실제 위치</td><td>2 / 0</td><td><b>0 / 0</b></td></tr><tr><td class="nw">버티포트 1 NM 안</td><td>15</td><td>12</td></tr><tr><td class="nw">UAM끼리 0.5 NM 안</td><td>2</td><td><b>0</b></td></tr><tr><td class="nw">회랑 안 공중 대기</td><td>635분</td><td><b>478분</b></td></tr><tr><td class="nw">감시 폐쇄</td><td>756분</td><td>613분</td></tr><tr><td class="nw">편당 지연(요청 → 도착)</td><td>2.89분</td><td>2.77분</td></tr></tbody></table></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">59일 전체</td><td>REV 35 설정</td><td>REV 36</td></tr><tr><td class="nw">처리</td><td>10,561편</td><td>10,456편 <span class="dim">(비행점검 운휴 시간대 105편 다른 시각 안내)</span></td></tr><tr><td class="nw">상용기 미달 &mdash; 엄한 / <b>실제 위치</b></td><td>11 / 1</td><td>1 / <b>0</b></td></tr><tr><td class="nw">버티포트 1 NM 안</td><td>32</td><td>21</td></tr><tr><td class="nw">UAM끼리 0.5 NM 안</td><td>12</td><td>1</td></tr><tr><td class="nw">회랑 안 공중 대기</td><td>1,537분</td><td><b>933분 (&minus;39%)</b></td></tr><tr><td class="nw">감시 폐쇄</td><td>1,588분</td><td>1,186분 (&minus;25%)</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">59일 중 46일은 AI 학습에 쓴 날이라 공정 비교는 시험 13일. 남은 엄한 1건은 9/19 화물기 CKS997 상승 5초(UAM 대기 중, 실제 2.16 NM).</span></div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전(REV 35):</b> 감시 경보 = 직선 외삽 규칙(지금·30·60초 예측이 상자 안) · 진입 배정 = 탐욕 + 이웃 교환 · 비행점검기는 미결(사전 협조 필요)로만 기록 · 깨진 ADS-B 거르기 없음.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① 학습 자료가 7&ndash;9월뿐 &mdash; 겨울 33 방향 비중이 다르면 재학습
+          ② 학습 모델은 연구용 &mdash; 실제 운영 전 안전 보증(재현성·설명 가능성·감독 체계) 필요. 혼합 방식은 규칙을 1차로 남겨 이 부담을 줄인다
+          ③ 13일 수요가 같은 난수로 만들어짐(교통만 다름)
+          ④ 버티포트 근처 이륙 직후 출발기 &mdash; 관제 출발 허가 정보를 PSU에 연동해야 해소
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev35">
       <div class="meta"><span class="rev">REV 35</span><span class="tag">경유점</span><span class="dt">2026-10-12 23:45</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">경유점 재설계 &mdash; 운영 지점에만 두고 AIP 관례로 이름 붙임 &middot; 복행 폐쇄 구간을 실측 기반으로</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>경유점은 &ldquo;거기서 무언가 결정되거나 바뀌기&rdquo; 때문에 존재한다 &mdash; 경로 정의, 관제 허가의 한계점, 관할 이양, 고도&middot;속도 제약, 선회, 위치 보고, 순서 조절, 비상 절차의 기준. 그런데 지금까지의 WP5&middot;WP4는 선회각이 0.7&deg;&middot;3.5&deg;뿐이라 아무 일도 일어나지 않는 자리였고, 정작 운영이 쓰는 자리에는 이름이 없었다.</p>
@@ -2287,10 +2358,7 @@ h2{scroll-margin-top:60px}
       <h4>이양 절차 &mdash; 게이트에서 무엇을, 언제 주고받는가</h4>
       <p>REV 23에서 이양게이트 <b>위치</b>는 정했으나 <b>절차</b>는 아직 없다. Class B는 진입 전에 관제허가가 필요하므로, 게이트 통과 시점에 허가를 받으면 늦다. ① <b>허가 요청 시점</b>(게이트 몇 NM 전, 몇 분 전) ② <b>허가 전 대기 위치</b> &mdash; 게이트 바깥(E등급)에서 기다리게 되므로 그 공역의 VFR 트래픽과 분리가 필요 ③ <b>PSU&rarr;관제 이양 시 넘길 정보</b>(편명&middot;고도층&middot;ETA) ④ 허가가 안 나올 때의 <b>회항 경로</b>를 정해야 한다. ConOps 6-3-2(관제권 경로&middot;고도 사전협의)와 REV 20의 수직위계(L2 PSU &rarr; L4 ATC)를 뼈대로 쓴다. <span class="dim">(구 항목 &ldquo;WP6&middot;SIHWA의 Class B 이탈&rdquo;은 REV 23 게이트 절단으로 해소)</span></p>
     </div>
-    <div class="openItem">
-      <h4>WP5&middot;WP4 명칭과 실제 위치 불일치</h4>
-      <p>REV 17&middot;19에서 좌표만 옮기고 명칭은 그대로 뒀다. WP6는 REV 23에서 GATE-N으로 대체돼 해소됐으나, WP5(&ldquo;Report Point&rdquo;)&middot;WP4(&ldquo;New airport IC Report Point&rdquo;)는 원래 지상 기준점에서 벗어나 있다. 발표자료에 쓰기 전 <b>명칭 재정의</b> 필요.</p>
-    </div>
+
     <div class="openItem">
       <h4>TCAS 협조 가능성 — eVTOL 상승률과 RA 로직 호환성</h4>
       <p>REV 21에서 ADS-B IN을 필수로 올려 RA 수신은 확보했으나, <b>상용기 TCAS II와 협조(coordination)가 성립하는지는 별개 문제</b>다. TCAS II는 상승/강하로 회피하는데 eVTOL의 상승률·강하율 특성이 제트와 달라, UAM에 TCAS II 호환 로직이 없으면 상용기는 UAM을 <b>비협조 침입기</b>로 처리한다. 기종 스펙 확정 후 ① UAM측 회피 능력(수직속도) ② RA 협조 프로토콜 지원 여부 ③ 미지원 시 대체수단(DAA)을 정해야 한다. 홀딩 중에는 저속 선회로 수직 회피 여유가 가장 적으므로, <b>홀딩 금지구역이 곧 RA 최악 지점</b>이라는 점도 함께 다뤄야 한다.</p>
@@ -2313,15 +2381,21 @@ h2{scroll-margin-top:60px}
     </div>
     <div class="openItem">
       <h4>UAM끼리 분리기준 부재 &mdash; 시간당 16편 이상의 회랑 안 대기</h4>
-      <p>REV 31에서 착륙장을 2개로 늘리자 시간당 16편 이상에서 회랑 안 대기 기체끼리 0.5 NM 안으로 가까워지는 경우가 생겼다(4일 8&ndash;21건). 0.5 NM&middot;300 ft는 우리가 정한 경고선이고, 국내에는 UAM끼리 분리기준이 아직 없다. 권장 수요를 시간당 12편으로 두는 근거이며, 더 받으려면 회랑 안 대기 위치&middot;간격 규칙이 필요하다. 버티포트 설계기준은 제정안이라 고시 확정본과 대조해야 한다.</p>
+      <p>0.5 NM&middot;300 ft는 우리가 정한 경고선이고 국내 UAM끼리 분리기준은 아직 없다. REV 36 최종 설정에서 시간당 12편은 13일 UAM끼리 근접 0이지만, 16편에서는 북쪽 도착기 두 대의 대기 패턴이 0.26 NM까지 가까워진 1건이 있다(9/18). 권장 수요 12편의 근거이며, 더 받으려면 대기 패턴끼리의 간격 규칙이 필요하다.</p>
     </div>
+
     <div class="openItem">
-      <h4>비행점검기와 시범 단계 운항 제한</h4>
-      <p>비행점검기(FC78 등, 1,480&ndash;1,515 ft)는 REV 32 남행 층(1,468 ft)과 같은 고도이므로 점검 일정을 사전에 받아 그 시간 회랑 진입을 막아야 한다(NOTAM&middot;사전 협조). 또 시범운용구역 기준의 &lsquo;1개 회랑 1대 &middot; 하루 편도 10회&rsquo;와 본 설계(다수 기체)는 단계를 나눠 설명해야 한다. 헬기 고도 협정은 REV 33에서 불필요로 정리했다(13일 시뮬 저속기 근접 0).</p>
+      <h4>비행점검 NOTAM 연동과 시범 단계 운항 제한</h4>
+      <p>REV 36에서 비행점검기(FC78·FC79, 남행 층과 같은 고도)가 있는 시간대 그 쪽 회랑을 비우는 운휴 규칙을 넣어 59일 실제 위치 기준 미달을 0으로 만들었다. 실제 운영에서는 비행점검 일정(NOTAM)을 PSU가 미리 받아 배정에 반영하는 절차가 필요하다. 시범운용구역의 &lsquo;1개 회랑 1대 · 하루 편도 10회&rsquo;와 상용 단계(시간당 12편)는 단계 로드맵으로 나눠 설명한다.</p>
     </div>
+
     <div class="openItem">
       <h4>경유점 이름의 전국 중복 검사 &mdash; 고시 전 확인 필요</h4>
       <p>REV 35의 이름(BUKGA&middot;HONDY&middot;SONDO&middot;UM1xx&middot;UM2xx)은 인천&middot;김포&middot;서울 절차의 고유 지점명 389개와만 대조했다. 실제 고시하려면 전국 고시점 목록과 대조해 반경 약 600 NM 안에서 중복&middot;음성 혼동이 없는지 확인해야 한다. UAM 회랑 고시점의 명명 규칙이 따로 있는지도 미확인이며, 없다면 &ldquo;기존 터미널 RNAV 관례를 따르되 UAM 전용 접두를 신설했다&rdquo;가 근거가 된다. 복행 폐쇄 구간의 양 끝은 실측 진입 13건으로 정했으므로, 겨울철 33 방향 운영 비율이 확보되면 재검토해야 한다.</p>
+    </div>
+    <div class="openItem">
+      <h4>버티포트 근처 이륙 직후 출발기 &mdash; 관제 출발 허가 정보 연동</h4>
+      <p>남은 버티포트 1 NM 안 근접은 15 방향 이륙 직후 출발기가 45&ndash;60초 만에 층에 닿는 경우다. 120초 앞 판단 AI를 학습해 봤지만 공중 항적만으로는 이륙 전 정보가 없어 효과가 없었다(REV 36 ⑦). 관제가 출발 허가·이륙 순서를 PSU에 실시간으로 넘기면 착륙장 이륙 보류·발착권 지점 대기로 막을 수 있다 &mdash; 정보 공유 체계 제안 과제.</p>
     </div>
     <div class="openItem">
       <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
@@ -2351,7 +2425,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 35 · 2026-10-12 23:45</span>
+  <span>회랑1 설계결정 로그 · REV 36 · 2026-10-14 16:03</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
