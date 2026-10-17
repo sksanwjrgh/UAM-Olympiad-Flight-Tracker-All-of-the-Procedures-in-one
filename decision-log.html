@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 40">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 41">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 40 · 2026-10-17 23:24</b><br>
+    <b>REV 41 · 2026-10-17 23:56</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:24</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:56</span>
   </div>
 </header>
 
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:24 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:56 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -604,7 +604,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–40에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–41에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -673,11 +673,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 40건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 41건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev41">REV 41</a></td><td class="k2">효과 비교</td><td class="src">기다림 분포 · 회랑 상태별 차이 · 화성시청 → T1 문앞~문앞(UAM 평균 약 39분 vs 자가용 70분)</td></tr>
         <tr><td class="v"><a href="#rev40">REV 40</a></td><td class="k2">운용 절차</td><td class="src">복행은 PSU가 관제 교신을 직접 듣고 바로 닫음 · 스트레스 조건 이름 정리</td></tr>
         <tr><td class="v"><a href="#rev39">REV 39</a></td><td class="k2">숫자 점검</td><td class="src">UAM끼리 근접을 DO-365 well clear로 대조 → 층 통과 여유 ±500 ft·0.70 NM · 모든 UAM은 ATC 관제 · 근거 문구 정정</td></tr>
         <tr><td class="v"><a href="#rev38">REV 38</a></td><td class="k2">심사 대비 검증</td><td class="src">버티포트 입지 실측 비교 · 수직 강하율 민감도 · AI 끔 수용 한도 · 시험 13일 AI 효과 · 관제 승인 횟수</td></tr>
@@ -727,10 +728,33 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev41">
+      <div class="meta"><span class="rev">REV 41</span><span class="tag">효과 비교</span><span class="dt">2026-10-17 23:56</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">기다림은 땅에서, 대부분 손님이 몰려서 &mdash; 화성시청 &rarr; T1 UAM 평균 약 39분 vs 자가용 약 70분</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 기다림 분포 &mdash; 59일 · 시간당 12편 · 10,452편 (원한 출발 시각보다 늦게 도착한 시간, 땅·하늘 대기 포함)</div>
+<div class="cx-p">평균 2.6분 · 중앙 1.0분 · 10편 중 9편 7.5분 안 · 100편 중 99편 16.3분 안 · 최대 34.5분 기다리지 않은 편 41% · 10분 넘게 5.8% · 20분 넘게 0.5% · 하늘에서 기다린 편 7.7%(평균 0.1분)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">원인 나눔</td><td>요청이 몰려 순서를 기다림 평균 2.3분 · 회랑이 닫혀 출발 보류 평균 0.15분(최대 7.9분)</td></tr><tr><td class="nw">회랑 상태별</td><td>가장 적게 닫힌 15일(하루 0&ndash;3분) 평균 2.2분 · 가장 많이 닫힌 15일(31&ndash;122분) 2.6분 &mdash; 차이 0.4분</td></tr><tr><td class="nw">시간대별</td><td>가장 긴 시간 16시 4.6분 · 9시 4.0분 · 가장 짧은 시간 12시 0.4분</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 화성시청 &rarr; T1 문앞~문앞 비교 (보안·수속은 양쪽 모두 제외 &mdash; 공항 보안검색은 같다, 사용자 결정)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">대중교통</td><td>138분(길찾기 조회값)</td></tr><tr><td class="nw">자가용</td><td>운전 약 60분 + 주차 후 터미널까지 약 10분 = 약 70분</td></tr><tr><td class="nw">UAM</td><td>버티포트까지 5분 + 비행 약 12분(직선·순항 174 kt) + 내려서 셔틀 타기 5분 + 셔틀 14분 + 기다림</td></tr></tbody></table></div>
+<div class="cx-p">= 평균 약 39분 · 최소 36분 · 10편 중 9편 44분 안 · 최대 70분</div>
+<div class="cx-concl">&rArr; 자가용보다 평균 45% 짧고, 가장 운 나쁜 경우도 자가용과 비슷 &mdash; UAM은 도로 혼잡과 무관</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전(REV 39):</b> &ldquo;약 41분&rdquo; = 정해진 시간표 + 예약 없이 온 승객 평균 대기 15분으로 계산 &mdash; 우리 운영 개념(예약하면 진입 시각 배정)과 다른 방식이었다.</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev40">
       <div class="meta"><span class="rev">REV 40</span><span class="tag">운용 절차</span><span class="dt">2026-10-17 23:24</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">복행은 PSU가 관제 교신을 직접 듣고 바로 닫는다 &mdash; ATC 전파를 기다리지 않음 · 스트레스 조건 이름 정리</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <div class="cx">
@@ -2651,7 +2675,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 40 · 2026-10-17 23:24</span>
+  <span>회랑1 설계결정 로그 · REV 41 · 2026-10-17 23:56</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
