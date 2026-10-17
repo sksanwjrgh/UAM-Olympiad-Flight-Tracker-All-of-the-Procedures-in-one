@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 39">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 40">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 39 · 2026-10-17 23:04</b><br>
+    <b>REV 40 · 2026-10-17 23:24</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:04</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:24</span>
   </div>
 </header>
 
@@ -426,7 +426,7 @@ h2{scroll-margin-top:60px}
           <td class="k">15L/15R 복행 대응</td>
           <td class="v">UM120 ~ UM220 폐쇄<br>(실측 기반 단일 구간)</td>
           <td><span class="pill crit">불가피</span></td>
-          <td class="src">REV 35: 실측 복행 진입 13건 중 12건 포함(공시 기반 7.04–14.58 NM은 실측의 68%를 놓쳐 교체). 16·34 복행은 감시만(REV 29). 복행기가 다가오면 기체 전후 ±2 NM 감시 추종 30분</td>
+          <td class="src">REV 35: 실측 복행 진입 13건 중 12건 포함(공시 기반 7.04–14.58 NM은 실측의 68%를 놓쳐 교체). 16·34 복행은 감시만(REV 29). 복행기가 다가오면 기체 전후 ±2 NM 감시 추종 30분 · REV 40: PSU가 관제 교신을 직접 듣고 즉시 닫음(ATC 전파 대기 없음, 시뮬은 30초 보수 가정)</td>
         </tr>
         <tr>
           <td class="k">33L/33R 대응</td>
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:04 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:24 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -604,7 +604,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–39에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–40에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -673,11 +673,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 39건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 40건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev40">REV 40</a></td><td class="k2">운용 절차</td><td class="src">복행은 PSU가 관제 교신을 직접 듣고 바로 닫음 · 스트레스 조건 이름 정리</td></tr>
         <tr><td class="v"><a href="#rev39">REV 39</a></td><td class="k2">숫자 점검</td><td class="src">UAM끼리 근접을 DO-365 well clear로 대조 → 층 통과 여유 ±500 ft·0.70 NM · 모든 UAM은 ATC 관제 · 근거 문구 정정</td></tr>
         <tr><td class="v"><a href="#rev38">REV 38</a></td><td class="k2">심사 대비 검증</td><td class="src">버티포트 입지 실측 비교 · 수직 강하율 민감도 · AI 끔 수용 한도 · 시험 13일 AI 효과 · 관제 승인 횟수</td></tr>
         <tr><td class="v"><a href="#rev37">REV 37</a></td><td class="k2">운용 알고리즘</td><td class="src">ATM 3단계 충돌 관리로 정리 · 엔진 결함 9건 수정 · 버티포트 층 통과 허가 · 59일 재산출 · 수용 한도 · 시간대별 배차 · 게이트 선택 · 스트레스 시험</td></tr>
@@ -726,10 +727,32 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev40">
+      <div class="meta"><span class="rev">REV 40</span><span class="tag">운용 절차</span><span class="dt">2026-10-17 23:24</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">복행은 PSU가 관제 교신을 직접 듣고 바로 닫는다 &mdash; ATC 전파를 기다리지 않음 · 스트레스 조건 이름 정리</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 복행 인지 경로 &mdash; 사용자 결정</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">이전</td><td>복행이 나면 ATC가 PSU에 알려 주고(&lsquo;전파&rsquo;) 그다음 회랑을 닫는 그림</td></tr><tr><td class="nw">지금</td><td>PSU가 타워·접근 관제 주파수를 직접 듣는다 &mdash; 조종사의 &lsquo;Going around&rsquo; 교신이나 관제사의 복행 지시를 듣는 즉시</td></tr></tbody></table></div>
+<div class="cx-p">미리 합의한(관제 협정) 구간 UM120 ~ UM220을 닫고 ATC에는 통보만 한다 &mdash; 모든 UAM은 여전히 ATC 관제(REV 39)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">시뮬레이션</td><td>복행 후 30초에 닫는 가정(GA_REACT_S) 그대로 &mdash; 교신을 들으면 실제로는 더 빠르므로 보수적</td></tr><tr><td class="nw">스트레스</td><td>복행을 2분 늦게 알아도 미달·근접이 늘지 않는다(하루 종일 18편 · 59일) &mdash; 교신을 놓친 최악의 경우에 해당</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 스트레스 조건 이름을 쉬운 말로</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">감시 자료 20초 지연</td><td>&rarr;</td><td>주변 항공기 위치를 20초 늦게 받아도 &mdash; 레이더 &rarr; PSU &rarr; AI &rarr; 관제 승인까지 걸리는 시간을 넉넉히 20초로</td></tr><tr><td class="nw">복행 전파 120초</td><td>&rarr;</td><td>복행을 2분 늦게 알아도</td></tr></tbody></table></div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전(REV 39):</b> 발표·로그 표현 &ldquo;복행 전파&rdquo; &mdash; ATC가 알려 줘야 닫는 것처럼 읽혔다.</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev39">
       <div class="meta"><span class="rev">REV 39</span><span class="tag">숫자 점검</span><span class="dt">2026-10-17 23:04</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">발표 숫자를 하나씩 반박해 보기 &mdash; UAM끼리 근접을 무인기 표준(DO-365)으로 다시 세고 층 통과 여유를 넓힘 · 모든 UAM은 ATC가 관제 · 근거 문구 정정</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>심사위원(공역 담당자·항공교통 전문가·인천공항 실무자)이 걸고넘어질 만한 숫자를 하나씩 실제 자료로 다시 따졌다. 근거가 약한 표현은 고치고, 기준이 느슨하다는 지적을 받을 수 있는 UAM끼리 근접은 국제 표준으로 다시 세어 엔진을 보강했다.</p>
@@ -2628,7 +2651,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 39 · 2026-10-17 23:04</span>
+  <span>회랑1 설계결정 로그 · REV 40 · 2026-10-17 23:24</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
