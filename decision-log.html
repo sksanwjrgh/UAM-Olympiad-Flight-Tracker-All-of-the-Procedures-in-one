@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 38">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 39">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 38 · 2026-10-17 16:37</b><br>
+    <b>REV 39 · 2026-10-17 23:04</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-17 16:37</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:04</span>
   </div>
 </header>
 
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 16:37 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:04 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -604,7 +604,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–38에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–39에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -656,11 +656,12 @@ h2{scroll-margin-top:60px}
         <tr><td class="no">44</td><td class="item">비행점검기</td><td class="concl"><b>NOTAM 운휴</b><br>그 시간 그 쪽 회랑 비움</td><td class="src">FC78·FC79가 남행 층과 같은 고도로 회랑을 따라 비행 — 59일 남은 미달 대부분. 운휴 규칙 후 59일 실제 위치 기준 미달 0. 대가: 105편(1%) 다른 시각 안내</td><td class="revc"><b>36</b></td></tr>
         <tr><td class="no">45</td><td class="item">승객 안내</td><td class="concl"><b>실시간 갱신</b><br>게이트 진입 시 91%가 ±1분</td><td class="src">예약 → 재배정 → 게이트 진입마다 예상 시각 갱신(평균 오차 0.87 → 0.28분). 출발 권장 시각은 승객별 여유로 같은 여유에서 제때 도착 93.9 → 95.9%</td><td class="revc"><b>36</b></td></tr>
         <tr><td class="no">46</td><td class="item">운용 알고리즘 개념</td><td class="concl"><b>ATM 3단계 충돌 관리</b></td><td class="src">ICAO Doc 9854: 1 전략적(회랑 배치·수용 한도·배차·진입 배정) · 2 분리 제공(복행·감시 폐쇄·층 통과 허가) · 3 충돌 회피(기체, 범위 밖). 국내 용어는 ConOps 1.5 전략적·전술적 분리. 전술 대응을 다 꺼도 회랑 미달 1(중심선 0) → 1단계가 안전의 1차</td><td class="revc"><b>37</b></td></tr>
-        <tr><td class="no">47</td><td class="item">버티포트 수직 이착륙</td><td class="concl"><b>층 통과 허가</b><br>운항 의도 기반</td><td class="src">다른 UAM이 내 착륙장 0.5 NM에 오는 가장 이른 시각과 내가 그 고도대(±400 ft)를 벗어나는 시간을 비교 → 계속·대기·되돌아감. 직선 연장 예측이 놓친 59일 UAM끼리 위험 2건 → 0</td><td class="revc"><b>37</b></td></tr>
+        <tr><td class="no">47</td><td class="item">버티포트 수직 이착륙</td><td class="concl"><b>층 통과 허가</b><br>여유 ±500 ft · 0.70 NM</td><td class="src">다른 UAM이 내 착륙장 근처에 오는 가장 이른 시각과 내가 그 고도대를 벗어나는 시간을 비교 → 계속·대기·되돌아감(REV 37). REV 39: 여유를 층 간격 ±500 ft·수평 0.70 NM로 넓혀 RTCA DO-365 well clear(4,000 ft·450 ft) 기준으로도 59일 UAM끼리 0건</td><td class="revc">37·<b>39</b></td></tr>
         <tr><td class="no">48</td><td class="item">시간대별 배차</td><td class="concl"><b>항공편 연동</b><br>공식 시간대 통계로 예측</td><td class="src">작년 같은 달 × 최근 증가율 × 요일 — 시험일 오차 5.6편/h. 하루 권장 192편(10월 예측) · 모든 시간대 한도 안</td><td class="revc"><b>37</b></td></tr>
         <tr><td class="no">49</td><td class="item">게이트 선택</td><td class="concl"><b>편마다 북·남 선택</b><br>운휴 대응</td><td class="src">한쪽 회랑이 막힌 가정 12일: 못 뜬 편 95 → 2. 평소 효과는 작음</td><td class="revc"><b>37</b></td></tr>
         <tr><td class="no">50</td><td class="item">버티포트 입지</td><td class="concl"><b>공항 밖 제3유보지</b><br>실측 비교</td><td class="src">공항 안 T1·T2 주차빌딩 옥상은 반경 1.5 NM·2,468 ft 아래 상용기 27.6·23.7회/시, 운영시간의 51·38%는 이착륙 공간 막힘 · 제3유보지 0회</td><td class="revc"><b>38</b></td></tr>
         <tr><td class="no">51</td><td class="item">수직 강하율</td><td class="concl"><b>범위로 제시</b><br>2,400 → 500 fpm</td><td class="src">VRS 우려로 강하율 민감도: 수용 한도 2,400 fpm 18편 · 1,000 fpm 16편 · 500 fpm 12편(한도 안 미달·근접 0) · 착륙장 3개로 늘려도 12편(병목은 도착·출발 교대)</td><td class="revc"><b>38</b></td></tr>
+        <tr><td class="no">52</td><td class="item">관제 역할</td><td class="concl"><b>모든 UAM은 ATC 관제</b><br>진입 허가 발급·보류·취소</td><td class="src">B등급은 VFR도 관제 분리(국토부). 붐비면 ATC가 진입 허가를 거둔다 — 회랑 비우기 최대 약 5분. PSU·AI는 시각 제안·위협 경보로 보조. 승인 하루 중앙값 7회</td><td class="revc"><b>39</b></td></tr>
         <tr><td class="no">36</td><td class="item">교통관리 방식</td><td class="concl"><b>전략적 사전 분리</b><br>수용 한도 시간당 18편 + 시간대별 배차</td><td class="src">게이트 진입 허가 시각을 미리 배정해 대기를 회랑 밖으로(ConOps 1.5 4-3-3) · 6편 구간 순서 최적화(REV 36). REV 37: 검증 10일 수용 한도 반반 18편 · 한쪽 몰림 20편(한도를 정한 것은 대기, 20편까지 미달·근접 0). 인천공항 시간대별 운항 통계로 수요를 예측해 시간대별 배차 — 승객 평균 대기 17.8 → 15.3분</td><td class="revc">27·36·<b>37</b></td></tr>
       </tbody>
     </table>
@@ -672,11 +673,12 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 38건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 39건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev39">REV 39</a></td><td class="k2">숫자 점검</td><td class="src">UAM끼리 근접을 DO-365 well clear로 대조 → 층 통과 여유 ±500 ft·0.70 NM · 모든 UAM은 ATC 관제 · 근거 문구 정정</td></tr>
         <tr><td class="v"><a href="#rev38">REV 38</a></td><td class="k2">심사 대비 검증</td><td class="src">버티포트 입지 실측 비교 · 수직 강하율 민감도 · AI 끔 수용 한도 · 시험 13일 AI 효과 · 관제 승인 횟수</td></tr>
         <tr><td class="v"><a href="#rev37">REV 37</a></td><td class="k2">운용 알고리즘</td><td class="src">ATM 3단계 충돌 관리로 정리 · 엔진 결함 9건 수정 · 버티포트 층 통과 허가 · 59일 재산출 · 수용 한도 · 시간대별 배차 · 게이트 선택 · 스트레스 시험</td></tr>
         <tr><td class="v"><a href="#rev36">REV 36</a></td><td class="k2">AI 검증</td><td class="src">59일 실측 학습 AI(혼합 경보 · 배정 최적화 · 승객 안내) · 깨진 ADS-B 거르기 · 비행점검 NOTAM 운휴</td></tr>
@@ -724,10 +726,54 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev39">
+      <div class="meta"><span class="rev">REV 39</span><span class="tag">숫자 점검</span><span class="dt">2026-10-17 23:04</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">발표 숫자를 하나씩 반박해 보기 &mdash; UAM끼리 근접을 무인기 표준(DO-365)으로 다시 세고 층 통과 여유를 넓힘 · 모든 UAM은 ATC가 관제 · 근거 문구 정정</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <p>심사위원(공역 담당자·항공교통 전문가·인천공항 실무자)이 걸고넘어질 만한 숫자를 하나씩 실제 자료로 다시 따졌다. 근거가 약한 표현은 고치고, 기준이 느슨하다는 지적을 받을 수 있는 UAM끼리 근접은 국제 표준으로 다시 세어 엔진을 보강했다.</p>
+        <div class="cx">
+<div class="cx-title">① UAM끼리 근접 &mdash; 우리 경고선(0.5 NM·300 ft)을 무인기 표준으로 대조</div>
+<div class="cx-p">RTCA DO-365(무인기 탐지·회피 성능 표준) well clear = 수평 4,000 ft(0.66 NM) · 수직 450 ft &mdash; 우리 경고선보다 넓다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">REV 38 엔진으로 다시 세면</td><td>59일(AI 켬) <b>1건</b> &mdash; 7/21 버티포트: 착륙장 1에서 상승하던 북행 출발기가 1,066 ft에서 기다리는 사이 위로 남행 출발기(1,468 ft) 통과, 수평 0.06 NM·수직 318 ft</td></tr><tr><td class="nw">원인</td><td>층 통과 허가가 상대 고도대 ±400 ft 밖에서 기다리고, 0.5 NM 밖으로 멀어지면 바로 다시 움직였다</td></tr><tr><td class="nw">고침</td><td>여유를 <b>±500 ft(층 간격)·수평 0.70 NM</b>로 &mdash; DO-365 이상</td></tr><tr><td class="nw">결과(REV 39 엔진)</td><td>59일 AI 켬 DO-365 <b>0건</b>(가장 가까운 경우 수평 0.86 NM·수직 500 ft) · 하루 종일 18편 DO-365 <b>0건</b></td></tr></tbody></table></div>
+<div class="cx-p">수용 한도 18편 그대로 · 59일 공중 대기 967 &rarr; 972분 · 하루 종일 18편 공중 대기 1,857 &rarr; 2,058분(+11%)</div>
+<div class="cx-p"><span class="dim">규칙만 쓰면(AI 끔) 하루 종일 18편에서 UAM끼리 근접 6건 &mdash; AI의 안전 몫은 그대로. NASA는 4,000 ft가 공항 주변(터미널)에는 넓다고도 지적한다 &mdash; 그래도 더 엄한 쪽을 택했다.</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 관제 체계 &mdash; B등급 안 모든 UAM은 ATC가 관제한다(사용자 결정)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">근거</td><td>국토부 공역 안내: B등급은 계기·시계비행 모두에 분리를 포함한 관제를 제공</td></tr><tr><td class="nw">ATC</td><td>게이트 진입 허가 발급·보류·취소 · 회랑 개폐 결정 &mdash; 너무 붐비면 UAM 진입 허가를 거둔다</td></tr><tr><td class="nw">PSU·AI</td><td>진입 시각 제안 · 위협 경보 · 대기·배정 계산 &mdash; ATC 판단을 돕는다</td></tr><tr><td class="nw">허가를 거두면</td><td>회랑 안 UAM이 빠져나가는 데 최대 약 5분(REV 26 실측 비우기 5.1분)</td></tr><tr><td class="nw">관제 승인</td><td>하루 중앙값 7회 · 가장 바쁜 날 65회(7/21, 15 방향 종일 · 시간당 약 4회) &mdash; 평균 12회는 이 하루가 끌어올린 값</td></tr></tbody></table></div>
+<div class="cx-p"><span class="dim">이전 표현 &ldquo;관제사는 회랑 상태만 승인하고 개별 UAM은 PSU와 AI가 관리한다&rdquo;는 B등급 규정과 어긋나 바꿨다.</span></div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 숫자 점검 &mdash; 고친 표현</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">숫자</td><td>문제</td><td>고친 표현</td></tr><tr><td class="nw">하루 490명</td><td>수요 규모를 192편 × 4석 × 70%에 맞춘 가정값</td><td>좌석 공급 하루 768석 · 탑승률 70%면 약 540명(공급 능력)</td></tr><tr><td class="nw">13.4회/시 &lsquo;가로지름&rsquo;</td><td>15 방향 운영 중, 중심선 1.55&ndash;1.69 NM 옆을 층 고도로 지나간 수</td><td>15 방향 운영 중 분리 기준 안을 지나간 출발기</td></tr><tr><td class="nw">복행 &lsquo;68%를 놓친다&rsquo;</td><td>68%는 항적 점 기준 · 같은 장 그래프는 건수(13건 중 7건 포함)</td><td>실측 진입 13건 중 6건을 놓친다</td></tr><tr><td class="nw">첨두 68회/시</td><td>2025년 6월 값</td><td>첨두 시간 평균 약 76회/시(2026년 7&ndash;9월 공식 통계 75.5&ndash;78.6)</td></tr><tr><td class="nw">승용차 30.7 &rarr; 45.2%</td><td>원출처 불명 기사</td><td>승용차 분담률 30.3%(2019) &rarr; 41%(2025) · 공항버스 56.4 &rarr; 29.7%(공사 자료 인용 보도)</td></tr><tr><td class="nw">분리 기준 FAA 7110.65</td><td>국내 고시 수치 미확인</td><td>국내 B등급 = VFR도 관제 분리 · 최저치는 FAA 수치 준용(인국공 내부 기준과 같음)</td></tr><tr><td class="nw">반폭 근거 ConOps 4-3-4-3</td><td>ConOps에는 폭 수치가 없다</td><td>Class B 10 NM − 게이트 8.752 NM · ConOps 4-3-4(폭은 실증으로 설계)</td></tr><tr><td class="nw">25 / 99건</td><td>회랑 고도 조정 전 값</td><td>(회랑 고도 조정 전) 명시 · 지금은 13건</td></tr><tr><td class="nw">수요 예측 오차 5.6편/h</td><td>상대 크기 없음</td><td>평균 62편/h의 약 9%</td></tr><tr><td class="nw">선착순 대비 &minus;77%</td><td>Class B에 순수 선착순은 없다</td><td>배정 없이 요청 순으로 허가할 때 대비</td></tr><tr><td class="nw">비행 12분 · 41분</td><td>가정이 숨어 있다</td><td>직선 경로 · 순항 174 kt(150 kt면 13분) · 화성 버티포트는 시청 인근 · 대기는 예약 없이 온 승객</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 다시 계산한 값 &mdash; REV 39 엔진 <span class="dim">(시간당 12편 · 착륙장 2개 · 비행점검 운휴)</span></div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">59일 AI 끔 &rarr; 켬</td><td>공중 대기 1,260 &rarr; 972분(&minus;23%) · 폐쇄 1,646 &rarr; 1,283분 · 미달 0 · UAM끼리 0</td></tr><tr><td class="nw">시험 13일</td><td>공중 대기 593 &rarr; 538분(&minus;9%) · 폐쇄 780 &rarr; 644분(&minus;17%)</td></tr><tr><td class="nw">진입 배정 효과(13일)</td><td>회랑 안 대기 2,358 &rarr; 538분(&minus;77%) · UAM끼리 6 &rarr; 0건</td></tr><tr><td class="nw">AI 끔 수용 한도</td><td>18편 &rarr; AI 켬 18편 &mdash; <span class="c">REV 38의 16 &rarr; 18편은 사라짐</span>: 넓힌 층 통과 여유가 AI와 상관없이 작동해 규칙만 쓸 때의 근접 1건도 막았다</td></tr></tbody></table></div>
+<div class="cx-p">AI의 몫 = 대기·폐쇄 감소 + 몰릴 때 근접 방지(하루 종일 18편 규칙만 6건 &rarr; AI 0건)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">항공편 연동 배차</td><td>승객 평균 대기 17.8 &rarr; 15.3분</td></tr><tr><td class="nw">승객 안내(게이트 진입 시)</td><td>±1분 안 90%(REV 36 엔진 값 91%를 다시 계산)</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 설명이 필요한 결과 &mdash; 감시가 20초 늦으면 대기가 준다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">하루 종일 18편 · 59일</td><td>감시 폐쇄 627 &rarr; 296회 · 공중 대기 1,857 &rarr; 1,046분 · 미달·근접 늘지 않음</td></tr><tr><td class="nw">해석</td><td>경보가 60초 앞을 보므로 20초 늦어도 실제 위협에는 여유가 남고, 예측 상자를 잠깐 스치고 빠지는 교통의 경보만 사라진다</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 현행 폐쇄 규칙은 보수적이다 &mdash; &lsquo;경보가 일정 시간 이어질 때만 폐쇄&rsquo;는 대기를 크게 줄일 후보(미결, 운영 규칙 변경이라 별도 판단)</div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전(REV 38):</b> 층 통과 허가 여유 ±400 ft·0.5 NM · UAM끼리 근접은 우리 경고선(0.5 NM·300 ft)으로만 셈 · 관제 역할 &ldquo;ATC는 회랑 상태만 승인&rdquo; · 위 ③의 표현들.</div>
+        <div class="ev" style="margin-top:10px">
+          <span class="lbl">남은 확인</span>
+          ① 국내 B등급 VFR 분리 최저치 고시 원문 · ② 화성시청 &rarr; T1 대중교통 시간의 조회 일시와 동탄 리무진 비교 · ③ 감시 경보 지속 시간 조건 시험
+        </div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev38">
       <div class="meta"><span class="rev">REV 38</span><span class="tag">심사 대비 검증</span><span class="dt">2026-10-17 16:37</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">제3자 심사 관점 점검 &mdash; 버티포트 입지 실측 비교 · 수직 강하율 민감도 · AI가 늘리는 회랑 용량 · 학습에 안 쓴 13일 기준 AI 효과 · 관제 승인 횟수</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <p>심사 기준(문제 인식 20 · 혁신성 30 · 실행 타당성 30 · 기대효과 20)으로 발표 자료를 제3자처럼 점검했더니 답이 비어 있는 질문이 나왔다 &mdash; &ldquo;왜 공항 안 옥상이 아닌가&rdquo;, &ldquo;수직 2,400 fpm 강하는 와류 영역 아닌가&rdquo;, &ldquo;AI가 정확히 얼마나 했나(학습일이 섞이지 않았나)&rdquo;, &ldquo;관제사는 하루 몇 번 승인하나&rdquo;. 모두 실측·시뮬레이션으로 답했다. 문제 제기도 공항 셔틀 수요가 아니라 주제 그대로 &lsquo;상용화된 UAM과 기존 항공기의 충돌 가능성&rsquo;으로 다시 세웠다(사용자 판단).</p>
@@ -2527,9 +2573,10 @@ h2{scroll-margin-top:60px}
       <p>REV 30의 감시 폐쇄는 PSU가 접근관제의 감시자료(레이더&middot;ADS-B)를 실시간으로 받아 30&middot;60초 앞을 예측한다는 전제다. 그래도 이미 회랑 안에 있는 기체 옆을 도착 유도기&middot;출발기가 층 고도로 지나가는 경우(7/21 JJA108·JJA1403, 9/4 HL5242)는 막지 못한다. 접근관제가 UAM 회랑을 알고 15 방향 다운윈드&middot;HDY 상공을 층 고도 밖으로 유도하도록 협정(LOA)에 넣어야 한다. 또 발착구간 반폭 0.3 NM은 기체 RNP 0.1 달성이 전제이고, WP3&ndash;GATE-S 하부 지상 위험(송도&middot;인천 해안)은 아직 보지 않았다.</p>
     </div>
     <div class="openItem">
-      <h4>UAM끼리 분리기준 부재 &mdash; 우리 경고선 0.5 NM · 300 ft</h4>
-      <p>국내 UAM끼리 분리기준은 아직 없어 0.5 NM·300 ft를 우리 경고선으로 쓴다. REV 37 엔진(층 통과 허가)에서 검증 10일 시간당 20편까지 UAM끼리 근접 0, 24편부터 나타난다. 수용 한도(반반 18편)는 이 경고선과 대기 기준으로 정한 값이라, 국가 기준이 정해지면 다시 판정해야 한다.</p>
+      <h4>UAM끼리 분리기준 부재 &mdash; 우리 경고선 0.5 NM·300 ft, 무인기 표준으로도 대조</h4>
+      <p>국내 UAM끼리 분리기준은 아직 없다. REV 39에서 RTCA DO-365 well clear(4,000 ft·450 ft)로도 세어 59일 0건 · 하루 종일 18편 0건. 국가 기준이 정해지면 수용 한도를 다시 판정해야 한다.</p>
     </div>
+
 
 
     <div class="openItem">
@@ -2548,6 +2595,10 @@ h2{scroll-margin-top:60px}
     <div class="openItem">
       <h4>ADS-B 공백 중 복행 &mdash; 감시 자료와 관제 정보의 결합</h4>
       <p>스트레스 시험에 남는 1건(8/9 JNA002)은 복행기가 ADS-B 78초 공백 중에 복행해 1 NM 앞에서 다시 잡힌 경우다. 실제 관제는 복행을 즉시 알기 때문에 시뮬레이션보다 대응 시간이 길다 &mdash; 관제 복행 통보를 PSU에 실시간으로 넘기는 협정 항목.</p>
+    </div>
+    <div class="openItem">
+      <h4>감시 경보 지속 시간 조건 &mdash; 폐쇄를 절반으로 줄일 후보</h4>
+      <p>감시 자료가 20초 늦어도 미달이 늘지 않고 감시 폐쇄가 절반 넘게 준다(REV 39 ⑤). 경보가 일정 시간 이어질 때만 폐쇄하는 규칙을 59일로 시험해 볼 만하다 &mdash; 운영 규칙 변경이라 별도 판단.</p>
     </div>
     <div class="openItem">
       <h4>복수 버티포트 미충족 — ConOps 운용모델 2 요건</h4>
@@ -2577,7 +2628,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 38 · 2026-10-17 16:37</span>
+  <span>회랑1 설계결정 로그 · REV 39 · 2026-10-17 23:04</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
