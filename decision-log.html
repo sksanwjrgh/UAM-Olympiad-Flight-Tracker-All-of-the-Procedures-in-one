@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 41">
+<meta name="description" content="인천공항 셔틀형 UAM 회랑1의 설계 결정과 근거 — REV 01~REV 45">
 <title>회랑1 설계결정 로그</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -338,12 +338,12 @@ h2{scroll-margin-top:60px}
     <p class="sub">공항 셔틀형 UAM 운항 조화 설계 — 인천 관제공역(RKSI Class B) 안 회랑의 설계 결정과 그 근거를 기록한다. 발표자료의 근거 원천으로 쓰기 위해, 각 항목은 <b>무엇이 바뀌었는지 · 왜(계산·원문) · 이전에는 무엇이었는지</b>를 함께 남긴다.</p>
   </div>
   <div class="right">
-    <b>REV 41 · 2026-10-17 23:56</b><br>
+    <b>REV 45 · 2026-10-18 14:47</b><br>
     기준 AIP: AMDT 12/24 · AD 2-73 AMDT 10/25 · ENR 5.1(2025-09-18)<br>
     기준 규정: K-UAM ConOps 1.5(2025-08)<br>
     실측: VM 23일 ADS-B 전수<br>
     분석지도: v17 · 시연앱: Tideway<br>
-    <span style="color:var(--rule)">최종 갱신 2026-10-17 23:56</span>
+    <span style="color:var(--rule)">최종 갱신 2026-10-18 14:47</span>
   </div>
 </header>
 
@@ -538,7 +538,7 @@ h2{scroll-margin-top:60px}
 <!--CORRIDOR-SECTION-->
 <section>
   <h2><span class="idx">02</span>회랑 제원 · 지도</h2>
-  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-17 23:56 · 지리참조 잔차 0.1 px)</span></p>
+  <p class="secNote">분석지도 v17의 <code>UAM.pts</code>를 단일 진실원천으로 읽어 생성했다. 좌표를 바꾸면 이 절이 함께 갱신된다. <span class="dim">(생성 2026-10-18 14:47 · 지리참조 잔차 0.1 px)</span></p>
 
   <div class="mapWrap">
     <div class="mapInner">
@@ -604,7 +604,7 @@ h2{scroll-margin-top:60px}
 
 <section>
   <h2 id="s03"><span class="idx">03</span>결정 · 검증 요약</h2>
-  <p class="secNote">REV 01–41에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
+  <p class="secNote">REV 01–45에서 내린 결정과 검증 결과를 한 표로 모았다. 고도는 모두 ft AMSL(QNH)이다. 활주로 방향 표기: <b>15 = 남동향(150°) 입·출항</b>, <b>33 = 북서향(330°) 입·출항</b> — 활주로의 물리적 위치가 아니라 항공기가 뜨고 내리는 방향이다. 각 행의 근거는 아래 <b>03 결정 로그</b>에 계산·원문과 함께 상세히 적혀 있다.</p>
   <div class="tableWrap">
     <table class="sumTable">
       <thead>
@@ -673,11 +673,15 @@ h2{scroll-margin-top:60px}
   <p class="secNote">위 요약표의 각 행이 어떤 계산·원문에서 나왔는지, 그리고 <b>이전에는 무엇이었고 왜 바뀌었는지</b>를 남긴 상세 기록. 최신 결정이 위로 온다. REV 번호는 이 문서 내부의 결정 순번이며 AIP 개정번호와 무관하다.</p>
 
   <details class="revidx">
-    <summary>REV 색인 — 41건 (클릭해 펼치기)</summary>
+    <summary>REV 색인 — 45건 (클릭해 펼치기)</summary>
     <div class="tableWrap" style="margin-top:10px">
       <table>
         <thead><tr><th>REV</th><th>구분</th><th>제목</th></tr></thead>
         <tbody>
+        <tr><td class="v"><a href="#rev45">REV 45</a></td><td class="k2">외곽 관제</td><td class="src">게이트 대기 기반 남↔북 전환(36일 평균 효과 없음 — 병목은 공용 착륙장) · 시연 날짜 다양화(10/3 피크 · 8/22 복행 · 10/4 진입 거절)</td></tr>
+        <tr><td class="v"><a href="#rev44">REV 44</a></td><td class="k2">운용 절차</td><td class="src">버티포트 옆 헬기 사전 통보 시에만 발착구간 폐쇄(10/14 근접 1→0) · 발표 9·11·12번 새 숫자</td></tr>
+        <tr><td class="v"><a href="#rev43">REV 43</a></td><td class="k2">외곽 관제</td><td class="src">도심 버티포트 5곳 · 한강 하구 교차(김포 연장선 9.5 NM) · 남북 균형 + 계획 간격 + 진입 거절 · UAM끼리 근접 0</td></tr>
+        <tr><td class="v"><a href="#rev42">REV 42</a></td><td class="k2">검증 확대</td><td class="src">학습에 안 쓴 23일 추가(82일) · AI 놓침 8→1 / 실제 위협 519건 · 규칙 북쪽 사각지대 · 버티포트 옆 헬기 71ce40</td></tr>
         <tr><td class="v"><a href="#rev41">REV 41</a></td><td class="k2">효과 비교</td><td class="src">기다림 분포 · 회랑 상태별 차이 · 화성시청 → T1 문앞~문앞(UAM 평균 약 39분 vs 자가용 70분)</td></tr>
         <tr><td class="v"><a href="#rev40">REV 40</a></td><td class="k2">운용 절차</td><td class="src">복행은 PSU가 관제 교신을 직접 듣고 바로 닫음 · 스트레스 조건 이름 정리</td></tr>
         <tr><td class="v"><a href="#rev39">REV 39</a></td><td class="k2">숫자 점검</td><td class="src">UAM끼리 근접을 DO-365 well clear로 대조 → 층 통과 여유 ±500 ft·0.70 NM · 모든 UAM은 ATC 관제 · 근거 문구 정정</td></tr>
@@ -728,10 +732,139 @@ h2{scroll-margin-top:60px}
 
   <div class="log">
 
+    <article class="entry" id="rev45">
+      <div class="meta"><span class="rev">REV 45</span><span class="tag">외곽 관제</span><span class="dt">2026-10-18 14:47</span></div>
+      <div class="body">
+        <details class="revd" open>
+        <summary><span class="rvt">북쪽이 차면 남쪽으로 &mdash; 게이트 대기 기반 전환을 넣었지만 36일 평균 효과는 거의 없다(병목은 공용 착륙장)</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 사용자 지적 &mdash; 외곽 관제 영상에서 북쪽 대기 구역이 차는데 남쪽으로 돌리지 않음</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">이전</td><td>남북 균형은 이륙 전 계획 단계(30분 구간 60%)에서만 · 비행 중 전환은 대기열 숫자만 보고 자주 바꾸다 회랑 대기 2배라 꺼 둠</td></tr><tr><td class="nw">전환 규칙</td><td>내 게이트 앞 2대 이상 · 반대 게이트 0대(v2: 2대 이상 적음) · 반대 회랑 열림·포화 아님 · 추가 비행 3분 이내 · 한 편당 한 번 · 이륙 직전 또는 분기점(김포 하구 교차점) 전</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 36일 · 시간당 18편</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">남북 균형 + 계획 간격</td><td>회랑 안 대기 170분/일 · 게이트 밖 15.5분 · 문앞→착륙 23.32분 · 미달 0 · 근접 1</td></tr><tr><td>+ 게이트 전환(110회 · 하루 약 3회)</td><td>회랑 안 대기 172분/일 · 게이트 밖 15.4분 · 문앞→착륙 23.35분 · 미달 0 · 근접 1</td></tr><tr><td class="nw">진입 거절안 + 전환(116회)</td><td>회랑 안 대기 109 → 113분/일 · 게이트 밖 127 → 132분</td></tr><tr><td class="nw">하루 단위</td><td>9/17 게이트 밖 406 → 298분(북쪽만 막힌 날) · 10/3 248 → 381분(남쪽도 차 있던 날)</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 북쪽이 차 보일 때 남쪽도 대개 차 있다 &mdash; 병목은 남북이 같이 쓰는 착륙장(도착·출발 교대)이라 게이트를 바꾸면 줄이 옮겨갈 뿐 · 한쪽만 막힌 날에만 도움, 평균 영향 없음 → 켜 두되 "한쪽 막힘 대응"으로 설명</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 시연 날짜 다양화(사용자 요청)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">10/3 13시</td><td>36일 중 회랑 주변 실제 항공기가 가장 많은 피크(시간당 106대) · 감시 폐쇄 · 13:48 북 → 남 전환</td></tr><tr><td class="nw">8/22 11시</td><td>14분 사이 복행 5건 &mdash; 16R 4건은 감시만, 15L KAL1408만 UM120~UM220 폐쇄</td></tr><tr><td class="nw">10/4 12시</td><td>회랑 반쪽 도착 한 대(진입 거절) &mdash; 게이트 밖 대기 구역 · 도심 버티포트 지상 대기</td></tr></tbody></table></div>
+</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
+    <article class="entry" id="rev44">
+      <div class="meta"><span class="rev">REV 44</span><span class="tag">운용 절차</span><span class="dt">2026-10-18 08:23</span></div>
+      <div class="body">
+        <details class="revd">
+        <summary><span class="rvt">버티포트 옆 헬기 &mdash; 사전 통보를 받으면 그 시간에만 발착구간을 닫는다 · 10/14 근접 1 &rarr; 0</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 사용자 결정 &mdash; 비행점검기 사전 통보(NOTAM)와 같은 방식</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">대상</td><td>버티포트 근처를 오가는 헬기(REV 42의 71ce40 · 82일 중 16일 출현)</td></tr><tr><td class="nw">규칙</td><td>운항을 미리 통보받으면, 헬기가 HONDY 반경 1.5 NM · 2,000 ft 아래에 있는 동안(앞 2분 · 뒤 1분 여유) 발착구간을 닫는다</td></tr><tr><td class="nw">그동안</td><td>도착은 발착권 대기 지점에서, 출발은 착륙장에서 기다린다 · 회랑 나머지는 그대로 운영</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 검증</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">10/14(근접이 났던 날)</td><td>통보 없음: 도착 UAM SA079 × 71ce40 0.28 NM · 7 ft → 통보 있음: 근접 0 · 발착구간 2회 9분 닫힘 · 공중 대기 +14분</td></tr><tr><td class="nw">출현 16일 · 시간당 12편</td><td>발착구간 닫힘 2회 9분(16일 합계) · 상용기 미달 변화 없음</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 통보만 오면 하루 1분도 안 되는 대가로 막을 수 있다 &mdash; 관제탑과의 통보 협정이 남은 일</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 발표 자료 반영(REV 42·43 숫자)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">9번 AI 카드</td><td>위협 경보 &ldquo;놓침 5 → 0(279건)&rdquo; → &ldquo;놓침 8 → 1(학습 안 쓴 36일 · 519건) · 괜한 경보 232 → 152 · 규칙의 북쪽 사각지대도 잡음&rdquo;</td></tr><tr><td class="nw">11번 로드맵</td><td>3단계 &ldquo;시간당 최대 18편 · 미달 0 · 근접 0&rdquo; → &ldquo;평시 12편 · 피크 18편 · 12편 미달·근접 0 · 18편 남북 균형으로 미달 2→0 · 근접 4→1&rdquo;</td></tr><tr><td class="nw">12번 시연</td><td>&ldquo;도심 5곳에서 한강 간선으로 들어오는 UAM을 회랑 관리 AI가 받아 관리&rdquo; 맥락 추가(사용자 결정)</td></tr></tbody></table></div>
+</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
+    <article class="entry" id="rev43">
+      <div class="meta"><span class="rev">REV 43</span><span class="tag">외곽 관제</span><span class="dt">2026-10-18 07:33</span></div>
+      <div class="body">
+        <details class="revd">
+        <summary><span class="rvt">도심 버티포트 5곳 → 한강 간선 → 김포 연장선 하구 교차 → 게이트 → 회랑 &mdash; 남북 균형 · 계획 간격 · 진입 거절로 UAM끼리 근접 0</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 바깥에서 들어오는 UAM을 시뮬레이션 안에 넣음(사용자 요청 — 게이트에서 갑자기 생겨나던 것 폐기)</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">도심 버티포트</td><td>잠실 25% · 여의도 25% · 마곡 15% · 일산 킨텍스 15% · 화성 20% (수요 비중은 가정)</td></tr><tr><td class="nw">경로</td><td>서울·일산 = K-UAM 수도권 실증 노선처럼 한강 중심선(OSM)을 따라 하류로 · 화성 = 시화호 수면 위 → SONDO</td></tr><tr><td class="nw">흐름</td><td>도시 이륙(배정 시각에 맞춰, 지상 대기) → 게이트까지 비행(출발 지연·바람 오차, 빨리 오면 감속) → 게이트 밖 대기 구역 → 진입 허가 → 회랑 → HONDY</td></tr><tr><td class="nw">남쪽 폐쇄 우회</td><td>SONDO에서 BUKGA로 순간이동하던 것 → 북항·정서진을 거쳐 실제로 날아간다</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 김포공항(RKSS) 활주로 연장선을 어디서 건너나 &mdash; 82일 실측 · 간선 0.5 NM · 500–1,900 ft</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">아라뱃길로 꺾기(첫 안)</td><td>김포 활주로 끝 0.6 NM · 빠른 항공기 하루 100.5대 · 교차점 막힘 8%(32 방향 이륙기 1,260–2,050 ft)</td></tr><tr><td class="nw">한강 하구로 건너기(채택)</td><td>연장선 북서 9.5 NM · 1,000–1,400 ft · 빠른 항공기 하루 0.12대 · 막힘 0.0%</td></tr><tr><td class="nw">대가</td><td>잠실 → BUKGA 32.5 → 34.1 NM (+0.6분)</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 활주로 가까이는 이륙기가 UAM 고도로 올라오고 멀리는 착륙기가 높게 내려온다 &mdash; 그 사이(북서 9–10 NM · 1,400 ft 아래)가 82일 동안 한 번도 막히지 않았다</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 관제 방식 &mdash; ICAO Doc 9854 3단계를 게이트 바깥까지 넓힘</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">전략(이륙 전)</td><td>남북 균형: 30분 구간 한쪽 60% 넘으면 서울편을 반대 게이트로(+1.8분 이내) · 계획 간격: 같은 쪽 도착 배정 240초(회랑 한 번 통과) · 간선 같은 방향 60초</td></tr><tr><td class="nw">사전 전술(지상)</td><td>출발 여유 30초(늦을 몫을 감속으로 흡수) · 내가 닿을 때 대기 구역이 찰 것으로 보이면 도시에서 이륙을 1분씩 미룸</td></tr><tr><td class="nw">전술(게이트)</td><td>진입 허가는 ATC · 회랑이 포화 직전이면(회랑 반쪽 도착 한 대 · 착륙장 대기 중) 진입 거절 → 게이트 밖 1.5 NM 대기 구역</td></tr><tr><td class="nw">대기 구역</td><td>3층 1,468 · 1,968 · 968 ft (K-UAM ConOps 1.5 회랑 고도대 450±150 m 안)</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 결과 &mdash; 학습에 쓰지 않은 36일 · 시간당 18편 · 도심 5곳 전체 흐름</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">가까운 게이트(장치 없음)</td><td>UAM끼리 4 · 미달 2 · 회랑 안 대기 297분/일 · 게이트 밖 40분/일 · 대기 구역 최대 3대 · 문앞→착륙 25.8분(90% 41.6) · 계획 결항 290편/9842(2.9%)</td></tr><tr><td class="nw">+ 출발 여유 30초</td><td>UAM끼리 4 · 미달 2 · 회랑 안 대기 296분/일 · 게이트 밖 36분/일 · 대기 구역 최대 3대 · 문앞→착륙 25.9분(90% 41.8) · 계획 결항 301편/9842(3.1%)</td></tr><tr><td class="nw">남북 균형 + 출발 여유</td><td>UAM끼리 1 · 미달 0 · 회랑 안 대기 173분/일 · 게이트 밖 17분/일 · 대기 구역 최대 3대 · 문앞→착륙 23.3분(90% 36.0) · 계획 결항 198편/9842(2.0%)</td></tr></tbody></table></div>
+<div class="cx-p">남북 균형 + 출발 여유 + 계획 간격 240초(채택) UAM끼리 1 · 미달 0 · 회랑 안 대기 170분/일 · 게이트 밖 16분/일 · 대기 구역 최대 2대 · 문앞→착륙 23.3분(90% 36.0) · 계획 결항 206편/9842(2.1%)</div>
+<div class="cx-tw"><table><tbody><tr><td>위 + 회랑 반쪽 도착 한 대(진입 거절)</td><td>UAM끼리 1 · 미달 0 · 회랑 안 대기 109분/일 · 게이트 밖 127분/일 · 대기 구역 최대 4대 · 문앞→착륙 23.6분(90% 36.9) · 계획 결항 206편/9842(2.1%)</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 효과의 대부분은 남북 균형 &mdash; 출발 여유만으로는 36일 평균 차이 없음(근접 4 · 미달 2 그대로) · 남북 균형을 더하면 근접 1 · 미달 0 · 회랑 안 대기 173분/일 · 계획 간격은 대기 구역 최대 3 → 2대</div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 시간당 12편</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">12편 · 가까운 게이트</td><td>UAM끼리 1 · 미달 1 · 회랑 안 대기 45분/일 · 게이트 밖 3분/일 · 대기 구역 최대 2대 · 문앞→착륙 17.6분(90% 24.5) · 계획 결항 0편/6603(0.0%)</td></tr><tr><td class="nw">12편 · 채택안</td><td>UAM끼리 0 · 미달 0 · 회랑 안 대기 29분/일 · 게이트 밖 3분/일 · 대기 구역 최대 1대 · 문앞→착륙 17.3분(90% 23.2) · 계획 결항 0편/6603(0.0%)</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑥ 시험해 보고 버린 것</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">계획 지연 기준 재배정</td><td>한 편도 옮기지 않음 &mdash; 착륙장을 남북이 같이 써서 계획 단계에선 이득이 안 보인다</td></tr><tr><td class="nw">비행 중 게이트 전환</td><td>착륙장 순서를 다시 짜지 않고 바꾸면 회랑 안 대기 2배 → 게이트가 실제로 닫혔을 때만 바꾸도록 좁힘</td></tr><tr><td class="nw">일방통행(도착 북·출발 남)</td><td>15 방향 날 남쪽 감시 폐쇄에 출발이 몰려 9/17 대기 592분 → 기각(활주로 방향에 따라 달라짐)</td></tr><tr><td class="nw">진입 거절만(계획 간격 없이)</td><td>대기 구역 5대까지 쌓임 &mdash; 처리 속도를 계획에 넣어야 기다림이 지상으로 간다</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑦ 엔진 수정·남은 과제</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">탈출 간격</td><td>폐쇄 구간 안 두 대가 같은 경계로 빠지며 0.11 NM(7/23) → 뒤 기체와 2 NM을 지키며 물러남</td></tr><tr><td class="nw">남은 빈틈</td><td>회랑 안에서 오래 대기할 때 패턴끼리 겹침(7/24 0.11 NM — 대기 위치 하한에서 패턴이 앞으로 뻗음) &mdash; 계획 간격·한 대 원칙으로 줄였지만 18편에서 1건씩 남음</td></tr><tr><td class="nw">남은 근접 2건</td><td>10/4(계획 간격안) 북 도착 두 대가 실제 212초 간격(계획 240초, 비행 오차)으로 들어와 7–9분 대기 중 0.22 NM · 7/21(진입 거절안, 복행일) 버티포트 근처 17분 대기 도착기 × 남쪽 출발기 0.16 NM</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 시간당 12편은 분리 미달·UAM끼리 근접 0 · 18편은 상한 근처(장치 없이 미달 2·근접 4 → 미달 0·근접 1) &mdash; 운영 권장은 12편, 18편은 피크 시간대 한정</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">협의 필요</td><td>김포 접근관제와 하구 교차점 협정 · 버티포트 옆 헬기(REV 42) · 시간당 18편은 계획 결항이 생기는 상한 근처</td></tr></tbody></table></div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전:</b> 도착 UAM이 배정 시각에 게이트에서 생겨났고, 기다림은 숫자로만 셌다. 도심 연결은 설계 범위 밖으로 두고 직선 거리로만 계산했다(서울 3곳이 SONDO가 가깝다고 봄 &mdash; 한강 간선을 따르면 BUKGA가 가깝다).</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
+    <article class="entry" id="rev42">
+      <div class="meta"><span class="rev">REV 42</span><span class="tag">검증 확대</span><span class="dt">2026-10-18 05:43</span></div>
+      <div class="body">
+        <details class="revd">
+        <summary><span class="rvt">학습에 쓰지 않은 23일을 더해 82일로 &mdash; AI 놓침 8&rarr;1건(실제 위협 519건), 현행 규칙의 북쪽 사각지대, 버티포트 옆 헬기</span><span class="rvx">펼치기</span></summary>
+        <div class="rvb">
+        <div class="cx">
+<div class="cx-title">① 데이터 &mdash; 녹화를 10/17까지 이어받음</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">녹화 기간</td><td>2026-07-21 ~ 10-17 · 7/25–7/31은 계정 차단으로 공백 → 82일</td></tr><tr><td class="nw">새 23일</td><td>9/25 ~ 10/17 · 학습에 한 번도 쓰지 않은 날 (학습 36 · 검증 10 · 시험 13일 분할은 그대로 고정)</td></tr></tbody></table></div>
+<div class="cx-p">함께 이어붙임 활주로 방향 기록 · 복행 후보 19건(10월은 대부분 33 방향) · METAR(QNH 보정)</div>
+</div>
+        <div class="cx">
+<div class="cx-title">② 전술 AI 채점 &mdash; 모델은 그대로(재학습 없음), 실제 위협 = 140 kt 이상이 층 고도 설계기준 상자에 들어온 통과</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">원래 시험 13일 · 279건</td><td>현행 규칙 놓침 5 · 괜한 경보 112</td><td>→</td><td>AI(규칙+학습 혼합) 놓침 0 · 괜한 경보 74</td></tr><tr><td class="nw">새 23일 · 240건</td><td>현행 규칙 놓침 3 · 괜한 경보 120</td><td>→</td><td>AI 놓침 1 · 괜한 경보 78</td></tr><tr><td class="nw">AI가 놓친 1건</td><td>10/3 IC003 · 속도 140 kt 경계값 · 남행 층보다 434 ft 아래 · 상자 안 5초</td><td></td><td></td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; "놓침 0"은 더 이상 쓰지 않는다 &mdash; 학습에 안 쓴 36일 실제 위협 519건 중 AI 518건 제때 · 현행 규칙 511건</div>
+</div>
+        <div class="cx">
+<div class="cx-title">③ 현행 규칙의 사각지대 &mdash; 수평·하강 중인 고속 교통은 남쪽 구간(HONDY 이남)만 감시한다</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">새 23일에 규칙이 놓친 3건</td><td>HL8219 · DLH718 · AAR522 &mdash; 모두 북쪽 구간을 170 kt 이상으로 내려온 여객기(상자 안 12–42초)</td></tr><tr><td class="nw">AI</td><td>세 건 모두 확률 100%로 경보</td></tr><tr><td class="nw">엔진 23일 · 4,117편</td><td>상용기 분리 미달 AI 0 · 현행 규칙 1(10/16 DLH718) · UAM끼리 0 · 0</td></tr><tr><td class="nw">원인 가르기</td><td>10/16을 경보 × 배정 방식 네 조합으로 다시 돌림 &mdash; AI 경보면 0, 현행 규칙이면 1(배정 방식과 무관)</td></tr><tr><td class="nw">효율</td><td>회랑 폐쇄 811 → 605분 · 공중 대기 446 → 385분</td></tr></tbody></table></div>
+</div>
+        <div class="cx">
+<div class="cx-title">④ 새로 찾은 위험 &mdash; 버티포트 옆을 오가는 헬기</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">71ce40</td><td>호출부호 없음 · 40–140 kt · 400–850 ft · 82일 중 16일 출현</td></tr><tr><td class="nw">10/14</td><td>버티포트(HONDY) 위 0.28 NM을 632 ft로 지나 약 1 NM 지점에 내려앉음 → 도착 UAM과 0.28 NM · 7 ft (AI·규칙 모두, 관제탑 관할 1 NM 안)</td></tr></tbody></table></div>
+<div class="cx-concl">&rArr; 제3유보지 주변 헬기 운항을 확인하고 관제탑과 순서 협정이 필요하다 &mdash; 시뮬레이션의 UAM은 헬기에 반응하지 않으므로 실제로는 관제탑이 순서를 정할 상황</div>
+</div>
+        <div class="cx">
+<div class="cx-title">⑤ 설명 정정</div>
+<div class="cx-tw"><table><tbody><tr><td class="nw">9/17 S4 장면</td><td>"회랑으로 오지 않을 상용기 경보를 거른다"(틀림) → AI가 줄인 폐쇄 4건은 전부 느린 헬기·소형기(IC003 · HL9321, 113 kt 이하) · 헬기는 회랑 아래 공시 헬기 고도로 다니며 관제가 분리(REV 33)</td></tr><tr><td class="nw">학습 일수</td><td>"59일 실측으로 학습" → 46일 학습(36 + 검증 10) · 나머지는 시험</td></tr><tr><td class="nw">표시 오류</td><td>항로도 상황판의 "복행 0.00–0.00 NM 폐쇄"(감시용 빈 기록) 제거 · 감시 폐쇄를 지도에 표시 · "복행 전파" 문구 → "PSU가 관제 교신으로 복행 인지"</td></tr></tbody></table></div>
+</div>
+        <div class="was" style="margin-top:12px"><b>이전(REV 39–41):</b> 시험 13일 결과만으로 &ldquo;AI 놓침 0&rdquo;이라고 썼고, S4 장면의 AI 효과를 &ldquo;회랑으로 오지 않을 상용기&rdquo; 경보를 거른 것으로 설명했다.</div>
+        </div>
+        </details>
+      </div>
+    </article>
+
     <article class="entry" id="rev41">
       <div class="meta"><span class="rev">REV 41</span><span class="tag">효과 비교</span><span class="dt">2026-10-17 23:56</span></div>
       <div class="body">
-        <details class="revd" open>
+        <details class="revd">
         <summary><span class="rvt">기다림은 땅에서, 대부분 손님이 몰려서 &mdash; 화성시청 &rarr; T1 UAM 평균 약 39분 vs 자가용 약 70분</span><span class="rvx">펼치기</span></summary>
         <div class="rvb">
         <div class="cx">
@@ -2675,7 +2808,7 @@ h2{scroll-margin-top:60px}
 </section>
 
 <div class="foot">
-  <span>회랑1 설계결정 로그 · REV 41 · 2026-10-17 23:56</span>
+  <span>회랑1 설계결정 로그 · REV 45 · 2026-10-18 14:47</span>
   <span>이준호 · 이대호 · 임수현 · 김연휘 · 양승민</span>
 </div>
 
