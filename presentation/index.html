@@ -34,10 +34,28 @@ video{width:100%;border-radius:8px;background:#000;display:block}
   <div class="card">
     <div class="btns"><a class="btn" href="deck.pdf" target="_blank" rel="noopener">발표 PDF 열기</a><a class="btn" href="../">항로도(v17) 보기</a></div>
     <iframe class="pdf" src="deck.pdf" title="발표 자료 PDF"></iframe>
-    <div class="note">휴대폰에서 PDF가 안 보이면 위의 '발표 PDF 열기'를 누르세요. 영상은 곧 이 페이지에 추가됩니다.</div>
+    <div class="note">휴대폰에서 PDF가 안 보이면 위의 '발표 PDF 열기'를 누르세요. 검증 장(10쪽)의 효율 영상은 아래 영상 목록에 있습니다.</div>
   </div>
 
-  <!-- 영상은 녹화가 끝나면 추가 -->
+  <h2>설명 영상</h2>
+  <div class="grid">
+    <div class="card v"><video controls preload="metadata" src="videos/pr_1min.mp4"></video><h3>PR 영상 (1분)</h3><p>필요성 → 설계 → 적정성 → 현실화 → 운용 → 로드맵 요약</p></div>
+    <div class="card v"><video controls preload="metadata" src="videos/ai_psu_efficiency.mp4"></video><h3>AI PSU 교통 처리 효율 (1분)</h3><p>학습 미사용 36일 · 동일 수요 · 선착순 대비 AI 배정</p></div>
+  </div>
+
+  <h2>시뮬레이션 수행 결과</h2>
+  <div class="grid">
+    <div class="card v"><video controls preload="metadata" src="videos/corridor_sim.mp4"></video><h3>회랑 관제 시뮬레이션</h3><p>실측 ADS-B 위 UAM 운항 재현 · 복행·감시 폐쇄·헬기 협정</p></div>
+    <div class="card v"><video controls preload="metadata" src="videos/ai_on_off.mp4"></video><h3>AI 미적용 · 적용 대조</h3><p>10/16 미탐지 위협 · 10/6 불필요한 폐쇄 · 10/3 진입 시각 배정</p></div>
+    <div class="card v"><video controls preload="metadata" src="videos/threat_ai.mp4"></video><h3>회랑 충돌위협 판정 AI</h3><p>항공기별 회랑 진입 확률 · 경보·필터링</p></div>
+    <div class="card v"><video controls preload="metadata" src="videos/outer_control.mp4"></video><h3>수도권 외곽 관제</h3><p>도심 버티포트 5곳 → 게이트 → 회랑 · 전략 배정·진입 거절</p></div>
+    <div class="card v"><video controls preload="metadata" src="videos/outer_control_days.mp4"></video><h3>외곽 관제 — 여러 날짜</h3><p>10/3 피크 · 8/22 연속 복행 · 10/4 진입 거절</p></div>
+  </div>
+
+  <h2>여객편의 앱</h2>
+  <div class="grid">
+    <div class="card v"><video controls preload="metadata" src="videos/app_demo.mp4"></video><h3>하늘셔틀 승객 앱 시연</h3><p>운항 현황 · 항공편 연동 · 수하물 · 기상 운항 중단 안내</p></div>
+  </div>
   <div class="note">모든 수치: 최종 운항 규칙(수직 강하 1,500 fpm 가정) · 82일 실측 14,569편 분리 미달 0 · UAM 간 근접 0 · 59일 최대 시간당 16편 · 도어투도어 약 51분.</div>
 </main>
 </body>
